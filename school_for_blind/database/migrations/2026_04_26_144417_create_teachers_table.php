@@ -1,0 +1,37 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration {
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('teachers', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
+            $table->string('full_name');
+            $table->string('phone')->unique();
+            $table->string('password');
+            // $table->date('date_of_birth');
+           $table->string('subjects')->default('');
+            $table->enum('level', ['ninth', 'twelfth']);
+            $table->enum('status', ['pending', 'approved', 'rejected','suspended'])->default('pending');
+            $table->string('stripe_account_id')->nullable();
+            $table->string('cv_path');
+            $table->text('fcm_token')->nullable();
+            $table->rememberToken();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('teachers');
+    }
+};
