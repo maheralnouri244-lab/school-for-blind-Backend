@@ -9,6 +9,7 @@ return new class extends Migration {
     {
         Schema::create('exams', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('teacher_id')->nullable()->constrained('teachers')->cascadeOnDelete();
             $table->string('title');
             $table->text('description')->nullable();
             $table->foreignId('subject_id')->constrained('subjects')->cascadeOnDelete();

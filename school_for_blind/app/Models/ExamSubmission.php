@@ -24,4 +24,10 @@ class ExamSubmission extends Model
     {
         return $this->belongsTo(Exam::class, 'exam_id');
     }
+    public function getAnswers()
+    {
+        return ExamStudentAnswer::where('exam_id', $this->exam_id)
+            ->where('student_id', $this->student_id)
+            ->get();
+    }
 }

@@ -91,6 +91,9 @@ Route::middleware([CheckAdminRole::class . ':Super Admin,Academic Manager,Data E
     Route::post('exams/{id}/questions', [ExamController::class, 'storeQuestion'])->name('exams.questions.store');
     Route::post('exams/{id}/questions/attach', [ExamController::class, 'attachQuestion'])->name('exams.questions.attach');
     Route::delete('exams/{id}/questions/{question_id}', [ExamController::class, 'detachQuestion'])->name('exams.questions.detach');
+    Route::get('exams/{id}/submissions', [ExamController::class, 'submissions'])->name('exams.submissions');
+    Route::post('exams/{id}/approve-all', [ExamController::class, 'approveAllSubmissions'])->name('exams.approve-all');
+    Route::post('exam-submissions/{submission_id}/approve', [ExamController::class, 'approveSubmission'])->name('exams.submissions.approve');
     Route::resource('exams', ExamController::class)->parameters(['exams' => 'id']);
 
 });

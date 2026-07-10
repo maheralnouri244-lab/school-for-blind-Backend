@@ -99,6 +99,11 @@
               data-bs-target="#createQuestionModal">
               <i class="fa-solid fa-plus me-2"></i> إنشاء سؤال تفاعلي جديد
             </button>
+
+            <a href="{{ route('dashboard.exams.submissions', $exam->id) }}"
+              class="btn btn-accept rounded-pill py-2 fw-bold text-center text-white text-decoration-none">
+              <i class="fa-solid fa-graduation-cap me-2"></i> عرض أوراق وتسليمات الطلاب
+            </a>
           </div>
         </div>
       </div>
@@ -176,8 +181,7 @@
 
   <div class="modal fade" id="createQuestionModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
-      <div class="modal-content glass-modal"
-        style="border: 1px solid var(--border-color); color: var(--text-main);">
+      <div class="modal-content glass-modal" style="border: 1px solid var(--border-color); color: var(--text-main);">
         <div class="modal-header border-0">
           <h5 class="modal-title fw-bold">إنشاء سؤال تفاعلي جديد</h5>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -273,11 +277,11 @@
 
       // بناء الـ HTML للخيار الجديد ديناميكياً
       newRow.innerHTML = `
-          <div class="input-group-text" style="background-color: var(--hover-bg); border-color: var(--border-color);">
-              <input class="form-check-input mt-0" type="radio" name="correct_choice" value="${choiceCount}">
-          </div>
-          <input type="text" name="choices[${choiceCount}][text]" class="form-control search-input" placeholder="نص الخيار رقم ${choiceCount + 1}">
-      `;
+            <div class="input-group-text" style="background-color: var(--hover-bg); border-color: var(--border-color);">
+                <input class="form-check-input mt-0" type="radio" name="correct_choice" value="${choiceCount}">
+            </div>
+            <input type="text" name="choices[${choiceCount}][text]" class="form-control search-input" placeholder="نص الخيار رقم ${choiceCount + 1}">
+        `;
 
       container.appendChild(newRow);
       choiceCount++;

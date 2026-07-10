@@ -8,10 +8,10 @@ return new class extends Migration {
     {
         Schema::create('exam_submissions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('student_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('student_id')->constrained('students')->cascadeOnDelete();
             $table->foreignId('exam_id')->constrained('exams')->cascadeOnDelete();
             $table->decimal('score')->default(0);
-            $table->enum('status', ['pending_approval', 'approved', 'rejected'])->default('pending_approval');
+            $table->enum('status', ['pending_grading', 'pending_approval', 'approved', 'rejected'])->default('pending_grading');
 
             $table->timestamps();
         });

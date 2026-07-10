@@ -7,6 +7,7 @@ use App\Http\Controllers\CaregiverController;
 use App\Http\Controllers\DonationController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\LessonController;
+use App\Http\Controllers\LiveKitWebhookController;
 use App\Http\Controllers\MagicLoginController;
 use App\Http\Controllers\OtpController;
 use App\Http\Controllers\PointRedemptionController;
@@ -18,6 +19,7 @@ use App\Http\Controllers\StripeWebhookController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\StudentQuizController;
 use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\TeacherExamController;
 use App\Http\Middleware\CheckCallCreatorRole;
 use App\Http\Middleware\CheckPunishment;
 use App\Http\Middleware\CheckUserType;
@@ -25,7 +27,6 @@ use App\Http\Middleware\IsTeacher;
 use App\Http\Middleware\PreventStudentCallActions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\LiveKitWebhookController;
 
 Route::post('verify-otp', [OtpController::class, 'verify']);
 Route::post('register', [StudentController::class, 'register']);
@@ -94,6 +95,9 @@ Route::prefix('quizzes')->group(function () {
         Route::delete('/{id}', [QuizController::class, 'destroy']);
         Route::get('{lessonId}/quiz', [QuizController::class, 'getQuizByLesson']);
         Route::post('/{quizId}/students/{studentId}/grade', [QuizController::class, 'gradeTextAnswers']);
+        Route::get('/teacher/pending-grading', [QuizController::class, 'getQuizzesPendingGrading']);
+        Route::get('/{quizId}/submissions', [QuizController::class, 'getQuizSubmissions']);
+        Route::get('/{quizId}/students/{studentId}/pending-answers', [QuizController::class, 'getPendingTextAnswers']);
     });
     // Route::middleware(['auth:sanctum', 'CheckIsStudent'])->group(function () {
     // });
@@ -103,6 +107,14 @@ Route::prefix('quizzes')->group(function () {
         Route::get('/{id}', [QuizController::class, 'show']);
         Route::get('/{quiz_id}/students/{student_id}/answers', [QuizController::class, 'getStudentAnswers']);
     });
+});
+
+Route::middleware(['auth:sanctum', 'isTeacher'])->prefix('exam')->controller(TeacherExamController::class)->group(function () {
+    Route::post('/', 'store');
+    Route::get('/pending-grading', 'getExamsPendingGrading');
+    Route::get('/{examId}/submissions', 'getExamSubmissions');
+    Route::get('/{examId}/students/{studentId}/pending-answers', 'getPendingTextAnswers');
+    Route::post('/{examId}/students/{studentId}/grade', 'gradeTextAnswers');
 });
 
 Route::middleware('auth:sanctum')

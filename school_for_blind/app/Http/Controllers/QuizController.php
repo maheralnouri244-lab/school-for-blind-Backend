@@ -212,7 +212,13 @@ class QuizController extends Controller
         DB::beginTransaction();
         try {
             $totalScore = 0;
+            $hasTextQuestions = false;
             foreach ($request->answers as $answerData) {
+
+                if ($answerData['type'] === 'TEXT') {
+                    $hasTextQuestions = true;
+                }
+
                 $question = Question::find($answerData['question_id']);
                 $isCorrect = false;
                 $pointsEarned = 0;
@@ -245,13 +251,15 @@ class QuizController extends Controller
                     'text_answer' => $answerData['type'] !== 'mcq' ? $answerData['text_answer'] : null,
                     'is_correct' => $isCorrect,
                     'points_earned' => $pointsEarned,
+                    'is_graded' => $answerData['type'] !== 'TEXT',
                 ]);
             }
 
             $submission = QuizSubmission::create([
                 'student_id' => $student_id,
                 'quiz_id' => $quiz->id,
-                'score' => $totalScore,
+                'total_score' => $totalScore,
+                'status' => $hasTextQuestions ? 'pending' : 'graded',
             ]);
             DB::commit();
             return response()->json([
@@ -363,8 +371,19 @@ class QuizController extends Controller
 
                     $studentAnswer->points_earned = $gradeData['points'];
                     $studentAnswer->is_correct = $gradeData['points'] > 0;
+                    $studentAnswer->is_graded = true;
                     $studentAnswer->save();
                 }
+            }
+
+            $ungradedAnswers = StudentAnswer::where('student_id', $studentId)
+                ->where('is_graded', false)
+                ->whereHas('question.quizzes', function ($query) use ($quizId) {
+                    $query->where('quizzes.id', $quizId);
+                })->exists();
+
+            if (!$ungradedAnswers) {
+                $submission->status = 'graded';
             }
 
             $newTotalScore = StudentAnswer::where('student_id', $studentId)
@@ -373,7 +392,7 @@ class QuizController extends Controller
                 })
                 ->sum('points_earned');
 
-            $submission->score = $newTotalScore;
+            $submission->total_score = $newTotalScore;
             $submission->save();
 
             DB::commit();
@@ -390,5 +409,67 @@ class QuizController extends Controller
                 'details' => $e->getMessage()
             ], 500);
         }
+    }
+
+    public function getQuizzesPendingGrading()
+    {
+        $teacher_id = auth()->id();
+
+        $quizzes = Quiz::where('teacher_id', $teacher_id)
+            ->whereHas('submissions', function ($query) {
+                $query->where('status', 'pending');
+            })
+            ->with(['subject', 'lesson.class'])
+            ->withCount([
+                'submissions' => function ($query) {
+                    $query->where('status', 'pending');
+                }
+            ])
+            ->get();
+
+        return response()->json([
+            'message' => 'الكويزات التي بانتظار التصحيح',
+            'quizzes' => $quizzes
+        ]);
+    }
+
+    public function getQuizSubmissions($quizId)
+    {
+        $quiz = Quiz::findOrFail($quizId);
+
+        $submissions = QuizSubmission::with('student:id,fullname')
+            ->where('quiz_id', $quizId)
+            ->get();
+
+        return response()->json([
+            'quiz_id' => $quiz->id,
+            'quiz_title' => $quiz->title ?? 'كويز',
+            'submissions' => $submissions
+        ]);
+    }
+
+    public function getPendingTextAnswers($quizId, $studentId)
+    {
+        $submission = QuizSubmission::where('quiz_id', $quizId)
+            ->where('student_id', $studentId)
+            ->firstOrFail();
+
+        $textAnswers = StudentAnswer::where('student_id', $studentId)
+            ->whereHas('question', function ($q) use ($quizId) {
+                $q->where('type', 'TEXT')
+                    ->whereHas('quizzes', function ($query) use ($quizId) {
+                        $query->where('quizzes.id', $quizId);
+                    });
+            })
+            ->with('question:id,description,points')
+            ->get();
+
+        return response()->json([
+            'quiz_id' => (int) $quizId,
+            'student_id' => (int) $studentId,
+            'submission_status' => $submission->status,
+            'current_score' => $submission->total_score,
+            'answers_to_grade' => $textAnswers
+        ]);
     }
 }

@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Models\Exam;
-use App\Models\Subject;
-use App\Models\Question;
-use App\Models\Teacher;
 use App\Models\Choice;
+use App\Models\Exam;
+use App\Models\ExamSubmission;
+use App\Models\Question;
+use App\Models\Subject;
+use App\Models\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -52,12 +53,15 @@ class ExamController extends Controller
             'duration_minutes' => 'required|integer|min:5|max:300',
         ]);
 
+        $adminTeacher = Teacher::where('phone', '0000000000')->first();
+
         Exam::create([
             'title' => $request->title,
             'description' => $request->description,
             'subject_id' => $request->subject_id,
             'exam_date' => $request->exam_date,
             'duration_minutes' => $request->duration_minutes,
+            'teacher_id' => $adminTeacher ? $adminTeacher->id : null,
             'is_published' => false,
         ]);
 
@@ -197,5 +201,47 @@ class ExamController extends Controller
         $exam->questions()->detach($questionId);
 
         return redirect()->back()->with('success', 'تم إزالة السؤال من الامتحان بنجاح.');
+    }
+
+    public function submissions(Request $request, $examId)
+    {
+        $exam = Exam::findOrFail($examId);
+        
+        $query = ExamSubmission::with('student')->where('exam_id', $examId);
+
+        if ($request->has('status') && $request->status != '') {
+            $query->where('status', $request->status);
+        }
+
+        $submissions = $query->latest()->paginate(15);
+
+        return view('pages.exams.submissions', compact('exam', 'submissions'));
+    }
+
+    public function approveSubmission($submissionId)
+    {
+        $submission = ExamSubmission::findOrFail($submissionId);
+        
+        if ($submission->status === 'pending_approval') {
+            $submission->update(['status' => 'approved']);
+            return redirect()->back()->with('success', 'تم اعتماد نتيجة الطالب بنجاح.');
+        }
+
+        return redirect()->back()->with('error', 'هذه الورقة ليست بانتظار الاعتماد.');
+    }
+
+    public function approveAllSubmissions($examId)
+    {
+        $exam = Exam::findOrFail($examId);
+        
+        $updatedCount = ExamSubmission::where('exam_id', $examId)
+            ->where('status', 'pending_approval')
+            ->update(['status' => 'approved']);
+
+        if ($updatedCount > 0) {
+            return redirect()->back()->with('success', "تم اعتماد $updatedCount ورقة بنجاح.");
+        }
+
+        return redirect()->back()->with('info', 'لا يوجد أوراق بانتظار الاعتماد حالياً.');
     }
 }

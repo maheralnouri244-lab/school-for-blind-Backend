@@ -16,14 +16,24 @@ class Exam extends Model
         'exam_date' => 'datetime',
     ];
 
-    public function subject(): BelongsTo
+    public function subject()
     {
         return $this->belongsTo(Subject::class, 'subject_id');
     }
 
-    public function questions(): BelongsToMany
+    public function questions()
     {
         return $this->belongsToMany(Question::class, 'exam_question', 'exam_id', 'question_id')
                     ->withTimestamps();
+    }
+
+    public function teacher()
+    {
+        return $this->belongsTo(Teacher::class, 'teacher_id');
+    }
+
+    public function submissions()
+    {
+        return $this->hasMany(ExamSubmission::class, 'exam_id');
     }
 }
