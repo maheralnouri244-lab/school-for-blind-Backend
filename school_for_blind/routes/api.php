@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Admin\PunishmentController;
 use App\Http\Controllers\Admin\TeacherTransferController;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\CaregiverController;
@@ -11,6 +10,7 @@ use App\Http\Controllers\LiveKitWebhookController;
 use App\Http\Controllers\MagicLoginController;
 use App\Http\Controllers\OtpController;
 use App\Http\Controllers\PointRedemptionController;
+use App\Http\Controllers\PunishmentController;
 use App\Http\Controllers\QuestionBankController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\ReportController;

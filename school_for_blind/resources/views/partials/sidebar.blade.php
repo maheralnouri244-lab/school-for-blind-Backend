@@ -143,7 +143,7 @@
     <li>
       <a href="{{ route('dashboard.exams.index') }}"
         class="nav-link d-flex align-items-center justify-content-between {{ request()->routeIs('dashboard.exams.*') ? 'nav-link-active' : 'nav-link-custom' }}">
-        <span>الامتحانات والمذاكرات</span>
+        <span>الامتحانات و المذاكرات</span>
         <i class="fa-solid fa-file-signature"></i>
       </a>
     </li>

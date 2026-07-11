@@ -33,13 +33,14 @@ class DatabaseSeeder extends Seeder
             ContentSeeder::class,
             AdminSeeder::class,
             TeacherSeeder::class,
-            PastExamSeeder::class,  
-            ExamSeeder::class,
+            PastExamSeeder::class,
             StudentSeeder::class,
+            ExamSeeder::class,
             LessonSeeder::class,
             SubjectLessonsCountSeeder::class,
             PunishmentSeeder::class,
             QuizSeeder::class,
+            QuizSubmissionSeeder::class,
         ]);
 
         User::factory()->create([

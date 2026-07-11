@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Models\Choice;
 use App\Models\Exam;
+use App\Models\ExamStudentAnswer;
 use App\Models\ExamSubmission;
 use App\Models\Question;
 use App\Models\Subject;
@@ -206,7 +207,7 @@ class ExamController extends Controller
     public function submissions(Request $request, $examId)
     {
         $exam = Exam::findOrFail($examId);
-        
+
         $query = ExamSubmission::with('student')->where('exam_id', $examId);
 
         if ($request->has('status') && $request->status != '') {
@@ -215,13 +216,20 @@ class ExamController extends Controller
 
         $submissions = $query->latest()->paginate(15);
 
+        foreach ($submissions as $submission) {
+            $submission->answers = ExamStudentAnswer::with(['question.choices', 'choice'])
+                ->where('student_id', $submission->student_id)
+                ->where('exam_id', $submission->exam_id)
+                ->get();
+        }
+
         return view('pages.exams.submissions', compact('exam', 'submissions'));
     }
 
     public function approveSubmission($submissionId)
     {
         $submission = ExamSubmission::findOrFail($submissionId);
-        
+
         if ($submission->status === 'pending_approval') {
             $submission->update(['status' => 'approved']);
             return redirect()->back()->with('success', 'تم اعتماد نتيجة الطالب بنجاح.');
@@ -233,7 +241,7 @@ class ExamController extends Controller
     public function approveAllSubmissions($examId)
     {
         $exam = Exam::findOrFail($examId);
-        
+
         $updatedCount = ExamSubmission::where('exam_id', $examId)
             ->where('status', 'pending_approval')
             ->update(['status' => 'approved']);
