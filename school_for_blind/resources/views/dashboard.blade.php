@@ -5,110 +5,137 @@
 
     <div class="row g-4 mb-4">
 
+      {{-- 1. مركز تحكم الطلاب (Students Hub) --}}
       <div class="col-lg-4">
-        <div class="row g-3">
-          <div class="col-12">
-            <a href="{{ route('students.index') }}" class="text-decoration-none d-block">
-              <div class="custom-card d-flex justify-content-between align-items-center shadow-sm-hover"
-                style="transition: transform 0.2s;">
-                <div>
-                  <p class="text-muted mb-1 fs-5">إجمالي الطلاب</p>
-                  <h3 class="fw-bold mb-0" style="color: var(--text-main);">{{$studentsCount}}</h3>
-                </div>
-                <i class="fa-solid fa-arrow-up text-success fs-3"></i>
-              </div>
-            </a>
-          </div>
-          <div class="col-12">
-            <a href="{{ route('teachers.index') }}" class="text-decoration-none d-block">
-              <div class="custom-card d-flex justify-content-between align-items-center shadow-sm-hover"
-                style="transition: transform 0.2s;">
-                <div>
-                  <p class="text-muted mb-1 fs-5">إجمالي المعلمين</p>
-                  <h3 class="fw-bold mb-0" style="color: var(--text-main);">{{$teachersCount}}</h3>
-                </div>
-                <i class="fa-solid fa-arrow-down text-danger fs-3"></i>
-              </div>
-            </a>
-          </div>
-        </div>
-      </div>
+        <div class="custom-card h-100 d-flex flex-column justify-content-between">
 
-      <div class="col-lg-4">
-        <div class="custom-card h-100">
-          <div class="d-flex justify-content-between mb-4">
-            <h5 class="fw-bold" style="color: var(--text-main);">مراقب المحتوى</h5>
-            <i class="fa-solid fa-ellipsis text-muted"></i>
-          </div>
-
-          <ul class="list-unstyled d-flex flex-column gap-3">
-            <li class="d-flex align-items-center">
-              <span class="p-2 rounded-circle me-3" style="background-color: #4ade80;"></span>
-              <span style="color: var(--text-main);">البلاغات</span>
-            </li>
-            <li class="d-flex align-items-center">
-              <span class="p-2 rounded-circle me-3" style="background-color: #facc15;"></span>
-              <span style="color: var(--text-main);">مشاكل تقنية</span>
-            </li>
-            <li class="d-flex align-items-center">
-              <span class="p-2 rounded-circle me-3" style="background-color: #4ade80;"></span>
-              <span style="color: var(--text-main);">المحتوى</span>
-            </li>
-            <li class="d-flex align-items-center">
-              <span class="p-2 rounded-circle me-3" style="background-color: #4ade80;"></span>
-              <span style="color: var(--text-main);">المحادثات</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="col-lg-4">
-        <div class="custom-card h-100">
-          <h5 class="fw-bold mb-4" style="color: var(--text-main);">طلبات الانضمام الأخيرة</h5>
-
-          <a href="{{ route('requests.view', 'teacher') }}" class="text-decoration-none">
-            <div class="d-flex align-items-center position-relative p-3 mb-3 rounded shadow-sm-hover"
-              style="background-color: var(--bg-main); transition: transform 0.2s;">
-
-              <div class="d-flex align-items-center gap-3">
-                <div class="bg-secondary p-2 rounded text-white">
-                  <i class="fa-regular fa-user"></i>
-                </div>
-                <div>
-                  <h6 class="mb-0" style="color: var(--text-main);">طلبات المعلمين</h6>
-                  <small class="text-muted">إجمالي الطلبات</small>
-                </div>
-              </div>
-
-              <span class="position-absolute fw-bold"
-                style="left: 15px; top: 50%; transform: translateY(-50%); color: var(--text-main); font-size: 1.1rem;">
-                {{ $pendingteachersCount }}
-              </span>
+          {{-- القسم العلوي: الإحصائية --}}
+          <div class="d-flex justify-content-between align-items-start mb-4">
+            <div>
+              <p class="text-muted mb-1 fs-6 fw-bold">إجمالي الطلاب المسجلين</p>
+              <h2 class="fw-bold mb-0" style="color: var(--text-main);">{{$studentsCount}}</h2>
             </div>
-          </a>
+            <div class="p-3 rounded d-flex align-items-center justify-content-center bg-soft-info"
+              style="width: 55px; height: 55px;">
+              <i class="fa-solid fa-graduation-cap fs-3 text-info"></i>
+            </div>
+          </div>
 
-          <a href="{{ route('requests.view', 'student') }}" class="text-decoration-none">
-            <div class="d-flex align-items-center position-relative p-3 rounded shadow-sm-hover"
-              style="background-color: var(--bg-main); transition: transform 0.2s;">
-
-              <div class="d-flex align-items-center gap-3">
-                <div class="bg-secondary p-2 rounded text-white">
-                  <i class="fa-regular fa-user"></i>
-                </div>
-                <div>
-                  <h6 class="mb-0" style="color: var(--text-main);">طلبات الطلاب</h6>
-                  <small class="text-muted">إجمالي الطلبات</small>
-                </div>
-              </div>
-
-              <span class="position-absolute fw-bold"
-                style="left: 15px; top: 50%; transform: translateY(-50%); color: var(--text-main); font-size: 1.1rem;">
+          {{-- القسم السفلي: أزرار التحكم الأفقية (تم تعديل زر الطلبات للأزرق والنص لـ طلبات الانضمام) --}}
+          <div class="d-flex gap-2 mt-auto">
+            <a href="{{ route('students.index') }}" class="btn btn-sm flex-grow-1 py-2 fw-bold"
+              style="background-color: var(--bg-main); color: var(--text-main); border: 1px solid var(--border-color); border-radius: 8px;">
+              عرض الكل
+            </a>
+            <a href="{{ route('requests.view', 'student') }}"
+              class="btn btn-sm flex-grow-1 py-2 fw-bold d-flex align-items-center justify-content-center gap-2"
+              style="background-color: rgba(59, 130, 246, 0.12); color: #3b82f6; border: none; border-radius: 8px;">
+              <span>طلبات الانضمام</span>
+              <span class="badge rounded-pill px-2 py-1"
+                style="background-color: rgba(59, 130, 246, 0.25); color: #3b82f6; font-size: 0.85rem;">
                 {{ $pendingstudentsCount }}
               </span>
-            </div>
-          </a>
+            </a>
+          </div>
 
         </div>
+      </div>
+
+      {{-- 2. matrix تحكم المعلمين (Teachers Hub) --}}
+      <div class="col-lg-4">
+        <div class="custom-card h-100 d-flex flex-column justify-content-between">
+
+          {{-- القسم العلوي: الإحصائية --}}
+          <div class="d-flex justify-content-between align-items-start mb-4">
+            <div>
+              <p class="text-muted mb-1 fs-6 fw-bold">إجمالي المعلمين المسجلين</p>
+              <h2 class="fw-bold mb-0" style="color: var(--text-main);">{{$teachersCount}}</h2>
+            </div>
+            <div class="p-3 rounded d-flex align-items-center justify-content-center"
+              style="width: 55px; height: 55px; background-color: rgba(163, 230, 53, 0.15);">
+              <i class="fa-solid fa-person-chalkboard fs-3" style="color: var(--accent-color);"></i>
+            </div>
+          </div>
+
+          {{-- القسم السفلي: أزرار التحكم الأفقية جنب بعض --}}
+          <div class="d-flex gap-2 mt-auto">
+            <a href="{{ route('teachers.index') }}" class="btn btn-sm flex-grow-1 py-2 fw-bold"
+              style="background-color: var(--bg-main); color: var(--text-main); border: 1px solid var(--border-color); border-radius: 8px;">
+              عرض الكل
+            </a>
+            <a href="{{ route('requests.view', 'teacher') }}"
+              class="btn btn-sm flex-grow-1 py-2 fw-bold d-flex align-items-center justify-content-center gap-2"
+              style="background-color: rgba(163, 230, 53, 0.12); color: var(--accent-color); border: none; border-radius: 8px;">
+              <span>طلبات الانضمام</span>
+              <span class="badge rounded-pill px-2 py-1"
+                style="background-color: rgba(163, 230, 53, 0.25); color: var(--accent-color); font-size: 0.85rem;">
+                {{ $pendingteachersCount }}
+              </span>
+            </a>
+          </div>
+
+        </div>
+      </div>
+
+      {{-- 3. قسم مراقب المحتوى (Control Hub) بارتفاع كامل ومحاذاة مثالية --}}
+      <div class="col-lg-4">
+        <a href="{{ route('content.monitor') }}" class="text-decoration-none d-block h-100">
+          <div class="custom-card h-100 shadow-sm-hover" style="transition: transform 0.2s; cursor: pointer;">
+            <div class="d-flex justify-content-between mb-4">
+              <h5 class="fw-bold mb-0" style="color: var(--text-main);">مراقب المحتوى</h5>
+              <div class="p-1 rounded d-flex align-items-center justify-content-center"
+                style="width: 30px; height: 30px; background-color: rgba(163, 230, 53, 0.15);">
+                <i class="fa-solid fa-shield-halved" style="color: var(--accent-color);"></i>
+              </div>
+            </div>
+
+            <ul class="list-unstyled d-flex flex-column gap-3 mb-0">
+              {{-- 1. البلاغات: تدرج من الرمادي للفسفوري --}}
+              <li class="d-flex align-items-center justify-content-between p-2 rounded shadow-sm-hover"
+                style="transition: all 0.2s;">
+                <div class="d-flex align-items-center">
+                  <span class="p-2 rounded-circle me-3"
+                    style="background: linear-gradient(135deg, #9ca3af, var(--accent-color)); box-shadow: 0 0 10px rgba(163, 230, 53, 0.3); width: 16px; height: 16px; display: inline-block;"></span>
+                  <span style="color: var(--text-main); font-weight: 500;">البلاغات</span>
+                </div>
+                <i class="fa-solid fa-chevron-left text-muted fs-6"></i>
+              </li>
+
+              {{-- 2. مشاكل تقنية: تدرج من الرمادي للأزرق --}}
+              <li class="d-flex align-items-center justify-content-between p-2 rounded shadow-sm-hover"
+                style="transition: all 0.2s;">
+                <div class="d-flex align-items-center">
+                  <span class="p-2 rounded-circle me-3"
+                    style="background: linear-gradient(135deg, #9ca3af, #3b82f6); box-shadow: 0 0 10px rgba(59, 130, 246, 0.3); width: 16px; height: 16px; display: inline-block;"></span>
+                  <span style="color: var(--text-main); font-weight: 500;">مشاكل تقنية</span>
+                </div>
+                <i class="fa-solid fa-chevron-left text-muted fs-6"></i>
+              </li>
+
+              {{-- 3. المحتوى: تدرج من الرمادي للفسفوري --}}
+              <li class="d-flex align-items-center justify-content-between p-2 rounded shadow-sm-hover"
+                style="transition: all 0.2s;">
+                <div class="d-flex align-items-center">
+                  <span class="p-2 rounded-circle me-3"
+                    style="background: linear-gradient(135deg, #9ca3af, var(--accent-color)); box-shadow: 0 0 10px rgba(163, 230, 53, 0.3); width: 16px; height: 16px; display: inline-block;"></span>
+                  <span style="color: var(--text-main); font-weight: 500;">المحتوى</span>
+                </div>
+                <i class="fa-solid fa-chevron-left text-muted fs-6"></i>
+              </li>
+
+              {{-- 4. المحادثات: تدرج من الرمادي للأزرق --}}
+              <li class="d-flex align-items-center justify-content-between p-2 rounded shadow-sm-hover"
+                style="transition: all 0.2s;">
+                <div class="d-flex align-items-center">
+                  <span class="p-2 rounded-circle me-3"
+                    style="background: linear-gradient(135deg, #9ca3af, #3b82f6); box-shadow: 0 0 10px rgba(59, 130, 246, 0.3); width: 16px; height: 16px; display: inline-block;"></span>
+                  <span style="color: var(--text-main); font-weight: 500;">المحادثات</span>
+                </div>
+                <i class="fa-solid fa-chevron-left text-muted fs-6"></i>
+              </li>
+            </ul>
+          </div>
+        </a>
       </div>
 
     </div>
@@ -285,14 +312,18 @@
           {
             label: 'الطلاب',
             data: @json($studentsChartData),
-            backgroundColor: '#3b82f6',
+            backgroundColor: 'rgba(59, 130, 246, 0.6)',
+            borderColor: '#3b82f6',
+            borderWidth: 1,
             borderRadius: 4,
             barPercentage: 0.6
           },
           {
             label: 'المعلمون',
             data: @json($teachersChartData),
-            backgroundColor: '#10b981',
+            backgroundColor: 'rgba(132, 204, 22, 0.6)',
+            borderColor: '#84cc16',
+            borderWidth: 1,
             borderRadius: 4,
             barPercentage: 0.6
           }
@@ -327,8 +358,12 @@
         labels: ['الطلاب', 'المعلمين'],
         datasets: [{
           data: [{{ $pendingstudentsCount ?? 0 }}, {{ $pendingteachersCount ?? 0 }}],
-          backgroundColor: ['#3b82f6', '#8b5cf6', '#64748b'],
-          borderWidth: 0
+          backgroundColor: [
+            'rgba(59, 130, 246, 0.7)',
+            'rgba(132, 204, 22, 0.7)'
+          ],
+          borderWidth: 0,
+          hoverOffset: 4
         }]
       },
       options: {

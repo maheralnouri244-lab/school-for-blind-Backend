@@ -34,14 +34,15 @@ class Student extends Authenticatable
         'stripe_account_id',
     ];
 
-   public function getDocumentaryEvidenceAttribute($value)
-{
-    if (!$value) return null;
+    public function getDocumentaryEvidenceAttribute($value)
+    {
+        if (!$value)
+            return null;
 
-    $cleanFileName = basename($value);
+        $cleanFileName = basename($value);
 
-    return 'doc/' . $cleanFileName;
-}
+        return 'doc/' . $cleanFileName;
+    }
 
     protected function documentaryEvidence(): Attribute
     {
@@ -85,23 +86,23 @@ class Student extends Authenticatable
     {
         return $this->hasMany(StudentAnswer::class);
     }
-public function donations()
-{
-    return $this->morphMany(Donation::class, 'donatable');
-}
-public function favoriteLessons()
-{
-    return $this->morphToMany(Lesson::class, 'favorable', Favorite::class);
-}
-public function favoriteQuizzes()
-{
-    return $this->morphToMany(Quiz::class, 'favorable', Favorite::class);   
-}
-public function deviceTokens()
-{
-    return $this->morphMany(DeviceToken::class, 'tokenable');
-}
-protected static function booted()
+    public function donations()
+    {
+        return $this->morphMany(Donation::class, 'donatable');
+    }
+    public function favoriteLessons()
+    {
+        return $this->morphToMany(Lesson::class, 'favorable', Favorite::class);
+    }
+    public function favoriteQuizzes()
+    {
+        return $this->morphToMany(Quiz::class, 'favorable', Favorite::class);
+    }
+    public function deviceTokens()
+    {
+        return $this->morphMany(DeviceToken::class, 'tokenable');
+    }
+    protected static function booted()
     {
         static::deleting(function ($student) {
             $student->deviceTokens()->delete();
@@ -109,7 +110,25 @@ protected static function booted()
         });
     }
     public function notifications()
-{
-    return $this->morphMany(Notification::class, 'notifiable');
-}
+    {
+        return $this->morphMany(Notification::class, 'notifiable');
+    }
+
+    public function reportsMade()
+    {
+        return $this->morphMany(Report::class, 'reporter');
+    }
+
+    public function reportsReceived()
+    {
+        return $this->morphMany(Report::class, 'reported');
+    }
+
+    public function punishments()
+    {
+        return $this->morphToMany(Punishment::class, 'punishable', 'punishables')
+            ->using(Punishable::class)
+            ->withPivot(['id', 'admin_id', 'expires_at'])
+            ->withTimestamps();
+    }
 }

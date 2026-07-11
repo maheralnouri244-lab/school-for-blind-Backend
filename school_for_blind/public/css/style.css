@@ -202,3 +202,8 @@ body {
     
     border-radius: 1rem !important;
 }
+
+select option {
+    background-color: var(--bg-card) !important;
+    color: var(--text-main) !important;
+}

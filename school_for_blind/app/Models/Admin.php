@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
+use App\Models\Punishable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Admin extends Authenticatable
 {
@@ -42,4 +43,8 @@ class Admin extends Authenticatable
         ];
     }
 
+    public function givenPunishments()
+    {
+        return $this->hasMany(Punishable::class, 'admin_id');
+    }
 }

@@ -44,7 +44,7 @@ return new class extends Migration {
                    ->nullable()
                    ->constrained('parents')
                    ->onDelete('set null');*/
-$table->string('stripe_account_id')->nullable();
+            $table->string('stripe_account_id')->nullable();
             $table->timestamps();
         });
     }

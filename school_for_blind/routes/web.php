@@ -1,13 +1,16 @@
 <?php
 
 use App\Http\Controllers\Dashboard\AuthController;
+use App\Http\Controllers\Dashboard\ContentMonitorController;
 use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Dashboard\ExamController;
+use App\Http\Controllers\Dashboard\PastExamController;
+use App\Http\Controllers\Dashboard\PunishmentController;
+use App\Http\Controllers\Dashboard\ReportController;
 use App\Http\Controllers\Dashboard\RoomWebController;
 use App\Http\Controllers\MagicLoginController;
 use App\Http\Middleware\CheckAdminRole;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Dashboard\PastExamController;
-use App\Http\Controllers\Dashboard\ExamController;
 
 /*
 'Super Admin',
@@ -58,10 +61,24 @@ Route::middleware([CheckAdminRole::class . ':Super Admin,Academic Manager'])->gr
 });
 
 Route::middleware([CheckAdminRole::class . ':Super Admin,Moderator'])->group(function () {
-    Route::get('/content-monitor', function () {
-        return view('dashboard');
-    })->name('content.monitor');
+    Route::get('/content-monitor', [ContentMonitorController::class, 'index'])->name('content.monitor');
+
+    Route::prefix('reports')->name('reports.')->group(function () {
+        Route::get('/', [ReportController::class, 'index'])->name('index');
+        Route::get('/{id}', [ReportController::class, 'show'])->name('show');
+        Route::post('/{id}/status', [ReportController::class, 'updateStatus'])->name('update-status');
+    });
     Route::get('/logs', [DashboardController::class, 'logs'])->name('logs.index');
+});
+
+Route::middleware([CheckAdminRole::class . ':Super Admin,Moderator,Academic Manager'])->prefix('punishments')->name('punishments.')->group(function () {
+    Route::get('/types', [PunishmentController::class, 'indexTypes'])->name('types.index');
+    Route::post('/types', [PunishmentController::class, 'storeType'])->name('types.store');
+
+    Route::get('/active', [PunishmentController::class, 'activePunishments'])->name('active');
+
+    Route::post('/apply', [PunishmentController::class, 'apply'])->name('apply');
+    Route::post('/{id}/revoke', [PunishmentController::class, 'revoke'])->name('revoke');
 });
 
 

@@ -97,7 +97,7 @@
 
     <li>
       <a href="{{ route('content.monitor') }}"
-        class="nav-link d-flex align-items-center justify-content-between {{ request()->routeIs('content.monitor') ? 'nav-link-active' : 'nav-link-custom' }}">
+        class="nav-link d-flex align-items-center justify-content-between {{ request()->routeIs('content.monitor', 'reports.*', 'punishments.*') ? 'nav-link-active' : 'nav-link-custom' }}">
         <span>مراقب المحتوى</span>
         <i class="fa-solid fa-shield-halved"></i>
       </a>

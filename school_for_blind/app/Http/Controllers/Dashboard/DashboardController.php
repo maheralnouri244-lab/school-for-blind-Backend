@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Models\Caregiver;
 use App\Models\Classes;
+use App\Models\Punishment;
 use App\Models\Student;
 use App\Models\Subject;
 use App\Models\Teacher;
@@ -223,12 +224,14 @@ class DashboardController extends Controller
     public function studentsList()
     {
         $students = Student::with(['parent', 'class'])->latest()->paginate(15);
-        return view('pages.students.index', compact('students'));
+        $punishments = Punishment::orderBy('level', 'asc')->get();
+        return view('pages.students.index', compact('students', 'punishments'));
     }
 
     public function teachersList()
     {
         $teachers = Teacher::with(['subjects', 'classes'])->latest()->paginate(15);
-        return view('pages.teachers.index', compact('teachers'));
+        $punishments = Punishment::orderBy('level', 'asc')->get();
+        return view('pages.teachers.index', compact('teachers', 'punishments'));
     }
 }

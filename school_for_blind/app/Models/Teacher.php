@@ -33,25 +33,43 @@ class Teacher extends Authenticatable
         'fcm_token',
         // 'cv_path',
     ];
-public function donations()
-{
-    return $this->morphMany(Donation::class, 'donatable');
-}
- public function deviceTokens()
-{
-    return $this->morphMany(DeviceToken::class, 'tokenable');
-}   
-protected static function booted()
+    public function donations()
+    {
+        return $this->morphMany(Donation::class, 'donatable');
+    }
+    public function deviceTokens()
+    {
+        return $this->morphMany(DeviceToken::class, 'tokenable');
+    }
+    protected static function booted()
     {
         static::deleting(function ($teacher) {
             $teacher->deviceTokens()->delete();
             $teacher->notifications()->delete();
         });
     }
-public function notifications()
-{
-    return $this->morphMany(Notification::class, 'notifiable');
-}
+    public function notifications()
+    {
+        return $this->morphMany(Notification::class, 'notifiable');
+    }
+
+    public function reportsMade()
+    {
+        return $this->morphMany(Report::class, 'reporter');
+    }
+
+    public function reportsReceived()
+    {
+        return $this->morphMany(Report::class, 'reported');
+    }
+
+    public function punishments()
+    {
+        return $this->morphToMany(Punishment::class, 'punishable', 'punishables')
+            ->using(Punishable::class)
+            ->withPivot(['id', 'admin_id', 'expires_at'])
+            ->withTimestamps();
+    }
 
 }
 

@@ -18,7 +18,7 @@ class CheckAdminRole
     public function handle(Request $request, Closure $next, ...$roles): Response
     {
         if (!Auth::guard('admin')->check()) {
-            return redirect()->route('login'); 
+            return redirect()->route('login');
             // return response()->json(['message' => 'Unauthenticated.'], 401);
         }
 
