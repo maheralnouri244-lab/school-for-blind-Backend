@@ -11,6 +11,8 @@ use App\Http\Controllers\Dashboard\RoomWebController;
 use App\Http\Controllers\MagicLoginController;
 use App\Http\Middleware\CheckAdminRole;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Dashboard\SupportTicketController;
+
 
 /*
 'Super Admin',
@@ -113,4 +115,10 @@ Route::middleware([CheckAdminRole::class . ':Super Admin,Academic Manager,Data E
     Route::post('exam-submissions/{submission_id}/approve', [ExamController::class, 'approveSubmission'])->name('exams.submissions.approve');
     Route::resource('exams', ExamController::class)->parameters(['exams' => 'id']);
 
+});
+
+Route::prefix('support')->name('dashboard.support.')->group(function () {
+    Route::get('/', [SupportTicketController::class, 'index'])->name('index');
+    Route::post('/{id}/assign', [SupportTicketController::class, 'assign'])->name('assign');
+    Route::post('/{id}/status', [SupportTicketController::class, 'updateStatus'])->name('update-status');
 });

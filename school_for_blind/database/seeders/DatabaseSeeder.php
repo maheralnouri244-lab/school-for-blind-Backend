@@ -41,6 +41,7 @@ class DatabaseSeeder extends Seeder
             PunishmentSeeder::class,
             QuizSeeder::class,
             QuizSubmissionSeeder::class,
+            SupportTicketSeeder::class
         ]);
 
         User::factory()->create([
