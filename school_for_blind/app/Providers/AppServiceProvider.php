@@ -28,10 +28,12 @@ class AppServiceProvider extends ServiceProvider
         if (str_starts_with(config('app.url'), 'https://')) {
             URL::forceScheme('https');
         }
-        // Relation::morphMap([
-        //     'student'   => \App\Models\Student::class,
-        //     'teacher'   => \App\Models\Teacher::class,
-        //     'caregiver' => \App\Models\Caregiver::class,
-        // ]);
+        Relation::morphMap([
+            'student'   => \App\Models\Student::class,
+            'teacher'   => \App\Models\Teacher::class,
+            'caregiver' => \App\Models\Caregiver::class,
+            'PastExam' => \App\Models\PastExam::class,
+        'Exam'=> \App\Models\Exam::class,
+        ]);
     }
 }

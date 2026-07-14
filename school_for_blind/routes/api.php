@@ -25,6 +25,11 @@ use App\Http\Middleware\CheckPunishment;
 use App\Http\Middleware\CheckUserType;
 use App\Http\Middleware\IsTeacher;
 use App\Http\Middleware\PreventStudentCallActions;
+use App\Http\Controllers\StudentpastexamController;
+use App\Http\Controllers\StudentExamController;
+use App\Http\Controllers\SupportTicketController;
+
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -175,10 +180,13 @@ Route::get('/subjects/{id}/lessons/progress', [LessonController::class, 'getLess
 Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/favorites/toggle', [FavoriteController::class, 'toggle']);
+    Route::post('favorites/add', [FavoriteController::class, 'addToFavorite']);
 
     Route::get('/favorites/lessons', [FavoriteController::class, 'favoriteLessons']);
 
     Route::get('/favorites/quizzes', [FavoriteController::class, 'favoriteQuizzes']);
+    Route::get('favorites/exams', [FavoriteController::class, 'favoriteExams']);
+    Route::get('favorites/past-exams', [FavoriteController::class, 'favoritePastExams']);
 
     Route::get('/favorites/all', [FavoriteController::class, 'allFavorites']);
 
@@ -205,3 +213,19 @@ Route::post('/stripe/webhook', [StripeWebhookController::class, 'handleWebhook']
 
 Route::post('/livekit/webhook', [LiveKitWebhookController::class, 'handle']);
 
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/student/submissions', [StudentQuizController::class, 'getStudentSubmissions']);
+});
+Route::post('/support-tickets', [SupportTicketController::class, 'store'])->middleware('auth:sanctum');
+Route::get('/past-exams', [StudentpastexamController::class, 'getPastExamsBySubject']);
+
+Route::get('/past-exams/{id}/questions', [StudentpastexamController::class, 'getQuestionsByPastExam']);
+
+Route::get('/past-exams/{id}/solutions', [StudentpastexamController::class, 'getPastExamWithSolutions']);
+
+Route::get('/exams', [StudentExamController::class, 'getExamsBySubject']);
+Route::get('/exams/{id}/questions', [StudentExamController::class, 'getQuestionsByExam']);
+Route::get('/exams/{id}/solutions', [StudentExamController::class, 'getExamWithSolutions']);
+Route::post('/exams/submit-answer', [StudentExamController::class, 'submitAnswer'])->middleware('auth:sanctum');
+Route::get('/submissions/{id}/details', [StudentExamController::class, 'getSubmissionDetails'])->middleware('auth:sanctum');
+Route::post('/exams/submit', [StudentExamController::class, 'submitExam'])->middleware('auth:sanctum');

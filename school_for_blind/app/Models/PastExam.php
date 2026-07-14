@@ -22,4 +22,8 @@ class PastExam extends Model
   return $this->belongsToMany(Question::class, 'past_exam_question', 'past_exam_id', 'question_id')
    ->withTimestamps();
  }
+ public function favorites()
+{
+    return $this->morphMany(Favorite::class, 'favorable');
+}
 }

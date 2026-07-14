@@ -36,4 +36,8 @@ class Exam extends Model
     {
         return $this->hasMany(ExamSubmission::class, 'exam_id');
     }
+    public function favorites()
+{
+    return $this->morphMany(Favorite::class, 'favorable');
+}
 }

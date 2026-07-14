@@ -12,7 +12,7 @@ use App\Http\Controllers\MagicLoginController;
 use App\Http\Middleware\CheckAdminRole;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Dashboard\SupportTicketController;
-
+use App\Http\Controllers\NotificationController;
 
 /*
 'Super Admin',
@@ -122,3 +122,4 @@ Route::prefix('support')->name('dashboard.support.')->group(function () {
     Route::post('/{id}/assign', [SupportTicketController::class, 'assign'])->name('assign');
     Route::post('/{id}/status', [SupportTicketController::class, 'updateStatus'])->name('update-status');
 });
+Route::get('/send-test-notification', [NotificationController::class, 'testSend']);
