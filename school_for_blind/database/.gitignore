@@ -1,25 +1,19 @@
-# --- ملفات واجهات المستخدم والمكتبات (الحجم الأكبر) ---
 /node_modules/
 /vendor/
 app/GoogleAPI/vendor/
 **/GoogleAPI/
 
-# --- ملفات البيئة والإعدادات الحساسة ---
 .env
 .env.backup
 .env.production
-# تأكدي من عدم تجاهل ملف المثال حتى يستطيع زملائك معرفة المتغيرات المطلوبة
 !.env.example 
 
-# --- ملفات التشغيل والملفات المحلية الخاصة بمشروعكِ ---
 stripe.exe
 /blind_school
 
-# --- قواعد البيانات وملفات الـ SQLite ---
 *.sqlite*
 .phpunit.result.cache
 
-# --- ملفات الكاش والتخزين المؤقت لـ Laravel ---
 /storage/*.key
 /storage/framework/cache/data/*
 /storage/framework/sessions/*
@@ -27,7 +21,6 @@ stripe.exe
 /storage/framework/testing/*
 /bootstrap/cache/*
 
-# --- ملفات نظام التشغيل والمحررات المؤقتة ---
 .DS_Store
 Thumbs.db
 .idea/

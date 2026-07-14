@@ -23,17 +23,20 @@ class StoreSupportTicketRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'text_content' => 'required_without:audio|nullable|string',
-            'audio'        => 'required_without:text_content|nullable|file|mimes:mp3,wav,ogg,m4a|max:10240', 
-            'image'        => 'nullable|image|mimes:jpeg,png,jpg|max:5120', 
-        ];
+           'message' => 'required_without:audio|prohibits:audio|nullable|string', 
+        'audio'   => 'required_without:message|prohibits:message|nullable|file|mimes:mp3,wav,ogg,m4a|max:10240',
+            'image'   => 'required_without_all:message,audio|nullable|image|mimes:jpeg,png,jpg|max:5120',
+      ];
   
         }
 
         public function messages():array
         {
             return[
-          
+          'message.required' => 'يجب كتابة نص التذكرة في حال لم تقم بإرفاق تسجيل صوتي.',
+        'audio.required'   => 'يرجى إرفاق تسجيل صوتي للمشكلة في حال لم تقم بكتابة نص.',
+        'message.prohibits' => 'لا يمكنك إرسال نص وتسجيل صوتي معاً في نفس التذكرة.',
+        'audio.prohibits'   => 'لا يمكنك إرسال تسجيل صوتي ونص معاً في نفس التذكرة.',
         'text_content.required_without' => 'يرجى إرسال تفاصيل المشكلة إما بشكل نصي أو عبر تسجيل صوتي.',
         'text_content.string'           => 'يجب أن يكون محتوى المشكلة من نوع نصي (String).',
 
