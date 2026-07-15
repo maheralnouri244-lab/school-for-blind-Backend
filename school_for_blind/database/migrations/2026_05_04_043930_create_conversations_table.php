@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -13,9 +12,11 @@ return new class extends Migration
     {
         Schema::create('conversations', function (Blueprint $table) {
             $table->id();
-$table->string('type');
-$table->string('name');
-//$table->string('woner_id');
+            $table->enum('type', ['channel', 'discussion', 'teacher_admin']);
+            $table->string('name')->nullable();
+            $table->foreignId('teacher_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('subject_id')->nullable()->constrained('subjects')->onDelete('cascade');
+            $table->foreignId('parent_id')->nullable()->constrained('conversations')->onDelete('cascade');
             $table->timestamps();
         });
     }

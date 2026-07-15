@@ -71,5 +71,16 @@ class Teacher extends Authenticatable
             ->withTimestamps();
     }
 
+    public function exams()
+    {
+        return $this->hasMany(Exam::class);
+    }
+
+
+    public function quizzes()
+    {
+        return $this->hasMany(Quiz::class);
+    }
+
 }
 

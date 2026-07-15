@@ -8366,6 +8366,111 @@
               "body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"quiz_id\": 321,\n        \"total_score\": 0,\n        \"status\": \"graded\",\n        \"quiz_review\": [\n            {\n                \"question_id\": 3841,\n                \"description\": \"ما هي عاصمة سوريا؟\",\n                \"type\": \"mcq\",\n                \"points\": \"10.00\",\n                \"correct_answer\": \"دمشق\",\n                \"student_answer\": {\n                    \"is_correct\": 0,\n                    \"text_answer\": null,\n                    \"audio_path\": null,\n                    \"choice_text\": null\n                }\n            },\n            {\n                \"question_id\": 3842,\n                \"description\": \"الماء يتكون من هيدروجين وأوكسجين.\",\n                \"type\": \"TF\",\n                \"points\": \"10.00\",\n                \"correct_answer\": \"True\",\n                \"student_answer\": {\n                    \"is_correct\": 0,\n                    \"text_answer\": null,\n                    \"audio_path\": null,\n                    \"choice_text\": null\n                }\n            }\n        ]\n    }\n}"
             }
           ]
+        },
+        {
+          "name": "New Request",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyQV66lGSl4xnTSUviFc7NzV4DnJV597RpvhmJnw04bd6190",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/student/submissions",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "student",
+                "submissions"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "New Request",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/student/submissions",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "student",
+                    "submissions"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 13 Jul 2026 10:51:23 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"success\",\n    \"data\": [\n        {\n            \"submission_id\": 1,\n            \"quiz_id\": 1,\n            \"quiz_name\": \"اختبار رقم 1\",\n            \"total_score\": 8,\n            \"status\": \"pending\",\n            \"submitted_at\": \"2026-07-13 10:16\",\n            \"details\": [\n                {\n                    \"question_id\": 1,\n                    \"question\": \"اختر الخيار الصحيح رقم 1\",\n                    \"type\": \"mcq\",\n                    \"student_text_answer\": null,\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 1\n                },\n                {\n                    \"question_id\": 2,\n                    \"question\": \"اختر الخيار الصحيح رقم 2\",\n                    \"type\": \"mcq\",\n                    \"student_text_answer\": null,\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 1\n                },\n                {\n                    \"question_id\": 3,\n                    \"question\": \"اختر الخيار الصحيح رقم 3\",\n                    \"type\": \"mcq\",\n                    \"student_text_answer\": null,\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 1\n                },\n                {\n                    \"question_id\": 4,\n                    \"question\": \"اختر الخيار الصحيح رقم 4\",\n                    \"type\": \"mcq\",\n                    \"student_text_answer\": null,\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 1\n                },\n                {\n                    \"question_id\": 5,\n                    \"question\": \"العبارة رقم 1 صحيحة.\",\n                    \"type\": \"TF\",\n                    \"student_text_answer\": \"True\",\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 1\n                },\n                {\n                    \"question_id\": 6,\n                    \"question\": \"العبارة رقم 2 صحيحة.\",\n                    \"type\": \"TF\",\n                    \"student_text_answer\": \"False\",\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 1\n                },\n                {\n                    \"question_id\": 7,\n                    \"question\": \"العبارة رقم 3 صحيحة.\",\n                    \"type\": \"TF\",\n                    \"student_text_answer\": \"True\",\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 1\n                },\n                {\n                    \"question_id\": 8,\n                    \"question\": \"العبارة رقم 4 صحيحة.\",\n                    \"type\": \"TF\",\n                    \"student_text_answer\": \"False\",\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 1\n                },\n                {\n                    \"question_id\": 9,\n                    \"question\": \"اكتب اسم عاصمة سوريا.\",\n                    \"type\": \"TEXT\",\n                    \"student_text_answer\": \"هذه إجابة تجريبية من الطالب على السؤال النصي.\",\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 0\n                },\n                {\n                    \"question_id\": 10,\n                    \"question\": \"ما لون السماء في النهار؟\",\n                    \"type\": \"TEXT\",\n                    \"student_text_answer\": \"هذه إجابة تجريبية من الطالب على السؤال النصي.\",\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 0\n                },\n                {\n                    \"question_id\": 11,\n                    \"question\": \"اكتب كلمة الترحيب.\",\n                    \"type\": \"TEXT\",\n                    \"student_text_answer\": \"هذه إجابة تجريبية من الطالب على السؤال النصي.\",\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 0\n                },\n                {\n                    \"question_id\": 12,\n                    \"question\": \"ما حاصل 2 + 2 ؟\",\n                    \"type\": \"TEXT\",\n                    \"student_text_answer\": \"هذه إجابة تجريبية من الطالب على السؤال النصي.\",\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 0\n                }\n            ]\n        },\n        {\n            \"submission_id\": 4,\n            \"quiz_id\": 2,\n            \"quiz_name\": \"اختبار رقم 2\",\n            \"total_score\": 8,\n            \"status\": \"pending\",\n            \"submitted_at\": \"2026-07-13 10:16\",\n            \"details\": [\n                {\n                    \"question_id\": 1,\n                    \"question\": \"اختر الخيار الصحيح رقم 1\",\n                    \"type\": \"mcq\",\n                    \"student_text_answer\": null,\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 1\n                },\n                {\n                    \"question_id\": 2,\n                    \"question\": \"اختر الخيار الصحيح رقم 2\",\n                    \"type\": \"mcq\",\n                    \"student_text_answer\": null,\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 1\n                },\n                {\n                    \"question_id\": 3,\n                    \"question\": \"اختر الخيار الصحيح رقم 3\",\n                    \"type\": \"mcq\",\n                    \"student_text_answer\": null,\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 1\n                },\n                {\n                    \"question_id\": 4,\n                    \"question\": \"اختر الخيار الصحيح رقم 4\",\n                    \"type\": \"mcq\",\n                    \"student_text_answer\": null,\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 1\n                },\n                {\n                    \"question_id\": 5,\n                    \"question\": \"العبارة رقم 1 صحيحة.\",\n                    \"type\": \"TF\",\n                    \"student_text_answer\": \"True\",\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 1\n                },\n                {\n                    \"question_id\": 6,\n                    \"question\": \"العبارة رقم 2 صحيحة.\",\n                    \"type\": \"TF\",\n                    \"student_text_answer\": \"False\",\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 1\n                },\n                {\n                    \"question_id\": 7,\n                    \"question\": \"العبارة رقم 3 صحيحة.\",\n                    \"type\": \"TF\",\n                    \"student_text_answer\": \"True\",\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 1\n                },\n                {\n                    \"question_id\": 8,\n                    \"question\": \"العبارة رقم 4 صحيحة.\",\n                    \"type\": \"TF\",\n                    \"student_text_answer\": \"False\",\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 1\n                },\n                {\n                    \"question_id\": 9,\n                    \"question\": \"اكتب اسم عاصمة سوريا.\",\n                    \"type\": \"TEXT\",\n                    \"student_text_answer\": \"هذه إجابة تجريبية من الطالب على السؤال النصي.\",\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 0\n                },\n                {\n                    \"question_id\": 10,\n                    \"question\": \"ما لون السماء في النهار؟\",\n                    \"type\": \"TEXT\",\n                    \"student_text_answer\": \"هذه إجابة تجريبية من الطالب على السؤال النصي.\",\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 0\n                },\n                {\n                    \"question_id\": 11,\n                    \"question\": \"اكتب كلمة الترحيب.\",\n                    \"type\": \"TEXT\",\n                    \"student_text_answer\": \"هذه إجابة تجريبية من الطالب على السؤال النصي.\",\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 0\n                },\n                {\n                    \"question_id\": 12,\n                    \"question\": \"ما حاصل 2 + 2 ؟\",\n                    \"type\": \"TEXT\",\n                    \"student_text_answer\": \"هذه إجابة تجريبية من الطالب على السؤال النصي.\",\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 0\n                }\n            ]\n        },\n        {\n            \"submission_id\": 7,\n            \"quiz_id\": 3,\n            \"quiz_name\": \"اختبار رقم 3\",\n            \"total_score\": 8,\n            \"status\": \"pending\",\n            \"submitted_at\": \"2026-07-13 10:16\",\n            \"details\": [\n                {\n                    \"question_id\": 1,\n                    \"question\": \"اختر الخيار الصحيح رقم 1\",\n                    \"type\": \"mcq\",\n                    \"student_text_answer\": null,\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 1\n                },\n                {\n                    \"question_id\": 2,\n                    \"question\": \"اختر الخيار الصحيح رقم 2\",\n                    \"type\": \"mcq\",\n                    \"student_text_answer\": null,\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 1\n                },\n                {\n                    \"question_id\": 3,\n                    \"question\": \"اختر الخيار الصحيح رقم 3\",\n                    \"type\": \"mcq\",\n                    \"student_text_answer\": null,\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 1\n                },\n                {\n                    \"question_id\": 4,\n                    \"question\": \"اختر الخيار الصحيح رقم 4\",\n                    \"type\": \"mcq\",\n                    \"student_text_answer\": null,\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 1\n                },\n                {\n                    \"question_id\": 5,\n                    \"question\": \"العبارة رقم 1 صحيحة.\",\n                    \"type\": \"TF\",\n                    \"student_text_answer\": \"True\",\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 1\n                },\n                {\n                    \"question_id\": 6,\n                    \"question\": \"العبارة رقم 2 صحيحة.\",\n                    \"type\": \"TF\",\n                    \"student_text_answer\": \"False\",\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 1\n                },\n                {\n                    \"question_id\": 7,\n                    \"question\": \"العبارة رقم 3 صحيحة.\",\n                    \"type\": \"TF\",\n                    \"student_text_answer\": \"True\",\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 1\n                },\n                {\n                    \"question_id\": 8,\n                    \"question\": \"العبارة رقم 4 صحيحة.\",\n                    \"type\": \"TF\",\n                    \"student_text_answer\": \"False\",\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 1\n                },\n                {\n                    \"question_id\": 9,\n                    \"question\": \"اكتب اسم عاصمة سوريا.\",\n                    \"type\": \"TEXT\",\n                    \"student_text_answer\": \"هذه إجابة تجريبية من الطالب على السؤال النصي.\",\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 0\n                },\n                {\n                    \"question_id\": 10,\n                    \"question\": \"ما لون السماء في النهار؟\",\n                    \"type\": \"TEXT\",\n                    \"student_text_answer\": \"هذه إجابة تجريبية من الطالب على السؤال النصي.\",\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 0\n                },\n                {\n                    \"question_id\": 11,\n                    \"question\": \"اكتب كلمة الترحيب.\",\n                    \"type\": \"TEXT\",\n                    \"student_text_answer\": \"هذه إجابة تجريبية من الطالب على السؤال النصي.\",\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 0\n                },\n                {\n                    \"question_id\": 12,\n                    \"question\": \"ما حاصل 2 + 2 ؟\",\n                    \"type\": \"TEXT\",\n                    \"student_text_answer\": \"هذه إجابة تجريبية من الطالب على السؤال النصي.\",\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 0\n                }\n            ]\n        }\n    ]\n}"
+            }
+          ]
         }
       ]
     },
@@ -9029,7 +9134,7 @@
       "name": "Favorite",
       "item": [
         {
-          "name": "add to favorite",
+          "name": "add to favorite and remove",
           "request": {
             "auth": {
               "type": "bearer",
@@ -9416,22 +9521,322 @@
             }
           },
           "response": []
-        }
-      ]
-    },
-    {
-      "name": "filter",
-      "item": [
+        },
         {
-          "name": "New Request",
+          "name": "add",
           "request": {
-            "method": "GET",
-            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "oYeEre20RHdLlAmrkl2UzszXpmBdvfiCryC14Oer8d069e89",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"id\": 41,\r\n  \"type\": \"Exam\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
             "url": {
-              "raw": ""
+              "raw": "http://127.0.0.1:8000/api/favorites/add",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "favorites",
+                "add"
+              ]
             }
           },
-          "response": []
+          "response": [
+            {
+              "name": "New Request",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"id\": 41,\r\n  \"type\": \"lesson\"\r\n}\r\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/favorites/add",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "favorites",
+                    "add"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 13 Jul 2026 14:30:57 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Added to favorites successfully\",\n    \"is_favorite\": true\n}"
+            }
+          ]
+        },
+        {
+          "name": "favorite_exams",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": [
+            {
+              "name": "New Request",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"id\": 41,\r\n  \"type\": \"Exam\"\r\n}\r\n"
+                },
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/favorites/exams",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "favorites",
+                    "exams"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 13 Jul 2026 14:33:36 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n    null\n]"
+            }
+          ]
+        },
+        {
+          "name": "favorite_past_exams",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "oYeEre20RHdLlAmrkl2UzszXpmBdvfiCryC14Oer8d069e89",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"id\": 41,\r\n  \"type\": \"Exam\"\r\n}\r\n"
+            },
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/favorites/past-exams",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "favorites",
+                "past-exams"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "New Request",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"id\": 41,\r\n  \"type\": \"Exam\"\r\n}\r\n"
+                },
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/favorites/past-exams",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "favorites",
+                    "past-exams"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 13 Jul 2026 14:34:47 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "[]"
+            }
+          ]
         }
       ]
     },
@@ -10190,7 +10595,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "ZlGDdHr12Udw8VbLtVlLtKmGNgIw2fYmAxW3uq918970d865",
+                  "value": "9Kw7HTNQTOFnteVJi32rHDv7X8GRGfAwuOYuEB8W1c131bfc",
                   "type": "string"
                 }
               ]
@@ -10207,7 +10612,7 @@
               "mode": "formdata",
               "formdata": [
                 {
-                  "key": "text_content",
+                  "key": "message",
                   "value": "لقد نسيت كلمة سر تطبيق والدي",
                   "type": "text",
                   "uuid": "df7d1e10-a8cc-4a5e-96dd-412419ec2e1b"
@@ -10217,6 +10622,12 @@
                   "type": "file",
                   "uuid": "db58eacc-26b6-4134-8890-aad009c9a406",
                   "src": "postman-cloud:///1f173cc7-2439-43b0-b94f-31b9e33f5581"
+                },
+                {
+                  "key": "audio",
+                  "type": "file",
+                  "uuid": "0f776a01-7d8b-4fae-bf9a-6957b7337cea",
+                  "src": "postman-cloud:///1f17edb6-42bd-4d90-aaf5-e5907704681a"
                 }
               ]
             },
@@ -10252,10 +10663,24 @@
                   "mode": "formdata",
                   "formdata": [
                     {
-                      "key": "text_content",
+                      "key": "message",
                       "value": "لقد نسيت كلمة سر تطبيق والدي",
                       "type": "text",
                       "uuid": "df7d1e10-a8cc-4a5e-96dd-412419ec2e1b"
+                    },
+                    {
+                      "key": "image",
+                      "type": "file",
+                      "uuid": "db58eacc-26b6-4134-8890-aad009c9a406",
+                      "src": "postman-cloud:///1f173cc7-2439-43b0-b94f-31b9e33f5581",
+                      "disabled": true
+                    },
+                    {
+                      "key": "audio",
+                      "type": "file",
+                      "uuid": "0f776a01-7d8b-4fae-bf9a-6957b7337cea",
+                      "src": "postman-cloud:///1f17edb6-42bd-4d90-aaf5-e5907704681a",
+                      "disabled": true
                     }
                   ]
                 },
@@ -10297,7 +10722,7 @@
                 },
                 {
                   "key": "Date",
-                  "value": "Fri, 03 Jul 2026 14:00:22 GMT"
+                  "value": "Tue, 14 Jul 2026 03:43:10 GMT"
                 },
                 {
                   "key": "Content-Type",
@@ -10309,7 +10734,7 @@
                 }
               ],
               "cookie": [],
-              "body": "{\n    \"success\": true,\n    \"message\": \"تم إرسال تذكرة الدعم بنجاح.\",\n    \"data\": {\n        \"sender_id\": 1,\n        \"sender_type\": \"student\",\n        \"text_content\": \"لقد نسيت كلمة سر تطبيق والدي\",\n        \"audio_path\": null,\n        \"image_path\": null,\n        \"status\": \"pending\",\n        \"updated_at\": \"2026-07-03T14:00:22.000000Z\",\n        \"created_at\": \"2026-07-03T14:00:22.000000Z\",\n        \"id\": 1\n    }\n}"
+              "body": "{\n    \"success\": true,\n    \"message\": \"تم إرسال تذكرة الدعم بنجاح.\",\n    \"data\": {\n        \"sender_id\": 1,\n        \"sender_type\": \"App\\\\Models\\\\Student\",\n        \"message\": \"لقد نسيت كلمة سر تطبيق والدي\",\n        \"attachment_path\": null,\n        \"updated_at\": \"2026-07-14T03:43:10.000000Z\",\n        \"created_at\": \"2026-07-14T03:43:10.000000Z\",\n        \"id\": 4\n    }\n}"
             },
             {
               "name": "support-tickets",
@@ -10326,10 +10751,110 @@
                   "mode": "formdata",
                   "formdata": [
                     {
-                      "key": "text_content",
+                      "key": "message",
+                      "value": "لقد نسيت كلمة سر تطبيق والدي",
+                      "type": "text",
+                      "uuid": "df7d1e10-a8cc-4a5e-96dd-412419ec2e1b"
+                    },
+                    {
+                      "key": "image",
+                      "type": "file",
+                      "uuid": "db58eacc-26b6-4134-8890-aad009c9a406",
+                      "src": "postman-cloud:///1f173cc7-2439-43b0-b94f-31b9e33f5581"
+                    },
+                    {
+                      "key": "audio",
+                      "type": "file",
+                      "uuid": "0f776a01-7d8b-4fae-bf9a-6957b7337cea",
+                      "src": "postman-cloud:///1f17edb6-42bd-4d90-aaf5-e5907704681a",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/support-tickets",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "support-tickets"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 14 Jul 2026 03:44:09 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"تم إرسال تذكرة الدعم بنجاح.\",\n    \"data\": {\n        \"sender_id\": 1,\n        \"sender_type\": \"App\\\\Models\\\\Student\",\n        \"message\": \"لقد نسيت كلمة سر تطبيق والدي\",\n        \"attachment_path\": \"storage/support/attachments/1784000649_aya.jpg\",\n        \"updated_at\": \"2026-07-14T03:44:09.000000Z\",\n        \"created_at\": \"2026-07-14T03:44:09.000000Z\",\n        \"id\": 5\n    }\n}"
+            },
+            {
+              "name": "support-tickets",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "message",
                       "value": "لقد نسيت كلمة سر تطبيق والدي",
                       "type": "text",
                       "uuid": "df7d1e10-a8cc-4a5e-96dd-412419ec2e1b",
+                      "disabled": true
+                    },
+                    {
+                      "key": "image",
+                      "type": "file",
+                      "uuid": "db58eacc-26b6-4134-8890-aad009c9a406",
+                      "src": "postman-cloud:///1f173cc7-2439-43b0-b94f-31b9e33f5581"
+                    },
+                    {
+                      "key": "audio",
+                      "type": "file",
+                      "uuid": "0f776a01-7d8b-4fae-bf9a-6957b7337cea",
+                      "src": "postman-cloud:///1f17edb6-42bd-4d90-aaf5-e5907704681a",
                       "disabled": true
                     }
                   ]
@@ -10372,7 +10897,7 @@
                 },
                 {
                   "key": "Date",
-                  "value": "Fri, 03 Jul 2026 14:00:58 GMT"
+                  "value": "Tue, 14 Jul 2026 03:48:46 GMT"
                 },
                 {
                   "key": "Content-Type",
@@ -10384,7 +10909,7 @@
                 }
               ],
               "cookie": [],
-              "body": "{\n    \"message\": \"يرجى إرسال تفاصيل المشكلة إما بشكل نصي أو عبر تسجيل صوتي. (and 1 more error)\",\n    \"errors\": {\n        \"text_content\": [\n            \"يرجى إرسال تفاصيل المشكلة إما بشكل نصي أو عبر تسجيل صوتي.\"\n        ],\n        \"audio\": [\n            \"يرجى إرفاق تسجيل صوتي للمشكلة في حال لم تقم بكتابة نص.\"\n        ]\n    }\n}"
+              "body": "{\n    \"message\": \"The message field is required when audio is not present. (and 1 more error)\",\n    \"errors\": {\n        \"message\": [\n            \"The message field is required when audio is not present.\"\n        ],\n        \"audio\": [\n            \"يرجى إرفاق تسجيل صوتي للمشكلة في حال لم تقم بكتابة نص.\"\n        ]\n    }\n}"
             },
             {
               "name": "support-tickets",
@@ -10401,7 +10926,7 @@
                   "mode": "formdata",
                   "formdata": [
                     {
-                      "key": "text_content",
+                      "key": "message",
                       "value": "لقد نسيت كلمة سر تطبيق والدي",
                       "type": "text",
                       "uuid": "df7d1e10-a8cc-4a5e-96dd-412419ec2e1b"
@@ -10411,6 +10936,13 @@
                       "type": "file",
                       "uuid": "db58eacc-26b6-4134-8890-aad009c9a406",
                       "src": "postman-cloud:///1f173cc7-2439-43b0-b94f-31b9e33f5581"
+                    },
+                    {
+                      "key": "audio",
+                      "type": "file",
+                      "uuid": "0f776a01-7d8b-4fae-bf9a-6957b7337cea",
+                      "src": "postman-cloud:///1f17edb6-42bd-4d90-aaf5-e5907704681a",
+                      "disabled": true
                     }
                   ]
                 },
@@ -10452,7 +10984,7 @@
                 },
                 {
                   "key": "Date",
-                  "value": "Fri, 03 Jul 2026 14:03:25 GMT"
+                  "value": "Tue, 14 Jul 2026 03:49:30 GMT"
                 },
                 {
                   "key": "Content-Type",
@@ -10464,7 +10996,7 @@
                 }
               ],
               "cookie": [],
-              "body": "{\n    \"success\": true,\n    \"message\": \"تم إرسال تذكرة الدعم بنجاح.\",\n    \"data\": {\n        \"sender_id\": 1,\n        \"sender_type\": \"student\",\n        \"text_content\": \"لقد نسيت كلمة سر تطبيق والدي\",\n        \"audio_path\": null,\n        \"image_path\": \"storage/support/images/1783087405_aya.jpg\",\n        \"status\": \"pending\",\n        \"updated_at\": \"2026-07-03T14:03:25.000000Z\",\n        \"created_at\": \"2026-07-03T14:03:25.000000Z\",\n        \"id\": 3\n    }\n}"
+              "body": "{\n    \"success\": true,\n    \"message\": \"تم إرسال تذكرة الدعم بنجاح.\",\n    \"data\": {\n        \"sender_id\": 1,\n        \"sender_type\": \"App\\\\Models\\\\Student\",\n        \"message\": \"لقد نسيت كلمة سر تطبيق والدي\",\n        \"attachment_path\": \"storage/support/attachments/1784000970_aya.jpg\",\n        \"updated_at\": \"2026-07-14T03:49:30.000000Z\",\n        \"created_at\": \"2026-07-14T03:49:30.000000Z\",\n        \"id\": 6\n    }\n}"
             }
           ]
         }
@@ -11136,6 +11668,1225 @@
               "body": "{\n    \"message\": \"تم رصد العلامات وتحويل الورقة للإدارة للاعتماد بنجاح!\",\n    \"new_total_score\": 7,\n    \"status\": \"pending_approval\"\n}"
             }
           ]
+        },
+        {
+          "name": "get my exams",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "43|CdgZhcq0ttI8RSAnJCUdqeAMzrCVrWyr3h5rrYXGa861feb8",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/exam/my-exams",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "exam",
+                "my-exams"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "success",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/exam/my-exams",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "exam",
+                    "my-exams"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.30"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Wed, 15 Jul 2026 11:42:01 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": true,\n    \"message\": \"Exams retrieved successfully\",\n    \"data\": [\n        {\n            \"id\": 1,\n            \"teacher_id\": 2,\n            \"title\": \"امتحان تجريبي - الفلسفة\",\n            \"description\": \"امتحان شامل لاختبار قدرات الطلاب\",\n            \"subject_id\": 1,\n            \"exam_date\": null,\n            \"duration_minutes\": 60,\n            \"is_published\": 1,\n            \"created_at\": \"2026-07-12T12:46:16.000000Z\",\n            \"updated_at\": \"2026-07-12T12:46:16.000000Z\"\n        },\n        {\n            \"id\": 2,\n            \"teacher_id\": 2,\n            \"title\": \"امتحان تجريبي - التاريخ\",\n            \"description\": \"امتحان شامل لاختبار قدرات الطلاب\",\n            \"subject_id\": 2,\n            \"exam_date\": null,\n            \"duration_minutes\": 60,\n            \"is_published\": 1,\n            \"created_at\": \"2026-07-12T12:46:16.000000Z\",\n            \"updated_at\": \"2026-07-12T12:46:16.000000Z\"\n        }\n    ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "show exam",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "43|CdgZhcq0ttI8RSAnJCUdqeAMzrCVrWyr3h5rrYXGa861feb8",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/exam/my-exams/{{exam_id}}",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "exam",
+                "my-exams",
+                "{{exam_id}}"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "success",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/exam/my-exams/{{exam_id}}",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "exam",
+                    "my-exams",
+                    "{{exam_id}}"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.30"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Wed, 15 Jul 2026 11:50:21 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": true,\n    \"message\": \"تمت اعادة الاختبار المحدد\",\n    \"data\": {\n        \"id\": 1,\n        \"teacher_id\": 2,\n        \"title\": \"امتحان تجريبي - الفلسفة\",\n        \"description\": \"امتحان شامل لاختبار قدرات الطلاب\",\n        \"subject_id\": 1,\n        \"exam_date\": null,\n        \"duration_minutes\": 60,\n        \"is_published\": 1,\n        \"created_at\": \"2026-07-12T12:46:16.000000Z\",\n        \"updated_at\": \"2026-07-12T12:46:16.000000Z\",\n        \"questions\": [\n            {\n                \"id\": 36,\n                \"teacher_id\": 2,\n                \"type\": \"mcq\",\n                \"description\": \"ما هي عاصمة سوريا؟\",\n                \"correct_answer\": null,\n                \"points\": \"2.00\",\n                \"status\": \"publish\",\n                \"created_at\": \"2026-07-12T12:46:16.000000Z\",\n                \"updated_at\": \"2026-07-12T12:46:16.000000Z\",\n                \"pivot\": {\n                    \"exam_id\": 1,\n                    \"question_id\": 36,\n                    \"created_at\": \"2026-07-12T12:46:16.000000Z\",\n                    \"updated_at\": \"2026-07-12T12:46:16.000000Z\"\n                },\n                \"choices\": [\n                    {\n                        \"id\": 33,\n                        \"question_id\": 36,\n                        \"choice_text\": \"دمشق\",\n                        \"is_correct\": 1,\n                        \"created_at\": \"2026-07-12T12:46:16.000000Z\",\n                        \"updated_at\": \"2026-07-12T12:46:16.000000Z\"\n                    },\n                    {\n                        \"id\": 34,\n                        \"question_id\": 36,\n                        \"choice_text\": \"حلب\",\n                        \"is_correct\": 0,\n                        \"created_at\": \"2026-07-12T12:46:16.000000Z\",\n                        \"updated_at\": \"2026-07-12T12:46:16.000000Z\"\n                    },\n                    {\n                        \"id\": 35,\n                        \"question_id\": 36,\n                        \"choice_text\": \"حمص\",\n                        \"is_correct\": 0,\n                        \"created_at\": \"2026-07-12T12:46:16.000000Z\",\n                        \"updated_at\": \"2026-07-12T12:46:16.000000Z\"\n                    }\n                ]\n            },\n            {\n                \"id\": 37,\n                \"teacher_id\": 2,\n                \"type\": \"TF\",\n                \"description\": \"المربع يحتوي على 4 أضلاع متساوية.\",\n                \"correct_answer\": \"true\",\n                \"points\": \"1.00\",\n                \"status\": \"publish\",\n                \"created_at\": \"2026-07-12T12:46:16.000000Z\",\n                \"updated_at\": \"2026-07-12T12:46:16.000000Z\",\n                \"pivot\": {\n                    \"exam_id\": 1,\n                    \"question_id\": 37,\n                    \"created_at\": \"2026-07-12T12:46:16.000000Z\",\n                    \"updated_at\": \"2026-07-12T12:46:16.000000Z\"\n                },\n                \"choices\": []\n            },\n            {\n                \"id\": 38,\n                \"teacher_id\": 2,\n                \"type\": \"TEXT\",\n                \"description\": \"اشرح باختصار أسباب الثورة الصناعية.\",\n                \"correct_answer\": \"إجابة تعتمد على الفهم.\",\n                \"points\": \"5.00\",\n                \"status\": \"publish\",\n                \"created_at\": \"2026-07-12T12:46:16.000000Z\",\n                \"updated_at\": \"2026-07-12T12:46:16.000000Z\",\n                \"pivot\": {\n                    \"exam_id\": 1,\n                    \"question_id\": 38,\n                    \"created_at\": \"2026-07-12T12:46:16.000000Z\",\n                    \"updated_at\": \"2026-07-12T12:46:16.000000Z\"\n                },\n                \"choices\": []\n            }\n        ]\n    }\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "past_exam",
+      "item": [
+        {
+          "name": "info",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/past-exams?subject_id=17",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "past-exams"
+              ],
+              "query": [
+                {
+                  "key": "subject_id",
+                  "value": "17"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "info",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/past-exams?subject_id=17",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "past-exams"
+                  ],
+                  "query": [
+                    {
+                      "key": "subject_id",
+                      "value": "17"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 13 Jul 2026 15:15:57 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"success\",\n    \"data\": [\n        {\n            \"id\": 1,\n            \"title\": \"امتحان شهادة الدراسة الثانوية - كيمياء - الدورة الأولى\",\n            \"year\": \"2021\",\n            \"session\": \"first\",\n            \"is_favorited\": false\n        },\n        {\n            \"id\": 2,\n            \"title\": \"امتحان شهادة الدراسة الثانوية - كيمياء - الدورة الثانية\",\n            \"year\": \"2021\",\n            \"session\": \"second\",\n            \"is_favorited\": false\n        },\n        {\n            \"id\": 3,\n            \"title\": \"الامتحان العام لنيل الشهادة الثانوية - كيمياء\",\n            \"year\": \"2022\",\n            \"session\": \"first\",\n            \"is_favorited\": false\n        },\n        {\n            \"id\": 4,\n            \"title\": \"امتحان بكالوريا علمي - مادة الكيمياء - دورة أولى\",\n            \"year\": \"2023\",\n            \"session\": \"first\",\n            \"is_favorited\": false\n        },\n        {\n            \"id\": 5,\n            \"title\": \"الامتحان الموحد للشهادة الثانوية العامة - الكيمياء\",\n            \"year\": \"2024\",\n            \"session\": \"first\",\n            \"is_favorited\": false\n        }\n    ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "past_exam_question",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/past-exams/1/questions",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "past-exams",
+                "1",
+                "questions"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "past_exam_question",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/past-exams/1/questions",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "past-exams",
+                    "1",
+                    "questions"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 13 Jul 2026 15:23:06 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"success\",\n    \"data\": [\n        {\n            \"id\": 25,\n            \"type\": \"mcq\",\n            \"description\": \"السؤال 1: تزداد سرعة التفاعل الكيميائي بزيادة درجة الحرارة بسبب:\",\n            \"choices\": [\n                {\n                    \"id\": 33,\n                    \"choice_text\": \"زيادة طاقة التنشيط نفسها\"\n                },\n                {\n                    \"id\": 34,\n                    \"choice_text\": \"زيادة عدد الجزيئات التي تملك طاقة تنشيط\"\n                },\n                {\n                    \"id\": 35,\n                    \"choice_text\": \"نقصان عدد التصادمات الفعالة\"\n                },\n                {\n                    \"id\": 36,\n                    \"choice_text\": \"زيادة الحجم الكلي للمزيج\"\n                }\n            ]\n        },\n        {\n            \"id\": 26,\n            \"type\": \"TEXT\",\n            \"description\": \"السؤال 2: نعاير حمض النمل $HCOOH$ بهدروكسيد الصوديوم $NaOH$ والمطلوب: a) ما طبيعة الوسط عند نهاية المعايرة؟ ولماذا؟ b) حدّد المشعر المناسب لهذه المعايرة.\"\n        },\n        {\n            \"id\": 27,\n            \"type\": \"TEXT\",\n            \"description\": \"السؤال 3: يحدث التفاعل المتوازن الآتي في شروط مناسبة: $2NO_{(g)} + O_{2(g)} \\\\rightleftarrows 2NO_{2(g)}$ ، $\\\\Delta H < 0$. المطلوب: a) اكتب علاقة ثابت التوازن $K_p$ لهذا التفاعل المتوازن بدلالة الضغوط الجزئية. b) بيّن أثر زيادة درجة الحرارة على كلّ من: (حالة التوازن ، قيمة ثابت التوازن $K_c$).\"\n        },\n        {\n            \"id\": 28,\n            \"type\": \"TEXT\",\n            \"description\": \"السؤال 4: المسألة الأولى: يحوي وعاء مغلق حجمه 41 L مزيجاً غازياً مكوّن من 48 g من غاز الميتان $CH_4$ و 60 g من غاز الايتان $C_2H_6$. المطلوب حساب: الضغط الكلي للمزيج الغازي عند الدرجة 300 K. الكسر المولي لغاز الميتان عند درجة الحرارة السابقة.\"\n        },\n        {\n            \"id\": 29,\n            \"type\": \"TEXT\",\n            \"description\": \"السؤال 5: المسألة الثانية: يحدث التفاعل الأوّلي الآتي في شروط مناسبة: $2A_{(g)} + B_{(g)} \\\\longrightarrow 2C_{(g)}$ فإذا علمت أنّ التراكيز الابتدائية: $[A]_0 = 0.4 mol.L^{-1}$ ، $[B]_0 = 0.2 mol.L^{-1}$ ، وثابت سرعة التفاعل $k = 10^{-2}$. المطلوب حساب السرعة الابتدائية للتفاعل وحدّد رتبته.\"\n        },\n        {\n            \"id\": 30,\n            \"type\": \"TEXT\",\n            \"description\": \"السؤال 6: المسألة الثالثة: تُذاب عينة غير نقية من هدروكسيد البوتاسيوم كتلتها 5.6 g في الماء المقطّر، ويُكمل الحجم إلى 800 mL، فإذا كان تركيز محلول هدروكسيد البوتاسيوم السابق $0.1 mol.L^{-1}$. المطلوب حساب قيمة $pH$ محلول هدروكسيد البوتاسيوم المستعمل.\"\n        }\n    ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "past_exam_soiution",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/past-exams/1/solutions",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "past-exams",
+                "1",
+                "solutions"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "New Request",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/past-exams/1/solutions",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "past-exams",
+                    "1",
+                    "solutions"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 13 Jul 2026 15:29:15 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"success\",\n    \"data\": [\n        {\n            \"id\": 25,\n            \"type\": \"mcq\",\n            \"description\": \"السؤال 1: تزداد سرعة التفاعل الكيميائي بزيادة درجة الحرارة بسبب:\",\n            \"choices\": [\n                {\n                    \"id\": 33,\n                    \"choice_text\": \"زيادة طاقة التنشيط نفسها\",\n                    \"is_correct\": false\n                },\n                {\n                    \"id\": 34,\n                    \"choice_text\": \"زيادة عدد الجزيئات التي تملك طاقة تنشيط\",\n                    \"is_correct\": true\n                },\n                {\n                    \"id\": 35,\n                    \"choice_text\": \"نقصان عدد التصادمات الفعالة\",\n                    \"is_correct\": false\n                },\n                {\n                    \"id\": 36,\n                    \"choice_text\": \"زيادة الحجم الكلي للمزيج\",\n                    \"is_correct\": false\n                }\n            ]\n        },\n        {\n            \"id\": 26,\n            \"type\": \"TEXT\",\n            \"description\": \"السؤال 2: نعاير حمض النمل $HCOOH$ بهدروكسيد الصوديوم $NaOH$ والمطلوب: a) ما طبيعة الوسط عند نهاية المعايرة؟ ولماذا؟ b) حدّد المشعر المناسب لهذه المعايرة.\",\n            \"solution\": \"a) الوسط أساسي، بسبب احتواء المحلول على أيونات النملات $HCOO^-$ الذي يسلك سلوك أساس (ضعيف).\\nb) المشعر المناسب: فينول فتالئين.\"\n        },\n        {\n            \"id\": 27,\n            \"type\": \"TEXT\",\n            \"description\": \"السؤال 3: يحدث التفاعل المتوازن الآتي في شروط مناسبة: $2NO_{(g)} + O_{2(g)} \\\\rightleftarrows 2NO_{2(g)}$ ، $\\\\Delta H < 0$. المطلوب: a) اكتب علاقة ثابت التوازن $K_p$ لهذا التفاعل المتوازن بدلالة الضغوط الجزئية. b) بيّن أثر زيادة درجة الحرارة على كلّ من: (حالة التوازن ، قيمة ثابت التوازن $K_c$).\",\n            \"solution\": \"a) علاقة ثابت التوازن:\\n$$K_p = \\\\frac{P^2_{(NO_2)}}{P^2_{(NO)} \\\\times P_{(O_2)}}$$\\n\\nb) أثر زيادة درجة الحرارة:\\nيرجح التفاعل العكسي، وتنقص قيمة $K_c$.\"\n        },\n        {\n            \"id\": 28,\n            \"type\": \"TEXT\",\n            \"description\": \"السؤال 4: المسألة الأولى: يحوي وعاء مغلق حجمه 41 L مزيجاً غازياً مكوّن من 48 g من غاز الميتان $CH_4$ و 60 g من غاز الايتان $C_2H_6$. المطلوب حساب: الضغط الكلي للمزيج الغازي عند الدرجة 300 K. الكسر المولي لغاز الميتان عند درجة الحرارة السابقة.\",\n            \"solution\": \"الطلب الأول (الضغط الكلي):\\n$n = \\\\frac{m}{M}$\\n$n_{CH_4} = \\\\frac{48}{16} = 3 (mol)$\\n$n_{C_2H_6} = \\\\frac{60}{30} = 2 (mol)$\\n$P_t = \\\\frac{n_t R T}{V}$\\n$P_t = \\\\frac{(3+2) \\\\times 0.082 \\\\times 300}{41}$\\n$P_t = 3 \\\\text{ atm}$\\n\\nالطلب الثاني (الكسر المولي):\\n$$X_{(CH_4)} = \\\\frac{n_{CH_4}}{n_t}$$\\n$$X_{(CH_4)} = \\\\frac{3}{5}$$\"\n        },\n        {\n            \"id\": 29,\n            \"type\": \"TEXT\",\n            \"description\": \"السؤال 5: المسألة الثانية: يحدث التفاعل الأوّلي الآتي في شروط مناسبة: $2A_{(g)} + B_{(g)} \\\\longrightarrow 2C_{(g)}$ فإذا علمت أنّ التراكيز الابتدائية: $[A]_0 = 0.4 mol.L^{-1}$ ، $[B]_0 = 0.2 mol.L^{-1}$ ، وثابت سرعة التفاعل $k = 10^{-2}$. المطلوب حساب السرعة الابتدائية للتفاعل وحدّد رتبته.\",\n            \"solution\": \"الطلب الأول:\\n$v = k[A]^2[B]$\\n$v_0 = 10^{-2}(0.4)^2(0.2)$\\n$v_0 = 32 \\\\times 10^{-5} mol.L^{-1}.s^{-1}$\\nرتبة التفاعل: 3\"\n        },\n        {\n            \"id\": 30,\n            \"type\": \"TEXT\",\n            \"description\": \"السؤال 6: المسألة الثالثة: تُذاب عينة غير نقية من هدروكسيد البوتاسيوم كتلتها 5.6 g في الماء المقطّر، ويُكمل الحجم إلى 800 mL، فإذا كان تركيز محلول هدروكسيد البوتاسيوم السابق $0.1 mol.L^{-1}$. المطلوب حساب قيمة $pH$ محلول هدروكسيد البوتاسيوم المستعمل.\",\n            \"solution\": \"$[KOH] = 10^{-1} mol.L^{-1}$\\n$[OH^-] = 10^{-1} (mol.L^{-1})$\\n$[H_3O^+] = 10^{-13} (mol.L^{-1})$\\n$[H_3O^+] = 10^{-pH} \\\\Rightarrow pH = 13$\"\n        }\n    ]\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Exam_student",
+      "item": [
+        {
+          "name": "info",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/exams?subject_id=2",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "exams"
+              ],
+              "query": [
+                {
+                  "key": "subject_id",
+                  "value": "2"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "New Request",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/exams?subject_id=2",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "exams"
+                  ],
+                  "query": [
+                    {
+                      "key": "subject_id",
+                      "value": "2"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 13 Jul 2026 15:49:44 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"success\",\n    \"data\": [\n        {\n            \"id\": 2,\n            \"teacher_id\": 2,\n            \"title\": \"امتحان تجريبي - التاريخ\",\n            \"description\": \"امتحان شامل لاختبار قدرات الطلاب\",\n            \"subject_id\": 2,\n            \"exam_date\": null,\n            \"duration_minutes\": 60,\n            \"is_published\": 1,\n            \"created_at\": \"2026-07-13T15:15:24.000000Z\",\n            \"updated_at\": \"2026-07-13T15:15:24.000000Z\",\n            \"is_favorited\": false\n        }\n    ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Exam_questions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/exams/1/questions",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "exams",
+                "1",
+                "questions"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "New Request",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/exams/1/questions",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "exams",
+                    "1",
+                    "questions"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 13 Jul 2026 15:51:14 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"success\",\n    \"data\": [\n        {\n            \"id\": 55,\n            \"type\": \"mcq\",\n            \"description\": \"ما هي عاصمة سوريا؟\",\n            \"choices\": [\n                {\n                    \"id\": 69,\n                    \"choice_text\": \"دمشق\"\n                },\n                {\n                    \"id\": 70,\n                    \"choice_text\": \"حلب\"\n                },\n                {\n                    \"id\": 71,\n                    \"choice_text\": \"حمص\"\n                }\n            ]\n        },\n        {\n            \"id\": 56,\n            \"type\": \"TF\",\n            \"description\": \"المربع يحتوي على 4 أضلاع متساوية.\"\n        },\n        {\n            \"id\": 57,\n            \"type\": \"TEXT\",\n            \"description\": \"اشرح باختصار أسباب الثورة الصناعية.\"\n        }\n    ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Exam_solutions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/exams/1/solutions",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "exams",
+                "1",
+                "solutions"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "New Request",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/exams/1/solutions",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "exams",
+                    "1",
+                    "solutions"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 13 Jul 2026 15:52:54 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"success\",\n    \"data\": [\n        {\n            \"id\": 55,\n            \"type\": \"mcq\",\n            \"description\": \"ما هي عاصمة سوريا؟\",\n            \"choices\": [\n                {\n                    \"id\": 69,\n                    \"choice_text\": \"دمشق\",\n                    \"is_correct\": true\n                },\n                {\n                    \"id\": 70,\n                    \"choice_text\": \"حلب\",\n                    \"is_correct\": false\n                },\n                {\n                    \"id\": 71,\n                    \"choice_text\": \"حمص\",\n                    \"is_correct\": false\n                }\n            ]\n        },\n        {\n            \"id\": 56,\n            \"type\": \"TF\",\n            \"description\": \"المربع يحتوي على 4 أضلاع متساوية.\",\n            \"solution\": \"true\"\n        },\n        {\n            \"id\": 57,\n            \"type\": \"TEXT\",\n            \"description\": \"اشرح باختصار أسباب الثورة الصناعية.\",\n            \"solution\": \"إجابة تعتمد على الفهم.\"\n        }\n    ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "New Request",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "yTK2YQEywhWWBmOitSMbXJ6v53J105nkftgYUUSt33a1e474",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/submissions/1/details",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "submissions",
+                "1",
+                "details"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "yTK2YQEywhWWBmOitSMbXJ6v53J105nkftgYUUSt33a1e474",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"exam_id\": 2,\r\n    \"answers\": [\r\n        {\r\n            \"question_id\": 1,\r\n            \"choice_id\": 2\r\n        },\r\n        {\r\n            \"question_id\": 2,\r\n            \"text_answer\": \"نعم\"\r\n        }\r\n    ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/exams/submit",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "exams",
+                "submit"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "New Request",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "exam_id",
+                      "value": "1",
+                      "type": "text",
+                      "uuid": "6a7865ed-b05b-4c56-a2c4-639127c3d894"
+                    },
+                    {
+                      "key": "answers[0][question_id]",
+                      "value": "",
+                      "type": "text",
+                      "uuid": "fa30684d-e743-4ddb-a6ed-115745ee67b8"
+                    },
+                    {
+                      "key": "answers[0][text_answer]",
+                      "value": "",
+                      "type": "text",
+                      "uuid": "73491e54-05b2-4bf7-b654-65ff3dda7db4"
+                    },
+                    {
+                      "key": "answers[1][question_id]",
+                      "value": "",
+                      "type": "text",
+                      "uuid": "841ffb6f-3f17-4c65-a57e-32ca2d82529b"
+                    },
+                    {
+                      "key": "answers[1][choice_id]",
+                      "value": "",
+                      "type": "text",
+                      "uuid": "10768d92-3bf3-431e-8204-e45c2a416e15"
+                    },
+                    {
+                      "key": "answers[0][audio_answer]",
+                      "type": "file",
+                      "uuid": "73a50b22-5cfc-4374-a6cf-4e44696ef607",
+                      "src": "postman-cloud:///1f17edb6-42bd-4d90-aaf5-e5907704681a"
+                    }
+                  ],
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/exams/submit",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "exams",
+                    "submit"
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "",
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 13 Jul 2026 16:46:49 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [
+                {
+                  "expires": "Invalid Date",
+                  "domain": "",
+                  "path": ""
+                }
+              ],
+              "body": "{\n    \"status\": \"error\",\n    \"message\": \"عذراً، لقد قمت بتقديم هذا الاختبار مسبقاً.\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Bookmark",
+      "item": [
+        {
+          "name": "New Request",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "9Kw7HTNQTOFnteVJi32rHDv7X8GRGfAwuOYuEB8W1c131bfc",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "recording_id",
+                  "value": "",
+                  "type": "text",
+                  "uuid": "e2abf3a4-6909-455a-a17e-0ba3e613ec5c"
+                },
+                {
+                  "key": "name",
+                  "value": "",
+                  "type": "text",
+                  "uuid": "2581bb32-1fd1-4203-80b1-dfad0b681286"
+                },
+                {
+                  "key": "timestamp_in_seconds",
+                  "value": "",
+                  "type": "text",
+                  "uuid": "a502ff21-9fe4-4f1f-9325-d2c488ef8e02"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://127.0.0.1:8000/api//bookmarks",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "",
+                "bookmarks"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "9Kw7HTNQTOFnteVJi32rHDv7X8GRGfAwuOYuEB8W1c131bfc",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "message",
+                  "value": "لقد نسيت كلمة سر تطبيق والدي",
+                  "type": "text",
+                  "uuid": "df7d1e10-a8cc-4a5e-96dd-412419ec2e1b"
+                },
+                {
+                  "key": "image",
+                  "type": "file",
+                  "uuid": "db58eacc-26b6-4134-8890-aad009c9a406",
+                  "src": "postman-cloud:///1f173cc7-2439-43b0-b94f-31b9e33f5581"
+                },
+                {
+                  "key": "audio",
+                  "type": "file",
+                  "uuid": "0f776a01-7d8b-4fae-bf9a-6957b7337cea",
+                  "src": "postman-cloud:///1f17edb6-42bd-4d90-aaf5-e5907704681a"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/recordings/{recording}/bookmarks",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "recordings",
+                "{recording}",
+                "bookmarks"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "9Kw7HTNQTOFnteVJi32rHDv7X8GRGfAwuOYuEB8W1c131bfc",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "message",
+                  "value": "لقد نسيت كلمة سر تطبيق والدي",
+                  "type": "text",
+                  "uuid": "df7d1e10-a8cc-4a5e-96dd-412419ec2e1b"
+                },
+                {
+                  "key": "image",
+                  "type": "file",
+                  "uuid": "db58eacc-26b6-4134-8890-aad009c9a406",
+                  "src": "postman-cloud:///1f173cc7-2439-43b0-b94f-31b9e33f5581"
+                },
+                {
+                  "key": "audio",
+                  "type": "file",
+                  "uuid": "0f776a01-7d8b-4fae-bf9a-6957b7337cea",
+                  "src": "postman-cloud:///1f17edb6-42bd-4d90-aaf5-e5907704681a"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/bookmarks/{id}",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "bookmarks",
+                "{id}"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\TeacherTransferController;
 use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\Api\ConversationController;
 use App\Http\Controllers\CaregiverController;
 use App\Http\Controllers\DonationController;
 use App\Http\Controllers\FavoriteController;
@@ -21,12 +22,14 @@ use App\Http\Controllers\StudentQuizController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\TeacherExamController;
 use App\Http\Middleware\CheckCallCreatorRole;
+use App\Http\Middleware\CheckIsStudent;
 use App\Http\Middleware\CheckPunishment;
 use App\Http\Middleware\CheckUserType;
 use App\Http\Middleware\IsTeacher;
 use App\Http\Middleware\PreventStudentCallActions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 
 Route::post('verify-otp', [OtpController::class, 'verify']);
 Route::post('register', [StudentController::class, 'register']);
@@ -115,6 +118,8 @@ Route::middleware(['auth:sanctum', 'isTeacher'])->prefix('exam')->controller(Tea
     Route::get('/{examId}/submissions', 'getExamSubmissions');
     Route::get('/{examId}/students/{studentId}/pending-answers', 'getPendingTextAnswers');
     Route::post('/{examId}/students/{studentId}/grade', 'gradeTextAnswers');
+    Route::get('/my-exams', 'myExams');
+    Route::get('/my-exams/{exam_id}', 'show');
 });
 
 Route::middleware('auth:sanctum')
@@ -205,3 +210,17 @@ Route::post('/stripe/webhook', [StripeWebhookController::class, 'handleWebhook']
 
 Route::post('/livekit/webhook', [LiveKitWebhookController::class, 'handle']);
 
+Route::middleware(['auth:sanctum', IsTeacher::class])->prefix('teacher/channels')->group(function () {
+    Route::get('/', [ConversationController::class, 'getTeacherChannels']);
+    Route::post('/{conversationId}/messages', [ConversationController::class, 'sendMessage'])
+        ->middleware(CheckPunishment::class . ':Mute');
+});
+
+Route::middleware(['auth:sanctum', CheckIsStudent::class])->prefix('student/channels')->group(function () {
+    Route::get('/', [ConversationController::class, 'getStudentChannels']);
+    Route::get('/{conversationId}/messages', [ConversationController::class, 'getMessages']);
+    Route::post('/{conversationId}/messages', [ConversationController::class, 'sendMessage'])
+        ->middleware(CheckPunishment::class . ':Mute');
+});
+Route::delete('/messages/{messageId}', [ConversationController::class, 'deleteMessage'])
+    ->middleware('auth:sanctum');
