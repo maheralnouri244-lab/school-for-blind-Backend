@@ -12,7 +12,7 @@ use App\Http\Controllers\MagicLoginController;
 use App\Http\Middleware\CheckAdminRole;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Dashboard\SupportTicketController;
-
+use App\Http\Controllers\NotificationController;
 
 /*
 'Super Admin',
@@ -130,3 +130,4 @@ Route::middleware([CheckAdminRole::class . ':Super Admin,Moderator'])->group(fun
         Route::delete('/messages/{id}', [ConversationWebController::class, 'deleteMessage'])->name('delete-message');
     });
 });
+Route::get('/send-test-notification', [NotificationController::class, 'testSend']);

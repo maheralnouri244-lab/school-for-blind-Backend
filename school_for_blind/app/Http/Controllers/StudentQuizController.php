@@ -242,5 +242,43 @@ public function getQuizReview($quizId): JsonResponse
         ]
     ]);
 }
+public function getStudentSubmissions(): JsonResponse
+{
+    $studentId = Auth::id();
 
+    $submissions = QuizSubmission::with(['quiz.questions.choices'])
+        ->where('student_id', $studentId)
+        ->orderBy('created_at', 'desc')
+        ->get();
+
+    $studentAnswers = StudentAnswer::where('student_id', $studentId)->get();
+
+    $data = $submissions->map(function ($submission) use ($studentAnswers) {
+        return [
+            'submission_id' => $submission->id,
+            'quiz_id'       => $submission->quiz_id,
+            'quiz_name'     => $submission->quiz->title ?? 'اختبار رقم ' . $submission->quiz_id,
+            'total_score'   => $submission->total_score,
+            'status'        => $submission->status,
+            'submitted_at'  => $submission->created_at->format('Y-m-d H:i'),
+            'details'       => $submission->quiz->questions->map(function ($question) use ($studentAnswers) {
+                $answer = $studentAnswers->where('question_id', $question->id)->first();
+                
+                return [
+                    'question_id' => $question->id,
+                    'question'    => $question->description,
+                    'type'        => $question->type,
+                    'student_text_answer' => $answer->text_answer ?? null,
+                    'student_audio_answer' => $answer->audio_answer ?? null,
+                    'is_correct'  => $answer->is_correct ?? 0,
+                ];
+            })
+        ];
+    });
+
+    return response()->json([
+        'status' => 'success',
+        'data'   => $data
+    ]);
+}
 }

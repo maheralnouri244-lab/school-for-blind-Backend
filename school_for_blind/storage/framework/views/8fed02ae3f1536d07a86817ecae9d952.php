@@ -32,4 +32,4 @@
         </div>
     </body>
 </html>
-<?php /**PATH D:\project\laravel\school-for-blind-Backend\school_for_blind\vendor\laravel\framework\src\Illuminate\Foundation\Exceptions/views/minimal.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\Users\USER\Desktop\school-for-blind-Backend\school_for_blind\vendor\laravel\framework\src\Illuminate\Foundation\Exceptions/views/minimal.blade.php ENDPATH**/ ?>

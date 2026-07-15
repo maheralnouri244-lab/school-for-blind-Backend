@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Favorite;
 use App\Models\Lesson;
 use App\Models\Quiz;
+use App\Models\PastExam;
+use App\Models\Exam;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,40 +16,78 @@ class FavoriteController extends Controller
 {
     $request->validate([
         'id' => 'required|integer',
-        'type' => 'required|string|in:lesson,quiz',
+        'type' => 'required|string|in:lesson,quiz,PastExam,Exam',
     ]);
 
     $userId = Auth::id();
+    $map = [
+        'lesson'   => Lesson::class,
+        'quiz'     => Quiz::class,
+        'PastExam' => PastExam::class,
+        'Exam'     => Exam::class,
+    ];
 
-    $model = $request->type === 'lesson'
-        ? Lesson::class
-        : Quiz::class;
+    $modelClass = $map[$request->type];
+    $userId = Auth::id();
 
     $favorite = Favorite::where('user_id', $userId)
         ->where('favorable_id', $request->id)
-        ->where('favorable_type', $model)
+        ->where('favorable_type', $modelClass)
         ->first();
 
     if ($favorite) {
         $favorite->delete();
-        return response()->json([
-            'message' => 'Removed from favorites',
-            'is_favorite' => false
-        ]);
+        return response()->json(['message' => 'Removed', 'is_favorite' => false]);
     }
 
     Favorite::create([
         'user_id' => $userId,
         'favorable_id' => $request->id,
-        'favorable_type' => $model,
+        'favorable_type' => $modelClass,
+    ]);
+
+    return response()->json(['message' => 'Added', 'is_favorite' => true]);
+}
+public function addToFavorite(Request $request)
+{
+    $request->validate([
+        'id' => 'required|integer',
+        'type' => 'required|string|in:lesson,quiz,PastExam,Exam',
+    ]);
+
+    $typeMap = [
+        'lesson'   => Lesson::class,
+        'quiz'     => Quiz::class,
+        'PastExam' => PastExam::class,
+        'Exam'     => Exam::class,
+    ];
+
+    $model = $typeMap[$request->type];
+    $userId = Auth::id();
+
+    $exists = Favorite::where('user_id', $userId)
+        ->where('favorable_id', $request->id)
+        ->where('favorable_type', $model)
+        ->exists();
+
+    if ($exists) {
+        return response()->json([
+            'message' => 'Item is already in favorites',
+            'is_favorite' => true
+        ]);
+    }
+
+    Favorite::create([
+        'user_id'       => $userId,
+        'favorable_id'  => $request->id,
+        'favorable_type'=> $model,
     ]);
 
     return response()->json([
-        'message' => 'Added to favorites',
+        'message' => 'Added to favorites successfully',
         'is_favorite' => true
     ]);
 }
-
 public function index()
 {
     $favorites = Favorite::where('user_id', Auth::id())->get();
@@ -83,6 +123,26 @@ public function favoriteQuizzes()
 
     return response()->json($favorites);
 }
+public function favoriteExams()
+    {
+        $favorites = Favorite::where('user_id', Auth::id())
+            ->where('favorable_type', Exam::class)
+            ->with('favorable')
+            ->get()
+            ->pluck('favorable');
+
+        return response()->json($favorites);
+    }
+    public function favoritePastExams()
+    {
+        $favorites = Favorite::where('user_id', Auth::id())
+            ->where('favorable_type', PastExam::class)
+            ->with('favorable')
+            ->get()
+            ->pluck('favorable');
+
+        return response()->json($favorites);
+    }
 public function allFavorites()
 {
     $favorites = Favorite::where('user_id', Auth::id())
@@ -101,32 +161,35 @@ public function remove(Request $request)
 {
     $request->validate([
         'id' => 'required|integer',
-        'type' => 'required|string|in:lesson,quiz',
+        'type' => 'required|string|in:lesson,quiz,PastExam,Exam',
     ]);
 
     $userId = Auth::id();
 
-    $model = $request->type === 'lesson'
-        ? Lesson::class
-        : Quiz::class;
+  $model = match ($request->type) {
+            'lesson'   => Lesson::class,
+            'quiz'     => Quiz::class,
+            'PastExam' => PastExam::class,
+            'Exam'     => Exam::class,
+        };
 
-    $favorite = Favorite::where('user_id', $userId)
-        ->where('favorable_id', $request->id)
-        ->where('favorable_type', $model)
-        ->first();
+        $favorite = Favorite::where('user_id', $userId)
+            ->where('favorable_id', $request->id)
+            ->where('favorable_type', $model)
+            ->first();
 
-    if (!$favorite) {
+        if (!$favorite) {
+            return response()->json([
+                'message' => 'Item is not in favorites',
+                'is_favorite' => false
+            ]);
+        }
+
+        $favorite->delete();
+
         return response()->json([
-            'message' => 'Item is not in favorites',
+            'message' => 'Removed from favorites',
             'is_favorite' => false
         ]);
     }
-
-    $favorite->delete();
-
-    return response()->json([
-        'message' => 'Removed from favorites',
-        'is_favorite' => false
-    ]);
 }
-    }
