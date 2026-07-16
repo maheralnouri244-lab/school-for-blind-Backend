@@ -236,4 +236,4 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/bookmarks/{id}', [BookmarkController::class, 'destroy']);
 });
 Route::get('/teacher/pending-essay-answers', [TeacherQuizController::class, 'getPendingEssayAnswers'])->middleware(['auth:sanctum', IsTeacher::class]);
-Route::post('/teacher/grade-full-quiz-submission', [TeacherQuizController::class, 'gradeFullQuizSubmission'])->middleware(['auth:sanctum', IsTeacher::class]);
+Route::post('/teacher/grade-full-quiz-submission', [TeacherQuizController::class, 'gradeFullQuizSubmission'])->middleware(['auth:sanctum', IsTeacher::class]); 
