@@ -13,6 +13,16 @@ use Illuminate\Support\Facades\DB;
 class TeacherExamController extends Controller
 {
 
+    private function recalculateExamTotals(Exam $exam)
+    {
+        $questionsCount = $exam->questions()->count();
+        $totalMark = $exam->questions()->sum('points');
+        $exam->update([
+            'numofquestions' => $questionsCount,
+            'totalmark' => $totalMark,
+        ]);
+    }
+
     public function myExams(Request $request)
     {
         $teacher = $request->user();
@@ -89,6 +99,7 @@ class TeacherExamController extends Controller
             }
 
             DB::commit();
+            $this->recalculateExamTotals($exam);
             $exam->load('questions.choices');
 
             return response()->json([

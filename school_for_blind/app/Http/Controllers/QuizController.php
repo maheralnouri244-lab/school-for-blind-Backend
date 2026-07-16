@@ -98,6 +98,7 @@ class QuizController extends Controller
             }
 
             DB::commit();
+            $this->recalculateQuizTotals($quiz);
             $quiz->load('questions.choices');
 
             return response()->json([
