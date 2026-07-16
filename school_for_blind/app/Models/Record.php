@@ -43,4 +43,10 @@ class Record extends Model
             }
         );
     }
+
+public function bookmarks()
+{
+    return $this->hasMany(Bookmark::class);
 }
+
+    }

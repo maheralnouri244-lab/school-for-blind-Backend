@@ -32,6 +32,7 @@ class QuizSubmissionSeeder extends Seeder
                     $choiceId = null;
                     $textAnswer = null;
                     $isGraded = true;
+                    $audioAnswer = null; 
 
                     if ($question->type === 'mcq') {
                         $correctChoice = $question->choices->where('is_correct', true)->first();
@@ -55,7 +56,13 @@ class QuizSubmissionSeeder extends Seeder
                         $pointsEarned = 0;
                         $isGraded = false; 
                         $hasUngradedText = true;
-                    }
+                    if (rand(0, 1) == 1) {
+                            $textAnswer = 'هذه إجابة نصية تجريبية من الطالب على السؤال المقالي.';
+                            $audioAnswer = null;
+                        } else {
+                            $textAnswer = null;
+                            $audioAnswer = 'student_audios/fake_record_sample.wav'; 
+                        }}
 
                     StudentAnswer::create([
                         'student_id' => $student->id,
@@ -65,6 +72,7 @@ class QuizSubmissionSeeder extends Seeder
                         'is_correct' => $isCorrect,
                         'points_earned' => $pointsEarned,
                         'is_graded' => $isGraded,
+                        'audio_answer'  => $audioAnswer, 
                     ]);
                 }
 

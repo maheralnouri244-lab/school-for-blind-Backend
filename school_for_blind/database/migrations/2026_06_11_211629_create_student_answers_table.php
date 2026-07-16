@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->foreignId('question_id')->constrained('questions')->onDelete('cascade');
             $table->foreignId('choice_id')->nullable()->constrained('choices')->onDelete('cascade');
             $table->text('text_answer')->nullable();
+            $table->string('audio_answer')->nullable();
             $table->boolean('is_correct')->default(false);
             $table->float('points_earned')->default(0);
             $table->boolean('is_graded')->default(false);
