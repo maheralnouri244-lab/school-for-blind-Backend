@@ -24,7 +24,7 @@ class Exam extends Model
     public function questions()
     {
         return $this->belongsToMany(Question::class, 'exam_question', 'exam_id', 'question_id')
-                    ->withTimestamps();
+                    ->withTimestamps()->with('choices');
     }
 
     public function teacher()

@@ -1,17 +1,29 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Conversation extends Model
 {
-    protected$fillable = [
+    protected $fillable = ['type', 'name', 'teacher_id', 'subject_id', 'parent_id'];
 
-'type',
-'name',
-//'woner_id'
+    public function discussion()
+    {
+        return $this->hasOne(Conversation::class, 'parent_id')->where('type', 'discussion');
+    }
 
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
+    }
 
-];
+    public function teacher()
+    {
+        return $this->belongsTo(Teacher::class);
+    }
+
+    public function subject()
+    {
+        return $this->belongsTo(Subject::class);
+    }
 }

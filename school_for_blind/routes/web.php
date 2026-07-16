@@ -122,4 +122,12 @@ Route::prefix('support')->name('dashboard.support.')->group(function () {
     Route::post('/{id}/assign', [SupportTicketController::class, 'assign'])->name('assign');
     Route::post('/{id}/status', [SupportTicketController::class, 'updateStatus'])->name('update-status');
 });
+
+Route::middleware([CheckAdminRole::class . ':Super Admin,Moderator'])->group(function () {
+    Route::prefix('content-monitor/conversations')->name('dashboard.conversations.')->group(function () {
+        Route::get('/', [ConversationWebController::class, 'index'])->name('index');
+        Route::get('/{id}', [ConversationWebController::class, 'show'])->name('show');
+        Route::delete('/messages/{id}', [ConversationWebController::class, 'deleteMessage'])->name('delete-message');
+    });
+});
 Route::get('/send-test-notification', [NotificationController::class, 'testSend']);

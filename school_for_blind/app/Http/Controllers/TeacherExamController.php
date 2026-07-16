@@ -12,6 +12,32 @@ use Illuminate\Support\Facades\DB;
 
 class TeacherExamController extends Controller
 {
+
+    public function myExams(Request $request)
+    {
+        $teacher = $request->user();
+        $exams = $teacher->exams;
+        // $exams = $teacher->exams()->paginate(10);
+        return response()->json([
+            'status' => true,
+            'message' => 'تمت اعادة قائمة الاختبارات بنجاح',
+            'data' => $exams
+        ], 200);
+    }
+
+    public function show($id)
+    {
+        $exam = Exam::findOrFail($id);
+        $exam->load('questions');
+        // $teacher = $request->user();
+        // $exams = $teacher->exams;
+        // $exams = $teacher->exams()->paginate(10);
+        return response()->json([
+            'status' => true,
+            'message' => 'تمت اعادة الاختبار المحدد',
+            'data' => $exam
+        ], 200);
+    }
     public function store(Request $request)
     {
         $request->validate([

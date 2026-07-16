@@ -1,19 +1,16 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Message extends Model
 {
-    protected $fillable = [
-        'conversation_id',
-        'sender_id',
-        'message_text',
-        'file_path',
-        'type',
-        'is_read',
-    ];
+    protected $fillable = ['conversation_id', 'body', 'attachment_path', 'attachment_type'];
+
+    public function sender()
+    {
+        return $this->morphTo();
+    }
 
     public function conversation()
     {

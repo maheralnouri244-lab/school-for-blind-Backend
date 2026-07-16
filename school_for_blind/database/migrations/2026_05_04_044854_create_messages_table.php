@@ -6,8 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 use function Laravel\Prompts\text;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -15,12 +14,11 @@ return new class extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
-$table->foreignId('conversation_id')->constrained('conversations');
-$table->foreignId('sender_id');
-$table->text('message_text');
-$table->string('file_path');
-//$table->enum('type',['text', 'image', 'video', 'audio'])->default('text');
-$table->boolean('is_read')->default(false);
+            $table->foreignId('conversation_id')->constrained()->onDelete('cascade');
+            $table->morphs('sender');
+            $table->text('body')->nullable();
+            $table->string('attachment_path')->nullable();
+            $table->enum('attachment_type', ['file', 'image', 'voice', 'video'])->nullable();
             $table->timestamps();
         });
     }
