@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\TeacherTransferController;
 use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\CaregiverController;
 use App\Http\Controllers\DonationController;
 use App\Http\Controllers\FavoriteController;
@@ -17,19 +18,18 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\StripeWebhookController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\StudentExamController;
+use App\Http\Controllers\StudentpastexamController;
 use App\Http\Controllers\StudentQuizController;
+use App\Http\Controllers\SupportTicketController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\TeacherExamController;
+use App\Http\Controllers\TeacherQuizController;
 use App\Http\Middleware\CheckCallCreatorRole;
 use App\Http\Middleware\CheckPunishment;
 use App\Http\Middleware\CheckUserType;
 use App\Http\Middleware\IsTeacher;
 use App\Http\Middleware\PreventStudentCallActions;
-use App\Http\Controllers\StudentpastexamController;
-use App\Http\Controllers\StudentExamController;
-use App\Http\Controllers\SupportTicketController;
-
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -229,3 +229,11 @@ Route::get('/exams/{id}/solutions', [StudentExamController::class, 'getExamWithS
 Route::post('/exams/submit-answer', [StudentExamController::class, 'submitAnswer'])->middleware('auth:sanctum');
 Route::get('/submissions/{id}/details', [StudentExamController::class, 'getSubmissionDetails'])->middleware('auth:sanctum');
 Route::post('/exams/submit', [StudentExamController::class, 'submitExam'])->middleware('auth:sanctum');
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/bookmarks', [BookmarkController::class, 'store']);
+    Route::get('/recordings/{recording}/bookmarks', [BookmarkController::class, 'index']);
+    Route::delete('/bookmarks/{id}', [BookmarkController::class, 'destroy']);
+});
+Route::get('/teacher/pending-essay-answers', [TeacherQuizController::class, 'getPendingEssayAnswers'])->middleware(['auth:sanctum', IsTeacher::class]);
+Route::post('/teacher/grade-full-quiz-submission', [TeacherQuizController::class, 'gradeFullQuizSubmission'])->middleware(['auth:sanctum', IsTeacher::class]);

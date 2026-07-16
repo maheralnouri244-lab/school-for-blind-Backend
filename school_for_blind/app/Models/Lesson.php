@@ -84,5 +84,8 @@ class Lesson extends Model
         }
         return $this->quiz()->exists();
     }
-
+public function bookmarks()
+{
+    return $this->hasMany(Bookmark::class);
+}
 }

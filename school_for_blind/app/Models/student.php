@@ -131,4 +131,10 @@ class Student extends Authenticatable
             ->withPivot(['id', 'admin_id', 'expires_at'])
             ->withTimestamps();
     }
+public function bookmarks()
+{
+    return $this->hasMany(Bookmark::class);
 }
+
+
+    }

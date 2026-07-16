@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('bookmarks', function (Blueprint $table) {
             $table->id();
 $table->string('name');
-    $table->string('location');
-   // $table->foreignId('bookmarkable_id ')->constrained('lessons');
+$table->integer('timestamp_in_seconds');
+$table->foreignId('student_id')->constrained()->onDelete('cascade');
+$table->foreignId('lesson_id')->constrained('lessons')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -25,6 +26,10 @@ $table->string('name');
      */
     public function down(): void
     {
-        Schema::dropIfExists('bookmarks');
+       Schema::table('bookmarks', function (Blueprint $table) {
+            $table->dropForeign(['student_id']);
+            $table->dropForeign(['lesson_id']);
+            $table->dropColumn(['timestamp_in_seconds', 'student_id', 'lesson_id']);
+        });
     }
 };

@@ -14,6 +14,7 @@ class StudentAnswer extends Model
         'text_answer',
         'is_correct',
         'points_earned',
+        'audio_answer',
         
     ];
 
@@ -25,5 +26,9 @@ class StudentAnswer extends Model
     public function choice()
     {
         return $this->belongsTo(Choice::class);
+    }
+    public function student()
+    {
+        return $this->belongsTo(Student::class);
     }
 }

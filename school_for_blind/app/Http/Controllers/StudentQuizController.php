@@ -62,23 +62,6 @@ public function getQuizInfoByNames(QuizInfoRequest $request): JsonResponse
         ]
     ]);
 }
-public function getQuizQuestions($id): JsonResponse
-    {
-        $quiz = Quiz::with(['questions.choices'])->find($id);
-
-        if (!$quiz) {
-            return response()->json(['status' => 'error', 'message' => 'الكويز غير موجود'], 404);
-        }
-$questionsData = $quiz->questions->map(function ($question, $index) {
-        $questionNumber = $index + 1;
-        return new StudentQuestionResource($question, $questionNumber);
-    });
-        return response()->json([
-            'status' => 'success',
-            'quiz_id' => $quiz->id,
-            'questions' => $questionsData
-        ]);
-    }
 
 public function submitQuiz(SubmitQuizRequest $request): JsonResponse
 {
@@ -176,6 +159,24 @@ public function submitQuiz(SubmitQuizRequest $request): JsonResponse
         ], 500);
     }
 }
+public function getQuizQuestions($id): JsonResponse
+    {
+        $quiz = Quiz::with(['questions.choices'])->find($id);
+
+        if (!$quiz) {
+            return response()->json(['status' => 'error', 'message' => 'الكويز غير موجود'], 404);
+        }
+$questionsData = $quiz->questions->map(function ($question, $index) {
+        $questionNumber = $index + 1;
+        return new StudentQuestionResource($question, $questionNumber);
+    });
+        return response()->json([
+            'status' => 'success',
+            'quiz_id' => $quiz->id,
+            'questions' => $questionsData
+        ]);
+    }
+
 public function getQuizReview($quizId): JsonResponse
 {
     $studentId = Auth::id();
