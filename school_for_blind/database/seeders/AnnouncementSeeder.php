@@ -75,7 +75,7 @@ class AnnouncementSeeder extends Seeder
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
-         DB::table('announcements')->insert([
+        DB::table('announcements')->insert([
             'type' => 'school_timetable',
             'title' => 'برنامج الدوام الأسبوعي لعام 2026',
             'content' => json_encode($timetableData, JSON_UNESCAPED_UNICODE),
