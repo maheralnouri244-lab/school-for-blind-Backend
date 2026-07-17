@@ -3,7 +3,7 @@
     "_postman_id": "69ed107e-d42e-4b5f-9c27-11e53c1c3253",
     "name": "school-for-blind-app",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "56192936",
+    "_exporter_id": "56227181",
     "_collection_link": "https://go.postman.co/collection/56192936-69ed107e-d42e-4b5f-9c27-11e53c1c3253?source=collection_link"
   },
   "item": [
@@ -4036,59 +4036,549 @@
       "name": "Parent",
       "item": [
         {
-          "name": "login",
-          "request": {
-            "auth": {
-              "type": "noauth"
-            },
-            "method": "POST",
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "",
-              "options": {
-                "raw": {
-                  "language": "json"
+          "name": "summary",
+          "item": [
+            {
+              "name": "daily",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "43|amoc7jOQ4LOj9aPXDrUXLPGXwOu0YPUx2BSVevZnf6b1e7b0",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/parent/reports/daily",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "parent",
+                    "reports",
+                    "daily"
+                  ]
                 }
-              }
-            },
-            "url": {
-              "raw": "http://127.0.0.1:8000/api/caregiver/login?phone=0993297136&password=zik6f1fhsx",
-              "protocol": "http",
-              "host": [
-                "127",
-                "0",
-                "0",
-                "1"
-              ],
-              "port": "8000",
-              "path": [
-                "api",
-                "caregiver",
-                "login"
-              ],
-              "query": [
+              },
+              "response": [
                 {
-                  "key": "phone",
-                  "value": "0993297136"
+                  "name": "success",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "http://127.0.0.1:8000/api/parent/reports/daily",
+                      "protocol": "http",
+                      "host": [
+                        "127",
+                        "0",
+                        "0",
+                        "1"
+                      ],
+                      "port": "8000",
+                      "path": [
+                        "api",
+                        "parent",
+                        "reports",
+                        "daily"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "Host",
+                      "value": "127.0.0.1:8000"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "close"
+                    },
+                    {
+                      "key": "X-Powered-By",
+                      "value": "PHP/8.3.30"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, private"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Fri, 17 Jul 2026 14:53:29 GMT"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Access-Control-Allow-Origin",
+                      "value": "*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"status\": \"success\",\n    \"data\": [\n        {\n            \"greeting_message\": \"إلى ولي أمر الطالب: طالب تجريبي\",\n            \"student_id\": 301,\n            \"student_name\": \"طالب تجريبي\",\n            \"report_data\": {\n                \"date\": \"2026-07-17\",\n                \"attendance\": [\n                    {\n                        \"room_id\": 1,\n                        \"room_name\": \"بث الفلسفة المباشر\",\n                        \"can_excuse\": true,\n                        \"is_attended\": false,\n                        \"excuse_status\": null,\n                        \"total_room_minutes\": 60,\n                        \"student_presence_minutes\": 30\n                    }\n                ],\n                \"punishments\": [\n                    {\n                        \"name\": \"إنذار تأخر\",\n                        \"level\": 1,\n                        \"description\": \"إنذار بسبب التأخر عن البث\"\n                    }\n                ],\n                \"grades_today\": [\n                    {\n                        \"type\": \"quiz\",\n                        \"score\": 85,\n                        \"title\": \"المعرفة ومصادرها\",\n                        \"subject_name\": \"الفلسفة\"\n                    },\n                    {\n                        \"type\": \"exam\",\n                        \"score\": \"180.00\",\n                        \"title\": \"مذاكرة الفلسفة\",\n                        \"subject_name\": \"الفلسفة\"\n                    },\n                    {\n                        \"type\": \"exam\",\n                        \"score\": \"90.00\",\n                        \"title\": \"مذاكرة اللغة العربية\",\n                        \"subject_name\": \"اللغة العربية\"\n                    }\n                ]\n            },\n            \"message\": \"تم جلب التقرير بنجاح\"\n        }\n    ]\n}"
+                }
+              ]
+            },
+            {
+              "name": "monthly",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "43|amoc7jOQ4LOj9aPXDrUXLPGXwOu0YPUx2BSVevZnf6b1e7b0",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/parent/reports/monthly",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "parent",
+                    "reports",
+                    "monthly"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "success",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "http://127.0.0.1:8000/api/parent/reports/monthly",
+                      "protocol": "http",
+                      "host": [
+                        "127",
+                        "0",
+                        "0",
+                        "1"
+                      ],
+                      "port": "8000",
+                      "path": [
+                        "api",
+                        "parent",
+                        "reports",
+                        "monthly"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "Host",
+                      "value": "127.0.0.1:8000"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "close"
+                    },
+                    {
+                      "key": "X-Powered-By",
+                      "value": "PHP/8.3.30"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, private"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Fri, 17 Jul 2026 14:54:13 GMT"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Access-Control-Allow-Origin",
+                      "value": "*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"status\": \"success\",\n    \"data\": [\n        {\n            \"greeting_message\": \"إلى ولي أمر الطالب: طالب تجريبي\",\n            \"student_id\": 301,\n            \"student_name\": \"طالب تجريبي\",\n            \"report_data\": {\n                \"year\": 2026,\n                \"month\": 7,\n                \"weak_subjects\": [],\n                \"neglected_exams\": 0,\n                \"neglected_quizzes\": 25,\n                \"solved_quizzes_count\": 1,\n                \"attendance_percentage\": 0\n            },\n            \"message\": \"تم جلب التقرير بنجاح\"\n        }\n    ]\n}"
+                }
+              ]
+            },
+            {
+              "name": "yearly",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "43|amoc7jOQ4LOj9aPXDrUXLPGXwOu0YPUx2BSVevZnf6b1e7b0",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/parent/reports/yearly",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "parent",
+                    "reports",
+                    "yearly"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "success",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "url": {
+                      "raw": "http://127.0.0.1:8000/api/parent/reports/yearly",
+                      "protocol": "http",
+                      "host": [
+                        "127",
+                        "0",
+                        "0",
+                        "1"
+                      ],
+                      "port": "8000",
+                      "path": [
+                        "api",
+                        "parent",
+                        "reports",
+                        "yearly"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "Host",
+                      "value": "127.0.0.1:8000"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "close"
+                    },
+                    {
+                      "key": "X-Powered-By",
+                      "value": "PHP/8.3.30"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, private"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Fri, 17 Jul 2026 15:07:55 GMT"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Access-Control-Allow-Origin",
+                      "value": "*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"status\": \"success\",\n    \"data\": [\n        {\n            \"greeting_message\": \"إلى ولي أمر الطالب: طالب تجريبي\",\n            \"student_id\": 301,\n            \"student_name\": \"طالب تجريبي\",\n            \"report_data\": {\n                \"academic_year\": \"2026\",\n                \"total_student_score\": 270,\n                \"total_max_score\": 300,\n                \"final_average_percentage\": 90\n            },\n            \"subjects\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"الفلسفة\",\n                    \"grade_level\": \"twelfth\",\n                    \"number_of_lessons\": null,\n                    \"total_lessons\": 24,\n                    \"deleted_at\": null,\n                    \"created_at\": \"2026-07-17T14:48:07.000000Z\",\n                    \"updated_at\": \"2026-07-17T14:48:55.000000Z\"\n                },\n                {\n                    \"id\": 2,\n                    \"name\": \"التاريخ\",\n                    \"grade_level\": \"twelfth\",\n                    \"number_of_lessons\": null,\n                    \"total_lessons\": 29,\n                    \"deleted_at\": null,\n                    \"created_at\": \"2026-07-17T14:48:07.000000Z\",\n                    \"updated_at\": \"2026-07-17T14:48:55.000000Z\"\n                },\n                {\n                    \"id\": 3,\n                    \"name\": \"الجغرافيا\",\n                    \"grade_level\": \"twelfth\",\n                    \"number_of_lessons\": null,\n                    \"total_lessons\": 30,\n                    \"deleted_at\": null,\n                    \"created_at\": \"2026-07-17T14:48:07.000000Z\",\n                    \"updated_at\": \"2026-07-17T14:48:55.000000Z\"\n                },\n                {\n                    \"id\": 4,\n                    \"name\": \"اللغة العربية\",\n                    \"grade_level\": \"twelfth\",\n                    \"number_of_lessons\": null,\n                    \"total_lessons\": 28,\n                    \"deleted_at\": null,\n                    \"created_at\": \"2026-07-17T14:48:07.000000Z\",\n                    \"updated_at\": \"2026-07-17T14:48:55.000000Z\"\n                },\n                {\n                    \"id\": 5,\n                    \"name\": \"اللغة الإنكليزية\",\n                    \"grade_level\": \"twelfth\",\n                    \"number_of_lessons\": null,\n                    \"total_lessons\": 25,\n                    \"deleted_at\": null,\n                    \"created_at\": \"2026-07-17T14:48:07.000000Z\",\n                    \"updated_at\": \"2026-07-17T14:48:55.000000Z\"\n                },\n                {\n                    \"id\": 6,\n                    \"name\": \"اللغة الفرنسية\",\n                    \"grade_level\": \"twelfth\",\n                    \"number_of_lessons\": null,\n                    \"total_lessons\": 27,\n                    \"deleted_at\": null,\n                    \"created_at\": \"2026-07-17T14:48:07.000000Z\",\n                    \"updated_at\": \"2026-07-17T14:48:55.000000Z\"\n                },\n                {\n                    \"id\": 7,\n                    \"name\": \"التربية الدينية\",\n                    \"grade_level\": \"twelfth\",\n                    \"number_of_lessons\": null,\n                    \"total_lessons\": 26,\n                    \"deleted_at\": null,\n                    \"created_at\": \"2026-07-17T14:48:07.000000Z\",\n                    \"updated_at\": \"2026-07-17T14:48:55.000000Z\"\n                }\n            ]\n        }\n    ]\n}"
+                }
+              ]
+            },
+            {
+              "name": "absence excuse",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "43|amoc7jOQ4LOj9aPXDrUXLPGXwOu0YPUx2BSVevZnf6b1e7b0",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "student_id",
+                      "value": "301",
+                      "type": "text",
+                      "description": "id الطالب ابنك"
+                    },
+                    {
+                      "key": "room_id",
+                      "value": "1",
+                      "type": "text",
+                      "description": "id الغرفة او المكالمة يلي غاب فيها"
+                    },
+                    {
+                      "key": "reason",
+                      "value": "الولد كان مريض وغايب بعذر طبي",
+                      "type": "text",
+                      "description": "فينا نبعت ركويست بدونه مافي مشكلة"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/parent/reports/absence-excuse",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "parent",
+                    "reports",
+                    "absence-excuse"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "fail not your son",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "key": "student_id",
+                          "value": "1",
+                          "type": "text"
+                        },
+                        {
+                          "key": "room_id",
+                          "value": "1",
+                          "type": "text"
+                        },
+                        {
+                          "key": "reason",
+                          "value": "الولد كان مريض وغايب بعذر طبي",
+                          "type": "text",
+                          "description": "فينا نبعت ركويست بدونه مافي مشكلة"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "http://127.0.0.1:8000/api/parent/reports/absence-excuse",
+                      "protocol": "http",
+                      "host": [
+                        "127",
+                        "0",
+                        "0",
+                        "1"
+                      ],
+                      "port": "8000",
+                      "path": [
+                        "api",
+                        "parent",
+                        "reports",
+                        "absence-excuse"
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "Host",
+                      "value": "127.0.0.1:8000"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "close"
+                    },
+                    {
+                      "key": "X-Powered-By",
+                      "value": "PHP/8.3.30"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, private"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Fri, 17 Jul 2026 14:58:13 GMT"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Access-Control-Allow-Origin",
+                      "value": "*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"status\": \"error\",\n    \"message\": \"طالب غير صالح.\"\n}"
                 },
                 {
-                  "key": "password",
-                  "value": "zik6f1fhsx"
+                  "name": "success",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "key": "student_id",
+                          "value": "301",
+                          "type": "text",
+                          "description": "id الطالب ابنك"
+                        },
+                        {
+                          "key": "room_id",
+                          "value": "1",
+                          "type": "text",
+                          "description": "id الغرفة او المكالمة يلي غاب فيها"
+                        },
+                        {
+                          "key": "reason",
+                          "value": "الولد كان مريض وغايب بعذر طبي",
+                          "type": "text",
+                          "description": "فينا نبعت ركويست بدونه مافي مشكلة"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "http://127.0.0.1:8000/api/parent/reports/absence-excuse",
+                      "protocol": "http",
+                      "host": [
+                        "127",
+                        "0",
+                        "0",
+                        "1"
+                      ],
+                      "port": "8000",
+                      "path": [
+                        "api",
+                        "parent",
+                        "reports",
+                        "absence-excuse"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "Host",
+                      "value": "127.0.0.1:8000"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "close"
+                    },
+                    {
+                      "key": "X-Powered-By",
+                      "value": "PHP/8.3.30"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, private"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Fri, 17 Jul 2026 15:02:34 GMT"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Access-Control-Allow-Origin",
+                      "value": "*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"status\": \"success\",\n    \"message\": \"تم إرسال تبرير الغياب بنجاح بانتظار مراجعة الإدارة.\",\n    \"data\": {\n        \"student_id\": 301,\n        \"caregiver_id\": 1,\n        \"room_id\": \"1\",\n        \"reason\": \"الولد كان مريض وغايب بعذر طبي\",\n        \"status\": \"pending\",\n        \"updated_at\": \"2026-07-17T15:02:34.000000Z\",\n        \"created_at\": \"2026-07-17T15:02:34.000000Z\",\n        \"id\": 1\n    }\n}"
                 }
               ]
             }
-          },
-          "response": [
+          ]
+        },
+        {
+          "name": "auth",
+          "item": [
             {
-              "name": "success",
-              "originalRequest": {
+              "name": "login",
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
                 "method": "POST",
                 "header": [
                   {
@@ -4107,7 +4597,7 @@
                   }
                 },
                 "url": {
-                  "raw": "http://127.0.0.1:8000/api/caregiver/login?phone=0993297136&password=zik6f1fhsx",
+                  "raw": "http://127.0.0.1:8000/api/caregiver/login?phone=0911111111&password=12345678",
                   "protocol": "http",
                   "host": [
                     "127",
@@ -4124,52 +4614,102 @@
                   "query": [
                     {
                       "key": "phone",
-                      "value": "0993297136",
-                      "type": "text"
+                      "value": "0911111111"
                     },
                     {
                       "key": "password",
-                      "value": "zik6f1fhsx",
-                      "type": "text"
+                      "value": "12345678"
                     }
                   ]
                 }
               },
-              "status": "OK",
-              "code": 200,
-              "_postman_previewlanguage": "Text",
-              "header": [
+              "response": [
                 {
-                  "key": "Host",
-                  "value": "127.0.0.1:8000"
-                },
-                {
-                  "key": "Connection",
-                  "value": "close"
-                },
-                {
-                  "key": "X-Powered-By",
-                  "value": "PHP/8.2.12"
-                },
-                {
-                  "key": "Cache-Control",
-                  "value": "no-cache, private"
-                },
-                {
-                  "key": "Date",
-                  "value": "Tue, 16 Jun 2026 08:32:19 GMT"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                },
-                {
-                  "key": "Access-Control-Allow-Origin",
-                  "value": "*"
+                  "name": "success",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "http://127.0.0.1:8000/api/caregiver/login?phone=0993297136&password=zik6f1fhsx",
+                      "protocol": "http",
+                      "host": [
+                        "127",
+                        "0",
+                        "0",
+                        "1"
+                      ],
+                      "port": "8000",
+                      "path": [
+                        "api",
+                        "caregiver",
+                        "login"
+                      ],
+                      "query": [
+                        {
+                          "key": "phone",
+                          "value": "0993297136",
+                          "type": "text"
+                        },
+                        {
+                          "key": "password",
+                          "value": "zik6f1fhsx",
+                          "type": "text"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "Text",
+                  "header": [
+                    {
+                      "key": "Host",
+                      "value": "127.0.0.1:8000"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "close"
+                    },
+                    {
+                      "key": "X-Powered-By",
+                      "value": "PHP/8.2.12"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, private"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Tue, 16 Jun 2026 08:32:19 GMT"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Access-Control-Allow-Origin",
+                      "value": "*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"success\": true,\n    \"message\": \"تم تسجيل الدخول بنجاح.\",\n    \"data\": {\n        \"user\": {\n            \"id\": 1,\n            \"phone\": \"0993297136\",\n            \"fcm_token\": null\n        },\n        \"token\": \"47|ZL9JuzdXIa8W01lh5QOZyKzL9vqEAiiRSi2PAm5i667afdd8\"\n    }\n}"
                 }
-              ],
-              "cookie": [],
-              "body": "{\n    \"success\": true,\n    \"message\": \"تم تسجيل الدخول بنجاح.\",\n    \"data\": {\n        \"user\": {\n            \"id\": 1,\n            \"phone\": \"0993297136\",\n            \"fcm_token\": null\n        },\n        \"token\": \"47|ZL9JuzdXIa8W01lh5QOZyKzL9vqEAiiRSi2PAm5i667afdd8\"\n    }\n}"
+              ]
             }
           ]
         },
@@ -4672,7 +5212,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "44|rPePm5dDTjLLMn6nKQchCQWd4RGFqAOw2gFaZkiGc6f08ece",
+                  "value": "43|cEseHg9WJ8yVXl9WnQOrp2rLXMZhxU9CcNY0GnBS6c0ae6a6",
                   "type": "string"
                 }
               ]
@@ -9815,6 +10355,65 @@
               ],
               "cookie": [],
               "body": "{\n    \"id\": 3,\n    \"type\": \"school_timetable\",\n    \"title\": \"برنامج الدوام الأسبوعي لعام 2026\",\n    \"target_audience\": \"student\",\n    \"level\": \"ninth\",\n    \"timetable_data\": {\n        \"columns\": [\n            \"الحصة\",\n            \"الأحد\",\n            \"الإثنين\"\n        ],\n        \"rows\": [\n            {\n                \"period\": \"الأولى\",\n                \"sunday\": \"رياضيات\",\n                \"monday\": \"فيزياء\"\n            }\n        ]\n    },\n    \"created_at\": \"2026-07-02T17:24:32.000000Z\",\n    \"updated_at\": \"2026-07-02T17:24:32.000000Z\"\n}"
+            },
+            {
+              "name": "get_school_timetable",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/announcements/school-timetable/first",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "announcements",
+                    "school-timetable",
+                    "first"
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 17 Jul 2026 13:44:15 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"العنصر المطلوب غير موجود في قاعدة البيانات.\"\n}"
             }
           ]
         }

@@ -28,6 +28,7 @@ use App\Http\Controllers\TeacherExamController;
 use App\Http\Controllers\TeacherExamcorrectController;
 use App\Http\Controllers\Teacherpaymentcontroller;
 use App\Http\Controllers\TeacherQuizController;
+use App\Http\Controllers\ParentReportController;
 use App\Http\Middleware\CheckCallCreatorRole;
 use App\Http\Middleware\CheckIsStudent;
 use App\Http\Middleware\CheckPunishment;
@@ -253,7 +254,7 @@ Route::post('/exams/submit', [StudentExamController::class, 'submitExam'])->midd
 Route::get('/student/exam-details/{id}', [StudentExamController::class, 'getExamDetails']);
 
 Route::middleware('auth:sanctum')->group(function () {
-    
+
     Route::get('recordings/{recordingId}/bookmarks', [BookmarkController::class, 'index']);
 
     Route::post('bookmarks', [BookmarkController::class, 'store']);
@@ -261,20 +262,30 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('bookmarks/{id}', [BookmarkController::class, 'update']);
 
     Route::delete('bookmarks/{id}', [BookmarkController::class, 'destroy']);
-    
+
 });
 
 
 
 Route::get('/teacher/pending-essay-answers', [TeacherQuizController::class, 'getPendingEssayAnswers'])->middleware(['auth:sanctum', IsTeacher::class]);
-Route::post('/teacher/grade-full-quiz-submission', [TeacherQuizController::class, 'gradeFullQuizSubmission'])->middleware(['auth:sanctum', IsTeacher::class]); 
+Route::post('/teacher/grade-full-quiz-submission', [TeacherQuizController::class, 'gradeFullQuizSubmission'])->middleware(['auth:sanctum', IsTeacher::class]);
 
 Route::middleware('auth:teacher')->group(function () {
     Route::get('/teacher/pending-exams', [TeacherExamcorrectController::class, 'getPendingExamEssayAnswers']);
-    
+
     Route::post('/teacher/grade-exam', [TeacherExamcorrectController::class, 'gradeFullExamSubmission']);
 });
 
 
-Route::post('/transfer/salary/teacher',[Teacherpaymentcontroller::class,'setupTeacherBank']);/*->middleware(['auth:sanctum', CheckUserType::class . ':admin']);*/
+Route::post('/transfer/salary/teacher', [Teacherpaymentcontroller::class, 'setupTeacherBank']);/*->middleware(['auth:sanctum', CheckUserType::class . ':admin']);*/
 Route::post('/teacher/pay-salary', [TeacherPaymentController::class, 'payTeacherSalary']);
+
+
+Route::middleware(['auth:sanctum', 'isparent'])->prefix('parent')->group(function () {
+    Route::get('/reports/daily', [ParentReportController::class, 'getDailyReport']);
+    Route::get('/reports/monthly', [ParentReportController::class, 'getMonthlyReport']);
+    Route::get('/reports/yearly', [ParentReportController::class, 'getYearlyReport']);
+    Route::post('/reports/absence-excuse', [ParentReportController::class, 'submitAbsenceExcuse']);
+    Route::post('/reports/objection', [ParentReportController::class, 'submitObjection']);
+
+});

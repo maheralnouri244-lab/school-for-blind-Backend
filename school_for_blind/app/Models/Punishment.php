@@ -9,6 +9,7 @@ class Punishment extends Model
     protected $fillable = [
         'name',
         'description',
+        'level',
         'duration',
     ];
 }
