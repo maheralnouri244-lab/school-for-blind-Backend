@@ -111,25 +111,28 @@ class PastExamSeeder extends Seeder
         ];
 
         foreach ($examsList as $examData) {
+            $selectedQuestions = collect($rawQuestions)->random(min(6, count($rawQuestions)));
             $pastExam = PastExam::create([
-                'title'               => $examData['title'],
-                'subject_id'          => $subject->id,
-                'year'                => $examData['year'],
-                'session'             => $examData['session'],
+                'title' => $examData['title'],
+                'subject_id' => $subject->id,
+                'year' => $examData['year'],
+                'session' => $examData['session'],
                 'voice_solution_path' => null,
-                'is_published'        => true,
+                'is_published' => true,
+                'totalmark' => count($selectedQuestions),
+                'numofquestions' => count($selectedQuestions),
+                'timelimit' => 120,
             ]);
 
-            $selectedQuestions = collect($rawQuestions)->random(min(6, count($rawQuestions)));
 
             foreach ($selectedQuestions as $index => $qData) {
                 $prefix = "السؤال " . ($index + 1) . ": ";
 
                 $question = Question::create([
-                    'teacher_id'     => $teacherId,
-                    'type'           => $qData['type'],
-                    'status'         => 'publish',
-                    'description'    => $prefix . $qData['description'],
+                    'teacher_id' => $teacherId,
+                    'type' => $qData['type'],
+                    'status' => 'publish',
+                    'description' => $prefix . $qData['description'],
                     'correct_answer' => $qData['correct_answer'],
                 ]);
 
@@ -139,7 +142,7 @@ class PastExamSeeder extends Seeder
                     foreach ($qData['choices'] as $choice) {
                         $question->choices()->create([
                             'choice_text' => $choice['text'],
-                            'is_correct'  => $choice['is_correct'],
+                            'is_correct' => $choice['is_correct'],
                         ]);
                     }
                 }

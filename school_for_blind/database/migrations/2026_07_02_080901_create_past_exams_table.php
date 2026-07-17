@@ -9,7 +9,10 @@ return new class extends Migration {
     {
         Schema::create('past_exams', function (Blueprint $table) {
             $table->id();
-            $table->string('title'); 
+            $table->string('title');
+            $table->integer('numofquestions');
+            $table->integer('timelimit');
+            $table->integer('totalmark');
             $table->foreignId('subject_id')->constrained('subjects')->cascadeOnDelete();
             $table->year('year');
             $table->enum('session', ['first', 'second', 'complementary'])->default('first');

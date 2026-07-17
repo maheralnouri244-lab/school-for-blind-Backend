@@ -1,77 +1,79 @@
-@extends('layouts.app')
 
-@section('content')
+
+<?php $__env->startSection('content'); ?>
     <div class="container-fluid py-4">
 
-        {{-- رأس الصفحة --}}
+        
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2 class="fw-bold" style="color: var(--text-main);">تفاصيل الدورة الوزارية</h2>
-            <a href="{{ route('dashboard.past-exams.index') }}" class="btn px-4 rounded-pill fw-bold shadow-sm-hover"
+            <a href="<?php echo e(route('dashboard.past-exams.index')); ?>" class="btn px-4 rounded-pill fw-bold shadow-sm-hover"
                 style="background-color: var(--hover-bg); color: var(--text-main); border: 1px solid var(--border-color); transition: transform 0.2s;">
                 <i class="fa-solid fa-arrow-right me-2"></i> عودة للقائمة
             </a>
         </div>
 
-        {{-- رسائل النظام --}}
-        @if ($errors->any())
+        
+        <?php if($errors->any()): ?>
             <div class="alert alert-danger rounded-3 mb-4 fw-bold">
                 <ul class="mb-0">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
+                    <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <li><?php echo e($error); ?></li>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </ul>
             </div>
-        @endif
+        <?php endif; ?>
 
-        @if(session('success'))
+        <?php if(session('success')): ?>
             <div class="alert alert-success rounded-3 mb-4 fw-bold">
-                <i class="fa-solid fa-circle-check me-2"></i> {{ session('success') }}
-            </div>
-        @endif
+                <i class="fa-solid fa-circle-check me-2"></i> <?php echo e(session('success')); ?>
 
-        @if(session('error'))
-            <div class="alert alert-danger rounded-3 mb-4 fw-bold">
-                <i class="fa-solid fa-triangle-exclamation me-2"></i> {{ session('error') }}
             </div>
-        @endif
+        <?php endif; ?>
+
+        <?php if(session('error')): ?>
+            <div class="alert alert-danger rounded-3 mb-4 fw-bold">
+                <i class="fa-solid fa-triangle-exclamation me-2"></i> <?php echo e(session('error')); ?>
+
+            </div>
+        <?php endif; ?>
 
         <div class="row g-4">
-            {{-- العمود الجانبي: المعلومات الأساسية وإجراءات الأسئلة --}}
+            
             <div class="col-xl-4">
 
-                {{-- كرت المعلومات الأساسية --}}
+                
                 <div class="custom-card mb-4 shadow-sm-hover border" style="border-color: var(--border-color) !important;">
                     <h5 class="fw-bold mb-3" style="color: var(--text-main);">المعلومات الأساسية</h5>
                     <hr style="border-color: var(--border-color);">
 
                     <div class="mb-3">
                         <span class="text-muted d-block small mb-1">عنوان الدورة</span>
-                        <strong class="fs-5" style="color: var(--text-main);">{{ $pastExam->title }}</strong>
+                        <strong class="fs-5" style="color: var(--text-main);"><?php echo e($pastExam->title); ?></strong>
                     </div>
 
                     <div class="row mb-3">
                         <div class="col-6">
                             <span class="text-muted d-block small mb-1">المادة</span>
-                            <strong style="color: var(--text-main);">{{ $pastExam->subject->name ?? 'غير محدد' }}</strong>
+                            <strong style="color: var(--text-main);"><?php echo e($pastExam->subject->name ?? 'غير محدد'); ?></strong>
                         </div>
                         <div class="col-6">
                             <span class="text-muted d-block small mb-1"><i class="fa-regular fa-clock me-1"></i> مدة
                                 الامتحان</span>
-                            <strong style="color: var(--text-main);">{{ $pastExam->timelimit }} دقيقة</strong>
+                            <strong style="color: var(--text-main);"><?php echo e($pastExam->timelimit); ?> دقيقة</strong>
                         </div>
                     </div>
 
                     <div class="row mb-3">
                         <div class="col-6">
                             <span class="text-muted d-block small mb-1">السنة الدراسية</span>
-                            <strong style="color: var(--text-main);">{{ $pastExam->year }}</strong>
+                            <strong style="color: var(--text-main);"><?php echo e($pastExam->year); ?></strong>
                         </div>
                         <div class="col-6">
                             <span class="text-muted d-block small mb-1">الدورة</span>
                             <strong style="color: var(--text-main);">
-                                @if($pastExam->session == 'first') الأولى
-                                @elseif($pastExam->session == 'second') الثانية
-                                @else تكميلية @endif
+                                <?php if($pastExam->session == 'first'): ?> الأولى
+                                <?php elseif($pastExam->session == 'second'): ?> الثانية
+                                <?php else: ?> تكميلية <?php endif; ?>
                             </strong>
                         </div>
                     </div>
@@ -80,52 +82,52 @@
                         <div class="col-6">
                             <span class="text-muted d-block small mb-1"><i class="fa-solid fa-list-ol me-1 text-info"></i>
                                 عدد الأسئلة</span>
-                            <strong style="color: var(--text-main);">{{ $pastExam->numofquestions }} سؤال</strong>
+                            <strong style="color: var(--text-main);"><?php echo e($pastExam->numofquestions); ?> سؤال</strong>
                         </div>
                         <div class="col-6">
                             <span class="text-muted d-block small mb-1"><i class="fa-solid fa-star me-1 text-warning"></i>
                                 العلامة الكلية</span>
-                            <strong style="color: var(--text-main);">{{ $pastExam->totalmark }} درجة</strong>
+                            <strong style="color: var(--text-main);"><?php echo e($pastExam->totalmark); ?> درجة</strong>
                         </div>
                     </div>
 
                     <div class="mb-4">
                         <span class="text-muted d-block small mb-2">الحالة الحالية</span>
-                        @if($pastExam->is_published)
+                        <?php if($pastExam->is_published): ?>
                             <span class="badge px-3 py-2 rounded-pill fw-normal"
                                 style="background-color: rgba(163, 230, 53, 0.15); color: var(--accent-color); border: 1px solid var(--accent-color);">
                                 <i class="fa-solid fa-earth-americas me-1"></i> منشورة للطلاب
                             </span>
-                        @else
+                        <?php else: ?>
                             <span class="badge px-3 py-2 rounded-pill fw-normal"
                                 style="background-color: rgba(245, 158, 11, 0.1); color: #f59e0b; border: 1px solid #f59e0b;">
                                 <i class="fa-solid fa-lock me-1"></i> مسودة غير منشورة
                             </span>
-                        @endif
+                        <?php endif; ?>
                     </div>
 
-                    @if($pastExam->voice_solution_path)
+                    <?php if($pastExam->voice_solution_path): ?>
                         <div class="mb-4 p-3 rounded-4"
                             style="background-color: var(--hover-bg); border: 1px dashed var(--border-color);">
                             <span class="text-muted d-block small mb-2 fw-bold"><i
                                     class="fa-solid fa-volume-high text-success me-1"></i> الحل الصوتي الشامل</span>
                             <audio controls class="w-100" style="height: 40px;">
-                                <source src="{{ asset('storage/' . $pastExam->voice_solution_path) }}" type="audio/mpeg">
+                                <source src="<?php echo e(asset('storage/' . $pastExam->voice_solution_path)); ?>" type="audio/mpeg">
                             </audio>
                         </div>
-                    @endif
+                    <?php endif; ?>
 
                     <div class="d-grid gap-2">
-                        @if(!$pastExam->is_published)
-                            <form action="{{ route('dashboard.past-exams.publish', $pastExam->id) }}" method="POST">
-                                @csrf
+                        <?php if(!$pastExam->is_published): ?>
+                            <form action="<?php echo e(route('dashboard.past-exams.publish', $pastExam->id)); ?>" method="POST">
+                                <?php echo csrf_field(); ?>
                                 <button type="submit" class="btn w-100 rounded-pill py-2 fw-bold shadow-sm-hover"
                                     style="background-color: var(--accent-color); color: #111827; border: none; transition: transform 0.2s;">
                                     <i class="fa-solid fa-paper-plane me-2"></i> نشر الدورة للطلاب الآن
                                 </button>
                             </form>
-                        @endif
-                        <a href="{{ route('dashboard.past-exams.edit', $pastExam->id) }}"
+                        <?php endif; ?>
+                        <a href="<?php echo e(route('dashboard.past-exams.edit', $pastExam->id)); ?>"
                             class="btn rounded-pill py-2 fw-bold shadow-sm-hover"
                             style="background-color: rgba(59, 130, 246, 0.12); color: #3b82f6; border: 1px solid rgba(59, 130, 246, 0.5); transition: transform 0.2s;">
                             <i class="fa-solid fa-pen-to-square me-2"></i> تعديل البيانات الأساسية
@@ -133,7 +135,7 @@
                     </div>
                 </div>
 
-                {{-- كرت إجراءات الأسئلة --}}
+                
                 <div class="custom-card shadow-sm-hover border" style="border-color: var(--border-color) !important;">
                     <h5 class="fw-bold mb-3" style="color: var(--text-main);">إجراءات الأسئلة</h5>
                     <hr style="border-color: var(--border-color);">
@@ -147,40 +149,40 @@
                 </div>
             </div>
 
-            {{-- العمود الرئيسي: عرض الأسئلة المرتبطة --}}
+            
             <div class="col-xl-8">
                 <div class="custom-card h-100 border" style="border-color: var(--border-color) !important;">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h4 class="fw-bold m-0" style="color: var(--text-main);">الأسئلة المرتبطة بالدورة
-                            ({{ $pastExam->questions->count() }})</h4>
+                            (<?php echo e($pastExam->questions->count()); ?>)</h4>
                     </div>
                     <hr style="border-color: var(--border-color);">
 
                     <div class="d-flex flex-column gap-3">
-                        @forelse($pastExam->questions as $question)
+                        <?php $__empty_1 = true; $__currentLoopData = $pastExam->questions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $question): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                             <div class="p-4 rounded-4 shadow-sm-hover"
                                 style="background-color: var(--hover-bg); border: 1px solid var(--border-color); transition: all 0.2s;">
                                 <div class="d-flex justify-content-between align-items-start mb-3">
                                     <div>
                                         <span class="badge rounded-pill px-3 py-2 me-2"
                                             style="background-color: rgba(59, 130, 246, 0.1); color: #3b82f6; border: 1px solid #3b82f6;">
-                                            @if($question->type == 'mcq') <i class="fa-solid fa-list-ul me-1"></i> خيارات
-                                            @elseif($question->type == 'TF') <i class="fa-solid fa-check-double me-1"></i> صح /
+                                            <?php if($question->type == 'mcq'): ?> <i class="fa-solid fa-list-ul me-1"></i> خيارات
+                                            <?php elseif($question->type == 'TF'): ?> <i class="fa-solid fa-check-double me-1"></i> صح /
                                                 خطأ
-                                            @else <i class="fa-solid fa-pen-nib me-1"></i> مقالي @endif
+                                            <?php else: ?> <i class="fa-solid fa-pen-nib me-1"></i> مقالي <?php endif; ?>
                                         </span>
                                         <span class="badge rounded-pill px-3 py-2"
                                             style="background-color: rgba(163, 230, 53, 0.15); color: var(--accent-color);">
-                                            الدرجات: <strong>{{ $question->points }}</strong>
+                                            الدرجات: <strong><?php echo e($question->points); ?></strong>
                                         </span>
                                     </div>
 
-                                    {{-- زر الإزالة بالتدرج الرمادي للأحمر --}}
+                                    
                                     <form
-                                        action="{{ route('dashboard.past-exams.questions.detach', [$pastExam->id, $question->id]) }}"
+                                        action="<?php echo e(route('dashboard.past-exams.questions.detach', [$pastExam->id, $question->id])); ?>"
                                         method="POST" onsubmit="return confirm('هل أنت متأكد من إزالة هذا السؤال من الدورة؟');">
-                                        @csrf
-                                        @method('DELETE')
+                                        <?php echo csrf_field(); ?>
+                                        <?php echo method_field('DELETE'); ?>
                                         <button type="submit"
                                             class="btn btn-sm text-white shadow-sm-hover d-flex align-items-center justify-content-center"
                                             style="width: 36px; height: 36px; border-radius: 8px; background: linear-gradient(135deg, #9ca3af, #ef4444); box-shadow: 0 0 10px rgba(239, 68, 68, 0.3); border: none; transition: all 0.2s;"
@@ -190,51 +192,52 @@
                                     </form>
                                 </div>
 
-                                <p class="fw-bold fs-5 mb-4" style="color: var(--text-main);">{{ $question->description }}</p>
+                                <p class="fw-bold fs-5 mb-4" style="color: var(--text-main);"><?php echo e($question->description); ?></p>
 
-                                @if($question->type == 'mcq')
+                                <?php if($question->type == 'mcq'): ?>
                                     <div class="row g-3">
-                                        @foreach($question->choices as $choice)
+                                        <?php $__currentLoopData = $question->choices; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $choice): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <div class="col-md-6">
                                                 <div class="p-3 rounded-3 d-flex align-items-center justify-content-between"
-                                                    style="background-color: var(--bg-main); border: 1px solid {{ $choice->is_correct ? '#10b981' : 'var(--border-color)' }};">
-                                                    <span style="color: var(--text-main);">{{ $choice->choice_text }}</span>
-                                                    @if($choice->is_correct)
+                                                    style="background-color: var(--bg-main); border: 1px solid <?php echo e($choice->is_correct ? '#10b981' : 'var(--border-color)'); ?>;">
+                                                    <span style="color: var(--text-main);"><?php echo e($choice->choice_text); ?></span>
+                                                    <?php if($choice->is_correct): ?>
                                                         <i class="fa-solid fa-circle-check fs-5" style="color: #10b981;"></i>
-                                                    @endif
+                                                    <?php endif; ?>
                                                 </div>
                                             </div>
-                                        @endforeach
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </div>
-                                @elseif($question->type == 'TF')
+                                <?php elseif($question->type == 'TF'): ?>
                                     <div class="p-3 rounded-3 fw-bold d-inline-flex align-items-center gap-2"
                                         style="background-color: rgba(16, 185, 129, 0.05); color: #10b981; border: 1px dashed #10b981;">
                                         <i class="fa-solid fa-check-double"></i> الإجابة الصحيحة:
-                                        {{ $question->correct_answer == 'T' ? 'صح (True)' : 'خطأ (False)' }}
+                                        <?php echo e($question->correct_answer == 'T' ? 'صح (True)' : 'خطأ (False)'); ?>
+
                                     </div>
-                                @else
+                                <?php else: ?>
                                     <div class="p-3 rounded-3"
                                         style="background-color: var(--bg-main); border: 1px solid var(--border-color); border-right: 4px solid #3b82f6;">
                                         <span class="text-muted small d-block mb-2"><i class="fa-solid fa-pen text-info me-1"></i>
                                             نموذج الإجابة الصحيحة:</span>
                                         <strong
-                                            style="color: var(--text-main); white-space: pre-line;">{{ $question->correct_answer }}</strong>
+                                            style="color: var(--text-main); white-space: pre-line;"><?php echo e($question->correct_answer); ?></strong>
                                     </div>
-                                @endif
+                                <?php endif; ?>
                             </div>
-                        @empty
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                             <div class="text-center py-5 text-muted">
                                 <i class="fa-solid fa-circle-question fs-1 d-block mb-3 opacity-50"></i>
                                 لا توجد أسئلة مرتبطة بهذه الدورة حالياً. يمكنك إنشاء سؤال جديد.
                             </div>
-                        @endforelse
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    {{-- نافذة (Modal) إنشاء سؤال جديد --}}
+    
     <div class="modal fade" id="createQuestionModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content glass-modal text-end" dir="rtl"
@@ -252,8 +255,8 @@
                     <button type="button" class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
-                <form action="{{ route('dashboard.past-exams.questions.store', $pastExam->id) }}" method="POST">
-                    @csrf
+                <form action="<?php echo e(route('dashboard.past-exams.questions.store', $pastExam->id)); ?>" method="POST">
+                    <?php echo csrf_field(); ?>
                     <div class="modal-body p-4">
                         <div class="row mb-4 g-3">
                             <div class="col-md-6 text-start" dir="rtl">
@@ -409,4 +412,5 @@
             }
         }
     </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH D:\project\laravel\school-for-blind-Backend\school_for_blind\resources\views/pages/past_exams/show.blade.php ENDPATH**/ ?>

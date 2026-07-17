@@ -29,11 +29,11 @@ class PastExam extends Model
     {
         return $this->morphMany(Favorite::class, 'favorable');
     }
-    protected static function booted()
-    {
-        static::addGlobalScope('examStats', function (Builder $builder) {
-            $builder->withCount('questions as questionsCount')
-                ->withSum('questions as totalmark', 'points');
-        });
-    }
+    // protected static function booted()
+    // {
+    //     static::addGlobalScope('examStats', function (Builder $builder) {
+    //         $builder->withCount('questions as questionsCount')
+    //             ->withSum('questions as totalmark', 'points');
+    //     });
+    // }
 }
