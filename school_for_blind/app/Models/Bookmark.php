@@ -9,7 +9,7 @@ class Bookmark extends Model
     protected $fillable = [
 'name','timestamp_in_seconds',
 'student_id',
-'lesson_id'
+'record_id',
     ];
 public function student()
     {

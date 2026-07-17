@@ -2,8 +2,8 @@
 
 use App\Http\Controllers\Admin\TeacherTransferController;
 use App\Http\Controllers\AnnouncementController;
-use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\Api\ConversationController;
+use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\CaregiverController;
 use App\Http\Controllers\DonationController;
 use App\Http\Controllers\FavoriteController;
@@ -25,6 +25,8 @@ use App\Http\Controllers\StudentQuizController;
 use App\Http\Controllers\SupportTicketController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\TeacherExamController;
+use App\Http\Controllers\TeacherExamcorrectController;
+use App\Http\Controllers\Teacherpaymentcontroller;
 use App\Http\Controllers\TeacherQuizController;
 use App\Http\Middleware\CheckCallCreatorRole;
 use App\Http\Middleware\CheckIsStudent;
@@ -248,11 +250,31 @@ Route::get('/exams/{id}/solutions', [StudentExamController::class, 'getExamWithS
 Route::post('/exams/submit-answer', [StudentExamController::class, 'submitAnswer'])->middleware('auth:sanctum');
 Route::get('/submissions/{id}/details', [StudentExamController::class, 'getSubmissionDetails'])->middleware('auth:sanctum');
 Route::post('/exams/submit', [StudentExamController::class, 'submitExam'])->middleware('auth:sanctum');
+Route::get('/student/exam-details/{id}', [StudentExamController::class, 'getExamDetails']);
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/bookmarks', [BookmarkController::class, 'store']);
-    Route::get('/recordings/{recording}/bookmarks', [BookmarkController::class, 'index']);
-    Route::delete('/bookmarks/{id}', [BookmarkController::class, 'destroy']);
+    
+    Route::get('recordings/{recordingId}/bookmarks', [BookmarkController::class, 'index']);
+
+    Route::post('bookmarks', [BookmarkController::class, 'store']);
+
+    Route::put('bookmarks/{id}', [BookmarkController::class, 'update']);
+
+    Route::delete('bookmarks/{id}', [BookmarkController::class, 'destroy']);
+    
 });
+
+
+
 Route::get('/teacher/pending-essay-answers', [TeacherQuizController::class, 'getPendingEssayAnswers'])->middleware(['auth:sanctum', IsTeacher::class]);
 Route::post('/teacher/grade-full-quiz-submission', [TeacherQuizController::class, 'gradeFullQuizSubmission'])->middleware(['auth:sanctum', IsTeacher::class]); 
+
+Route::middleware('auth:teacher')->group(function () {
+    Route::get('/teacher/pending-exams', [TeacherExamcorrectController::class, 'getPendingExamEssayAnswers']);
+    
+    Route::post('/teacher/grade-exam', [TeacherExamcorrectController::class, 'gradeFullExamSubmission']);
+});
+
+
+Route::post('/transfer/salary/teacher',[Teacherpaymentcontroller::class,'setupTeacherBank']);/*->middleware(['auth:sanctum', CheckUserType::class . ':admin']);*/
+Route::post('/teacher/pay-salary', [TeacherPaymentController::class, 'payTeacherSalary']);

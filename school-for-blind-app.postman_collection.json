@@ -3,7 +3,7 @@
     "_postman_id": "69ed107e-d42e-4b5f-9c27-11e53c1c3253",
     "name": "school-for-blind-app",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "56227181",
+    "_exporter_id": "56192936",
     "_collection_link": "https://go.postman.co/collection/56192936-69ed107e-d42e-4b5f-9c27-11e53c1c3253?source=collection_link"
   },
   "item": [
@@ -12,11 +12,8 @@
       "item": [
         {
           "name": "Donation",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
           "request": {
-            "method": "GET",
+            "method": "POST",
             "header": [
               {
                 "key": "Accept",
@@ -39,16 +36,19 @@
               }
             },
             "url": {
-              "raw": "https://goes-litmus-uncouth.ngrok-free.dev/api/donate",
-              "protocol": "https",
+              "raw": "http://127.0.0.1:8000/api/donation/checkout",
+              "protocol": "http",
               "host": [
-                "goes-litmus-uncouth",
-                "ngrok-free",
-                "dev"
+                "127",
+                "0",
+                "0",
+                "1"
               ],
+              "port": "8000",
               "path": [
                 "api",
-                "donate"
+                "donation",
+                "checkout"
               ]
             }
           },
@@ -220,7 +220,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "\r\n{\r\n    \"payment_intent_id\": \"pi_3TizK5AAqVJRoLLh1wDXO5S8\"\r\n}\r\n",
+              "raw": "\r\n{\r\n    \"payment_intent_id\": \"pi_3TtsctAAqVJRoLLh0KoAuWXr\"\r\n}\r\n",
               "options": {
                 "raw": {
                   "language": "json"
@@ -863,6 +863,400 @@
               "body": "{\n    \"success\": false,\n    \"logged_out\": true,\n    \"message\": \" عذراً، انتهت صلاحية الجلسة أو تم تسجيل الخروج مسبقاً. يرجى العودة لصفحة تسجيل الدخول\"\n}"
             }
           ]
+        },
+        {
+          "name": "New Request",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "puq1h8Lf7JLQfytpo3zzsgTzaqlE6GSfalEIG0b3d81cc16a",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"teacher_id\": 1,\r\n    \"iban\": \"DE89370400440532013000\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/transfer/salary/teacher",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "transfer",
+                "salary",
+                "teacher"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "New Request",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"teacher_id\": 1,\r\n    \"iban\": \"DE89370400440532013000\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/transfer/salary/teacher",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "transfer",
+                    "salary",
+                    "teacher"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 16 Jul 2026 16:39:41 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"logged_out\": true,\n    \"message\": \" عذراً، انتهت صلاحية الجلسة أو تم تسجيل الخروج مسبقاً. يرجى العودة لصفحة تسجيل الدخول\"\n}"
+            },
+            {
+              "name": "New Request",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"teacher_id\": 1,\r\n    \"iban\": \"DE89370400440532013000\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/transfer/salary/teacher",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "transfer",
+                    "salary",
+                    "teacher"
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 16 Jul 2026 16:42:13 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"غير مصرح لك بالوصول لهذا المسار.\"\n}"
+            },
+            {
+              "name": "New Request",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"teacher_id\": 1,\r\n    \"iban\": \"DE89370400440532013000\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/transfer/salary/teacher",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "transfer",
+                    "salary",
+                    "teacher"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 16 Jul 2026 16:43:16 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"success\",\n    \"message\": \"تم ربط الحساب البنكي للأستاذ وتشفيره في Stripe بنجاح!\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "New Request",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"teacher_id\": 1,\r\n    \"amount\": 100\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/teacher/pay-salary",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "teacher",
+                "pay-salary"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "New Request",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"teacher_id\": 1,\r\n    \"amount\": 100\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/teacher/pay-salary",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "teacher",
+                    "pay-salary"
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 16 Jul 2026 16:50:44 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"error\",\n    \"message\": \"فشل التحويل: Attempt to read property \\\"balance\\\" on null\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "New Request",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
         }
       ]
     },
@@ -3639,6 +4033,262 @@
       ]
     },
     {
+      "name": "Parent",
+      "item": [
+        {
+          "name": "login",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/caregiver/login?phone=0993297136&password=zik6f1fhsx",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "caregiver",
+                "login"
+              ],
+              "query": [
+                {
+                  "key": "phone",
+                  "value": "0993297136"
+                },
+                {
+                  "key": "password",
+                  "value": "zik6f1fhsx"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "success",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/caregiver/login?phone=0993297136&password=zik6f1fhsx",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "caregiver",
+                    "login"
+                  ],
+                  "query": [
+                    {
+                      "key": "phone",
+                      "value": "0993297136",
+                      "type": "text"
+                    },
+                    {
+                      "key": "password",
+                      "value": "zik6f1fhsx",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 16 Jun 2026 08:32:19 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"تم تسجيل الدخول بنجاح.\",\n    \"data\": {\n        \"user\": {\n            \"id\": 1,\n            \"phone\": \"0993297136\",\n            \"fcm_token\": null\n        },\n        \"token\": \"47|ZL9JuzdXIa8W01lh5QOZyKzL9vqEAiiRSi2PAm5i667afdd8\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "logout",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "ZL9JuzdXIa8W01lh5QOZyKzL9vqEAiiRSi2PAm5i667afdd8",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/caregiver/logout",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "caregiver",
+                "logout"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "success",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": []
+                },
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/caregiver/logout",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "caregiver",
+                    "logout"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 16 Jun 2026 08:38:24 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"تم تسجيل الخروج بنجاح وإبطال صلاحية الجهاز.\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "name": "Otp",
       "item": [
         {
@@ -5696,35 +6346,33 @@
               "formdata": [
                 {
                   "key": "quiz_id",
-                  "value": "17",
+                  "value": "561",
                   "type": "text",
                   "uuid": "234763b7-dbeb-4ed8-b228-6069a397a628"
                 },
                 {
                   "key": "answers[0][question_id]",
-                  "value": "193",
+                  "value": "4138",
                   "type": "text",
                   "uuid": "99962cab-b73e-40b0-b948-c39c0507b7d1"
                 },
                 {
                   "key": "answers[0][choice_id]",
-                  "value": "257",
+                  "value": "5513",
                   "type": "text",
                   "uuid": "347506e6-54ce-4349-b1b3-0557dc6892f9"
                 },
                 {
                   "key": "answers[1][question_id]",
-                  "value": "194",
+                  "value": "4139",
                   "type": "text",
-                  "uuid": "7ef746ad-bcd4-4e7c-b131-0fa9d9276da5",
-                  "disabled": true
+                  "uuid": "7ef746ad-bcd4-4e7c-b131-0fa9d9276da5"
                 },
                 {
                   "key": "answers[1][text_answer]",
                   "value": "True",
                   "type": "text",
-                  "uuid": "54d63907-0de7-498d-bcac-b189d0a56483",
-                  "disabled": true
+                  "uuid": "54d63907-0de7-498d-bcac-b189d0a56483"
                 },
                 {
                   "key": "answers[2][audio_answer]",
@@ -7785,684 +8433,6 @@
       ]
     },
     {
-      "name": "Announcement",
-      "item": [
-        {
-          "name": "student_announcements",
-          "request": {
-            "auth": {
-              "type": "noauth"
-            },
-            "method": "POST",
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"type\": \"school_timetable\",\r\n    \"target_audience\": \"student\",\r\n    \"level\": \"ninth\",\r\n    \"title\": \"برنامج الدوام الأسبوعي لعام 2026\", \r\n    \"content\": {\r\n        \"columns\": [\r\n            \"الحصة\",\r\n            \"الأحد\",\r\n            \"الإثنين\"\r\n        ],\r\n        \"rows\": [\r\n            {\r\n                \"period\": \"الأولى\",\r\n                \"sunday\": \"رياضيات\",\r\n                \"monday\": \"فيزياء\"\r\n            }\r\n        ]\r\n    }\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://127.0.0.1:8000/api/announcements",
-              "protocol": "http",
-              "host": [
-                "127",
-                "0",
-                "0",
-                "1"
-              ],
-              "port": "8000",
-              "path": [
-                "api",
-                "announcements"
-              ]
-            }
-          },
-          "response": [
-            {
-              "name": "student_announcements",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Accept",
-                    "value": "application/json",
-                    "type": "text"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n    \"type\": \"normal\",\r\n    \"content\": \r\n      \"تؤجل المدرسة امتحان مادة العلوم للثلاثاء الفادم بمناسبة عيد رأس السنة الهجرية كل عام وأنتم إلى الله أقرب\"\r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": {
-                  "raw": "http://127.0.0.1:8000/api/announcements",
-                  "protocol": "http",
-                  "host": [
-                    "127",
-                    "0",
-                    "0",
-                    "1"
-                  ],
-                  "port": "8000",
-                  "path": [
-                    "api",
-                    "announcements"
-                  ]
-                }
-              },
-              "status": "Created",
-              "code": 201,
-              "_postman_previewlanguage": "Text",
-              "header": [
-                {
-                  "key": "Host",
-                  "value": "127.0.0.1:8000"
-                },
-                {
-                  "key": "Connection",
-                  "value": "close"
-                },
-                {
-                  "key": "X-Powered-By",
-                  "value": "PHP/8.2.12"
-                },
-                {
-                  "key": "Cache-Control",
-                  "value": "no-cache, private"
-                },
-                {
-                  "key": "Date",
-                  "value": "Sun, 14 Jun 2026 14:26:35 GMT"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                },
-                {
-                  "key": "Access-Control-Allow-Origin",
-                  "value": "*"
-                }
-              ],
-              "cookie": [],
-              "body": "{\n    \"message\": \"تم نشر الإعلان بنجاح للجميع\",\n    \"data\": {\n        \"id\": 6,\n        \"type\": \"normal\",\n        \"content\": \"تؤجل المدرسة امتحان مادة العلوم للثلاثاء الفادم بمناسبة عيد رأس السنة الهجرية كل عام وأنتم إلى الله أقرب\",\n        \"created_at\": \"2026-06-14T14:26:35.000000Z\",\n        \"updated_at\": \"2026-06-14T14:26:35.000000Z\"\n    }\n}"
-            }
-          ]
-        },
-        {
-          "name": "view_announcement",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "jf1io24rLabVP41ZsevA59MZCFIPHWbdcoP8h2fa9308d9ea",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "GET",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"content\": \"الطلاب الأعزاء، نود إعلامكم بأن عطلة نهاية الأسبوع ستبدأ من صباح الخميس القادم نظراً لأعمال الصيانة في المدرسة.\"\r\n}"
-            },
-            "url": {
-              "raw": "http://127.0.0.1:8000/api/announcements",
-              "protocol": "http",
-              "host": [
-                "127",
-                "0",
-                "0",
-                "1"
-              ],
-              "port": "8000",
-              "path": [
-                "api",
-                "announcements"
-              ]
-            }
-          },
-          "response": [
-            {
-              "name": "view_announcement",
-              "originalRequest": {
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "Accept",
-                    "value": "application/json",
-                    "type": "text"
-                  }
-                ],
-                "url": {
-                  "raw": "http://127.0.0.1:8000/api/announcements",
-                  "protocol": "http",
-                  "host": [
-                    "127",
-                    "0",
-                    "0",
-                    "1"
-                  ],
-                  "port": "8000",
-                  "path": [
-                    "api",
-                    "announcements"
-                  ]
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "_postman_previewlanguage": "Text",
-              "header": [
-                {
-                  "key": "Host",
-                  "value": "127.0.0.1:8000"
-                },
-                {
-                  "key": "Connection",
-                  "value": "close"
-                },
-                {
-                  "key": "X-Powered-By",
-                  "value": "PHP/8.2.12"
-                },
-                {
-                  "key": "Cache-Control",
-                  "value": "no-cache, private"
-                },
-                {
-                  "key": "Date",
-                  "value": "Sun, 14 Jun 2026 14:40:53 GMT"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                },
-                {
-                  "key": "Access-Control-Allow-Origin",
-                  "value": "*"
-                }
-              ],
-              "cookie": [],
-              "body": "[\n    {\n        \"id\": 2,\n        \"type\": \"exam_schedule\",\n        \"created_at\": \"2026-06-14T14:40:45.000000Z\",\n        \"updated_at\": \"2026-06-14T14:40:45.000000Z\"\n    },\n    {\n        \"id\": 1,\n        \"type\": \"normal\",\n        \"content\": \"تؤجل المدرسة امتحان مادة العلوم للثلاثاء الفادم بمناسبة عيد رأس السنة الهجرية كل عام وأنتم إلى الله أقرب\",\n        \"created_at\": \"2026-06-14T14:38:42.000000Z\",\n        \"updated_at\": \"2026-06-14T14:38:42.000000Z\"\n    }\n]"
-            }
-          ]
-        },
-        {
-          "name": "view_exam_schedule",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": ""
-            },
-            "url": {
-              "raw": "http://127.0.0.1:8000/api/announcements/exam/1",
-              "protocol": "http",
-              "host": [
-                "127",
-                "0",
-                "0",
-                "1"
-              ],
-              "port": "8000",
-              "path": [
-                "api",
-                "announcements",
-                "exam",
-                "1"
-              ]
-            }
-          },
-          "response": [
-            {
-              "name": "New Request",
-              "originalRequest": {
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "Accept",
-                    "value": "application/json",
-                    "type": "text"
-                  }
-                ],
-                "url": {
-                  "raw": "http://127.0.0.1:8000/api/announcements/exam/2",
-                  "protocol": "http",
-                  "host": [
-                    "127",
-                    "0",
-                    "0",
-                    "1"
-                  ],
-                  "port": "8000",
-                  "path": [
-                    "api",
-                    "announcements",
-                    "exam",
-                    "2"
-                  ]
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "_postman_previewlanguage": "Text",
-              "header": [
-                {
-                  "key": "Host",
-                  "value": "127.0.0.1:8000"
-                },
-                {
-                  "key": "Connection",
-                  "value": "close"
-                },
-                {
-                  "key": "X-Powered-By",
-                  "value": "PHP/8.2.12"
-                },
-                {
-                  "key": "Cache-Control",
-                  "value": "no-cache, private"
-                },
-                {
-                  "key": "Date",
-                  "value": "Sun, 14 Jun 2026 15:02:20 GMT"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                },
-                {
-                  "key": "Access-Control-Allow-Origin",
-                  "value": "*"
-                }
-              ],
-              "cookie": [],
-              "body": "{\n    \"id\": 2,\n    \"type\": \"exam_schedule\",\n    \"title\": \"برنامج امتحانات الفصل الثاني لعام 2026\",\n    \"exam_program\": {\n        \"columns\": [\n            \"اليوم والتاريخ\",\n            \"المادة\",\n            \"التوقيت\"\n        ],\n        \"rows\": [\n            {\n                \"date\": \"الأحد 2026-06-21\",\n                \"subject\": \"الرياضيات\",\n                \"time\": \"09:00 AM - 11:00 AM\"\n            }\n        ]\n    },\n    \"created_at\": \"2026-06-14T15:00:40.000000Z\"\n}"
-            }
-          ]
-        },
-        {
-          "name": "get_school_timetable",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "jf1io24rLabVP41ZsevA59MZCFIPHWbdcoP8h2fa9308d9ea",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://127.0.0.1:8000/api/announcements/school-timetable/first",
-              "protocol": "http",
-              "host": [
-                "127",
-                "0",
-                "0",
-                "1"
-              ],
-              "port": "8000",
-              "path": [
-                "api",
-                "announcements",
-                "school-timetable",
-                "first"
-              ]
-            }
-          },
-          "response": [
-            {
-              "name": "get_school_timetable",
-              "originalRequest": {
-                "method": "GET",
-                "header": [],
-                "url": {
-                  "raw": "http://127.0.0.1:8000/api/announcements/school-timetable/first",
-                  "protocol": "http",
-                  "host": [
-                    "127",
-                    "0",
-                    "0",
-                    "1"
-                  ],
-                  "port": "8000",
-                  "path": [
-                    "api",
-                    "announcements",
-                    "school-timetable",
-                    "first"
-                  ]
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "_postman_previewlanguage": null,
-              "header": [
-                {
-                  "key": "Host",
-                  "value": "127.0.0.1:8000"
-                },
-                {
-                  "key": "Connection",
-                  "value": "close"
-                },
-                {
-                  "key": "X-Powered-By",
-                  "value": "PHP/8.2.12"
-                },
-                {
-                  "key": "Cache-Control",
-                  "value": "no-cache, private"
-                },
-                {
-                  "key": "Date",
-                  "value": "Thu, 02 Jul 2026 17:28:58 GMT"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                },
-                {
-                  "key": "Access-Control-Allow-Origin",
-                  "value": "*"
-                }
-              ],
-              "cookie": [],
-              "body": "{\n    \"id\": 3,\n    \"type\": \"school_timetable\",\n    \"title\": \"برنامج الدوام الأسبوعي لعام 2026\",\n    \"target_audience\": \"student\",\n    \"level\": \"ninth\",\n    \"timetable_data\": {\n        \"columns\": [\n            \"الحصة\",\n            \"الأحد\",\n            \"الإثنين\"\n        ],\n        \"rows\": [\n            {\n                \"period\": \"الأولى\",\n                \"sunday\": \"رياضيات\",\n                \"monday\": \"فيزياء\"\n            }\n        ]\n    },\n    \"created_at\": \"2026-07-02T17:24:32.000000Z\",\n    \"updated_at\": \"2026-07-02T17:24:32.000000Z\"\n}"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Parent",
-      "item": [
-        {
-          "name": "login",
-          "request": {
-            "auth": {
-              "type": "noauth"
-            },
-            "method": "POST",
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://127.0.0.1:8000/api/caregiver/login?phone=0993297136&password=zik6f1fhsx",
-              "protocol": "http",
-              "host": [
-                "127",
-                "0",
-                "0",
-                "1"
-              ],
-              "port": "8000",
-              "path": [
-                "api",
-                "caregiver",
-                "login"
-              ],
-              "query": [
-                {
-                  "key": "phone",
-                  "value": "0993297136"
-                },
-                {
-                  "key": "password",
-                  "value": "zik6f1fhsx"
-                }
-              ]
-            }
-          },
-          "response": [
-            {
-              "name": "success",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Accept",
-                    "value": "application/json",
-                    "type": "text"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": {
-                  "raw": "http://127.0.0.1:8000/api/caregiver/login?phone=0993297136&password=zik6f1fhsx",
-                  "protocol": "http",
-                  "host": [
-                    "127",
-                    "0",
-                    "0",
-                    "1"
-                  ],
-                  "port": "8000",
-                  "path": [
-                    "api",
-                    "caregiver",
-                    "login"
-                  ],
-                  "query": [
-                    {
-                      "key": "phone",
-                      "value": "0993297136",
-                      "type": "text"
-                    },
-                    {
-                      "key": "password",
-                      "value": "zik6f1fhsx",
-                      "type": "text"
-                    }
-                  ]
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "_postman_previewlanguage": "Text",
-              "header": [
-                {
-                  "key": "Host",
-                  "value": "127.0.0.1:8000"
-                },
-                {
-                  "key": "Connection",
-                  "value": "close"
-                },
-                {
-                  "key": "X-Powered-By",
-                  "value": "PHP/8.2.12"
-                },
-                {
-                  "key": "Cache-Control",
-                  "value": "no-cache, private"
-                },
-                {
-                  "key": "Date",
-                  "value": "Tue, 16 Jun 2026 08:32:19 GMT"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                },
-                {
-                  "key": "Access-Control-Allow-Origin",
-                  "value": "*"
-                }
-              ],
-              "cookie": [],
-              "body": "{\n    \"success\": true,\n    \"message\": \"تم تسجيل الدخول بنجاح.\",\n    \"data\": {\n        \"user\": {\n            \"id\": 1,\n            \"phone\": \"0993297136\",\n            \"fcm_token\": null\n        },\n        \"token\": \"47|ZL9JuzdXIa8W01lh5QOZyKzL9vqEAiiRSi2PAm5i667afdd8\"\n    }\n}"
-            }
-          ]
-        },
-        {
-          "name": "logout",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "ZL9JuzdXIa8W01lh5QOZyKzL9vqEAiiRSi2PAm5i667afdd8",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "POST",
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "formdata",
-              "formdata": []
-            },
-            "url": {
-              "raw": "http://127.0.0.1:8000/api/caregiver/logout",
-              "protocol": "http",
-              "host": [
-                "127",
-                "0",
-                "0",
-                "1"
-              ],
-              "port": "8000",
-              "path": [
-                "api",
-                "caregiver",
-                "logout"
-              ]
-            }
-          },
-          "response": [
-            {
-              "name": "success",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Accept",
-                    "value": "application/json",
-                    "type": "text"
-                  }
-                ],
-                "body": {
-                  "mode": "formdata",
-                  "formdata": []
-                },
-                "url": {
-                  "raw": "http://127.0.0.1:8000/api/caregiver/logout",
-                  "protocol": "http",
-                  "host": [
-                    "127",
-                    "0",
-                    "0",
-                    "1"
-                  ],
-                  "port": "8000",
-                  "path": [
-                    "api",
-                    "caregiver",
-                    "logout"
-                  ]
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "_postman_previewlanguage": "Text",
-              "header": [
-                {
-                  "key": "Host",
-                  "value": "127.0.0.1:8000"
-                },
-                {
-                  "key": "Connection",
-                  "value": "close"
-                },
-                {
-                  "key": "X-Powered-By",
-                  "value": "PHP/8.2.12"
-                },
-                {
-                  "key": "Cache-Control",
-                  "value": "no-cache, private"
-                },
-                {
-                  "key": "Date",
-                  "value": "Tue, 16 Jun 2026 08:38:24 GMT"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                },
-                {
-                  "key": "Access-Control-Allow-Origin",
-                  "value": "*"
-                }
-              ],
-              "cookie": [],
-              "body": "{\n    \"success\": true,\n    \"message\": \"تم تسجيل الخروج بنجاح وإبطال صلاحية الجهاز.\"\n}"
-            }
-          ]
-        }
-      ]
-    },
-    {
       "name": "student_lesson",
       "item": [
         {
@@ -9113,6 +9083,738 @@
               ],
               "cookie": [],
               "body": "{\n    \"message\": \"Subject not found\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "past_exam",
+      "item": [
+        {
+          "name": "info",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/past-exams?subject_id=17",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "past-exams"
+              ],
+              "query": [
+                {
+                  "key": "subject_id",
+                  "value": "17"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "info",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/past-exams?subject_id=17",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "past-exams"
+                  ],
+                  "query": [
+                    {
+                      "key": "subject_id",
+                      "value": "17"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 13 Jul 2026 15:15:57 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"success\",\n    \"data\": [\n        {\n            \"id\": 1,\n            \"title\": \"امتحان شهادة الدراسة الثانوية - كيمياء - الدورة الأولى\",\n            \"year\": \"2021\",\n            \"session\": \"first\",\n            \"is_favorited\": false\n        },\n        {\n            \"id\": 2,\n            \"title\": \"امتحان شهادة الدراسة الثانوية - كيمياء - الدورة الثانية\",\n            \"year\": \"2021\",\n            \"session\": \"second\",\n            \"is_favorited\": false\n        },\n        {\n            \"id\": 3,\n            \"title\": \"الامتحان العام لنيل الشهادة الثانوية - كيمياء\",\n            \"year\": \"2022\",\n            \"session\": \"first\",\n            \"is_favorited\": false\n        },\n        {\n            \"id\": 4,\n            \"title\": \"امتحان بكالوريا علمي - مادة الكيمياء - دورة أولى\",\n            \"year\": \"2023\",\n            \"session\": \"first\",\n            \"is_favorited\": false\n        },\n        {\n            \"id\": 5,\n            \"title\": \"الامتحان الموحد للشهادة الثانوية العامة - الكيمياء\",\n            \"year\": \"2024\",\n            \"session\": \"first\",\n            \"is_favorited\": false\n        }\n    ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "past_exam_question",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/past-exams/1/questions",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "past-exams",
+                "1",
+                "questions"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "past_exam_question",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/past-exams/1/questions",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "past-exams",
+                    "1",
+                    "questions"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 13 Jul 2026 15:23:06 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"success\",\n    \"data\": [\n        {\n            \"id\": 25,\n            \"type\": \"mcq\",\n            \"description\": \"السؤال 1: تزداد سرعة التفاعل الكيميائي بزيادة درجة الحرارة بسبب:\",\n            \"choices\": [\n                {\n                    \"id\": 33,\n                    \"choice_text\": \"زيادة طاقة التنشيط نفسها\"\n                },\n                {\n                    \"id\": 34,\n                    \"choice_text\": \"زيادة عدد الجزيئات التي تملك طاقة تنشيط\"\n                },\n                {\n                    \"id\": 35,\n                    \"choice_text\": \"نقصان عدد التصادمات الفعالة\"\n                },\n                {\n                    \"id\": 36,\n                    \"choice_text\": \"زيادة الحجم الكلي للمزيج\"\n                }\n            ]\n        },\n        {\n            \"id\": 26,\n            \"type\": \"TEXT\",\n            \"description\": \"السؤال 2: نعاير حمض النمل $HCOOH$ بهدروكسيد الصوديوم $NaOH$ والمطلوب: a) ما طبيعة الوسط عند نهاية المعايرة؟ ولماذا؟ b) حدّد المشعر المناسب لهذه المعايرة.\"\n        },\n        {\n            \"id\": 27,\n            \"type\": \"TEXT\",\n            \"description\": \"السؤال 3: يحدث التفاعل المتوازن الآتي في شروط مناسبة: $2NO_{(g)} + O_{2(g)} \\\\rightleftarrows 2NO_{2(g)}$ ، $\\\\Delta H < 0$. المطلوب: a) اكتب علاقة ثابت التوازن $K_p$ لهذا التفاعل المتوازن بدلالة الضغوط الجزئية. b) بيّن أثر زيادة درجة الحرارة على كلّ من: (حالة التوازن ، قيمة ثابت التوازن $K_c$).\"\n        },\n        {\n            \"id\": 28,\n            \"type\": \"TEXT\",\n            \"description\": \"السؤال 4: المسألة الأولى: يحوي وعاء مغلق حجمه 41 L مزيجاً غازياً مكوّن من 48 g من غاز الميتان $CH_4$ و 60 g من غاز الايتان $C_2H_6$. المطلوب حساب: الضغط الكلي للمزيج الغازي عند الدرجة 300 K. الكسر المولي لغاز الميتان عند درجة الحرارة السابقة.\"\n        },\n        {\n            \"id\": 29,\n            \"type\": \"TEXT\",\n            \"description\": \"السؤال 5: المسألة الثانية: يحدث التفاعل الأوّلي الآتي في شروط مناسبة: $2A_{(g)} + B_{(g)} \\\\longrightarrow 2C_{(g)}$ فإذا علمت أنّ التراكيز الابتدائية: $[A]_0 = 0.4 mol.L^{-1}$ ، $[B]_0 = 0.2 mol.L^{-1}$ ، وثابت سرعة التفاعل $k = 10^{-2}$. المطلوب حساب السرعة الابتدائية للتفاعل وحدّد رتبته.\"\n        },\n        {\n            \"id\": 30,\n            \"type\": \"TEXT\",\n            \"description\": \"السؤال 6: المسألة الثالثة: تُذاب عينة غير نقية من هدروكسيد البوتاسيوم كتلتها 5.6 g في الماء المقطّر، ويُكمل الحجم إلى 800 mL، فإذا كان تركيز محلول هدروكسيد البوتاسيوم السابق $0.1 mol.L^{-1}$. المطلوب حساب قيمة $pH$ محلول هدروكسيد البوتاسيوم المستعمل.\"\n        }\n    ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "past_exam_soiution",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/past-exams/1/solutions",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "past-exams",
+                "1",
+                "solutions"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "New Request",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/past-exams/1/solutions",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "past-exams",
+                    "1",
+                    "solutions"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 13 Jul 2026 15:29:15 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"success\",\n    \"data\": [\n        {\n            \"id\": 25,\n            \"type\": \"mcq\",\n            \"description\": \"السؤال 1: تزداد سرعة التفاعل الكيميائي بزيادة درجة الحرارة بسبب:\",\n            \"choices\": [\n                {\n                    \"id\": 33,\n                    \"choice_text\": \"زيادة طاقة التنشيط نفسها\",\n                    \"is_correct\": false\n                },\n                {\n                    \"id\": 34,\n                    \"choice_text\": \"زيادة عدد الجزيئات التي تملك طاقة تنشيط\",\n                    \"is_correct\": true\n                },\n                {\n                    \"id\": 35,\n                    \"choice_text\": \"نقصان عدد التصادمات الفعالة\",\n                    \"is_correct\": false\n                },\n                {\n                    \"id\": 36,\n                    \"choice_text\": \"زيادة الحجم الكلي للمزيج\",\n                    \"is_correct\": false\n                }\n            ]\n        },\n        {\n            \"id\": 26,\n            \"type\": \"TEXT\",\n            \"description\": \"السؤال 2: نعاير حمض النمل $HCOOH$ بهدروكسيد الصوديوم $NaOH$ والمطلوب: a) ما طبيعة الوسط عند نهاية المعايرة؟ ولماذا؟ b) حدّد المشعر المناسب لهذه المعايرة.\",\n            \"solution\": \"a) الوسط أساسي، بسبب احتواء المحلول على أيونات النملات $HCOO^-$ الذي يسلك سلوك أساس (ضعيف).\\nb) المشعر المناسب: فينول فتالئين.\"\n        },\n        {\n            \"id\": 27,\n            \"type\": \"TEXT\",\n            \"description\": \"السؤال 3: يحدث التفاعل المتوازن الآتي في شروط مناسبة: $2NO_{(g)} + O_{2(g)} \\\\rightleftarrows 2NO_{2(g)}$ ، $\\\\Delta H < 0$. المطلوب: a) اكتب علاقة ثابت التوازن $K_p$ لهذا التفاعل المتوازن بدلالة الضغوط الجزئية. b) بيّن أثر زيادة درجة الحرارة على كلّ من: (حالة التوازن ، قيمة ثابت التوازن $K_c$).\",\n            \"solution\": \"a) علاقة ثابت التوازن:\\n$$K_p = \\\\frac{P^2_{(NO_2)}}{P^2_{(NO)} \\\\times P_{(O_2)}}$$\\n\\nb) أثر زيادة درجة الحرارة:\\nيرجح التفاعل العكسي، وتنقص قيمة $K_c$.\"\n        },\n        {\n            \"id\": 28,\n            \"type\": \"TEXT\",\n            \"description\": \"السؤال 4: المسألة الأولى: يحوي وعاء مغلق حجمه 41 L مزيجاً غازياً مكوّن من 48 g من غاز الميتان $CH_4$ و 60 g من غاز الايتان $C_2H_6$. المطلوب حساب: الضغط الكلي للمزيج الغازي عند الدرجة 300 K. الكسر المولي لغاز الميتان عند درجة الحرارة السابقة.\",\n            \"solution\": \"الطلب الأول (الضغط الكلي):\\n$n = \\\\frac{m}{M}$\\n$n_{CH_4} = \\\\frac{48}{16} = 3 (mol)$\\n$n_{C_2H_6} = \\\\frac{60}{30} = 2 (mol)$\\n$P_t = \\\\frac{n_t R T}{V}$\\n$P_t = \\\\frac{(3+2) \\\\times 0.082 \\\\times 300}{41}$\\n$P_t = 3 \\\\text{ atm}$\\n\\nالطلب الثاني (الكسر المولي):\\n$$X_{(CH_4)} = \\\\frac{n_{CH_4}}{n_t}$$\\n$$X_{(CH_4)} = \\\\frac{3}{5}$$\"\n        },\n        {\n            \"id\": 29,\n            \"type\": \"TEXT\",\n            \"description\": \"السؤال 5: المسألة الثانية: يحدث التفاعل الأوّلي الآتي في شروط مناسبة: $2A_{(g)} + B_{(g)} \\\\longrightarrow 2C_{(g)}$ فإذا علمت أنّ التراكيز الابتدائية: $[A]_0 = 0.4 mol.L^{-1}$ ، $[B]_0 = 0.2 mol.L^{-1}$ ، وثابت سرعة التفاعل $k = 10^{-2}$. المطلوب حساب السرعة الابتدائية للتفاعل وحدّد رتبته.\",\n            \"solution\": \"الطلب الأول:\\n$v = k[A]^2[B]$\\n$v_0 = 10^{-2}(0.4)^2(0.2)$\\n$v_0 = 32 \\\\times 10^{-5} mol.L^{-1}.s^{-1}$\\nرتبة التفاعل: 3\"\n        },\n        {\n            \"id\": 30,\n            \"type\": \"TEXT\",\n            \"description\": \"السؤال 6: المسألة الثالثة: تُذاب عينة غير نقية من هدروكسيد البوتاسيوم كتلتها 5.6 g في الماء المقطّر، ويُكمل الحجم إلى 800 mL، فإذا كان تركيز محلول هدروكسيد البوتاسيوم السابق $0.1 mol.L^{-1}$. المطلوب حساب قيمة $pH$ محلول هدروكسيد البوتاسيوم المستعمل.\",\n            \"solution\": \"$[KOH] = 10^{-1} mol.L^{-1}$\\n$[OH^-] = 10^{-1} (mol.L^{-1})$\\n$[H_3O^+] = 10^{-13} (mol.L^{-1})$\\n$[H_3O^+] = 10^{-pH} \\\\Rightarrow pH = 13$\"\n        }\n    ]\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Announcement",
+      "item": [
+        {
+          "name": "student_announcements",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"type\": \"school_timetable\",\r\n    \"target_audience\": \"student\",\r\n    \"level\": \"ninth\",\r\n    \"title\": \"برنامج الدوام الأسبوعي لعام 2026\", \r\n    \"content\": {\r\n        \"columns\": [\r\n            \"الحصة\",\r\n            \"الأحد\",\r\n            \"الإثنين\"\r\n        ],\r\n        \"rows\": [\r\n            {\r\n                \"period\": \"الأولى\",\r\n                \"sunday\": \"رياضيات\",\r\n                \"monday\": \"فيزياء\"\r\n            }\r\n        ]\r\n    }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/announcements",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "announcements"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "student_announcements",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"type\": \"normal\",\r\n    \"content\": \r\n      \"تؤجل المدرسة امتحان مادة العلوم للثلاثاء الفادم بمناسبة عيد رأس السنة الهجرية كل عام وأنتم إلى الله أقرب\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/announcements",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "announcements"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 14 Jun 2026 14:26:35 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"تم نشر الإعلان بنجاح للجميع\",\n    \"data\": {\n        \"id\": 6,\n        \"type\": \"normal\",\n        \"content\": \"تؤجل المدرسة امتحان مادة العلوم للثلاثاء الفادم بمناسبة عيد رأس السنة الهجرية كل عام وأنتم إلى الله أقرب\",\n        \"created_at\": \"2026-06-14T14:26:35.000000Z\",\n        \"updated_at\": \"2026-06-14T14:26:35.000000Z\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "view_announcement",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "jf1io24rLabVP41ZsevA59MZCFIPHWbdcoP8h2fa9308d9ea",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"content\": \"الطلاب الأعزاء، نود إعلامكم بأن عطلة نهاية الأسبوع ستبدأ من صباح الخميس القادم نظراً لأعمال الصيانة في المدرسة.\"\r\n}"
+            },
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/announcements",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "announcements"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "view_announcement",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/announcements",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "announcements"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 14 Jun 2026 14:40:53 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n    {\n        \"id\": 2,\n        \"type\": \"exam_schedule\",\n        \"created_at\": \"2026-06-14T14:40:45.000000Z\",\n        \"updated_at\": \"2026-06-14T14:40:45.000000Z\"\n    },\n    {\n        \"id\": 1,\n        \"type\": \"normal\",\n        \"content\": \"تؤجل المدرسة امتحان مادة العلوم للثلاثاء الفادم بمناسبة عيد رأس السنة الهجرية كل عام وأنتم إلى الله أقرب\",\n        \"created_at\": \"2026-06-14T14:38:42.000000Z\",\n        \"updated_at\": \"2026-06-14T14:38:42.000000Z\"\n    }\n]"
+            }
+          ]
+        },
+        {
+          "name": "view_exam_schedule",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/announcements/exam/1",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "announcements",
+                "exam",
+                "1"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "New Request",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/announcements/exam/2",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "announcements",
+                    "exam",
+                    "2"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 14 Jun 2026 15:02:20 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"id\": 2,\n    \"type\": \"exam_schedule\",\n    \"title\": \"برنامج امتحانات الفصل الثاني لعام 2026\",\n    \"exam_program\": {\n        \"columns\": [\n            \"اليوم والتاريخ\",\n            \"المادة\",\n            \"التوقيت\"\n        ],\n        \"rows\": [\n            {\n                \"date\": \"الأحد 2026-06-21\",\n                \"subject\": \"الرياضيات\",\n                \"time\": \"09:00 AM - 11:00 AM\"\n            }\n        ]\n    },\n    \"created_at\": \"2026-06-14T15:00:40.000000Z\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "get_school_timetable",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "jf1io24rLabVP41ZsevA59MZCFIPHWbdcoP8h2fa9308d9ea",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/announcements/school-timetable/first",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "announcements",
+                "school-timetable",
+                "first"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "get_school_timetable",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/announcements/school-timetable/first",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "announcements",
+                    "school-timetable",
+                    "first"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 02 Jul 2026 17:28:58 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"id\": 3,\n    \"type\": \"school_timetable\",\n    \"title\": \"برنامج الدوام الأسبوعي لعام 2026\",\n    \"target_audience\": \"student\",\n    \"level\": \"ninth\",\n    \"timetable_data\": {\n        \"columns\": [\n            \"الحصة\",\n            \"الأحد\",\n            \"الإثنين\"\n        ],\n        \"rows\": [\n            {\n                \"period\": \"الأولى\",\n                \"sunday\": \"رياضيات\",\n                \"monday\": \"فيزياء\"\n            }\n        ]\n    },\n    \"created_at\": \"2026-07-02T17:24:32.000000Z\",\n    \"updated_at\": \"2026-07-02T17:24:32.000000Z\"\n}"
             }
           ]
         }
@@ -11900,320 +12602,10 @@
       ]
     },
     {
-      "name": "past_exam",
-      "item": [
-        {
-          "name": "info",
-          "request": {
-            "auth": {
-              "type": "noauth"
-            },
-            "method": "GET",
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "http://127.0.0.1:8000/api/past-exams?subject_id=17",
-              "protocol": "http",
-              "host": [
-                "127",
-                "0",
-                "0",
-                "1"
-              ],
-              "port": "8000",
-              "path": [
-                "api",
-                "past-exams"
-              ],
-              "query": [
-                {
-                  "key": "subject_id",
-                  "value": "17"
-                }
-              ]
-            }
-          },
-          "response": [
-            {
-              "name": "info",
-              "originalRequest": {
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "Accept",
-                    "value": "application/json",
-                    "type": "text"
-                  }
-                ],
-                "url": {
-                  "raw": "http://127.0.0.1:8000/api/past-exams?subject_id=17",
-                  "protocol": "http",
-                  "host": [
-                    "127",
-                    "0",
-                    "0",
-                    "1"
-                  ],
-                  "port": "8000",
-                  "path": [
-                    "api",
-                    "past-exams"
-                  ],
-                  "query": [
-                    {
-                      "key": "subject_id",
-                      "value": "17"
-                    }
-                  ]
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "_postman_previewlanguage": null,
-              "header": [
-                {
-                  "key": "Host",
-                  "value": "127.0.0.1:8000"
-                },
-                {
-                  "key": "Connection",
-                  "value": "close"
-                },
-                {
-                  "key": "X-Powered-By",
-                  "value": "PHP/8.2.12"
-                },
-                {
-                  "key": "Cache-Control",
-                  "value": "no-cache, private"
-                },
-                {
-                  "key": "Date",
-                  "value": "Mon, 13 Jul 2026 15:15:57 GMT"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                },
-                {
-                  "key": "Access-Control-Allow-Origin",
-                  "value": "*"
-                }
-              ],
-              "cookie": [],
-              "body": "{\n    \"status\": \"success\",\n    \"data\": [\n        {\n            \"id\": 1,\n            \"title\": \"امتحان شهادة الدراسة الثانوية - كيمياء - الدورة الأولى\",\n            \"year\": \"2021\",\n            \"session\": \"first\",\n            \"is_favorited\": false\n        },\n        {\n            \"id\": 2,\n            \"title\": \"امتحان شهادة الدراسة الثانوية - كيمياء - الدورة الثانية\",\n            \"year\": \"2021\",\n            \"session\": \"second\",\n            \"is_favorited\": false\n        },\n        {\n            \"id\": 3,\n            \"title\": \"الامتحان العام لنيل الشهادة الثانوية - كيمياء\",\n            \"year\": \"2022\",\n            \"session\": \"first\",\n            \"is_favorited\": false\n        },\n        {\n            \"id\": 4,\n            \"title\": \"امتحان بكالوريا علمي - مادة الكيمياء - دورة أولى\",\n            \"year\": \"2023\",\n            \"session\": \"first\",\n            \"is_favorited\": false\n        },\n        {\n            \"id\": 5,\n            \"title\": \"الامتحان الموحد للشهادة الثانوية العامة - الكيمياء\",\n            \"year\": \"2024\",\n            \"session\": \"first\",\n            \"is_favorited\": false\n        }\n    ]\n}"
-            }
-          ]
-        },
-        {
-          "name": "past_exam_question",
-          "request": {
-            "auth": {
-              "type": "noauth"
-            },
-            "method": "GET",
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "http://127.0.0.1:8000/api/past-exams/1/questions",
-              "protocol": "http",
-              "host": [
-                "127",
-                "0",
-                "0",
-                "1"
-              ],
-              "port": "8000",
-              "path": [
-                "api",
-                "past-exams",
-                "1",
-                "questions"
-              ]
-            }
-          },
-          "response": [
-            {
-              "name": "past_exam_question",
-              "originalRequest": {
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "Accept",
-                    "value": "application/json",
-                    "type": "text"
-                  }
-                ],
-                "url": {
-                  "raw": "http://127.0.0.1:8000/api/past-exams/1/questions",
-                  "protocol": "http",
-                  "host": [
-                    "127",
-                    "0",
-                    "0",
-                    "1"
-                  ],
-                  "port": "8000",
-                  "path": [
-                    "api",
-                    "past-exams",
-                    "1",
-                    "questions"
-                  ]
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "_postman_previewlanguage": null,
-              "header": [
-                {
-                  "key": "Host",
-                  "value": "127.0.0.1:8000"
-                },
-                {
-                  "key": "Connection",
-                  "value": "close"
-                },
-                {
-                  "key": "X-Powered-By",
-                  "value": "PHP/8.2.12"
-                },
-                {
-                  "key": "Cache-Control",
-                  "value": "no-cache, private"
-                },
-                {
-                  "key": "Date",
-                  "value": "Mon, 13 Jul 2026 15:23:06 GMT"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                },
-                {
-                  "key": "Access-Control-Allow-Origin",
-                  "value": "*"
-                }
-              ],
-              "cookie": [],
-              "body": "{\n    \"status\": \"success\",\n    \"data\": [\n        {\n            \"id\": 25,\n            \"type\": \"mcq\",\n            \"description\": \"السؤال 1: تزداد سرعة التفاعل الكيميائي بزيادة درجة الحرارة بسبب:\",\n            \"choices\": [\n                {\n                    \"id\": 33,\n                    \"choice_text\": \"زيادة طاقة التنشيط نفسها\"\n                },\n                {\n                    \"id\": 34,\n                    \"choice_text\": \"زيادة عدد الجزيئات التي تملك طاقة تنشيط\"\n                },\n                {\n                    \"id\": 35,\n                    \"choice_text\": \"نقصان عدد التصادمات الفعالة\"\n                },\n                {\n                    \"id\": 36,\n                    \"choice_text\": \"زيادة الحجم الكلي للمزيج\"\n                }\n            ]\n        },\n        {\n            \"id\": 26,\n            \"type\": \"TEXT\",\n            \"description\": \"السؤال 2: نعاير حمض النمل $HCOOH$ بهدروكسيد الصوديوم $NaOH$ والمطلوب: a) ما طبيعة الوسط عند نهاية المعايرة؟ ولماذا؟ b) حدّد المشعر المناسب لهذه المعايرة.\"\n        },\n        {\n            \"id\": 27,\n            \"type\": \"TEXT\",\n            \"description\": \"السؤال 3: يحدث التفاعل المتوازن الآتي في شروط مناسبة: $2NO_{(g)} + O_{2(g)} \\\\rightleftarrows 2NO_{2(g)}$ ، $\\\\Delta H < 0$. المطلوب: a) اكتب علاقة ثابت التوازن $K_p$ لهذا التفاعل المتوازن بدلالة الضغوط الجزئية. b) بيّن أثر زيادة درجة الحرارة على كلّ من: (حالة التوازن ، قيمة ثابت التوازن $K_c$).\"\n        },\n        {\n            \"id\": 28,\n            \"type\": \"TEXT\",\n            \"description\": \"السؤال 4: المسألة الأولى: يحوي وعاء مغلق حجمه 41 L مزيجاً غازياً مكوّن من 48 g من غاز الميتان $CH_4$ و 60 g من غاز الايتان $C_2H_6$. المطلوب حساب: الضغط الكلي للمزيج الغازي عند الدرجة 300 K. الكسر المولي لغاز الميتان عند درجة الحرارة السابقة.\"\n        },\n        {\n            \"id\": 29,\n            \"type\": \"TEXT\",\n            \"description\": \"السؤال 5: المسألة الثانية: يحدث التفاعل الأوّلي الآتي في شروط مناسبة: $2A_{(g)} + B_{(g)} \\\\longrightarrow 2C_{(g)}$ فإذا علمت أنّ التراكيز الابتدائية: $[A]_0 = 0.4 mol.L^{-1}$ ، $[B]_0 = 0.2 mol.L^{-1}$ ، وثابت سرعة التفاعل $k = 10^{-2}$. المطلوب حساب السرعة الابتدائية للتفاعل وحدّد رتبته.\"\n        },\n        {\n            \"id\": 30,\n            \"type\": \"TEXT\",\n            \"description\": \"السؤال 6: المسألة الثالثة: تُذاب عينة غير نقية من هدروكسيد البوتاسيوم كتلتها 5.6 g في الماء المقطّر، ويُكمل الحجم إلى 800 mL، فإذا كان تركيز محلول هدروكسيد البوتاسيوم السابق $0.1 mol.L^{-1}$. المطلوب حساب قيمة $pH$ محلول هدروكسيد البوتاسيوم المستعمل.\"\n        }\n    ]\n}"
-            }
-          ]
-        },
-        {
-          "name": "past_exam_soiution",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "http://127.0.0.1:8000/api/past-exams/1/solutions",
-              "protocol": "http",
-              "host": [
-                "127",
-                "0",
-                "0",
-                "1"
-              ],
-              "port": "8000",
-              "path": [
-                "api",
-                "past-exams",
-                "1",
-                "solutions"
-              ]
-            }
-          },
-          "response": [
-            {
-              "name": "New Request",
-              "originalRequest": {
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "Accept",
-                    "value": "application/json",
-                    "type": "text"
-                  }
-                ],
-                "url": {
-                  "raw": "http://127.0.0.1:8000/api/past-exams/1/solutions",
-                  "protocol": "http",
-                  "host": [
-                    "127",
-                    "0",
-                    "0",
-                    "1"
-                  ],
-                  "port": "8000",
-                  "path": [
-                    "api",
-                    "past-exams",
-                    "1",
-                    "solutions"
-                  ]
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "_postman_previewlanguage": null,
-              "header": [
-                {
-                  "key": "Host",
-                  "value": "127.0.0.1:8000"
-                },
-                {
-                  "key": "Connection",
-                  "value": "close"
-                },
-                {
-                  "key": "X-Powered-By",
-                  "value": "PHP/8.2.12"
-                },
-                {
-                  "key": "Cache-Control",
-                  "value": "no-cache, private"
-                },
-                {
-                  "key": "Date",
-                  "value": "Mon, 13 Jul 2026 15:29:15 GMT"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                },
-                {
-                  "key": "Access-Control-Allow-Origin",
-                  "value": "*"
-                }
-              ],
-              "cookie": [],
-              "body": "{\n    \"status\": \"success\",\n    \"data\": [\n        {\n            \"id\": 25,\n            \"type\": \"mcq\",\n            \"description\": \"السؤال 1: تزداد سرعة التفاعل الكيميائي بزيادة درجة الحرارة بسبب:\",\n            \"choices\": [\n                {\n                    \"id\": 33,\n                    \"choice_text\": \"زيادة طاقة التنشيط نفسها\",\n                    \"is_correct\": false\n                },\n                {\n                    \"id\": 34,\n                    \"choice_text\": \"زيادة عدد الجزيئات التي تملك طاقة تنشيط\",\n                    \"is_correct\": true\n                },\n                {\n                    \"id\": 35,\n                    \"choice_text\": \"نقصان عدد التصادمات الفعالة\",\n                    \"is_correct\": false\n                },\n                {\n                    \"id\": 36,\n                    \"choice_text\": \"زيادة الحجم الكلي للمزيج\",\n                    \"is_correct\": false\n                }\n            ]\n        },\n        {\n            \"id\": 26,\n            \"type\": \"TEXT\",\n            \"description\": \"السؤال 2: نعاير حمض النمل $HCOOH$ بهدروكسيد الصوديوم $NaOH$ والمطلوب: a) ما طبيعة الوسط عند نهاية المعايرة؟ ولماذا؟ b) حدّد المشعر المناسب لهذه المعايرة.\",\n            \"solution\": \"a) الوسط أساسي، بسبب احتواء المحلول على أيونات النملات $HCOO^-$ الذي يسلك سلوك أساس (ضعيف).\\nb) المشعر المناسب: فينول فتالئين.\"\n        },\n        {\n            \"id\": 27,\n            \"type\": \"TEXT\",\n            \"description\": \"السؤال 3: يحدث التفاعل المتوازن الآتي في شروط مناسبة: $2NO_{(g)} + O_{2(g)} \\\\rightleftarrows 2NO_{2(g)}$ ، $\\\\Delta H < 0$. المطلوب: a) اكتب علاقة ثابت التوازن $K_p$ لهذا التفاعل المتوازن بدلالة الضغوط الجزئية. b) بيّن أثر زيادة درجة الحرارة على كلّ من: (حالة التوازن ، قيمة ثابت التوازن $K_c$).\",\n            \"solution\": \"a) علاقة ثابت التوازن:\\n$$K_p = \\\\frac{P^2_{(NO_2)}}{P^2_{(NO)} \\\\times P_{(O_2)}}$$\\n\\nb) أثر زيادة درجة الحرارة:\\nيرجح التفاعل العكسي، وتنقص قيمة $K_c$.\"\n        },\n        {\n            \"id\": 28,\n            \"type\": \"TEXT\",\n            \"description\": \"السؤال 4: المسألة الأولى: يحوي وعاء مغلق حجمه 41 L مزيجاً غازياً مكوّن من 48 g من غاز الميتان $CH_4$ و 60 g من غاز الايتان $C_2H_6$. المطلوب حساب: الضغط الكلي للمزيج الغازي عند الدرجة 300 K. الكسر المولي لغاز الميتان عند درجة الحرارة السابقة.\",\n            \"solution\": \"الطلب الأول (الضغط الكلي):\\n$n = \\\\frac{m}{M}$\\n$n_{CH_4} = \\\\frac{48}{16} = 3 (mol)$\\n$n_{C_2H_6} = \\\\frac{60}{30} = 2 (mol)$\\n$P_t = \\\\frac{n_t R T}{V}$\\n$P_t = \\\\frac{(3+2) \\\\times 0.082 \\\\times 300}{41}$\\n$P_t = 3 \\\\text{ atm}$\\n\\nالطلب الثاني (الكسر المولي):\\n$$X_{(CH_4)} = \\\\frac{n_{CH_4}}{n_t}$$\\n$$X_{(CH_4)} = \\\\frac{3}{5}$$\"\n        },\n        {\n            \"id\": 29,\n            \"type\": \"TEXT\",\n            \"description\": \"السؤال 5: المسألة الثانية: يحدث التفاعل الأوّلي الآتي في شروط مناسبة: $2A_{(g)} + B_{(g)} \\\\longrightarrow 2C_{(g)}$ فإذا علمت أنّ التراكيز الابتدائية: $[A]_0 = 0.4 mol.L^{-1}$ ، $[B]_0 = 0.2 mol.L^{-1}$ ، وثابت سرعة التفاعل $k = 10^{-2}$. المطلوب حساب السرعة الابتدائية للتفاعل وحدّد رتبته.\",\n            \"solution\": \"الطلب الأول:\\n$v = k[A]^2[B]$\\n$v_0 = 10^{-2}(0.4)^2(0.2)$\\n$v_0 = 32 \\\\times 10^{-5} mol.L^{-1}.s^{-1}$\\nرتبة التفاعل: 3\"\n        },\n        {\n            \"id\": 30,\n            \"type\": \"TEXT\",\n            \"description\": \"السؤال 6: المسألة الثالثة: تُذاب عينة غير نقية من هدروكسيد البوتاسيوم كتلتها 5.6 g في الماء المقطّر، ويُكمل الحجم إلى 800 mL، فإذا كان تركيز محلول هدروكسيد البوتاسيوم السابق $0.1 mol.L^{-1}$. المطلوب حساب قيمة $pH$ محلول هدروكسيد البوتاسيوم المستعمل.\",\n            \"solution\": \"$[KOH] = 10^{-1} mol.L^{-1}$\\n$[OH^-] = 10^{-1} (mol.L^{-1})$\\n$[H_3O^+] = 10^{-13} (mol.L^{-1})$\\n$[H_3O^+] = 10^{-pH} \\\\Rightarrow pH = 13$\"\n        }\n    ]\n}"
-            }
-          ]
-        }
-      ]
-    },
-    {
       "name": "Exam_student",
       "item": [
         {
-          "name": "info",
+          "name": "exams_subject",
           "request": {
             "method": "GET",
             "header": [
@@ -12224,7 +12616,7 @@
               }
             ],
             "url": {
-              "raw": "http://127.0.0.1:8000/api/exams?subject_id=2",
+              "raw": "http://127.0.0.1:8000/api/exams?subject_id=1",
               "protocol": "http",
               "host": [
                 "127",
@@ -12240,7 +12632,7 @@
               "query": [
                 {
                   "key": "subject_id",
-                  "value": "2"
+                  "value": "1"
                 }
               ]
             }
@@ -12318,6 +12710,91 @@
           ]
         },
         {
+          "name": "info",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/student/exam-details/1",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "student",
+                "exam-details",
+                "1"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "info",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/student/exam-details/1",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "student",
+                    "exam-details",
+                    "1"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 17 Jul 2026 05:12:50 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"success\",\n    \"message\": \"تم جلب تفاصيل الامتحان بنجاح.\",\n    \"data\": {\n        \"exam_id\": 1,\n        \"exam_title\": \"امتحان تجريبي - الفلسفة\",\n        \"descreption\": \"امتحان شامل لاختبار قدرات الطلاب\",\n        \"exam_date\": null,\n        \"duration_minutes\": 60,\n        \"total_questions\": 3,\n        \"total_mark\": 8\n    }\n}"
+            }
+          ]
+        },
+        {
           "name": "Exam_questions",
           "request": {
             "method": "GET",
@@ -12348,7 +12825,7 @@
           },
           "response": [
             {
-              "name": "New Request",
+              "name": "Exam_questions",
               "originalRequest": {
                 "method": "GET",
                 "header": [
@@ -12398,7 +12875,7 @@
                 },
                 {
                   "key": "Date",
-                  "value": "Mon, 13 Jul 2026 15:51:14 GMT"
+                  "value": "Thu, 16 Jul 2026 17:34:13 GMT"
                 },
                 {
                   "key": "Content-Type",
@@ -12410,7 +12887,7 @@
                 }
               ],
               "cookie": [],
-              "body": "{\n    \"status\": \"success\",\n    \"data\": [\n        {\n            \"id\": 55,\n            \"type\": \"mcq\",\n            \"description\": \"ما هي عاصمة سوريا؟\",\n            \"choices\": [\n                {\n                    \"id\": 69,\n                    \"choice_text\": \"دمشق\"\n                },\n                {\n                    \"id\": 70,\n                    \"choice_text\": \"حلب\"\n                },\n                {\n                    \"id\": 71,\n                    \"choice_text\": \"حمص\"\n                }\n            ]\n        },\n        {\n            \"id\": 56,\n            \"type\": \"TF\",\n            \"description\": \"المربع يحتوي على 4 أضلاع متساوية.\"\n        },\n        {\n            \"id\": 57,\n            \"type\": \"TEXT\",\n            \"description\": \"اشرح باختصار أسباب الثورة الصناعية.\"\n        }\n    ]\n}"
+              "body": "{\n    \"status\": \"success\",\n    \"data\": [\n        {\n            \"id\": 55,\n            \"type\": \"mcq\",\n            \"description\": \"ما هي عاصمة سوريا؟\",\n            \"point\": \"2.00\",\n            \"choices\": [\n                {\n                    \"id\": 85,\n                    \"choice_text\": \"دمشق\"\n                },\n                {\n                    \"id\": 86,\n                    \"choice_text\": \"حلب\"\n                },\n                {\n                    \"id\": 87,\n                    \"choice_text\": \"حمص\"\n                }\n            ]\n        },\n        {\n            \"id\": 56,\n            \"type\": \"TF\",\n            \"description\": \"المربع يحتوي على 4 أضلاع متساوية.\",\n            \"point\": \"1.00\"\n        },\n        {\n            \"id\": 57,\n            \"type\": \"TEXT\",\n            \"description\": \"اشرح باختصار أسباب الثورة الصناعية.\",\n            \"point\": \"5.00\"\n        }\n    ]\n}"
             }
           ]
         },
@@ -12445,7 +12922,7 @@
           },
           "response": [
             {
-              "name": "New Request",
+              "name": "Exam_solutions",
               "originalRequest": {
                 "method": "GET",
                 "header": [
@@ -12495,7 +12972,7 @@
                 },
                 {
                   "key": "Date",
-                  "value": "Mon, 13 Jul 2026 15:52:54 GMT"
+                  "value": "Thu, 16 Jul 2026 17:59:12 GMT"
                 },
                 {
                   "key": "Content-Type",
@@ -12507,19 +12984,22 @@
                 }
               ],
               "cookie": [],
-              "body": "{\n    \"status\": \"success\",\n    \"data\": [\n        {\n            \"id\": 55,\n            \"type\": \"mcq\",\n            \"description\": \"ما هي عاصمة سوريا؟\",\n            \"choices\": [\n                {\n                    \"id\": 69,\n                    \"choice_text\": \"دمشق\",\n                    \"is_correct\": true\n                },\n                {\n                    \"id\": 70,\n                    \"choice_text\": \"حلب\",\n                    \"is_correct\": false\n                },\n                {\n                    \"id\": 71,\n                    \"choice_text\": \"حمص\",\n                    \"is_correct\": false\n                }\n            ]\n        },\n        {\n            \"id\": 56,\n            \"type\": \"TF\",\n            \"description\": \"المربع يحتوي على 4 أضلاع متساوية.\",\n            \"solution\": \"true\"\n        },\n        {\n            \"id\": 57,\n            \"type\": \"TEXT\",\n            \"description\": \"اشرح باختصار أسباب الثورة الصناعية.\",\n            \"solution\": \"إجابة تعتمد على الفهم.\"\n        }\n    ]\n}"
+              "body": "{\n    \"status\": \"success\",\n    \"data\": [\n        {\n            \"id\": 55,\n            \"type\": \"mcq\",\n            \"description\": \"ما هي عاصمة سوريا؟\",\n            \"points\": \"2.00\",\n            \"choices\": [\n                {\n                    \"id\": 85,\n                    \"choice_text\": \"دمشق\",\n                    \"is_correct\": true\n                },\n                {\n                    \"id\": 86,\n                    \"choice_text\": \"حلب\",\n                    \"is_correct\": false\n                },\n                {\n                    \"id\": 87,\n                    \"choice_text\": \"حمص\",\n                    \"is_correct\": false\n                }\n            ]\n        },\n        {\n            \"id\": 56,\n            \"type\": \"TF\",\n            \"description\": \"المربع يحتوي على 4 أضلاع متساوية.\",\n            \"points\": \"1.00\",\n            \"solution\": \"true\"\n        },\n        {\n            \"id\": 57,\n            \"type\": \"TEXT\",\n            \"description\": \"اشرح باختصار أسباب الثورة الصناعية.\",\n            \"points\": \"5.00\",\n            \"solution\": \"إجابة تعتمد على الفهم.\"\n        }\n    ]\n}"
             }
           ]
         },
         {
-          "name": "New Request",
+          "name": "getSubmissionDetails",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
           "request": {
             "auth": {
               "type": "bearer",
               "bearer": [
                 {
                   "key": "token",
-                  "value": "yTK2YQEywhWWBmOitSMbXJ6v53J105nkftgYUUSt33a1e474",
+                  "value": "5EH4oMyQF29dKfRFo18GZDtQmE7BgrzuLG2wKi3r0e9443a9",
                   "type": "string"
                 }
               ]
@@ -12532,6 +13012,15 @@
                 "type": "text"
               }
             ],
+            "body": {
+              "mode": "raw",
+              "raw": "فيه حل الطالب وحل الأستاذ سوا",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
             "url": {
               "raw": "http://127.0.0.1:8000/api/submissions/1/details",
               "protocol": "http",
@@ -12550,17 +13039,83 @@
               ]
             }
           },
-          "response": []
+          "response": [
+            {
+              "name": "getSubmissionDetails",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/submissions/1/details",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "submissions",
+                    "1",
+                    "details"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 17 Jul 2026 05:33:31 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"submission_id\": 1,\n        \"total_score\": \"3.00\",\n        \"status\": \"pending_grading\",\n        \"details\": [\n            {\n                \"question_id\": 55,\n                \"question\": \"ما هي عاصمة سوريا؟\",\n                \"type\": \"mcq\",\n                \"student_text_answer\": null,\n                \"student_audio_answer\": null,\n                \"is_correct\": 1,\n                \"points_earned\": 2,\n                \"correct_answer\": \"دمشق\",\n                \"choices\": [\n                    {\n                        \"id\": 69,\n                        \"text\": \"دمشق\"\n                    },\n                    {\n                        \"id\": 70,\n                        \"text\": \"حلب\"\n                    },\n                    {\n                        \"id\": 71,\n                        \"text\": \"حمص\"\n                    }\n                ]\n            },\n            {\n                \"question_id\": 56,\n                \"question\": \"المربع يحتوي على 4 أضلاع متساوية.\",\n                \"type\": \"TF\",\n                \"student_text_answer\": \"true\",\n                \"student_audio_answer\": null,\n                \"is_correct\": 1,\n                \"points_earned\": 1,\n                \"correct_answer\": \"true\",\n                \"choices\": null\n            },\n            {\n                \"question_id\": 57,\n                \"question\": \"اشرح باختصار أسباب الثورة الصناعية.\",\n                \"type\": \"TEXT\",\n                \"student_text_answer\": \"الثورة الصناعية بدأت بسبب الحاجة لزيادة الإنتاج واستخدام الآلات البخارية...\",\n                \"student_audio_answer\": null,\n                \"is_correct\": 0,\n                \"points_earned\": 0,\n                \"correct_answer\": \"إجابة تعتمد على الفهم.\",\n                \"choices\": null\n            }\n        ]\n    }\n}"
+            }
+          ]
         },
         {
-          "name": "New Request",
+          "name": "submit_exam",
           "request": {
             "auth": {
               "type": "bearer",
               "bearer": [
                 {
                   "key": "token",
-                  "value": "yTK2YQEywhWWBmOitSMbXJ6v53J105nkftgYUUSt33a1e474",
+                  "value": "hpKWtTvxqOSC8RlvmOuXTy9whzz78KHPos45OXqL06068ac8",
                   "type": "string"
                 }
               ]
@@ -12574,13 +13129,51 @@
               }
             ],
             "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"exam_id\": 2,\r\n    \"answers\": [\r\n        {\r\n            \"question_id\": 1,\r\n            \"choice_id\": 2\r\n        },\r\n        {\r\n            \"question_id\": 2,\r\n            \"text_answer\": \"نعم\"\r\n        }\r\n    ]\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "exam_id",
+                  "value": "1",
+                  "type": "text",
+                  "uuid": "c0015aa1-ae74-400e-8834-dd257c4a00dc"
+                },
+                {
+                  "key": "answers[0][question_id]",
+                  "value": "55",
+                  "type": "text",
+                  "uuid": "dddb5f20-3356-4a6e-97a6-c0445d5a9cd3"
+                },
+                {
+                  "key": "answers[0][choice_id]",
+                  "value": "85",
+                  "type": "text",
+                  "uuid": "9ec094c2-b6a8-4e33-8883-b00fc422874a"
+                },
+                {
+                  "key": "answers[1][question_id]",
+                  "value": "56",
+                  "type": "text",
+                  "uuid": "5cc58bdf-7541-4032-a06f-aa592b95d570"
+                },
+                {
+                  "key": "answers[1][text_answer]",
+                  "value": "true",
+                  "type": "text",
+                  "uuid": "cf3a577c-22f5-4603-bec2-49227dddca81"
+                },
+                {
+                  "key": "answers[2][question_id]",
+                  "value": "57",
+                  "type": "text",
+                  "uuid": "ebe9506e-f0b7-4e6f-92dd-7d09b2ae75ea"
+                },
+                {
+                  "key": "answers[2][audio_answer]",
+                  "type": "file",
+                  "uuid": "49fa3fbf-1f9d-4e8c-b90b-fa15908e6adb",
+                  "src": "postman-cloud:///1f17edb6-42bd-4d90-aaf5-e5907704681a"
                 }
-              }
+              ]
             },
             "url": {
               "raw": "http://127.0.0.1:8000/api/exams/submit",
@@ -12715,6 +13308,238 @@
                 }
               ],
               "body": "{\n    \"status\": \"error\",\n    \"message\": \"عذراً، لقد قمت بتقديم هذا الاختبار مسبقاً.\"\n}"
+            },
+            {
+              "name": "New Request",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "exam_id",
+                      "value": "1",
+                      "type": "text",
+                      "uuid": "c0015aa1-ae74-400e-8834-dd257c4a00dc"
+                    },
+                    {
+                      "key": "answers[0][question_id]",
+                      "value": "55",
+                      "type": "text",
+                      "uuid": "dddb5f20-3356-4a6e-97a6-c0445d5a9cd3"
+                    },
+                    {
+                      "key": "answers[0][choice_id]",
+                      "value": "85",
+                      "type": "text",
+                      "uuid": "9ec094c2-b6a8-4e33-8883-b00fc422874a"
+                    },
+                    {
+                      "key": "answers[1][question_id]",
+                      "value": "56",
+                      "type": "text",
+                      "uuid": "5cc58bdf-7541-4032-a06f-aa592b95d570"
+                    },
+                    {
+                      "key": "answers[1][text_answer]",
+                      "value": "true",
+                      "type": "text",
+                      "uuid": "cf3a577c-22f5-4603-bec2-49227dddca81"
+                    },
+                    {
+                      "key": "answers[2][question_id]",
+                      "value": "57",
+                      "type": "text",
+                      "uuid": "ebe9506e-f0b7-4e6f-92dd-7d09b2ae75ea"
+                    },
+                    {
+                      "key": "answers[2][audio_answer]",
+                      "type": "file",
+                      "uuid": "49fa3fbf-1f9d-4e8c-b90b-fa15908e6adb",
+                      "src": "postman-cloud:///1f17edb6-42bd-4d90-aaf5-e5907704681a"
+                    }
+                  ],
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/exams/submit",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "exams",
+                    "submit"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 17 Jul 2026 04:31:30 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"logged_out\": true,\n    \"message\": \" عذراً، انتهت صلاحية الجلسة أو تم تسجيل الخروج مسبقاً. يرجى العودة لصفحة تسجيل الدخول\"\n}"
+            },
+            {
+              "name": "New Request",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "exam_id",
+                      "value": "1",
+                      "type": "text",
+                      "uuid": "c0015aa1-ae74-400e-8834-dd257c4a00dc"
+                    },
+                    {
+                      "key": "answers[0][question_id]",
+                      "value": "55",
+                      "type": "text",
+                      "uuid": "dddb5f20-3356-4a6e-97a6-c0445d5a9cd3"
+                    },
+                    {
+                      "key": "answers[0][choice_id]",
+                      "value": "85",
+                      "type": "text",
+                      "uuid": "9ec094c2-b6a8-4e33-8883-b00fc422874a"
+                    },
+                    {
+                      "key": "answers[1][question_id]",
+                      "value": "56",
+                      "type": "text",
+                      "uuid": "5cc58bdf-7541-4032-a06f-aa592b95d570"
+                    },
+                    {
+                      "key": "answers[1][text_answer]",
+                      "value": "true",
+                      "type": "text",
+                      "uuid": "cf3a577c-22f5-4603-bec2-49227dddca81"
+                    },
+                    {
+                      "key": "answers[2][question_id]",
+                      "value": "57",
+                      "type": "text",
+                      "uuid": "ebe9506e-f0b7-4e6f-92dd-7d09b2ae75ea"
+                    },
+                    {
+                      "key": "answers[2][audio_answer]",
+                      "type": "file",
+                      "uuid": "49fa3fbf-1f9d-4e8c-b90b-fa15908e6adb",
+                      "src": "postman-cloud:///1f17edb6-42bd-4d90-aaf5-e5907704681a"
+                    }
+                  ],
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/exams/submit",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "exams",
+                    "submit"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 17 Jul 2026 04:45:37 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"success\",\n    \"message\": \"تم تسليم الاختبار بنجاح وتصحيح الأسئلة المؤتمتة تلقائياً!\",\n    \"data\": {\n        \"submission_id\": 8,\n        \"score\": 1,\n        \"status\": \"pending_grading\"\n    }\n}"
             }
           ]
         }
@@ -12724,14 +13549,14 @@
       "name": "Bookmark",
       "item": [
         {
-          "name": "New Request",
+          "name": "ADD",
           "request": {
             "auth": {
               "type": "bearer",
               "bearer": [
                 {
                   "key": "token",
-                  "value": "9Kw7HTNQTOFnteVJi32rHDv7X8GRGfAwuOYuEB8W1c131bfc",
+                  "value": "BXitoGBiIJMyRGBrOLkMyaEHlwprFdaPUjigD92va4b16875",
                   "type": "string"
                 }
               ]
@@ -12749,26 +13574,33 @@
               "formdata": [
                 {
                   "key": "recording_id",
-                  "value": "",
+                  "value": "1",
                   "type": "text",
                   "uuid": "e2abf3a4-6909-455a-a17e-0ba3e613ec5c"
                 },
                 {
                   "key": "name",
-                  "value": "",
+                  "value": "فقرة مهمة",
                   "type": "text",
-                  "uuid": "2581bb32-1fd1-4203-80b1-dfad0b681286"
+                  "uuid": "2581bb32-1fd1-4203-80b1-dfad0b681286",
+                  "disabled": true
                 },
                 {
                   "key": "timestamp_in_seconds",
-                  "value": "",
+                  "value": "7",
                   "type": "text",
                   "uuid": "a502ff21-9fe4-4f1f-9325-d2c488ef8e02"
+                },
+                {
+                  "key": "lesson id",
+                  "value": "1",
+                  "type": "text",
+                  "uuid": "56ae1746-6e84-4cae-9c93-7757b3443f68"
                 }
               ]
             },
             "url": {
-              "raw": "http://127.0.0.1:8000/api//bookmarks",
+              "raw": "http://127.0.0.1:8000/api/bookmarks",
               "protocol": "http",
               "host": [
                 "127",
@@ -12779,25 +13611,207 @@
               "port": "8000",
               "path": [
                 "api",
-                "",
                 "bookmarks"
               ]
             }
           },
-          "response": []
+          "response": [
+            {
+              "name": "New Request",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "recording_id",
+                      "value": "1",
+                      "type": "text",
+                      "uuid": "e2abf3a4-6909-455a-a17e-0ba3e613ec5c"
+                    },
+                    {
+                      "key": "name",
+                      "value": "فقرة مهمة",
+                      "type": "text",
+                      "uuid": "2581bb32-1fd1-4203-80b1-dfad0b681286"
+                    },
+                    {
+                      "key": "timestamp_in_seconds",
+                      "value": "1",
+                      "type": "text",
+                      "uuid": "a502ff21-9fe4-4f1f-9325-d2c488ef8e02"
+                    },
+                    {
+                      "key": "lesson id",
+                      "value": "1",
+                      "type": "text",
+                      "uuid": "56ae1746-6e84-4cae-9c93-7757b3443f68"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/bookmarks",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "bookmarks"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 17 Jul 2026 07:04:17 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"تم حفظ العلامة المرجعية بنجاح\",\n    \"bookmark\": {\n        \"student_id\": 2,\n        \"name\": \"فقرة مهمة\",\n        \"timestamp_in_seconds\": \"1\",\n        \"lesson_id\": \"1\",\n        \"updated_at\": \"2026-07-17T07:04:17.000000Z\",\n        \"created_at\": \"2026-07-17T07:04:17.000000Z\",\n        \"id\": 1\n    }\n}"
+            },
+            {
+              "name": "ADD",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "recording_id",
+                      "value": "1",
+                      "type": "text",
+                      "uuid": "e2abf3a4-6909-455a-a17e-0ba3e613ec5c"
+                    },
+                    {
+                      "key": "name",
+                      "value": "فقرة مهمة",
+                      "type": "text",
+                      "uuid": "2581bb32-1fd1-4203-80b1-dfad0b681286",
+                      "disabled": true
+                    },
+                    {
+                      "key": "timestamp_in_seconds",
+                      "value": "1",
+                      "type": "text",
+                      "uuid": "a502ff21-9fe4-4f1f-9325-d2c488ef8e02"
+                    },
+                    {
+                      "key": "lesson id",
+                      "value": "1",
+                      "type": "text",
+                      "uuid": "56ae1746-6e84-4cae-9c93-7757b3443f68"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/bookmarks",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "bookmarks"
+                  ]
+                }
+              },
+              "status": "Unprocessable Content",
+              "code": 422,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 17 Jul 2026 08:12:32 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"لقد قمت بإضافة علامة مرجعية عند هذا الوقت مسبقاً لهذا الدرس.\",\n    \"errors\": {\n        \"timestamp_in_seconds\": [\n            \"لقد قمت بإضافة علامة مرجعية عند هذا الوقت مسبقاً لهذا الدرس.\"\n        ]\n    }\n}"
+            }
+          ]
         },
         {
-          "name": "New Request",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
+          "name": "ALL",
           "request": {
             "auth": {
               "type": "bearer",
               "bearer": [
                 {
                   "key": "token",
-                  "value": "9Kw7HTNQTOFnteVJi32rHDv7X8GRGfAwuOYuEB8W1c131bfc",
+                  "value": "BXitoGBiIJMyRGBrOLkMyaEHlwprFdaPUjigD92va4b16875",
                   "type": "string"
                 }
               ]
@@ -12810,31 +13824,8 @@
                 "type": "text"
               }
             ],
-            "body": {
-              "mode": "formdata",
-              "formdata": [
-                {
-                  "key": "message",
-                  "value": "لقد نسيت كلمة سر تطبيق والدي",
-                  "type": "text",
-                  "uuid": "df7d1e10-a8cc-4a5e-96dd-412419ec2e1b"
-                },
-                {
-                  "key": "image",
-                  "type": "file",
-                  "uuid": "db58eacc-26b6-4134-8890-aad009c9a406",
-                  "src": "postman-cloud:///1f173cc7-2439-43b0-b94f-31b9e33f5581"
-                },
-                {
-                  "key": "audio",
-                  "type": "file",
-                  "uuid": "0f776a01-7d8b-4fae-bf9a-6957b7337cea",
-                  "src": "postman-cloud:///1f17edb6-42bd-4d90-aaf5-e5907704681a"
-                }
-              ]
-            },
             "url": {
-              "raw": "http://127.0.0.1:8000/api/recordings/{recording}/bookmarks",
+              "raw": "http://127.0.0.1:8000/api/recordings/1/bookmarks",
               "protocol": "http",
               "host": [
                 "127",
@@ -12846,22 +13837,413 @@
               "path": [
                 "api",
                 "recordings",
-                "{recording}",
+                "1",
                 "bookmarks"
               ]
             }
           },
-          "response": []
+          "response": [
+            {
+              "name": "New Request",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/recordings/1/bookmarks",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "recordings",
+                    "1",
+                    "bookmarks"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 17 Jul 2026 08:33:31 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"bookmarks\": []\n}"
+            },
+            {
+              "name": "ALL",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/recordings/1/bookmarks",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "recordings",
+                    "1",
+                    "bookmarks"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 17 Jul 2026 08:34:48 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"bookmarks\": [\n        {\n            \"id\": 3,\n            \"name\": null,\n            \"timestamp_in_seconds\": 1,\n            \"student_id\": 1,\n            \"record_id\": 1,\n            \"created_at\": \"2026-07-17T08:34:22.000000Z\",\n            \"updated_at\": \"2026-07-17T08:34:22.000000Z\"\n        },\n        {\n            \"id\": 4,\n            \"name\": null,\n            \"timestamp_in_seconds\": 3,\n            \"student_id\": 1,\n            \"record_id\": 1,\n            \"created_at\": \"2026-07-17T08:34:34.000000Z\",\n            \"updated_at\": \"2026-07-17T08:34:34.000000Z\"\n        },\n        {\n            \"id\": 5,\n            \"name\": null,\n            \"timestamp_in_seconds\": 7,\n            \"student_id\": 1,\n            \"record_id\": 1,\n            \"created_at\": \"2026-07-17T08:34:41.000000Z\",\n            \"updated_at\": \"2026-07-17T08:34:41.000000Z\"\n        }\n    ]\n}"
+            }
+          ]
         },
         {
-          "name": "New Request",
+          "name": "modifiation",
           "request": {
             "auth": {
               "type": "bearer",
               "bearer": [
                 {
                   "key": "token",
-                  "value": "9Kw7HTNQTOFnteVJi32rHDv7X8GRGfAwuOYuEB8W1c131bfc",
+                  "value": "BXitoGBiIJMyRGBrOLkMyaEHlwprFdaPUjigD92va4b16875",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"تعديل\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/bookmarks/3",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "bookmarks",
+                "3"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "New Request",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/bookmarks/1",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "bookmarks",
+                    "1"
+                  ]
+                }
+              },
+              "status": "Unprocessable Content",
+              "code": 422,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 17 Jul 2026 08:36:11 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"The name field is required.\",\n    \"errors\": {\n        \"name\": [\n            \"The name field is required.\"\n        ]\n    }\n}"
+            },
+            {
+              "name": "New Request",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\": \"تعديل\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/bookmarks/1",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "bookmarks",
+                    "1"
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 17 Jul 2026 08:42:24 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"العنصر المطلوب غير موجود في قاعدة البيانات.\"\n}"
+            },
+            {
+              "name": "success",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\": \"تعديل\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/bookmarks/3",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "bookmarks",
+                    "3"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 17 Jul 2026 08:42:56 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"تم تحديث اسم العلامة بنجاح\",\n    \"bookmark\": {\n        \"id\": 3,\n        \"name\": \"تعديل\",\n        \"timestamp_in_seconds\": 1,\n        \"student_id\": 1,\n        \"record_id\": 1,\n        \"created_at\": \"2026-07-17T08:34:22.000000Z\",\n        \"updated_at\": \"2026-07-17T08:42:56.000000Z\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "DELETE",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "BXitoGBiIJMyRGBrOLkMyaEHlwprFdaPUjigD92va4b16875",
                   "type": "string"
                 }
               ]
@@ -12874,31 +14256,8 @@
                 "type": "text"
               }
             ],
-            "body": {
-              "mode": "formdata",
-              "formdata": [
-                {
-                  "key": "message",
-                  "value": "لقد نسيت كلمة سر تطبيق والدي",
-                  "type": "text",
-                  "uuid": "df7d1e10-a8cc-4a5e-96dd-412419ec2e1b"
-                },
-                {
-                  "key": "image",
-                  "type": "file",
-                  "uuid": "db58eacc-26b6-4134-8890-aad009c9a406",
-                  "src": "postman-cloud:///1f173cc7-2439-43b0-b94f-31b9e33f5581"
-                },
-                {
-                  "key": "audio",
-                  "type": "file",
-                  "uuid": "0f776a01-7d8b-4fae-bf9a-6957b7337cea",
-                  "src": "postman-cloud:///1f17edb6-42bd-4d90-aaf5-e5907704681a"
-                }
-              ]
-            },
             "url": {
-              "raw": "http://127.0.0.1:8000/api/bookmarks/{id}",
+              "raw": "http://127.0.0.1:8000/api/bookmarks/1",
               "protocol": "http",
               "host": [
                 "127",
@@ -12910,11 +14269,140 @@
               "path": [
                 "api",
                 "bookmarks",
-                "{id}"
+                "1"
               ]
             }
           },
-          "response": []
+          "response": [
+            {
+              "name": "New Request",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/bookmarks/2",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "bookmarks",
+                    "2"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 17 Jul 2026 08:14:51 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"تم حذف العلامة المرجعية بنجاح\"\n}"
+            },
+            {
+              "name": "New Request",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/bookmarks/1",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "bookmarks",
+                    "1"
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 17 Jul 2026 08:27:21 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"العنصر المطلوب غير موجود في قاعدة البيانات.\"\n}"
+            }
+          ]
         }
       ]
     },
@@ -13082,7 +14570,7 @@
           ]
         },
         {
-          "name": "New Request",
+          "name": "correct_quizzes",
           "request": {
             "auth": {
               "type": "bearer",
@@ -13335,6 +14823,307 @@
               ],
               "cookie": [],
               "body": "{\n    \"status\": \"error\",\n    \"message\": \"العلامة المدخلة للسؤال المقالي () أكبر من حدها الأقصى وهو 1.00.\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "solutions_exam",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "TvK0HHMIjsO3e45UXXBP9dTwAuEWEsuRVIAdVSDpbd3192fb",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/teacher/pending-exams",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "teacher",
+                "pending-exams"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "New Request",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/teacher/pending-exams",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "teacher",
+                    "pending-exams"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 17 Jul 2026 06:06:33 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"success\",\n    \"data\": [\n        {\n            \"submission_id\": 1,\n            \"student_id\": 1,\n            \"student_name\": \"طالب First Division - ninth\",\n            \"student_section\": \"First Division\",\n            \"exam_id\": 1,\n            \"exam_title\": \"امتحان تجريبي - الفلسفة\",\n            \"essay_questions\": [\n                {\n                    \"answer_id\": 3,\n                    \"question_id\": 57,\n                    \"question_mark\": 5,\n                    \"question_details\": {\n                        \"description\": \"اشرح باختصار أسباب الثورة الصناعية.\"\n                    },\n                    \"text_answer\": \"الثورة الصناعية بدأت بسبب الحاجة لزيادة الإنتاج واستخدام الآلات البخارية...\",\n                    \"audio_answer_url\": null\n                },\n                {\n                    \"answer_id\": 12,\n                    \"question_id\": 57,\n                    \"question_mark\": 5,\n                    \"question_details\": {\n                        \"description\": \"اشرح باختصار أسباب الثورة الصناعية.\"\n                    },\n                    \"text_answer\": \"الثورة الصناعية بدأت بسبب الحاجة لزيادة الإنتاج واستخدام الآلات البخارية...\",\n                    \"audio_answer_url\": null\n                }\n            ]\n        }\n    ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "correct_exam",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "TvK0HHMIjsO3e45UXXBP9dTwAuEWEsuRVIAdVSDpbd3192fb",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"submission_id\": 1,\r\n    \"answers\": [\r\n        {\r\n            \"answer_id\": 3,\r\n            \"points_earned\": 1.5\r\n        }\r\n    ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/teacher/grade-exam",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "teacher",
+                "grade-exam"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "New Request",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"submission_id\": 8,\r\n    \"answers\": [\r\n        {\r\n            \"answer_id\": 3,\r\n            \"points_earned\": 1.5\r\n        }\r\n    ]\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/teacher/grade-exam",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "teacher",
+                    "grade-exam"
+                  ]
+                }
+              },
+              "status": "Unprocessable Content",
+              "code": 422,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 17 Jul 2026 06:12:22 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"The selected submission id is invalid.\",\n    \"errors\": {\n        \"submission_id\": [\n            \"The selected submission id is invalid.\"\n        ]\n    }\n}"
+            },
+            {
+              "name": "New Request",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"submission_id\": 1,\r\n    \"answers\": [\r\n        {\r\n            \"answer_id\": 3,\r\n            \"points_earned\": 1.5\r\n        }\r\n    ]\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/teacher/grade-exam",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "teacher",
+                    "grade-exam"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 17 Jul 2026 06:14:59 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"success\",\n    \"message\": \"تم رصد علامات الأسئلة المقالية وتحديث النتيجة النهائية للامتحان بنجاح!\",\n    \"data\": {\n        \"submission_id\": 1,\n        \"student_id\": 1,\n        \"exam_id\": 1,\n        \"final_score\": 4.5,\n        \"status\": \"approved\"\n    }\n}"
             }
           ]
         }
