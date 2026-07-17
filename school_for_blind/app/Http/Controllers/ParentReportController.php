@@ -169,4 +169,21 @@ class ParentReportController extends Controller
             'data' => $objection
         ]);
     }
+
+    public function getSubjectGrades(Request $request, $studentId, $subjectId)
+    {
+        $caregiver = $request->user();
+
+        $student = $caregiver->students()->where('id', $studentId)->first();
+        if (!$student) {
+            return response()->json(['status' => 'error', 'message' => 'طالب غير صالح.'], 403);
+        }
+
+        $grades = $this->reportService->getSubjectGrades($studentId, $subjectId);
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $grades
+        ]);
+    }
 }

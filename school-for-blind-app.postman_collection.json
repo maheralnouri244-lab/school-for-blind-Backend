@@ -4567,6 +4567,107 @@
                   "body": "{\n    \"status\": \"success\",\n    \"message\": \"تم إرسال تبرير الغياب بنجاح بانتظار مراجعة الإدارة.\",\n    \"data\": {\n        \"student_id\": 301,\n        \"caregiver_id\": 1,\n        \"room_id\": \"1\",\n        \"reason\": \"الولد كان مريض وغايب بعذر طبي\",\n        \"status\": \"pending\",\n        \"updated_at\": \"2026-07-17T15:02:34.000000Z\",\n        \"created_at\": \"2026-07-17T15:02:34.000000Z\",\n        \"id\": 1\n    }\n}"
                 }
               ]
+            },
+            {
+              "name": "exam & quiz for one subject",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "43|amoc7jOQ4LOj9aPXDrUXLPGXwOu0YPUx2BSVevZnf6b1e7b0",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/parent/reports/student/301/subject/1",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "parent",
+                    "reports",
+                    "student",
+                    "301",
+                    "subject",
+                    "1"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "success",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "http://127.0.0.1:8000/api/parent/reports/student/301/subject/1",
+                      "protocol": "http",
+                      "host": [
+                        "127",
+                        "0",
+                        "0",
+                        "1"
+                      ],
+                      "port": "8000",
+                      "path": [
+                        "api",
+                        "parent",
+                        "reports",
+                        "student",
+                        "301",
+                        "subject",
+                        "1"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "Host",
+                      "value": "127.0.0.1:8000"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "close"
+                    },
+                    {
+                      "key": "X-Powered-By",
+                      "value": "PHP/8.3.30"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, private"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Fri, 17 Jul 2026 15:17:05 GMT"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Access-Control-Allow-Origin",
+                      "value": "*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"student_name\": \"طالب تجريبي\",\n        \"quizzes\": [\n            {\n                \"title\": \"المعرفة ومصادرها\",\n                \"student_score\": 85,\n                \"teacher_assigned_mark\": 85,\n                \"graded_at\": \"2026-07-17 14:49:34\"\n            }\n        ],\n        \"exams\": [\n            {\n                \"title\": \"مذاكرة الفلسفة\",\n                \"max_score\": 200,\n                \"student_score\": \"180.00\",\n                \"graded_at\": \"2026-07-17 14:49:34\"\n            }\n        ]\n    }\n}"
+                }
+              ]
             }
           ]
         },

@@ -287,5 +287,5 @@ Route::middleware(['auth:sanctum', 'isparent'])->prefix('parent')->group(functio
     Route::get('/reports/yearly', [ParentReportController::class, 'getYearlyReport']);
     Route::post('/reports/absence-excuse', [ParentReportController::class, 'submitAbsenceExcuse']);
     Route::post('/reports/objection', [ParentReportController::class, 'submitObjection']);
-
+    Route::get('/reports/student/{studentId}/subject/{subjectId}', [ParentReportController::class, 'getSubjectGrades']);
 });
