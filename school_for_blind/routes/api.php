@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Admin\TeacherTransferController;
 use App\Http\Controllers\AnnouncementController;
-use App\Http\Controllers\Api\ConversationController;
+use App\Http\Controllers\ConversationController;
 use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\CaregiverController;
 use App\Http\Controllers\DonationController;
@@ -11,6 +11,7 @@ use App\Http\Controllers\LessonController;
 use App\Http\Controllers\LiveKitWebhookController;
 use App\Http\Controllers\MagicLoginController;
 use App\Http\Controllers\OtpController;
+use App\Http\Controllers\ParentReportController;
 use App\Http\Controllers\PointRedemptionController;
 use App\Http\Controllers\PunishmentController;
 use App\Http\Controllers\QuestionBankController;
@@ -28,7 +29,6 @@ use App\Http\Controllers\TeacherExamController;
 use App\Http\Controllers\TeacherExamcorrectController;
 use App\Http\Controllers\Teacherpaymentcontroller;
 use App\Http\Controllers\TeacherQuizController;
-use App\Http\Controllers\ParentReportController;
 use App\Http\Middleware\CheckCallCreatorRole;
 use App\Http\Middleware\CheckIsStudent;
 use App\Http\Middleware\CheckPunishment;
