@@ -90,7 +90,13 @@
 
                 <td class="align-middle px-3"><?php echo e($exam->subject->name ?? 'غير محدد'); ?></td>
                 <td class="align-middle px-3" dir="ltr" style="color: var(--text-muted);">
-                  <?php echo e(\Carbon\Carbon::parse($exam->exam_date)->format('Y-m-d H:i')); ?></td>
+                  <?php if($exam->exam_date): ?>
+                    <?php echo e(\Carbon\Carbon::parse($exam->exam_date)->format('Y-m-d H:i')); ?>
+
+                  <?php else: ?>
+                    <span class="badge bg-secondary opacity-75 rounded-pill px-3 py-2 fw-normal">غير محدد</span>
+                  <?php endif; ?>
+                </td>
                 <td class="align-middle px-3"><?php echo e($exam->duration_minutes); ?> دقيقة</td>
 
                 

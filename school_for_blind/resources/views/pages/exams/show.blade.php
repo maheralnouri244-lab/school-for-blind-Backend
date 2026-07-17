@@ -65,8 +65,12 @@
           <div class="row mb-3">
             <div class="col-6">
               <span class="text-muted d-block small mb-1">موعد الامتحان</span>
-              <strong style="color: var(--text-main);"
-                dir="ltr">{{ \Carbon\Carbon::parse($exam->exam_date)->format('Y-m-d H:i') }}</strong>
+              @if($exam->exam_date)
+                <strong style="color: var(--text-main);"
+                  dir="ltr">{{ \Carbon\Carbon::parse($exam->exam_date)->format('Y-m-d H:i') }}</strong>
+              @else
+                <span class="badge bg-secondary opacity-75 rounded-pill px-3 py-1 fw-normal text-white">غير محدد</span>
+              @endif
             </div>
             <div class="col-6">
               <span class="text-muted d-block small mb-1">المدة الزمنية</span>
@@ -337,11 +341,11 @@
       newRow.className = 'input-group choice-row';
 
       newRow.innerHTML = `
-              <div class="input-group-text px-3" style="background-color: var(--bg-main); border-color: var(--border-color);">
-                  <input class="form-check-input mt-0" type="radio" name="correct_choice" value="${choiceCount}" style="cursor: pointer;">
-              </div>
-              <input type="text" name="choices[${choiceCount}][text]" class="form-control bg-transparent" style="color: var(--text-main); border-color: var(--border-color);" placeholder="نص الخيار رقم ${choiceCount + 1}">
-          `;
+                <div class="input-group-text px-3" style="background-color: var(--bg-main); border-color: var(--border-color);">
+                    <input class="form-check-input mt-0" type="radio" name="correct_choice" value="${choiceCount}" style="cursor: pointer;">
+                </div>
+                <input type="text" name="choices[${choiceCount}][text]" class="form-control bg-transparent" style="color: var(--text-main); border-color: var(--border-color);" placeholder="نص الخيار رقم ${choiceCount + 1}">
+            `;
 
       container.appendChild(newRow);
       choiceCount++;
