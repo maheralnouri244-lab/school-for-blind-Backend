@@ -5,6 +5,9 @@ use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         channels: __DIR__.'/../routes/channels.php',
@@ -15,25 +18,39 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->trustProxies(at: '*');
+
+        $middleware->validateCsrfTokens(except: [
+            'stripe/webhook',      
+            'api/stripe/webhook',  
+        ]);
+
         $middleware->alias([
             'admin.role' => \App\Http\Middleware\CheckAdminRole::class,
             'CheckIsStudent' => \App\Http\Middleware\CheckIsStudent::class,
             'isTeacher' => \App\Http\Middleware\IsTeacher::class,
             'CheckPunishment' => \App\Http\Middleware\CheckPunishment::class,
-            $middleware->validateCsrfTokens(except: [
-            'stripe/webhook',      
-            'api/stripe/webhook',  
-        ]),
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        $exceptions->render(function (AuthenticationException $e, $request) {
+        
+        $exceptions->render(function (AuthenticationException $e, Request $request) {
             if ($request->is('api/*')) {
                 return response()->json([
                     'success' => false,
                     'logged_out' => true,
-                    'message' => ' عذراً، انتهت صلاحية الجلسة أو تم تسجيل الخروج مسبقاً. يرجى العودة لصفحة تسجيل الدخول'
+                    'message' => 'عذراً، انتهت صلاحية الجلسة أو تم تسجيل الخروج مسبقاً. يرجى العودة لصفحة تسجيل الدخول'
                 ], Response::HTTP_UNAUTHORIZED, [], JSON_UNESCAPED_UNICODE);
             }
         });
-    })->create();
+
+        $exceptions->render(function (NotFoundHttpException $e, Request $request) {
+            if ($request->is('api/*')) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'العنصر المطلوب غير موجود في قاعدة البيانات.'
+                ], Response::HTTP_NOT_FOUND, [], JSON_UNESCAPED_UNICODE);
+            }
+        });
+
+    })
+    ->create();
