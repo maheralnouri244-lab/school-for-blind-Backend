@@ -66,6 +66,7 @@ Route::prefix('teacher')->controller(TeacherController::class)->group(function (
     Route::middleware('auth:sanctum')->group(function () {
         Route::post('logout', 'logout')->name('teachers.logout');
         Route::get('info', 'info')->name('teachers.info');
+        Route::get('all-subjects/statistics', 'getAllSubjectsStats')->name('teachers.stats');
         // Route::get('cv', 'showCv')->name('teachers.cv');
     });
 });
