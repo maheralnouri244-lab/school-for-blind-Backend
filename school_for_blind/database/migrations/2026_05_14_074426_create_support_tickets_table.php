@@ -12,7 +12,7 @@ return new class extends Migration {
 
             $table->morphs('sender');
 
-            $table->text('message');
+            $table->text('message')->nullable();
             $table->string('attachment_path')->nullable();
 
             $table->enum('priority', ['low', 'medium', 'high', 'urgent'])->default('low');
