@@ -78,13 +78,13 @@ public function getQuestionsByExam($examId)
 {
     $exam = Exam::with('questions.choices')->findOrFail($examId);
 
-    $formattedQuestions = $exam->questions->map(function ($question) {
+    $formattedQuestions = $exam->questions->map(function ($question) use ($exam) {
         $data = [
             'id' => $question->id,
             'type' => $question->type,
             'description' => $question->description,
             'point'=>$question->points,
-            'totalmark'=>$question->totalmark,
+            'totalmark'=>$exam->totalmark,
         ];
 
         if ($question->type === 'mcq') {

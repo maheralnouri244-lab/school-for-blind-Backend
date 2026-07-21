@@ -80,8 +80,7 @@ Route::post('/donation/checkout', [DonationController::class, 'checkout']);
 Route::post('/donation/confirm', [DonationController::class, 'confirmPayment']);
 Route::get('/donation/success', [DonationController::class, 'success'])->name('donation.success');
 Route::get('/donation/cancel', [DonationController::class, 'cancel'])->name('donation.cancel');
-Route::middleware('auth:sanctum')->group(function () {
-});
+Route::middleware('auth:sanctum')->group(function () {});
 Route::post('/point-redemption/request', [PointRedemptionController::class, 'store'])->middleware('auth:sanctum');
 Route::prefix('admin/point-redemption')->middleware(['auth:sanctum'])->group(function () {
     Route::post('/{redemptionRequest}/approve', [PointRedemptionController::class, 'approve']);
@@ -144,12 +143,12 @@ Route::middleware('auth:sanctum')
 Route::post('/announcements', [AnnouncementController::class, 'store']);
 Route::get('/announcements', [AnnouncementController::class, 'index']);
 Route::get('/announcements/exam/{id}', [AnnouncementController::class, 'showExam']);
+Route::get('/announcements/school-timetable/first', [AnnouncementController::class, 'firstSchoolTimetable']);
 
 
 Route::prefix('student/quizzes')->group(function () {
 
     Route::get('{id}/questions', [StudentQuizController::class, 'getQuizQuestions']);
-
 });
 Route::middleware('auth:sanctum')->group(function () {
     //  Route::post('search-info', [StudentQuizController::class, 'getQuizInfoByNames']);
@@ -174,7 +173,6 @@ Route::middleware(['auth:sanctum', CheckUserType::class . ':admin'])->prefix('ad
 Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('quiz/submit', [StudentQuizController::class, 'submitQuiz']);
-
 });
 
 Route::middleware('auth:sanctum')->group(function () {
@@ -198,7 +196,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('favorites/past-exams', [FavoriteController::class, 'favoritePastExams']);
 
     Route::get('/favorites/all', [FavoriteController::class, 'allFavorites']);
-
 });
 Route::post('/favorites/remove', [FavoriteController::class, 'remove'])
     ->middleware('auth:sanctum');
