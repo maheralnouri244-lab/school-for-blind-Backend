@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->foreignId('teacher_id')->nullable()->constrained()->onDelete('cascade');
             $table->foreignId('subject_id')->nullable()->constrained('subjects')->onDelete('cascade');
             $table->foreignId('parent_id')->nullable()->constrained('conversations')->onDelete('cascade');
+            $table->foreignId('admin_id')->nullable()->constrained('admins')->onDelete('cascade');
             $table->timestamps();
         });
     }

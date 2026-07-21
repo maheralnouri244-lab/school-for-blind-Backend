@@ -33,15 +33,17 @@
        <tr style="border-bottom: 1px solid var(--border-color);">
         <td class="py-3">
          <span
-          class="fw-bold text-danger">{{ $record->punishable->fullname ?? $record->punishable->full_name ?? 'غير معروف' }}</span>
+          class="fw-bold text-danger">{{ $record->punishable->role ?? $record->punishable->fullname ?? $record->punishable->full_name ?? 'غير معروف' }}</span>
          <small
-          class="text-muted d-block">{{ class_basename($record->punishable_type) == 'Student' ? 'طالب' : 'أستاذ' }}</small>
+          class="text-muted d-block">{{ class_basename($record->punishable_type) == 'Student' ? 'طالب' 
+                          : (class_basename($record->punishable_type) == 'Teacher' ? 'أستاذ' : 
+                          (class_basename($record->punishable_type) == 'Admin' ? 'أدمن' :  'اهل')) }}</small>
         </td>
         <td class="py-3">
          <span class="badge-status bg-soft-warning text-warning">{{ $record->punishment->name }}</span>
         </td>
         <td class="py-3 text-muted">
-         {{ $record->admin->name ?? 'أدمن محذوف' }}
+         {{ $record->admin->role ?? 'أدمن محذوف' }}
         </td>
         <td class="py-3 text-center">
          @if($record->expires_at)

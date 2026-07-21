@@ -22,5 +22,9 @@ Broadcast::channel('conversation.{id}', function ($user, $id) {
         return $user->class->teachers()->where('teachers.id', $conversation->teacher_id)->exists();
     }
 
+    if (class_basename($user) === 'Admin') {
+        return true;
+    }
+
     return false;
-}, ['guards' => ['sanctum']]);
+}, ['guards' => ['sanctum', 'web', 'admin']]);

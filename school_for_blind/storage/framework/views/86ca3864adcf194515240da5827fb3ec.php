@@ -1,6 +1,6 @@
-@extends('layouts.app')
 
-@section('content')
+
+<?php $__env->startSection('content'); ?>
   <div class="container-fluid py-4">
 
     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -10,13 +10,14 @@
       </div>
     </div>
 
-    @if(session('success'))
+    <?php if(session('success')): ?>
       <div class="alert alert-success rounded-3 mb-4 fw-bold">
-        <i class="fa-solid fa-circle-check me-2"></i> {{ session('success') }}
-      </div>
-    @endif
+        <i class="fa-solid fa-circle-check me-2"></i> <?php echo e(session('success')); ?>
 
-    @php
+      </div>
+    <?php endif; ?>
+
+    <?php
       $selectedStatuses = request('statuses', []);
       $statusLabels = ['open' => 'جديدة', 'in_progress' => 'قيد المعالجة', 'resolved' => 'محلولة', 'closed' => 'مغلقة'];
       $currentStatusText = count($selectedStatuses) > 0 && count($selectedStatuses) < 4
@@ -41,10 +42,10 @@
       $currentDepartmentText = count($selectedDepartments) > 0 && count($selectedDepartments) < 6
         ? implode('، ', array_intersect_key($departmentLabels, array_flip($selectedDepartments)))
         : (count($selectedDepartments) === 6 ? 'جميع الأقسام' : 'كل الأقسام (اضغط للاختيار)');
-    @endphp
+    ?>
 
     <div class="custom-card mb-4 p-3 border" style="border-color: var(--border-color) !important;">
-      <form action="{{ route('dashboard.support.index') }}" method="GET" class="row g-3 align-items-end">
+      <form action="<?php echo e(route('dashboard.support.index')); ?>" method="GET" class="row g-3 align-items-end">
 
         <div class="col-md-3">
           <label class="form-label small fw-bold mb-1" style="color: var(--text-main);">حالة الطلب</label>
@@ -53,21 +54,22 @@
               class="btn w-100 text-start d-flex justify-content-between align-items-center rounded-pill bg-transparent p-2 px-3"
               type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
               style="color: var(--text-main); border: 1px solid var(--border-color); font-size: 0.85rem; text-align: right !important;">
-              <span class="text-truncate me-2" style="max-width: 85%;">{{ $currentStatusText }}</span>
+              <span class="text-truncate me-2" style="max-width: 85%;"><?php echo e($currentStatusText); ?></span>
               <i class="fa-solid fa-chevron-down opacity-50 small"></i>
             </button>
             <div class="dropdown-menu p-3 rounded-3 shadow text-end border w-100"
               style="background-color: var(--bg-main); border-color: var(--border-color) !important; min-width: 220px;">
 
-              @foreach($statusLabels as $key => $label)
+              <?php $__currentLoopData = $statusLabels; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $label): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <div class="form-check mb-2 d-flex align-items-center gap-2 justify-content-start">
-                  <input class="form-check-input m-0" type="checkbox" name="statuses[]" value="{{ $key }}"
-                    id="status_{{{ $key }}}" {{ in_array($key, $selectedStatuses) ? 'checked' : '' }}
+                  <input class="form-check-input m-0" type="checkbox" name="statuses[]" value="<?php echo e($key); ?>"
+                    id="status_<?php echo e($key); ?>" <?php echo e(in_array($key, $selectedStatuses) ? 'checked' : ''); ?>
+
                     style="cursor: pointer;">
-                  <label class="form-check-label small fw-bold mb-0" for="status_{{{ $key }}}"
-                    style="color: var(--text-main); cursor: pointer;">{{ $label }}</label>
+                  <label class="form-check-label small fw-bold mb-0" for="status_<?php echo e($key); ?>"
+                    style="color: var(--text-main); cursor: pointer;"><?php echo e($label); ?></label>
                 </div>
-              @endforeach
+              <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
             </div>
           </div>
@@ -80,27 +82,28 @@
               class="btn w-100 text-start d-flex justify-content-between align-items-center rounded-pill bg-transparent p-2 px-3"
               type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
               style="color: var(--text-main); border: 1px solid var(--border-color); font-size: 0.85rem; text-align: right !important;">
-              <span class="text-truncate me-2" style="max-width: 85%;">{{ $currentPriorityText }}</span>
+              <span class="text-truncate me-2" style="max-width: 85%;"><?php echo e($currentPriorityText); ?></span>
               <i class="fa-solid fa-chevron-down opacity-50 small"></i>
             </button>
             <div class="dropdown-menu p-3 rounded-3 shadow text-end border w-100"
               style="background-color: var(--bg-main); border-color: var(--border-color) !important; min-width: 220px;">
 
-              @foreach($priorityLabels as $key => $label)
+              <?php $__currentLoopData = $priorityLabels; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $label): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <div class="form-check mb-2 d-flex align-items-center gap-2 justify-content-start">
-                  <input class="form-check-input m-0" type="checkbox" name="priorities[]" value="{{ $key }}"
-                    id="priority_{{{ $key }}}" {{ in_array($key, $selectedPriorities) ? 'checked' : '' }}
+                  <input class="form-check-input m-0" type="checkbox" name="priorities[]" value="<?php echo e($key); ?>"
+                    id="priority_<?php echo e($key); ?>" <?php echo e(in_array($key, $selectedPriorities) ? 'checked' : ''); ?>
+
                     style="cursor: pointer;">
-                  <label class="form-check-label small fw-bold mb-0" for="priority_{{{ $key }}}"
-                    style="color: var(--text-main); cursor: pointer;">{{ $label }}</label>
+                  <label class="form-check-label small fw-bold mb-0" for="priority_<?php echo e($key); ?>"
+                    style="color: var(--text-main); cursor: pointer;"><?php echo e($label); ?></label>
                 </div>
-              @endforeach
+              <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
             </div>
           </div>
         </div>
 
-        @if(isset($isSuperOrSupport) && $isSuperOrSupport)
+        <?php if(isset($isSuperOrSupport) && $isSuperOrSupport): ?>
           <div class="col-md-3">
             <label class="form-label small fw-bold mb-1" style="color: var(--text-main);">القسم الموجه إليه</label>
             <div class="dropdown" dir="rtl">
@@ -108,35 +111,36 @@
                 class="btn w-100 text-start d-flex justify-content-between align-items-center rounded-pill bg-transparent p-2 px-3"
                 type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
                 style="color: var(--text-main); border: 1px solid var(--border-color); font-size: 0.85rem; text-align: right !important;">
-                <span class="text-truncate me-2" style="max-width: 85%;">{{ $currentDepartmentText }}</span>
+                <span class="text-truncate me-2" style="max-width: 85%;"><?php echo e($currentDepartmentText); ?></span>
                 <i class="fa-solid fa-chevron-down opacity-50 small"></i>
               </button>
               <div class="dropdown-menu p-3 rounded-3 shadow text-end border w-100"
                 style="background-color: var(--bg-main); border-color: var(--border-color) !important; min-width: 240px; max-height: 280px; overflow-y: auto;">
 
-                @foreach($departmentLabels as $key => $label)
+                <?php $__currentLoopData = $departmentLabels; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $label): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                   <div class="form-check mb-2 d-flex align-items-center gap-2 justify-content-start">
-                    <input class="form-check-input m-0" type="checkbox" name="departments[]" value="{{ $key }}"
-                      id="dept_{{ str_replace(' ', '_', $key) }}" {{ in_array($key, $selectedDepartments) ? 'checked' : '' }}
+                    <input class="form-check-input m-0" type="checkbox" name="departments[]" value="<?php echo e($key); ?>"
+                      id="dept_<?php echo e(str_replace(' ', '_', $key)); ?>" <?php echo e(in_array($key, $selectedDepartments) ? 'checked' : ''); ?>
+
                       style="cursor: pointer;">
-                    <label class="form-check-label small fw-bold mb-0 {{ $key === 'unassigned' ? 'text-warning' : '' }}"
-                      for="dept_{{ str_replace(' ', '_', $key) }}"
-                      style="color: var(--text-main); cursor: pointer;">{{ $label }}</label>
+                    <label class="form-check-label small fw-bold mb-0 <?php echo e($key === 'unassigned' ? 'text-warning' : ''); ?>"
+                      for="dept_<?php echo e(str_replace(' ', '_', $key)); ?>"
+                      style="color: var(--text-main); cursor: pointer;"><?php echo e($label); ?></label>
                   </div>
-                @endforeach
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
               </div>
             </div>
           </div>
-        @endif
+        <?php endif; ?>
 
         <div class="col-md-2">
           <label class="form-label small fw-bold mb-1" style="color: var(--text-main);">الترتيب الأولوّي</label>
           <select name="sort_by_priority" class="form-select search-input rounded-pill bg-transparent p-2 px-3"
             style="color: var(--text-main); border: 1px solid var(--border-color); font-size: 0.85rem;">
             <option value="">بدون ترتيب أولوي</option>
-            <option value="desc" {{ request('sort_by_priority') == 'desc' ? 'selected' : '' }}>الأعلى أولاً</option>
-            <option value="asc" {{ request('sort_by_priority') == 'asc' ? 'selected' : '' }}>الأقل أولاً</option>
+            <option value="desc" <?php echo e(request('sort_by_priority') == 'desc' ? 'selected' : ''); ?>>الأعلى أولاً</option>
+            <option value="asc" <?php echo e(request('sort_by_priority') == 'asc' ? 'selected' : ''); ?>>الأقل أولاً</option>
           </select>
         </div>
 
@@ -150,12 +154,12 @@
         </div>
       </form>
 
-      @if(count($selectedStatuses) > 0 || count($selectedPriorities) > 0 || count($selectedDepartments) > 0 || request('sort_by_priority'))
+      <?php if(count($selectedStatuses) > 0 || count($selectedPriorities) > 0 || count($selectedDepartments) > 0 || request('sort_by_priority')): ?>
         <div class="mt-2 text-start px-2">
-          <a href="{{ route('dashboard.support.index') }}" class="text-danger small text-decoration-none fw-bold"><i
+          <a href="<?php echo e(route('dashboard.support.index')); ?>" class="text-danger small text-decoration-none fw-bold"><i
               class="fa-solid fa-trash-can me-1"></i> إعادة تعيين وإلغاء كافة الفلاتر</a>
         </div>
-      @endif
+      <?php endif; ?>
     </div>
 
     <div class="custom-card p-0 overflow-hidden rounded-4 border"
@@ -175,77 +179,78 @@
             </tr>
           </thead>
           <tbody>
-            @forelse($tickets as $ticket)
+            <?php $__empty_1 = true; $__currentLoopData = $tickets; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ticket): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
               <tr style="border-bottom: 1px solid var(--border-color);">
-                <td class="align-middle px-3">{{ $loop->iteration }}</td>
+                <td class="align-middle px-3"><?php echo e($loop->iteration); ?></td>
 
                 <td class="align-middle px-3 text-start">
                   <div class="fw-bold mb-1">
-                    {{ $ticket->sender->fullname ?? $ticket->sender->full_name ?? 'مستخدم غير معروف' }}
+                    <?php echo e($ticket->sender->fullname ?? $ticket->sender->full_name ?? 'مستخدم غير معروف'); ?>
+
                   </div>
-                  @if($ticket->sender_type === 'student' || $ticket->sender_type === 'App\Models\Student')
+                  <?php if($ticket->sender_type === 'student' || $ticket->sender_type === 'App\Models\Student'): ?>
                     <span class="badge px-2 py-1 rounded-pill small bg-soft-info text-info">طالب</span>
-                  @elseif($ticket->sender_type === 'teacher' || $ticket->sender_type === 'App\Models\Teacher')
+                  <?php elseif($ticket->sender_type === 'teacher' || $ticket->sender_type === 'App\Models\Teacher'): ?>
                     <span class="badge px-2 py-1 rounded-pill small"
                       style="background-color: rgba(163, 230, 53, 0.15); color: var(--accent-color);">أستاذ</span>
-                  @else
+                  <?php else: ?>
                     <span class="badge px-2 py-1 rounded-pill small bg-soft-warning text-warning">ولي أمر</span>
-                  @endif
+                  <?php endif; ?>
                 </td>
 
                 <td class="align-middle px-4 text-start small" style="max-width: 300px;">
-                  <div class="text-truncate" title="{{ $ticket->message }}">{{ $ticket->message }}</div>
-                  @if($ticket->attachment_path)
-                    <a href="{{ asset('storage/' . $ticket->attachment_path) }}" target="_blank"
+                  <div class="text-truncate" title="<?php echo e($ticket->message); ?>"><?php echo e($ticket->message); ?></div>
+                  <?php if($ticket->attachment_path): ?>
+                    <a href="<?php echo e(asset('storage/' . $ticket->attachment_path)); ?>" target="_blank"
                       class="btn btn-sm mt-2 rounded-pill fw-bold small d-inline-flex align-items-center gap-1"
                       style="background-color: rgba(16, 185, 129, 0.1); color: #10b981; border: 1px solid #10b981; text-decoration: none;">
                       <i class="fa-solid fa-image"></i> عرض المرفق
                     </a>
-                  @endif
+                  <?php endif; ?>
                 </td>
 
                 <td class="align-middle px-3">
-                  @if($ticket->priority === 'urgent')
+                  <?php if($ticket->priority === 'urgent'): ?>
                     <span class="badge px-3 py-1.5 rounded-pill fw-bold text-white bg-danger animate-pulse">عاجل جداً
                       🚨</span>
-                  @elseif($ticket->priority === 'high')
+                  <?php elseif($ticket->priority === 'high'): ?>
                     <span class="badge px-3 py-1.5 rounded-pill fw-normal"
                       style="background-color: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid #ef4444;">عالية</span>
-                  @elseif($ticket->priority === 'medium')
+                  <?php elseif($ticket->priority === 'medium'): ?>
                     <span class="badge px-3 py-1.5 rounded-pill fw-normal"
                       style="background-color: rgba(245, 158, 11, 0.1); color: #f59e0b; border: 1px solid #f59e0b;">متوسطة</span>
-                  @else
+                  <?php else: ?>
                     <span class="badge px-3 py-1.5 rounded-pill fw-normal"
                       style="background-color: rgba(156, 163, 175, 0.1); color: #9ca3af; border: 1px solid #9ca3af;">منخفضة</span>
-                  @endif
+                  <?php endif; ?>
                 </td>
 
                 <td class="align-middle px-3 fw-bold small">
-                  @if($ticket->assigned_department === 'Super Admin') المدير العام
-                  @elseif($ticket->assigned_department === 'Academic Manager') الموجه الأكاديمي
-                  @elseif($ticket->assigned_department === 'Moderator') مراقب المحتوى
-                  @elseif($ticket->assigned_department === 'Financial Manager') المدير المالي
-                  @elseif($ticket->assigned_department === 'Data Entry') مدخل البيانات
-                  @else
+                  <?php if($ticket->assigned_department === 'Super Admin'): ?> المدير العام
+                  <?php elseif($ticket->assigned_department === 'Academic Manager'): ?> الموجه الأكاديمي
+                  <?php elseif($ticket->assigned_department === 'Moderator'): ?> مراقب المحتوى
+                  <?php elseif($ticket->assigned_department === 'Financial Manager'): ?> المدير المالي
+                  <?php elseif($ticket->assigned_department === 'Data Entry'): ?> مدخل البيانات
+                  <?php else: ?>
                     <span class="text-muted fw-normal fst-italic">بانتظار الفرز</span>
-                  @endif
+                  <?php endif; ?>
                 </td>
 
                 <td class="align-middle px-3">
-                  @if($ticket->status === 'resolved')
+                  <?php if($ticket->status === 'resolved'): ?>
                     <span class="badge px-3 py-2 rounded-pill fw-normal"
                       style="background-color: rgba(16, 185, 129, 0.1); color: #10b981; border: 1px solid #10b981;">محلولة</span>
-                  @elseif($ticket->status === 'in_progress')
+                  <?php elseif($ticket->status === 'in_progress'): ?>
                     <span class="badge px-3 py-2 rounded-pill fw-normal"
                       style="background-color: rgba(59, 130, 246, 0.1); color: #3b82f6; border: 1px solid #3b82f6;">قيد
                       المعالجة</span>
-                  @elseif($ticket->status === 'closed')
+                  <?php elseif($ticket->status === 'closed'): ?>
                     <span class="badge px-3 py-2 rounded-pill fw-normal"
                       style="background-color: rgba(156, 163, 175, 0.1); color: #9ca3af; border: 1px solid #9ca3af;">مغلقة</span>
-                  @else
+                  <?php else: ?>
                     <span class="badge px-3 py-2 rounded-pill fw-normal"
                       style="background-color: rgba(245, 158, 11, 0.1); color: #f59e0b; border: 1px solid #f59e0b;">جديدة</span>
-                  @endif
+                  <?php endif; ?>
                 </td>
 
                 <td class="align-middle px-4">
@@ -253,15 +258,15 @@
 
                     <button type="button"
                       class="btn btn-sm text-white shadow-sm-hover d-flex align-items-center justify-content-center"
-                      data-bs-toggle="modal" data-bs-target="#ticketModal{{ $ticket->id }}"
+                      data-bs-toggle="modal" data-bs-target="#ticketModal<?php echo e($ticket->id); ?>"
                       style="width: 36px; height: 36px; border-radius: 8px; background: linear-gradient(135deg, #9ca3af, #3b82f6); box-shadow: 0 0 10px rgba(59, 130, 246, 0.2); border: none; transition: all 0.2s;">
                       <i class="fa-solid fa-folder-open"></i>
                     </button>
 
-                    @if($ticket->status !== 'resolved' && $ticket->status !== 'closed')
-                      <form action="{{ route('dashboard.support.update-status', $ticket->id) }}" method="POST"
+                    <?php if($ticket->status !== 'resolved' && $ticket->status !== 'closed'): ?>
+                      <form action="<?php echo e(route('dashboard.support.update-status', $ticket->id)); ?>" method="POST"
                         class="d-inline">
-                        @csrf
+                        <?php echo csrf_field(); ?>
                         <input type="hidden" name="status" value="resolved">
                         <button type="submit"
                           class="btn btn-sm shadow-sm-hover d-flex align-items-center justify-content-center"
@@ -270,13 +275,13 @@
                           <i class="fa-solid fa-check-double"></i>
                         </button>
                       </form>
-                    @endif
+                    <?php endif; ?>
 
                   </div>
                 </td>
               </tr>
 
-              <div class="modal fade" id="ticketModal{{ $ticket->id }}" tabindex="-1" aria-hidden="true">
+              <div class="modal fade" id="ticketModal<?php echo e($ticket->id); ?>" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg">
                   <div class="modal-content glass-modal text-end" dir="rtl"
                     style="border: 1px solid var(--border-color); color: var(--text-main); border-radius: 16px; overflow: hidden;">
@@ -292,7 +297,7 @@
                           <h5 class="modal-title fw-bold mb-0" style="color: var(--text-main);">تفاصيل تذكرة الدعم الفني
                           </h5>
                           <small class="text-muted">المرسل:
-                            {{ $ticket->sender->fullname ?? $ticket->sender->full_name ?? 'غير معروف' }}</small>
+                            <?php echo e($ticket->sender->fullname ?? $ticket->sender->full_name ?? 'غير معروف'); ?></small>
                         </div>
                       </div>
                       <button type="button" class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -305,46 +310,47 @@
                           <div class="p-3 rounded-4"
                             style="background-color: var(--hover-bg); border: 1px solid var(--border-color); text-align: right;">
                             <p class="mb-0 fs-5 style-main" style="white-space: pre-line; color: var(--text-main);">
-                              {{ $ticket->message }}
+                              <?php echo e($ticket->message); ?>
+
                             </p>
                           </div>
                         </div>
 
-                        @if($ticket->attachment_path)
+                        <?php if($ticket->attachment_path): ?>
                           <div class="col-12 mt-2">
                             <label class="form-label small fw-bold mb-2">المرفقات المرسلة:</label>
                             <div class="p-2 rounded-4 text-center border"
                               style="background-color: var(--bg-main); border-color: var(--border-color) !important; max-height: 350px; overflow: hidden;">
-                              <a href="{{ asset('storage/' . $ticket->attachment_path) }}" target="_blank"
+                              <a href="<?php echo e(asset('storage/' . $ticket->attachment_path)); ?>" target="_blank"
                                 title="اضغط لعرض الحجم الكامل">
-                                <img src="{{ asset('storage/' . $ticket->attachment_path) }}" class="img-fluid rounded-3"
+                                <img src="<?php echo e(asset('storage/' . $ticket->attachment_path)); ?>" class="img-fluid rounded-3"
                                   style="max-height: 330px; object-fit: contain;">
                               </a>
                             </div>
                           </div>
-                        @endif
+                        <?php endif; ?>
 
-                        @if(isset($isSuperOrSupport) && $isSuperOrSupport)
+                        <?php if(isset($isSuperOrSupport) && $isSuperOrSupport): ?>
                           <div class="col-12 mt-4">
                             <hr style="border-color: var(--border-color);">
                             <h6 class="fw-bold mb-3">فرز وتصنيف الطلب (للإدارة فقط):</h6>
-                            <form action="{{ route('dashboard.support.assign', $ticket->id) }}" method="POST"
+                            <form action="<?php echo e(route('dashboard.support.assign', $ticket->id)); ?>" method="POST"
                               class="p-3 rounded-4"
                               style="background-color: var(--bg-main); border: 1px dashed var(--border-color);">
-                              @csrf
+                              <?php echo csrf_field(); ?>
 
                               <div class="row g-3">
                                 <div class="col-md-4 text-start" dir="rtl">
                                   <label class="form-label small text-muted">القسم الموجه إليه</label>
                                   <select name="assigned_department" class="form-select bg-transparent rounded-3"
                                     style="color: var(--text-main); border-color: var(--border-color);" required>
-                                    <option value="" {{ is_null($ticket->assigned_department) ? 'selected' : '' }}>اختر
+                                    <option value="" <?php echo e(is_null($ticket->assigned_department) ? 'selected' : ''); ?>>اختر
                                       القسم...</option>
-                                    <option value="Super Admin" {{ $ticket->assigned_department == 'Super Admin' ? 'selected' : '' }}>المدير العام</option>
-                                    <option value="Academic Manager" {{ $ticket->assigned_department == 'Academic Manager' ? 'selected' : '' }}>الموجّه الأكاديمي</option>
-                                    <option value="Moderator" {{ $ticket->assigned_department == 'Moderator' ? 'selected' : '' }}>مراقب المحتوى</option>
-                                    <option value="Financial Manager" {{ $ticket->assigned_department == 'Financial Manager' ? 'selected' : '' }}>المدير المالي</option>
-                                    <option value="Data Entry" {{ $ticket->assigned_department == 'Data Entry' ? 'selected' : '' }}>مدخل البيانات</option>
+                                    <option value="Super Admin" <?php echo e($ticket->assigned_department == 'Super Admin' ? 'selected' : ''); ?>>المدير العام</option>
+                                    <option value="Academic Manager" <?php echo e($ticket->assigned_department == 'Academic Manager' ? 'selected' : ''); ?>>الموجّه الأكاديمي</option>
+                                    <option value="Moderator" <?php echo e($ticket->assigned_department == 'Moderator' ? 'selected' : ''); ?>>مراقب المحتوى</option>
+                                    <option value="Financial Manager" <?php echo e($ticket->assigned_department == 'Financial Manager' ? 'selected' : ''); ?>>المدير المالي</option>
+                                    <option value="Data Entry" <?php echo e($ticket->assigned_department == 'Data Entry' ? 'selected' : ''); ?>>مدخل البيانات</option>
                                   </select>
                                 </div>
 
@@ -352,10 +358,10 @@
                                   <label class="form-label small text-muted">درجة الأولوية</label>
                                   <select name="priority" class="form-select bg-transparent rounded-3"
                                     style="color: var(--text-main); border-color: var(--border-color);" required>
-                                    <option value="low" {{ $ticket->priority == 'low' ? 'selected' : '' }}>منخفضة</option>
-                                    <option value="medium" {{ $ticket->priority == 'medium' ? 'selected' : '' }}>متوسطة</option>
-                                    <option value="high" {{ $ticket->priority == 'high' ? 'selected' : '' }}>عالية</option>
-                                    <option value="urgent" {{ $ticket->priority == 'urgent' ? 'selected' : '' }}>عاجلة جداً
+                                    <option value="low" <?php echo e($ticket->priority == 'low' ? 'selected' : ''); ?>>منخفضة</option>
+                                    <option value="medium" <?php echo e($ticket->priority == 'medium' ? 'selected' : ''); ?>>متوسطة</option>
+                                    <option value="high" <?php echo e($ticket->priority == 'high' ? 'selected' : ''); ?>>عالية</option>
+                                    <option value="urgent" <?php echo e($ticket->priority == 'urgent' ? 'selected' : ''); ?>>عاجلة جداً
                                     </option>
                                   </select>
                                 </div>
@@ -364,12 +370,12 @@
                                   <label class="form-label small text-muted">حالة الطلب</label>
                                   <select name="status" class="form-select bg-transparent rounded-3"
                                     style="color: var(--text-main); border-color: var(--border-color);" required>
-                                    <option value="open" {{ $ticket->status == 'open' ? 'selected' : '' }}>جديدة</option>
-                                    <option value="in_progress" {{ $ticket->status == 'in_progress' ? 'selected' : '' }}>قيد
+                                    <option value="open" <?php echo e($ticket->status == 'open' ? 'selected' : ''); ?>>جديدة</option>
+                                    <option value="in_progress" <?php echo e($ticket->status == 'in_progress' ? 'selected' : ''); ?>>قيد
                                       المعالجة</option>
-                                    <option value="resolved" {{ $ticket->status == 'resolved' ? 'selected' : '' }}>محلولة
+                                    <option value="resolved" <?php echo e($ticket->status == 'resolved' ? 'selected' : ''); ?>>محلولة
                                     </option>
-                                    <option value="closed" {{ $ticket->status == 'closed' ? 'selected' : '' }}>مغلقة</option>
+                                    <option value="closed" <?php echo e($ticket->status == 'closed' ? 'selected' : ''); ?>>مغلقة</option>
                                   </select>
                                 </div>
                               </div>
@@ -380,23 +386,23 @@
                               </button>
                             </form>
                           </div>
-                        @else
+                        <?php else: ?>
                           <div class="col-12 mt-3 text-start">
                             <hr style="border-color: var(--border-color);">
-                            <form action="{{ route('dashboard.support.update-status', $ticket->id) }}" method="POST"
+                            <form action="<?php echo e(route('dashboard.support.update-status', $ticket->id)); ?>" method="POST"
                               class="p-3 rounded-4 d-flex flex-column gap-3"
                               style="background-color: var(--bg-main); border: 1px dashed var(--border-color);">
-                              @csrf
+                              <?php echo csrf_field(); ?>
 
                               <div class="text-start" dir="rtl">
                                 <label class="form-label small text-muted">تحديث حالة الطلب:</label>
                                 <select name="status" class="form-select bg-transparent rounded-3 mb-2"
                                   style="color: var(--text-main); border-color: var(--border-color);" required>
-                                  <option value="open" {{ $ticket->status == 'open' ? 'selected' : '' }}>جديدة</option>
-                                  <option value="in_progress" {{ $ticket->status == 'in_progress' ? 'selected' : '' }}>قيد
+                                  <option value="open" <?php echo e($ticket->status == 'open' ? 'selected' : ''); ?>>جديدة</option>
+                                  <option value="in_progress" <?php echo e($ticket->status == 'in_progress' ? 'selected' : ''); ?>>قيد
                                     المعالجة</option>
-                                  <option value="resolved" {{ $ticket->status == 'resolved' ? 'selected' : '' }}>محلولة</option>
-                                  <option value="closed" {{ $ticket->status == 'closed' ? 'selected' : '' }}>مغلقة</option>
+                                  <option value="resolved" <?php echo e($ticket->status == 'resolved' ? 'selected' : ''); ?>>محلولة</option>
+                                  <option value="closed" <?php echo e($ticket->status == 'closed' ? 'selected' : ''); ?>>مغلقة</option>
                                 </select>
                               </div>
 
@@ -406,7 +412,7 @@
                               </button>
                             </form>
                           </div>
-                        @endif
+                        <?php endif; ?>
 
                       </div>
                     </div>
@@ -415,7 +421,7 @@
                 </div>
               </div>
 
-            @empty
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
               <tr>
                 <td colspan="7" class="text-center py-5 text-muted">
                   <i class="fa-solid fa-inbox fs-1 mb-3 opacity-50"></i>
@@ -423,18 +429,20 @@
                   لا توجد تذاكر أو طلبات دعم فني ضمن هذا الفلتر حالياً.
                 </td>
               </tr>
-            @endforelse
+            <?php endif; ?>
           </tbody>
         </table>
       </div>
 
-      @if($tickets->hasPages())
+      <?php if($tickets->hasPages()): ?>
         <div class="d-flex justify-content-center p-3 border-top" style="border-color: var(--border-color) !important;"
           dir="ltr">
-          {{ $tickets->links() }}
+          <?php echo e($tickets->links()); ?>
+
         </div>
-      @endif
+      <?php endif; ?>
     </div>
 
   </div>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH D:\project\laravel\school-for-blind-Backend\school_for_blind\resources\views/pages/support/index.blade.php ENDPATH**/ ?>

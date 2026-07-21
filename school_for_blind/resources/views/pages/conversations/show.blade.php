@@ -1,12 +1,21 @@
 @extends('layouts.app')
 
 @section('content')
- <div class="container-fluid p-0">
+<div class="container-fluid p-0">
   {{-- رأس الصفحة --}}
   <div class="d-flex justify-content-between align-items-center mb-4">
    <div>
-    <h4 class="fw-bold mb-1" style="color: var(--text-main);">{{ $conversation->name }}</h4>
-    <small class="text-muted">أستاذ المادة: {{ $conversation->teacher->full_name ?? 'غير محدد' }}</small>
+    <h4 class="fw-bold mb-1" style="color: var(--text-main);">{{ $conversation->name ?? 'محادثة' }}</h4>
+    <small class="text-muted">
+      أستاذ المادة: {{ $conversation->teacher->full_name ?? 'غير محدد' }}
+      @if($conversation->type === 'channel')
+        <span class="badge bg-soft-info text-info ms-2">قناة</span>
+      @elseif($conversation->type === 'discussion')
+        <span class="badge bg-soft-warning text-warning ms-2">مجموعة نقاش</span>
+      @else
+        <span class="badge bg-soft-success text-success ms-2">محادثة إدارية</span>
+      @endif
+    </small>
    </div>
    <a href="{{ route('dashboard.conversations.index') }}" class="btn btn-sm"
     style="background-color: var(--bg-main); color: var(--text-main); border: 1px solid var(--border-color);">
@@ -17,83 +26,65 @@
   <div class="row">
    <div class="col-12">
     {{-- صندوق المحادثة --}}
-    <div class="custom-card d-flex flex-column" style="height: 600px; padding: 20px;">
+    <div class="custom-card d-flex flex-column" style="height: 650px; padding: 20px;">
 
      {{-- منطقة الرسائل --}}
-     <div id="chat-messages" class="flex-grow-1 overflow-y-auto mb-3 p-3"
-      style="background-color: var(--bg-main); border-radius: 8px; border: 1px solid var(--border-color);">
-      @forelse($conversation->messages as $message)
-       <div class="d-flex align-items-start mb-3 justify-content-between p-2 rounded msg-item"
-        id="message-{{ $message->id }}" style="background-color: var(--bg-card); border: 1px solid var(--border-color);">
+     <div id="chat-messages" class="flex-grow-1 overflow-y-auto mb-3 p-3 position-relative"
+      style="background-color: var(--bg-main); border-radius: 12px; border: 1px solid var(--border-color);">
+      
+      {{-- مؤشر تحميل الرسائل القديمة عند السكرول لأعلى --}}
+      <div id="top-loading-spinner" class="text-center py-2 d-none">
+        <div class="spinner-border spinner-border-sm text-primary" role="status"></div>
+        <small class="text-muted ms-2">جاري تحميل الرسائل القديمة...</small>
+      </div>
 
-        <div class="d-flex align-items-start gap-2">
-         {{-- أيقونة تدل على نوع المرسل --}}
-         <div class="p-2 rounded bg-soft-info d-flex align-items-center justify-content-center"
-          style="width: 35px; height: 35px;">
-          @if(class_basename($message->sender_type) === 'Teacher')
-           <i class="fa-solid fa-user-tie text-info"></i>
-          @else
-           <i class="fa-solid fa-graduation-cap text-info"></i>
-          @endif
-         </div>
+      {{-- يتم حشو الرسائل ديناميكياً هنا عبر الـ JavaScript --}}
+      <div id="messages-wrapper"></div>
+     </div>
 
-         <div>
-          <strong class="d-block" style="color: var(--text-main); font-size: 0.9rem;">
-           {{ $message->sender->fullname ?? $message->sender->full_name ?? 'مستخدم' }}
-           <span class="text-muted fw-normal"
-            style="font-size: 0.75rem;">({{ class_basename($message->sender_type) === 'Teacher' ? 'أستاذ' : 'طالب' }})</span>
-          </strong>
+     {{-- نموذج إرسال الرسالة (إذا كان الأدمن يملك صلاحية الرد) --}}
+     @if(isset($canReply) && $canReply)
+      <form id="send-message-form" class="mt-auto" enctype="multipart/form-data">
+        @csrf
+        <div class="input-group p-1 rounded-3" style="background-color: var(--bg-card); border: 1px solid var(--border-color);">
+          
+          {{-- زر إضافة مرفق --}}
+          <label class="btn btn-link text-muted m-0 d-flex align-items-center" for="attachment-input" title="إرفاق ملف أو تسجيل">
+            <i class="fa-solid fa-paperclip fs-5"></i>
+          </label>
+          <input type="file" id="attachment-input" name="attachment" class="d-none">
 
-          {{-- متن الرسالة --}}
-          @if($message->body)
-           <p class="mb-1 mt-1" style="color: var(--text-main);">{{ $message->body }}</p>
-          @endif
+          {{-- حقل إدخال النص --}}
+          <input type="text" id="message-body-input" name="body" class="form-control border-0 shadow-none bg-transparent"
+                 placeholder="اكتب رسالتك هنا..." style="color: var(--text-main);">
 
-          {{-- في حال وجود ملف مرفق --}}
-          @if($message->attachment_path)
-           <div class="mt-1">
-            @if($message->attachment_type === 'image')
-             <img src="{{ asset($message->attachment_path) }}" class="img-fluid rounded" style="max-width: 200px;"
-              alt="مرفق">
-            @else
-             <a href="{{ asset($message->attachment_path) }}" target="_blank" class="btn btn-sm btn-outline-secondary py-1"
-              style="font-size: 0.8rem;">
-              <i class="fa-solid fa-paperclip me-1"></i> تحميل المرفق
-             </a>
-            @endif
-           </div>
-          @endif
-
-          <small class="text-muted d-block mt-1"
-           style="font-size: 0.7rem;">{{ $message->created_at->format('Y-m-d H:i') }}</small>
-         </div>
+          {{-- زر الإرسال --}}
+          <button type="submit" class="btn btn-primary px-4 fw-bold rounded-2 d-flex align-items-center gap-2" id="btn-send-msg">
+            <span>إرسال</span>
+            <i class="fa-solid fa-paper-plane"></i>
+          </button>
         </div>
 
-        {{-- زر الحذف المخصص للآدمن --}}
-        <button class="btn btn-sm btn-link text-danger border-0 p-1" onclick="confirmDeleteMessage({{ $message->id }})"
-         title="حذف هذه الرسالة">
-         <i class="fa-regular fa-trash-can fs-5"></i>
-        </button>
-       </div>
-      @empty
-       <div id="no-messages-alert" class="text-center py-5 text-muted">
-        <i class="fa-regular fa-comments fs-1 mb-3"></i>
-        <p>لا توجد رسائل في هذه المحادثة بعد.</p>
-       </div>
-      @endforelse
-     </div>
-
-     {{-- تنبيه بأن القنوات للقراءة فقط للآدمن أيضاً في هذه الواجهة --}}
-     <div class="p-2 rounded bg-soft-warning text-warning text-center" style="font-size: 0.9rem;">
-      <i class="fa-solid fa-circle-info me-1"></i> هذه الواجهة مخصصة لمراقبة وضبط المحتوى وحذف المخالفات فقط.
-     </div>
+        {{-- المعاينة المسبقة للملف المرفق قبل الإرسال --}}
+        <div id="attachment-preview" class="mt-2 d-none align-items-center gap-2 p-2 rounded" style="background-color: var(--hover-bg);">
+          <i class="fa-solid fa-file text-info"></i>
+          <small id="attachment-file-name" class="text-muted flex-grow-1"></small>
+          <button type="button" class="btn-close btn-sm" id="btn-remove-attachment"></button>
+        </div>
+      </form>
+     @else
+      {{-- تنبيه للواجهات المخصصة للمراقبة فقط --}}
+      <div class="p-2 rounded bg-soft-warning text-warning text-center" style="font-size: 0.9rem;">
+        <i class="fa-solid fa-circle-info me-1"></i> هذه الواجهة مخصصة لمراقبة وضبط المحتوى وحذف المخالفات.
+      </div>
+     @endif
 
     </div>
    </div>
   </div>
  </div>
 
- {{-- مودال تأكيد الحذف (Glass Modal متناسق مع تصميمكم) --}}
+ {{-- 1. مودال تأكيد الحذف --}}
  <div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
    <div class="modal-content glass-modal">
@@ -102,8 +93,7 @@
      <button type="button" class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
     <div class="modal-body text-end">
-     <p style="color: var(--text-main);">هل أنت متأكد من رغبتك في حذف هذه الرسالة نهائياً من المحادثة؟ لا يمكن التراجع عن
-      هذا الإجراء.</p>
+     <p style="color: var(--text-main);">هل أنت متأكد من رغبتك في حذف هذه الرسالة نهائياً؟ لا يمكن التراجع عن هذا الإجراء.</p>
     </div>
     <div class="modal-footer border-0">
      <button type="button" class="btn btn-sm" data-bs-dismiss="modal"
@@ -113,78 +103,295 @@
    </div>
   </div>
  </div>
+
+ {{-- 2. مودال عرض ملف المستخدم الديناميكي (طالب أو أستاذ) --}}
+ <div class="modal fade" id="userProfileModal" tabindex="-1" aria-hidden="true">
+   <div class="modal-dialog modal-dialog-centered modal-lg">
+     <div class="modal-content glass-modal text-end" id="user-profile-modal-content">
+       <div class="text-center py-5">
+         <div class="spinner-border text-primary" role="status"></div>
+         <p class="mt-2 text-muted">جاري تحميل بيانات الملف الشخصي...</p>
+       </div>
+     </div>
+   </div>
+ </div>
 @endsection
 
 @push('scripts')
  <script>
+  const conversationId = {{ $conversation->id }};
+  const chatContainer = document.getElementById('chat-messages');
+  const messagesWrapper = document.getElementById('messages-wrapper');
+  const topSpinner = document.getElementById('top-loading-spinner');
+  
+  let nextCursorUrl = `/content-monitor/conversations/${conversationId}/fetch-messages`;
+  let isLoading = false;
+  let isFirstLoad = true;
   let messageIdToDelete = null;
-  const deleteModal = new bootstrap.Modal(document.getElementById('deleteConfirmModal'));
 
-  // 1. فتح مودال تأكيد الحذف وحفظ معرف الرسالة
-  function confirmDeleteMessage(id) {
-   messageIdToDelete = id;
-   deleteModal.show();
+  const deleteModal = new bootstrap.Modal(document.getElementById('deleteConfirmModal'));
+  const profileModal = new bootstrap.Modal(document.getElementById('userProfileModal'));
+
+  // --- 1. جلب الرسائل (Infinite Scroll) ---
+  function fetchMessages(url, isPrepend = false) {
+    if (!url || isLoading) return;
+    isLoading = true;
+    if (isPrepend) topSpinner.classList.remove('d-none');
+
+    fetch(url, {
+      headers: {
+        'Accept': 'application/json',
+        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+      }
+    })
+    .then(res => res.json())
+    .then(data => {
+      nextCursorUrl = data.next_page_url;
+
+      // البيانات تأتي مرتبة من الأحدث إلى الأقدم، نعكسها ليتم عرض القديماً أولاً بالأعلى
+      const messages = data.data.reverse(); 
+
+      const oldScrollHeight = chatContainer.scrollHeight;
+
+      if (isPrepend) {
+        // إضافة الرسائل القديمة في الأعلى عند السكرول
+        messages.forEach(msg => {
+          messagesWrapper.insertAdjacentHTML('afterbegin', renderMessageHTML(msg));
+        });
+        // الحفاظ على موقع السكرول القديم كي لا تقفز الشاشة
+        chatContainer.scrollTop = chatContainer.scrollHeight - oldScrollHeight;
+      } else {
+        // التحميل الأول للرسائل
+        messages.forEach(msg => {
+          messagesWrapper.insertAdjacentHTML('beforeend', renderMessageHTML(msg));
+        });
+
+        if (isFirstLoad) {
+          scrollToBottom();
+          isFirstLoad = false;
+        }
+      }
+
+      if (messagesWrapper.children.length === 0) {
+        messagesWrapper.innerHTML = `
+          <div id="no-messages-alert" class="text-center py-5 text-muted">
+            <i class="fa-regular fa-comments fs-1 mb-3"></i>
+            <p>لا توجد رسائل في هذه المحادثة بعد.</p>
+          </div>`;
+      }
+    })
+    .catch(err => console.error('Error fetching messages:', err))
+    .finally(() => {
+      isLoading = false;
+      topSpinner.classList.add('d-none');
+    });
   }
 
-  // 2. إرسال طلب الحذف للـ Backend عند تأكيد العملية
-  document.getElementById('btn-confirm-delete').addEventListener('click', function () {
-   if (!messageIdToDelete) return;
-
-   fetch(`/content-monitor/conversations/messages/${messageIdToDelete}`, {
-    method: 'DELETE',
-    headers: {
-     'X-CSRF-TOKEN': '{{ csrf_token() }}',
-     'Accept': 'application/json',
-     'Content-Type': 'application/json'
+  // الاستماع لحدث السكرول لأعلى لجلب المزيد
+  chatContainer.addEventListener('scroll', function() {
+    if (chatContainer.scrollTop === 0 && nextCursorUrl && !isLoading) {
+      fetchMessages(nextCursorUrl, true);
     }
-   })
-    .then(response => response.json())
-    .then(data => {
-     if (data.success) {
-      // إزالة الرسالة محلياً من شاشة الآدمن الذي قام بالحذف
-      const msgEl = document.getElementById('message-' + messageIdToDelete);
-      if (msgEl) {
-       msgEl.remove();
-      }
-      deleteModal.hide();
-     } else {
-      alert('حدث خطأ أثناء محاولة الحذف.');
-     }
-    })
-    .catch(error => {
-     console.error('Error:', error);
-     alert('فشل الاتصال بالسيرفر.');
-    });
   });
 
-  // 3. الجزء السحري: الاستماع اللحظي (Real-time Listener) عبر Laravel Echo
-  // إذا قام شخص آخر بالحذف، تنحذف الرسالة فوراً من الشاشة دون تحديث الصفحة
-  window.onload = function () {
-   // النزول لأسفل المحادثة تلقائياً عند فتح الصفحة
-   const chatContainer = document.getElementById('chat-messages');
-   chatContainer.scrollTop = chatContainer.scrollHeight;
+  // --- 2. رسم كرت الرسالة (HTML Generator) ---
+  function renderMessageHTML(msg) {
+    const senderTypeClass = msg.sender_type ? msg.sender_type.split('\\').pop() : '';
+    const senderName = msg.sender ? (msg.sender.fullname || msg.sender.full_name || 'مستخدم') : 'مستخدم';
+    
+    let iconClass = 'fa-user-graduate';
+    let roleName = 'طالب';
+    let iconBg = 'bg-soft-info';
 
-   if (typeof window.Echo !== 'undefined') {
-    window.Echo.private('conversation.' + {{ $conversation->id }})
-     .listen('MessageDeleted', (e) => {
-      console.log('حدث حذف رسالة لحظي:', e);
-      const deletedMsgEl = document.getElementById('message-' + e.deleted_message_id);
-      if (deletedMsgEl) {
-       deletedMsgEl.style.transition = 'all 0.5s ease';
-       deletedMsgEl.style.opacity = '0';
-       deletedMsgEl.style.transform = 'scale(0.9)';
+    if (senderTypeClass === 'Teacher') {
+      iconClass = 'fa-user-tie';
+      roleName = 'أستاذ';
+      iconBg = 'bg-soft-warning';
+    } else if (senderTypeClass === 'Admin') {
+      iconClass = 'fa-user-shield';
+      roleName = 'إدارة';
+      iconBg = 'bg-soft-success';
+    }
 
-       // حذف العنصر نهائياً بعد انتهاء تأثير الأنيميشن
-       setTimeout(() => {
-        deletedMsgEl.remove();
-        // إذا فرغت المحادثة، أظهر تنبيه فارغ
-        if (document.querySelectorAll('.msg-item').length === 0) {
-         location.reload(); // لإظهار ديف "لا توجد رسائل"
-        }
-       }, 500);
+    let attachmentHTML = '';
+    if (msg.attachment_path) {
+      if (msg.attachment_type === 'image') {
+        attachmentHTML = `<div class="mt-2"><img src="${msg.attachment_path}" class="img-fluid rounded border" style="max-width: 250px;" alt="مرفق صورة"></div>`;
+      } else if (msg.attachment_type === 'voice') {
+        attachmentHTML = `<div class="mt-2"><audio controls src="${msg.attachment_path}" class="w-100" style="max-width: 300px;"></audio></div>`;
+      } else {
+        attachmentHTML = `<div class="mt-2"><a href="${msg.attachment_path}" target="_blank" class="btn btn-sm btn-outline-secondary"><i class="fa-solid fa-paperclip me-1"></i> فتح المرفق</a></div>`;
       }
-     });
-   }
+    }
+
+    // إمكانية الضغط على اسم المرسل لعرض الملف الشخصي (إذا لم يكن أدمن)
+    const profileClick = (senderTypeClass === 'Student' || senderTypeClass === 'Teacher') 
+      ? `onclick="openUserProfile('${senderTypeClass}', ${msg.sender_id})"` 
+      : '';
+
+    return `
+      <div class="d-flex align-items-start mb-3 justify-content-between p-2 rounded msg-item" id="message-${msg.id}" 
+           style="background-color: var(--bg-card); border: 1px solid var(--border-color);">
+        <div class="d-flex align-items-start gap-2">
+          <div class="p-2 rounded ${iconBg} d-flex align-items-center justify-content-center cursor-pointer" 
+               style="width: 38px; height: 38px;" ${profileClick} title="عرض الملف الشخصي">
+            <i class="fa-solid ${iconClass}"></i>
+          </div>
+          <div>
+            <strong class="d-block cursor-pointer text-hover-primary" style="color: var(--text-main); font-size: 0.9rem;" ${profileClick}>
+              ${senderName}
+              <span class="text-muted fw-normal" style="font-size: 0.75rem;">(${roleName})</span>
+            </strong>
+            ${msg.body ? `<p class="mb-1 mt-1" style="color: var(--text-main); font-size: 0.95rem;">${msg.body}</p>` : ''}
+            ${attachmentHTML}
+            <small class="text-muted d-block mt-1" style="font-size: 0.7rem;">${new Date(msg.created_at).toLocaleString('ar-EG')}</small>
+          </div>
+        </div>
+        <button class="btn btn-sm btn-link text-danger border-0 p-1" onclick="confirmDeleteMessage(${msg.id})" title="حذف هذه الرسالة">
+          <i class="fa-regular fa-trash-can fs-5"></i>
+        </button>
+      </div>`;
+  }
+
+  // --- 3. فتح ملف المستخدم الشخصي عبر AJAX ---
+  function openUserProfile(type, id) {
+    const modalContent = document.getElementById('user-profile-modal-content');
+    modalContent.innerHTML = `
+      <div class="text-center py-5">
+        <div class="spinner-border text-primary" role="status"></div>
+        <p class="mt-2 text-muted">جاري تحميل بيانات الملف الشخصي...</p>
+      </div>`;
+    profileModal.show();
+
+    fetch(`/content-monitor/conversations/user-profile?type=${type}&id=${id}`, {
+      headers: { 'Accept': 'application/json' }
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        modalContent.innerHTML = data.html;
+      } else {
+        modalContent.innerHTML = `<div class="p-4 text-center text-danger">${data.message || 'فشل تحميل الملف الشخصي.'}</div>`;
+      }
+    })
+    .catch(err => {
+      modalContent.innerHTML = `<div class="p-4 text-center text-danger">حدث خطأ أثناء جلب البيانات.</div>`;
+    });
+  }
+
+  // --- 4. إرسال رسالة جديدة (الأدمن) ---
+  const sendForm = document.getElementById('send-message-form');
+  if (sendForm) {
+    const attachmentInput = document.getElementById('attachment-input');
+    const attachmentPreview = document.getElementById('attachment-preview');
+    const attachmentFileName = document.getElementById('attachment-file-name');
+    const removeAttachmentBtn = document.getElementById('btn-remove-attachment');
+
+    attachmentInput.addEventListener('change', function() {
+      if (this.files.length > 0) {
+        attachmentFileName.textContent = this.files[0].name;
+        attachmentPreview.classList.remove('d-none');
+        attachmentPreview.classList.add('d-flex');
+      }
+    });
+
+    removeAttachmentBtn.addEventListener('click', function() {
+      attachmentInput.value = '';
+      attachmentPreview.classList.add('d-none');
+      attachmentPreview.classList.remove('d-flex');
+    });
+
+    sendForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      const btnSend = document.getElementById('btn-send-msg');
+      btnSend.disabled = true;
+
+      fetch(`/content-monitor/conversations/${conversationId}/send`, {
+        method: 'POST',
+        headers: {
+          'X-CSRF-TOKEN': '{{ csrf_token() }}',
+          'Accept': 'application/json'
+        },
+        body: formData
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          const noMsgAlert = document.getElementById('no-messages-alert');
+          if (noMsgAlert) noMsgAlert.remove();
+
+          messagesWrapper.insertAdjacentHTML('beforeend', renderMessageHTML(data.data));
+          scrollToBottom();
+          sendForm.reset();
+          removeAttachmentBtn.click();
+        } else {
+          alert(data.message || 'فشل إرسال الرسالة.');
+        }
+      })
+      .catch(err => alert('حدث خطأ أثناء الإرسال.'))
+      .finally(() => btnSend.disabled = false);
+    });
+  }
+
+  // --- 5. حذف الرسالة ---
+  function confirmDeleteMessage(id) {
+    messageIdToDelete = id;
+    deleteModal.show();
+  }
+
+  document.getElementById('btn-confirm-delete').addEventListener('click', function() {
+    if (!messageIdToDelete) return;
+
+    fetch(`/content-monitor/conversations/messages/${messageIdToDelete}`, {
+      method: 'DELETE',
+      headers: {
+        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+        'Accept': 'application/json'
+      }
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        const msgEl = document.getElementById('message-' + messageIdToDelete);
+        if (msgEl) msgEl.remove();
+        deleteModal.hide();
+      } else {
+        alert('حدث خطأ أثناء محاولة الحذف.');
+      }
+    })
+    .catch(err => alert('فشل الاتصال بالسيرفر.'));
+  });
+
+  function scrollToBottom() {
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+  }
+
+  // --- 6. التهيئة والـ Real-time عبر Laravel Echo ---
+  window.onload = function() {
+    fetchMessages(nextCursorUrl);
+
+    if (typeof window.Echo !== 'undefined') {
+      window.Echo.private('conversation.' + conversationId)
+        .listen('MessageDeleted', (e) => {
+          const deletedMsgEl = document.getElementById('message-' + e.deleted_message_id);
+          if (deletedMsgEl) {
+            deletedMsgEl.style.transition = 'all 0.4s ease';
+            deletedMsgEl.style.opacity = '0';
+            setTimeout(() => deletedMsgEl.remove(), 400);
+          }
+        })
+        .listen('MessageSent', (e) => {
+          // إضافة الرسالة اللحظية المرسلة من مستخدم آخر
+          if (e.message) {
+            const noMsgAlert = document.getElementById('no-messages-alert');
+            if (noMsgAlert) noMsgAlert.remove();
+            
+            messagesWrapper.insertAdjacentHTML('beforeend', renderMessageHTML(e.message));
+            scrollToBottom();
+          }
+        });
+    }
   };
  </script>
 @endpush

@@ -31,6 +31,13 @@ class PunishmentSeeder extends Seeder
                 'duration_minutes' => 10080,
             ],
 
+             [
+                'name' => 'Warning',
+                'level' => 1,
+                'description' => 'إنذار أكاديمي تأخر عن درس يقام حاليا)',
+                'duration_minutes' => null,
+            ],
+
             [
                 'name' => 'Warning',
                 'level' => 1,

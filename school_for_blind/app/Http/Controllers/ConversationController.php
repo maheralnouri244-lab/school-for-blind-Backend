@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\MessageDeleted;
+use App\Events\MessageSent;
 use App\Http\Controllers\Controller;
 use App\Models\Conversation;
 use App\Models\Message;
+use App\Models\Report;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use App\Events\MessageSent;
 
 class ConversationController extends Controller
 {
@@ -60,12 +62,42 @@ class ConversationController extends Controller
 
     // FOR BOTH
 
-    public function getMessages($conversationId)
+    public function getMessages(Request $request, $conversationId)
     {
+        $user = $request->user();
+        
+        $conversation = Conversation::with('parent')->findOrFail($conversationId);
+
+        if (class_basename($user) === 'Student') {
+            if ($conversation->type === 'teacher_admin') {
+                return response()->json(['success' => false, 'message' => 'غير مصرح لك بالوصول.'], 403);
+            }
+
+            $teacherId = $conversation->teacher_id ?? optional($conversation->parent)->teacher_id;
+
+            $hasAccess = $user->class->teachers()->where('teachers.id', $teacherId)->exists();
+            if (!$hasAccess) {
+                return response()->json(['success' => false, 'message' => 'غير مصرح لك باستعراض رسائل هذه المحادثة.'], 403);
+            }
+        }
+
+        if (class_basename($user) === 'Teacher') {
+            if ((int) $conversation->teacher_id !== (int) $user->id) {
+                return response()->json(['success' => false, 'message' => 'غير مصرح لك بالوصول لهذه المحادثة.'], 403);
+            }
+        }
+
         $messages = Message::where('conversation_id', $conversationId)
-            ->with('sender:id,name')
+            ->with('sender')
             ->orderBy('created_at', 'asc')
             ->get();
+
+        $messages->transform(function ($message) {
+            if ($message->attachment_path) {
+                $message->attachment_path = asset($message->attachment_path);
+            }
+            return $message;
+        });
 
         return response()->json(['success' => true, 'data' => $messages]);
     }
@@ -84,10 +116,28 @@ class ConversationController extends Controller
         }
 
         $user = $request->user();
-        $conversation = Conversation::findOrFail($conversationId);
 
-        if (class_basename($user) === 'Student' && $conversation->type === 'channel') {
-            return response()->json(['success' => false, 'message' => 'لا يمكنك الإرسال في هذه القناة'], 403);
+        $conversation = Conversation::with('parent')->findOrFail($conversationId);
+
+        if (class_basename($user) === 'Student') {
+
+            if ($conversation->type === 'channel') {
+                return response()->json(['success' => false, 'message' => 'لا يمكنك الإرسال في هذه القناة'], 403);
+            }
+
+            if ($conversation->type === 'discussion') {
+                $teacherId = $conversation->teacher_id ?? optional($conversation->parent)->teacher_id;
+
+                if (!$teacherId) {
+                    return response()->json(['success' => false, 'message' => 'بيانات المحادثة غير مكتملة.'], 400);
+                }
+
+                $isEnrolled = $user->class->teachers()->where('teachers.id', $teacherId)->exists();
+
+                if (!$isEnrolled) {
+                    return response()->json(['success' => false, 'message' => 'عذراً، لا يمكنك الإرسال في مجموعة نقاش لا تنتمي لأساتذة شعبتك.'], 403);
+                }
+            }
         }
 
         $attachmentPath = null;
@@ -139,5 +189,55 @@ class ConversationController extends Controller
         broadcast(new MessageDeleted($message->id, $message->conversation_id))->toOthers();
 
         return response()->json(['success' => true, 'message' => 'تم حذف الرسالة بنجاح.']);
+    }
+
+    public function getTeacherAdminConversations(Request $request)
+    {
+        $teacher = $request->user();
+
+        $conversations = Conversation::where('teacher_id', $teacher->id)
+            ->where('type', 'teacher_admin')
+            ->with('admin:id,role,email')
+            ->get();
+
+        return response()->json(['success' => true, 'data' => $conversations]);
+    }
+
+
+    public function reportMessage(Request $request, $messageId)
+    {
+        $request->validate([
+            'reason' => 'nullable|string|max:1000',
+        ]);
+
+        $reporter = $request->user();
+
+        $message = Message::findOrFail($messageId);
+
+        if ($message->sender_id === $reporter->id && $message->sender_type === get_class($reporter)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'لا يمكنك الإبلاغ عن رسالتك الخاصة.'
+            ], 400);
+        }
+
+        $report = Report::create([
+            'reporter_type' => get_class($reporter),
+            'reporter_id' => $reporter->id,
+
+            'reported_type' => $message->sender_type,
+            'reported_id' => $message->sender_id,
+
+            'reason' => $request->reason,
+            'status' => 'pending',
+
+            'reportable_type' => get_class($message),
+            'reportable_id' => $message->id,
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'تم إرسال البلاغ بنجاح، ستقوم الإدارة بمراجعته.'
+        ]);
     }
 }

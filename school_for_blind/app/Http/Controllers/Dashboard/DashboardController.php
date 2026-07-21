@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Spatie\Activitylog\Models\Activity;
+use App\Models\Conversation;
+use App\Models\Admin;
 
 
 class DashboardController extends Controller
@@ -174,7 +176,7 @@ class DashboardController extends Controller
         return view('pages.requests.complete_teacher', compact('teacher', 'subjects', 'selectedClassIds', 'allClasses', 'title'));
     }
 
-    public function completeTeacherApproval(Request $request, $id, \App\Services\WhatsAppService $whatsApp)
+    public function completeTeacherApproval(Request $request, $id, WhatsAppService $whatsApp)
     {
         $request->validate([
             'full_name' => 'required|string|max:255',
@@ -190,12 +192,15 @@ class DashboardController extends Controller
         $teacher = Teacher::findOrFail($id);
 
         DB::transaction(function () use ($request, $teacher, $whatsApp) {
+
+            $selectedSubjects = Subject::whereIn('id', $request->subjects)->get();
+
             $teacher->update([
                 'full_name' => $request->full_name,
                 'phone' => $request->phone,
                 'level' => $request->level,
                 'status' => 'approved',
-                'subjects' => implode(', ', Subject::whereIn('id', $request->subjects)->pluck('name')->toArray()),
+                'subjects' => implode(', ', $selectedSubjects->pluck('name')->toArray()),
             ]);
 
             $teacher->classes()->sync($request->classes);
@@ -208,10 +213,45 @@ class DashboardController extends Controller
             }
             $teacher->subjects()->sync($syncData);
 
+            foreach ($selectedSubjects as $subject) {
+                $channel = Conversation::firstOrCreate([
+                    'type' => 'channel',
+                    'teacher_id' => $teacher->id,
+                    'subject_id' => $subject->id,
+                ], [
+                    'name' => 'قناة مادة ' . $subject->name . ' - ' . $teacher->full_name,
+                ]);
+
+                Conversation::firstOrCreate([
+                    'type' => 'discussion',
+                    'teacher_id' => $teacher->id,
+                    'subject_id' => $subject->id,
+                    'parent_id' => $channel->id,
+                ], [
+                    'name' => 'مناقشة مادة ' . $subject->name . ' - ' . $teacher->full_name,
+                ]);
+            }
+
+            $admins = Admin::whereIn('role', [
+                'Super Admin',
+                'Academic Manager',
+            ])->get();
+
+            foreach ($admins as $admin) {
+                \Log::info($admin);
+                Conversation::firstOrCreate([
+                    'type' => 'teacher_admin',
+                    'teacher_id' => $teacher->id,
+                    'admin_id' => $admin->id,
+                ], [
+                    'name' => 'محادثة الإدارة - ' . $admin->role,
+                ]);
+            }
+
             $whatsApp->sendTeacherinfo($teacher->phone, $teacher->full_name);
         });
 
-        return redirect()->route('requests.view', 'teacher')->with('success', 'تم تنشيط حساب الأستاذ وتثبيت بياناته بنجاح.');
+        return redirect()->route('requests.view', 'teacher')->with('success', 'تم تنشيط حساب الأستاذ وتثبيت بياناته وإنشاء جميع القنوات والمحادثات بنجاح.');
     }
 
     public function logs()

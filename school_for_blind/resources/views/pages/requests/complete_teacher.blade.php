@@ -35,7 +35,7 @@
                     </div>
 
                     <h5 class="fw-bold mb-3 mt-5" style="color: var(--text-main);">2. الشعب والصفوف المسندة</h5>
-                    <p class="text-muted small">تأكيد الشعب المحددة مسبقاً (يمكنك التعديل عليها هنا أيضاً):</p>
+                    <p class="text-muted small">اختر الشعب التي سيدرسها هذا الاستاذ</p>
                     <div class="row">
                         <div class="col-12">
                             <select name="classes[]" class="form-select" multiple style="background-color: var(--bg-main); color: var(--text-main); border-color: var(--border-color); min-height: 120px;">

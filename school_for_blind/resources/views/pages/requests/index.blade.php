@@ -72,7 +72,8 @@
                 </option>
               @endforeach
             </select>
-            <small id="classSelectionHint" class="text-muted d-none mt-2 d-block">💡 يمكنك اختيار أكثر من شعبة بالضغط المستمر على زر <b>Ctrl</b> في الويندوز أو <b>Cmd</b> في الماك أثناء الضغط على الخيارات.</small>
+            <small id="classSelectionHint" class="text-muted d-none mt-2 d-block">💡 يمكنك اختيار أكثر من شعبة بالضغط
+              المستمر على زر <b>Ctrl</b> في الويندوز أو <b>Cmd</b> في الماك أثناء الضغط على الخيارات.</small>
           </div>
         </div>
 
@@ -102,13 +103,7 @@
         let classId = null;
         if (status === 'approved') {
           if (type === 'teacher') {
-            classId = Array.from(classSelect.selectedOptions).map(option => option.value).filter(val => val !== "");
-            if (classId.length === 0) {
-              alert('الرجاء تحديد شعبة واحدة على الأقل للأستاذ');
-              return;
-            }
-
-            window.location.href = `/dashboard/teachers/${id}/complete-approval?classes=${classId.join(',')}`;
+            window.location.href = `/dashboard/teachers/${id}/complete-approval`;
             return;
           } else {
             classId = classSelect.value;
@@ -159,14 +154,11 @@
           activeType = this.getAttribute('data-type');
 
           classSelect.value = '';
-          classWrapper.classList.remove('d-none');
 
           if (activeType === 'teacher') {
-            classSelect.setAttribute('multiple', 'multiple');
-            classSelect.style.height = 'auto';
-            classLabel.innerText = 'حدد الشعب التي سيقوم الأستاذ بتدريسها:';
-            classHint.classList.remove('d-none');
+            classWrapper.classList.add('d-none');
           } else {
+            classWrapper.classList.remove('d-none');
             classSelect.removeAttribute('multiple');
             classSelect.style.height = '45px';
             classLabel.innerText = 'حدد الشعبة التي سينضم إليها الطالب:';

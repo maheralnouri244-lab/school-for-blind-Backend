@@ -224,8 +224,11 @@ Route::post('/livekit/webhook', [LiveKitWebhookController::class, 'handle']);
 
 Route::middleware(['auth:sanctum', IsTeacher::class])->prefix('teacher/channels')->group(function () {
     Route::get('/', [ConversationController::class, 'getTeacherChannels']);
+    Route::get('/admin-chats', [ConversationController::class, 'getTeacherAdminConversations']);
+    Route::get('/{conversationId}/messages', [ConversationController::class, 'getMessages']);
     Route::post('/{conversationId}/messages', [ConversationController::class, 'sendMessage'])
         ->middleware(CheckPunishment::class . ':Mute');
+    Route::post('/{conversationId}/read', [ConversationController::class, 'markAsRead']);
 });
 
 Route::middleware(['auth:sanctum', CheckIsStudent::class])->prefix('student/channels')->group(function () {
@@ -233,9 +236,15 @@ Route::middleware(['auth:sanctum', CheckIsStudent::class])->prefix('student/chan
     Route::get('/{conversationId}/messages', [ConversationController::class, 'getMessages']);
     Route::post('/{conversationId}/messages', [ConversationController::class, 'sendMessage'])
         ->middleware(CheckPunishment::class . ':Mute');
+    Route::post('/{conversationId}/read', [ConversationController::class, 'markAsRead']);
 });
-Route::delete('/messages/{messageId}', [ConversationController::class, 'deleteMessage'])
-    ->middleware('auth:sanctum');
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::delete('/messages/{messageId}', [ConversationController::class, 'deleteMessage']);
+    Route::post('/messages/{messageId}/report', [ConversationController::class, 'reportMessage']);
+});
+
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/student/submissions', [StudentQuizController::class, 'getStudentSubmissions']);
 });

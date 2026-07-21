@@ -30,7 +30,7 @@ class ClassesTableSeeder extends Seeder
 
         foreach ($levels as $level) {
             foreach ($divisions as $index => $divisionName) {
-
+                
                 $divisionNumber = $index + 1;
                 $classId = DB::table('classes')->insertGetId([
                     'name' => $divisionName,

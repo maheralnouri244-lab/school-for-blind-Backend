@@ -5,8 +5,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Message extends Model
 {
-    protected $fillable = ['conversation_id', 'body', 'attachment_path', 'attachment_type'];
-
+    // protected $fillable = ['conversation_id', 'body', 'attachment_path', 'attachment_type'];
+    protected $guarded = [];
     public function sender()
     {
         return $this->morphTo();

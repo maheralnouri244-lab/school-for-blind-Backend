@@ -207,11 +207,11 @@ class ParentReportTestDataSeeder extends Seeder
 
         Report::firstOrCreate(
             [
-                'reporter_type' => Caregiver::class,
-                'reporter_id' => $caregiver->id,
+                'reporter_type' => Teacher::class,
+                'reporter_id' => $teacher->id,
                 'reported_type' => Student::class,
                 'reported_id' => $student->id,
-                'reason' => 'ابني كان مريضاً، أرجو إزالة الغياب.'
+                'reason' => 'الطالب يتهزء و يزعج اصدقائه'
             ],
             [
                 'status' => 'pending',
