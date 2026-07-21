@@ -163,26 +163,89 @@ class QuizController extends Controller
             })
             ->values();
     }
+public function update(Request $request, $id)
+{
+    $quiz = Quiz::findOrFail($id);
 
-    public function update(Request $request, $id)
-    {
-        $quiz = Quiz::findOrFail($id);
-        $request->validate([
-            // 'title' => 'sometimes|string|min:1',
-            'numofquestions' => 'sometimes|integer|min:1',
-            'timelimit' => 'sometimes|integer|min:1',
-            'totalmark' => 'sometimes|integer|min:1',
-        ]);
+    // حماية: المدرّس يعدّل كويزه فقط
+    if ($quiz->teacher_id !== auth()->id()) {
+        return response()->json([
+            'message' => 'لا يمكنك تعديل كويز لم تنشئه'
+        ], 403);
+    }
 
+    $request->validate([
+        'numofquestions' => 'sometimes|integer|min:1',
+        'timelimit' => 'sometimes|integer|min:1',
+        'totalmark' => 'sometimes|integer|min:1',
+        'questions' => 'sometimes|array|min:1',
+        'questions.*.type' => 'required|in:mcq,TF,TEXT',
+        'questions.*.description' => 'required|string',
+        'questions.*.points' => 'nullable|numeric|min:0',
+        'questions.*.choices' => 'required_if:questions.*.type,mcq|array|min:2',
+        'questions.*.choices.*.text' => 'required_with:questions.*.choices|string',
+        'questions.*.choices.*.is_correct' => 'required_with:questions.*.choices|boolean',
+        'questions.*.correct_answer' => 'required_unless:questions.*.type,mcq|string',
+    ]);
+
+    DB::beginTransaction();
+
+    try {
         $quiz->update($request->only(['numofquestions', 'timelimit', 'totalmark']));
-        // $quiz->save();
+
+        // تعديل الأسئلة: حذف القديمة ثم إنشاء الجديدة
+        if ($request->has('questions')) {
+            $oldQuestions = $quiz->questions()->get();
+            $quiz->questions()->detach();
+
+            foreach ($oldQuestions as $old) {
+                // أسئلة البنك (status = Bank) تُفصل فقط ولا تُحذف
+                if ($old->status !== 'Bank') {
+                    $old->choices()->delete();
+                    $old->delete();
+                }
+            }
+
+            // إنشاء الأسئلة الجديدة (نفس منطق store)
+            foreach ($request->questions as $q) {
+                $question = Question::create([
+                    'teacher_id' => auth()->id(),
+                    'type' => $q['type'],
+                    'description' => $q['description'],
+                    'correct_answer' => $q['type'] !== 'mcq' ? $q['correct_answer'] : null,
+                    'points' => $q['points'] ?? 1,
+                    'status' => $q['status'] ?? 'publish',
+                ]);
+
+                if ($q['type'] === 'mcq' && isset($q['choices'])) {
+                    foreach ($q['choices'] as $choice) {
+                        $question->choices()->create([
+                            'choice_text' => $choice['text'],
+                            'is_correct' => $choice['is_correct'] ?? false,
+                        ]);
+                    }
+                }
+
+                $quiz->questions()->attach($question->id);
+            }
+        }
+
+        DB::commit();
+        $quiz->load('questions.choices');
 
         return response()->json([
             'message' => 'تم تعديل الكويز بنجاح!',
             'quiz' => $quiz
         ]);
-    }
 
+    } catch (\Exception $e) {
+        DB::rollBack();
+        return response()->json([
+            'error' => 'حدث خطأ أثناء التعديل',
+            'details' => $e->getMessage()
+        ], 500);
+    }
+}
     public function destroy($id)
     {
         $quiz = Quiz::findOrFail($id);
