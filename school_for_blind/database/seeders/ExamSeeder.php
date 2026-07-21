@@ -63,6 +63,8 @@ class ExamSeeder extends Seeder
                 'subject_id' => $subject->id,
                 'duration_minutes' => 60,
                 'is_published' => true,
+                'numofquestions' => 3,
+                'totalmark' => 8,
             ]);
 
             $exam->questions()->attach([$mcqQuestion->id, $tfQuestion->id, $textQuestion->id]);
@@ -71,7 +73,7 @@ class ExamSeeder extends Seeder
                 $submission = ExamSubmission::create([
                     'student_id' => $student->id,
                     'exam_id' => $exam->id,
-                    'score' => 3, 
+                    'score' => 3,
                     'status' => 'pending_grading',
                 ]);
 
@@ -100,9 +102,9 @@ class ExamSeeder extends Seeder
                     'exam_id' => $exam->id,
                     'question_id' => $textQuestion->id,
                     'text_answer' => 'الثورة الصناعية بدأت بسبب الحاجة لزيادة الإنتاج واستخدام الآلات البخارية...',
-                    'is_correct' => false, 
-                    'points_earned' => 0,  
-                    'is_graded' => false,  
+                    'is_correct' => false,
+                    'points_earned' => 0,
+                    'is_graded' => false,
                 ]);
             }
         }

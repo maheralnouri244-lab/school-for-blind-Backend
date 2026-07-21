@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -13,12 +12,12 @@ return new class extends Migration
     {
         Schema::create('schedules', function (Blueprint $table) {
             $table->id();
-$table->foreignId('class_id')->constrained('classes');
-$table->foreignId('teacher_id')->constrained('teachers');
-$table->foreignId('subject_id')->constrained('subjects');
-$table->string('day_of_week');
-$table->time('start_time');
-$table->time('end_time');
+            $table->foreignId('class_id')->constrained('classes');
+            $table->foreignId('teacher_id')->constrained('teachers');
+            $table->foreignId('subject_id')->constrained('subjects');
+            $table->string('day_of_week');
+            $table->time('start_time');
+            $table->time('end_time');
             $table->timestamps();
         });
     }

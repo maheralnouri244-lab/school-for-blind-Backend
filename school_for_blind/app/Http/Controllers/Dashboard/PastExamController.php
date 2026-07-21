@@ -50,6 +50,7 @@ class PastExamController extends Controller
             'year' => 'required|integer|min:2000|max:' . (date('Y') + 1),
             'session' => 'required|in:first,second,complementary',
             'voice_solution' => 'nullable|mimes:mp3,wav,aac,ogg|max:20480',
+            'timelimit' => 'required|integer|min:1|max:300',
         ]);
 
         $data = $request->except('voice_solution');
@@ -60,6 +61,8 @@ class PastExamController extends Controller
         }
 
         $data['is_published'] = false;
+        $data['totalmark'] = 0;
+        $data['numofquestions'] = 0;
 
         PastExam::create($data);
 
@@ -100,6 +103,7 @@ class PastExamController extends Controller
             'year' => 'required|integer|min:2000|max:' . (date('Y') + 1),
             'session' => 'required|in:first,second,complementary',
             'voice_solution' => 'nullable|mimes:mp3,wav,aac,ogg|max:20480',
+            'timelimit' => 'required|integer|min:1|max:300',
         ]);
 
         $data = $request->except('voice_solution');
@@ -183,6 +187,8 @@ class PastExamController extends Controller
 
             $pastExam->questions()->attach($question->id);
 
+            $this->updateExamStats($pastExam);
+
             DB::commit();
             return redirect()->back()->with('success', 'تم إضافة السؤال التفاعلي بنجاح.');
 
@@ -202,6 +208,8 @@ class PastExamController extends Controller
 
         if (!$pastExam->questions()->where('question_id', $request->question_id)->exists()) {
             $pastExam->questions()->attach($request->question_id);
+            
+            $this->updateExamStats($pastExam);
         }
 
         return redirect()->back()->with('success', 'تم استيراد السؤال من بنك الأسئلة بنجاح.');
@@ -212,6 +220,15 @@ class PastExamController extends Controller
         $pastExam = PastExam::findOrFail($pastExamId);
         $pastExam->questions()->detach($questionId);
 
+        $this->updateExamStats($pastExam);
+
         return redirect()->back()->with('success', 'تم إزالة السؤال من هذه الدورة.');
+    }
+
+    private function updateExamStats(PastExam $exam)
+    {
+        $exam->numofquestions = $exam->questions()->count();
+        $exam->totalmark = $exam->questions()->sum('points');
+        $exam->save();
     }
 }

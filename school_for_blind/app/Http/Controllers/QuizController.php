@@ -13,6 +13,16 @@ use Illuminate\Support\Facades\DB;
 
 class QuizController extends Controller
 {
+
+    private function recalculateQuizTotals(Quiz $quiz)
+    {
+        $questionsCount = $quiz->questions()->count();
+        $totalMark = $quiz->questions()->sum('points');
+        $quiz->update([
+            'numofquestions' => $questionsCount,
+            'totalmark' => $totalMark,
+        ]);
+    }
     public function store(Request $request)
     {
         $request->validate([
@@ -88,6 +98,7 @@ class QuizController extends Controller
             }
 
             DB::commit();
+            $this->recalculateQuizTotals($quiz);
             $quiz->load('questions.choices');
 
             return response()->json([
@@ -167,6 +178,7 @@ public function update(Request $request, $id)
 {
     $quiz = Quiz::findOrFail($id);
 
+<<<<<<< HEAD
     // حماية: المدرّس يعدّل كويزه فقط
     if ($quiz->teacher_id !== auth()->id()) {
         return response()->json([
@@ -237,6 +249,86 @@ public function update(Request $request, $id)
             'message' => 'تم تعديل الكويز بنجاح!',
             'quiz' => $quiz
         ]);
+=======
+    public function update(Request $request, $id)
+    {
+        // return response()->json($request->all());
+        $quiz = Quiz::findOrFail($id);
+
+        $request->validate([
+            'timelimit' => 'sometimes|integer|min:1',
+            'delete_question_ids' => 'nullable|array',
+            'delete_question_ids.*' => 'exists:questions,id',
+            'add_question_ids' => 'nullable|array',
+            'add_question_ids.*' => 'exists:questions,id',
+            'new_questions' => 'nullable|array',
+            'new_questions.*.type' => 'required_with:new_questions|in:mcq,TF,TEXT',
+            'new_questions.*.description' => 'required_with:new_questions|string',
+            'new_questions.*.points' => 'nullable|numeric|min:0',
+            'new_questions.*.choices' => 'required_if:new_questions.*.type,mcq|array|min:2',
+            'new_questions.*.choices.*.text' => 'required_with:new_questions.*.choices|string',
+            'new_questions.*.choices.*.is_correct' => 'required_with:new_questions.*.choices|boolean',
+            'new_questions.*.correct_answer' => 'required_unless:new_questions.*.type,mcq|string',
+        ]);
+
+        DB::beginTransaction();
+
+        try {
+            if ($request->has('timelimit')) {
+                $quiz->update($request->only(['timelimit']));
+            }
+
+            if ($request->has('delete_question_ids') && !empty($request->delete_question_ids)) {
+                $quiz->questions()->detach($request->delete_question_ids);
+            }
+
+            if ($request->has('add_question_ids') && !empty($request->add_question_ids)) {
+                $quiz->questions()->syncWithoutDetaching($request->add_question_ids);
+            }
+
+            if ($request->has('new_questions') && !empty($request->new_questions)) {
+                foreach ($request->new_questions as $q) {
+                    $question = Question::create([
+                        'teacher_id' => auth()->id(),
+                        'type' => $q['type'],
+                        'description' => $q['description'],
+                        'correct_answer' => $q['type'] !== 'mcq' ? $q['correct_answer'] : null,
+                        'points' => $q['points'] ?? 1,
+                        'status' => $q['status'] ?? 'publish',
+                    ]);
+
+                    if ($q['type'] === 'mcq' && isset($q['choices'])) {
+                        foreach ($q['choices'] as $choice) {
+                            $question->choices()->create([
+                                'choice_text' => $choice['text'],
+                                'is_correct' => $choice['is_correct'] ?? false,
+                            ]);
+                        }
+                    }
+                    $quiz->questions()->attach($question->id);
+                }
+            }
+
+            $this->recalculateQuizTotals($quiz);
+
+            DB::commit();
+
+            $quiz->load('questions.choices');
+
+            return response()->json([
+                'message' => 'تم تعديل الكويز وتحديث عدد الأسئلة والعلامات تلقائياً!',
+                'quiz' => $quiz
+            ], 200);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'error' => 'حدث خطأ أثناء تعديل الكويز',
+                'details' => $e->getMessage()
+            ], 500);
+        }
+    }
+>>>>>>> 9477ebde0c2048e30bb70e698ce933cd9d399777
 
     } catch (\Exception $e) {
         DB::rollBack();

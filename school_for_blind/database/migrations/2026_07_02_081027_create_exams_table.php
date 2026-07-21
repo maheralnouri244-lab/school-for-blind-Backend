@@ -15,6 +15,8 @@ return new class extends Migration {
             $table->foreignId('subject_id')->constrained('subjects')->cascadeOnDelete();
             $table->dateTime('exam_date')->nullable();
             $table->integer('duration_minutes')->default(60);
+            $table->integer('numofquestions')->default(0);
+            $table->integer('totalmark')->default(0);
             $table->boolean('is_published')->default(false);
             $table->timestamps();
         });

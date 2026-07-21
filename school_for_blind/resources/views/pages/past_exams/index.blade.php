@@ -68,6 +68,7 @@
                             <th class="py-3 px-4 text-start border-0">عنوان الدورة</th>
                             <th class="py-3 px-3 border-0">المادة</th>
                             <th class="py-3 px-3 border-0">السنة والدورة</th>
+                            <th class="py-3 px-3 border-0">المدة / الأسئلة</th>
                             <th class="py-3 px-3 border-0">الحالة</th>
                             <th class="py-3 px-4 border-0">الإجراءات</th>
                         </tr>
@@ -97,7 +98,17 @@
                                     @else تكميلية @endif
                                 </td>
 
-                                {{-- توحيد شكل حالات الدورة (نفس تنسيق الامتحانات) --}}
+                                {{-- العمود الجديد: المدة وعدد الأسئلة --}}
+                                <td class="align-middle px-3 text-start" style="color: var(--text-muted);">
+                                    <div class="d-flex flex-column gap-1" dir="rtl">
+                                        <span style="font-size: 0.85rem;"><i class="fa-regular fa-clock me-1 text-info"></i>
+                                            {{ $exam->timelimit }} دقيقة</span>
+                                        <span style="font-size: 0.85rem;"><i class="fa-solid fa-list-ol me-1 text-warning"></i>
+                                            {{ $exam->numofquestions }} أسئلة</span>
+                                    </div>
+                                </td>
+
+                                {{-- توحيد شكل حالات الدورة --}}
                                 <td class="align-middle px-3">
                                     @if($exam->is_published)
                                         <span class="badge px-3 py-2 rounded-pill fw-normal"
@@ -112,11 +123,11 @@
                                     @endif
                                 </td>
 
-                                {{-- أزرار الإجراءات المتدرجة مع التوهج الناعم --}}
+                                {{-- أزرار الإجراءات --}}
                                 <td class="align-middle px-4">
                                     <div class="d-flex justify-content-center gap-2">
 
-                                        {{-- زر التفاصيل: تدرج رمادي لفسفوري --}}
+                                        {{-- زر التفاصيل --}}
                                         <a href="{{ route('dashboard.past-exams.show', $exam->id) }}"
                                             class="btn btn-sm shadow-sm-hover d-flex align-items-center justify-content-center"
                                             style="width: 36px; height: 36px; border-radius: 8px; background: linear-gradient(135deg, #9ca3af, var(--accent-color)); box-shadow: 0 0 10px rgba(163, 230, 53, 0.3); color: #111827; border: none; transition: all 0.2s;"
@@ -124,7 +135,7 @@
                                             <i class="fa-solid fa-eye"></i>
                                         </a>
 
-                                        {{-- زر التعديل: تدرج رمادي لأزرق --}}
+                                        {{-- زر التعديل --}}
                                         <a href="{{ route('dashboard.past-exams.edit', $exam->id) }}"
                                             class="btn btn-sm text-white shadow-sm-hover d-flex align-items-center justify-content-center"
                                             style="width: 36px; height: 36px; border-radius: 8px; background: linear-gradient(135deg, #9ca3af, #3b82f6); box-shadow: 0 0 10px rgba(59, 130, 246, 0.3); border: none; transition: all 0.2s;"
@@ -132,7 +143,7 @@
                                             <i class="fa-solid fa-pen-to-square"></i>
                                         </a>
 
-                                        {{-- زر الحذف: تدرج رمادي لأحمر --}}
+                                        {{-- زر الحذف --}}
                                         <form action="{{ route('dashboard.past-exams.destroy', $exam->id) }}" method="POST"
                                             class="d-inline"
                                             onsubmit="return confirm('هل أنت متأكد من حذف هذه الدورة بشكل نهائي؟');">
@@ -151,7 +162,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="6" class="text-center py-5 text-muted">
+                                <td colspan="7" class="text-center py-5 text-muted">
                                     <i class="fa-solid fa-folder-open fs-1 d-block mb-3 opacity-50"></i>
                                     لا يوجد دورات سابقة مضافة حالياً.
                                 </td>

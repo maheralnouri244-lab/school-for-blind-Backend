@@ -17,18 +17,25 @@ public function store(StoreSupportTicketRequest $request): JsonResponse
     $validated = $request->validated();
     $user = Auth::user();
 
-    $attachmentPath = null;
+    $attachments = [];
+    
     if ($request->hasFile('audio')) {
-        $attachmentPath = $this->uploadRecord($request->file('audio'), 'support/attachments');
-    } elseif ($request->hasFile('image')) {
-        $attachmentPath = $this->uploadFile($request->file('image'), 'support/attachments');
+        $audio = $this->uploadRecord($request->file('audio'), 'support/attachments');
+        $attachments['audio'] = str_starts_with($audio, 'storage/') ? $audio : 'storage/' . $audio;
     }
+
+    if ($request->hasFile('image')) {
+        $image = $this->uploadFile($request->file('image'), 'support/attachments');
+        $attachments['image'] = str_starts_with($image, 'storage/') ? $image : 'storage/' . $image;
+    }
+
+    $attachmentPath = empty($attachments) ? null : $attachments;
 
     $ticket = SupportTicket::create([
         'sender_id'       => $user->id,         
         'sender_type'     => get_class($user), 
-        'message'         => $validated['message'], 
-        'attachment_path' => $attachmentPath,      
+        'message'         => $validated['message'] ?? null, 
+        'attachment_path' => $attachmentPath, 
     ]);
 
     return response()->json([
@@ -36,6 +43,4 @@ public function store(StoreSupportTicketRequest $request): JsonResponse
         'message' => 'تم إرسال تذكرة الدعم بنجاح.',
         'data'    => $ticket
     ], 201);
-}
-
-}
+}}

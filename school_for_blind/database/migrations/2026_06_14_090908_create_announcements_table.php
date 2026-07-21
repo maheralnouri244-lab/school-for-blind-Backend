@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -15,7 +14,7 @@ return new class extends Migration
             $table->id();
             $table->string('type')->default('normal');
             $table->string('title')->nullable();
-             $table->longText('content');
+            $table->longText('content');
             $table->enum('level', ['ninth', 'twelfth', 'all'])->default('all');
             $table->enum('target_audience', ['student', 'parent', 'teacher'])->default('student');
             $table->timestamps();

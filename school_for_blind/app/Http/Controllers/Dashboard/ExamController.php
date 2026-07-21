@@ -50,7 +50,7 @@ class ExamController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'subject_id' => 'required|exists:subjects,id',
-            'exam_date' => 'required|date|after:now',
+            'exam_date' => 'nullable|date|after:now',
             'duration_minutes' => 'required|integer|min:5|max:300',
         ]);
 
@@ -101,7 +101,7 @@ class ExamController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'subject_id' => 'required|exists:subjects,id',
-            'exam_date' => 'required|date',
+            'exam_date' => 'nullable|date',
             'duration_minutes' => 'required|integer|min:5|max:300',
         ]);
 
@@ -122,9 +122,18 @@ class ExamController extends Controller
     public function publish($id)
     {
         $exam = Exam::findOrFail($id);
+
+        if (is_null($exam->exam_date)) {
+            return redirect()->back()->with('error', 'لا يمكن نشر الامتحان! يرجى تحديد موعد (تاريخ ووقت) للامتحان أولاً من خلال زر تعديل البيانات.');
+        }
+
+        if ($exam->questions()->count() == 0) {
+            return redirect()->back()->with('error', 'لا يمكن نشر امتحان فارغ! يرجى إضافة سؤال واحد على الأقل.');
+        }
+
         $exam->update(['is_published' => true]);
 
-        return redirect()->back()->with('success', 'تم نشر الامتحان بنجاح.');
+        return redirect()->back()->with('success', 'تم نشر الامتحان للطلاب بنجاح.');
     }
 
     public function storeQuestion(Request $request, $examId)

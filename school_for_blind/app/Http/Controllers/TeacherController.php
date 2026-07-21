@@ -4,12 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TeacherLoginRequest;
 use App\Http\Requests\TeacherRegisterRequest;
+use App\Models\Exam;
+use App\Models\ExamSubmission;
+use App\Models\Quiz;
+use App\Models\QuizSubmission;
 use App\Models\Teacher;
 use App\Traits\UploadFileTrait;
 use Exception;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Http\Request;
 class TeacherController extends Controller
 {
 
@@ -145,4 +149,166 @@ class TeacherController extends Controller
 
     //     return Storage::response($teacher->cv_path);
     // }
+
+    public function getAllSubjectsStats(Request $request)
+    {
+        $teacher = $request->user();
+        $subjects = $teacher->subjects()->get();
+        
+        if ($subjects->isEmpty()) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'هذا الأستاذ غير مرتبط بأي مادة حالياً.',
+                'data' => []
+            ], 200);
+        }
+
+        $allSubjectsResponse = [];
+
+        foreach ($subjects as $subject) {
+
+            $latestQuiz = Quiz::where('subject_id', $subject->id)->where('teacher_id', $teacher->id)->latest()->first();
+            $latestExam = Exam::where('subject_id', $subject->id)->where('teacher_id', $teacher->id)->latest()->first();
+
+            $latestAssessment = null;
+            $assessmentType = null;
+
+            if ($latestQuiz && $latestExam) {
+                if ($latestQuiz->created_at > $latestExam->created_at) {
+                    $latestAssessment = $latestQuiz;
+                    $assessmentType = 'quiz';
+                } else {
+                    $latestAssessment = $latestExam;
+                    $assessmentType = 'exam';
+                }
+            } elseif ($latestQuiz) {
+                $latestAssessment = $latestQuiz;
+                $assessmentType = 'quiz';
+            } elseif ($latestExam) {
+                $latestAssessment = $latestExam;
+                $assessmentType = 'exam';
+            }
+
+            $subjectStats = [
+                'subject_id' => $subject->id,
+                'subject_name' => $subject->name,
+                'has_assessments' => false,
+                'latest_assessment' => null,
+                'critical_assessments' => []
+            ];
+
+            if ($latestAssessment && $latestAssessment->totalmark > 0) {
+                $subjectStats['has_assessments'] = true;
+
+                $submissions = $assessmentType === 'quiz'
+                    ? QuizSubmission::where('quiz_id', $latestAssessment->id)->get()
+                    : ExamSubmission::where('exam_id', $latestAssessment->id)->get();
+
+                $totalStudents = $submissions->count();
+                $passedCount = 0;
+                $failedCount = 0;
+
+                $total = $latestAssessment->totalmark;
+                $step = $total / 5;
+
+                $b1 = "0 - " . round($step, 1);
+                $b2 = ">" . round($step, 1) . " - " . round($step * 2, 1);
+                $b3 = ">" . round($step * 2, 1) . " - " . round($step * 3, 1);
+                $b4 = ">" . round($step * 3, 1) . " - " . round($step * 4, 1);
+                $b5 = ">" . round($step * 4, 1) . " - " . round($total, 1);
+
+                $brackets = [$b1 => 0, $b2 => 0, $b3 => 0, $b4 => 0, $b5 => 0];
+
+                foreach ($submissions as $sub) {
+                    $score = $assessmentType === 'quiz' ? $sub->total_score : $sub->score;
+
+                    if ($score < ($step * 2)) {
+                        $failedCount++;
+                    } else {
+                        $passedCount++;
+                    }
+
+                    if ($score <= $step) {
+                        $brackets[$b1]++;
+                    } elseif ($score <= $step * 2) {
+                        $brackets[$b2]++;
+                    } elseif ($score <= $step * 3) {
+                        $brackets[$b3]++;
+                    } elseif ($score <= $step * 4) {
+                        $brackets[$b4]++;
+                    } else {
+                        $brackets[$b5]++;
+                    }
+                }
+
+                $bracketsPercentages = [];
+                if ($totalStudents > 0) {
+                    foreach ($brackets as $key => $count) {
+                        $bracketsPercentages[$key] = round(($count / $totalStudents) * 100, 2);
+                    }
+                } else {
+                    $bracketsPercentages = [$b1 => 0, $b2 => 0, $b3 => 0, $b4 => 0, $b5 => 0];
+                }
+
+                $subjectStats['latest_assessment'] = [
+                    'id' => $latestAssessment->id,
+                    'type' => $assessmentType,
+                    'title' => $assessmentType === 'exam' ? $latestAssessment->title : 'Quiz #' . $latestAssessment->id,
+                    'total_mark' => $total,
+                    'total_students_took_it' => $totalStudents,
+                    'passed_count' => $passedCount,
+                    'failed_count' => $failedCount,
+                    'score_brackets_percentages' => $bracketsPercentages,
+                ];
+            }
+
+            $lowPerformingItems = [];
+
+            $allQuizzes = Quiz::where('subject_id', $subject->id)->where('teacher_id', $teacher->id)->get();
+            foreach ($allQuizzes as $quiz) {
+                if ($quiz->totalmark > 0) {
+                    $subs = QuizSubmission::where('quiz_id', $quiz->id)->get();
+                    if ($subs->count() > 0) {
+                        $lowScorers = $subs->filter(fn($s) => ($s->total_score / $quiz->totalmark) * 100 < 40)->count();
+                        $failRate = ($lowScorers / $subs->count()) * 100;
+                        if ($failRate > 60) {
+                            $lowPerformingItems[] = [
+                                'id' => $quiz->id,
+                                'type' => 'quiz',
+                                'fail_rate' => round($failRate, 2)
+                            ];
+                        }
+                    }
+                }
+            }
+
+            $allExams = Exam::where('subject_id', $subject->id)->where('teacher_id', $teacher->id)->get();
+            foreach ($allExams as $exam) {
+                if ($exam->totalmark > 0) {
+                    $subs = ExamSubmission::where('exam_id', $exam->id)->get();
+                    if ($subs->count() > 0) {
+                        $lowScorers = $subs->filter(fn($s) => ($s->score / $exam->totalmark) * 100 < 40)->count();
+                        $failRate = ($lowScorers / $subs->count()) * 100;
+                        if ($failRate > 60) {
+                            $lowPerformingItems[] = [
+                                'id' => $exam->id,
+                                'type' => 'exam',
+                                'title' => $exam->title,
+                                'fail_rate' => round($failRate, 2)
+                            ];
+                        }
+                    }
+                }
+            }
+
+            $subjectStats['critical_assessments'] = $lowPerformingItems;
+
+            $allSubjectsResponse[] = $subjectStats;
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $allSubjectsResponse
+        ], 200);
+    }
 }

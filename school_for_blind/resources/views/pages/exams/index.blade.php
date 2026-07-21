@@ -89,7 +89,12 @@
 
                 <td class="align-middle px-3">{{ $exam->subject->name ?? 'غير محدد' }}</td>
                 <td class="align-middle px-3" dir="ltr" style="color: var(--text-muted);">
-                  {{ \Carbon\Carbon::parse($exam->exam_date)->format('Y-m-d H:i') }}</td>
+                  @if($exam->exam_date)
+                    {{ \Carbon\Carbon::parse($exam->exam_date)->format('Y-m-d H:i') }}
+                  @else
+                    <span class="badge bg-secondary opacity-75 rounded-pill px-3 py-2 fw-normal">غير محدد</span>
+                  @endif
+                </td>
                 <td class="align-middle px-3">{{ $exam->duration_minutes }} دقيقة</td>
 
                 {{-- توحيد شكل حالات الامتحان --}}

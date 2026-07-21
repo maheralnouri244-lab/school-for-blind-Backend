@@ -84,14 +84,22 @@
                 </select>
               </div>
 
-              {{-- رفع ملف صوتي جديد --}}
+              {{-- مدة الامتحان --}}
               <div class="col-md-6 text-start" dir="rtl">
-                <label for="voice_solution" class="form-label fw-bold text-muted mb-2">تحديث ملف الحل الصوتي
-                  الشامل</label>
-                <input type="file" name="voice_solution" id="voice_solution" class="form-control bg-transparent rounded-3"
-                  accept="audio/*" style="color: var(--text-main); border: 1px solid var(--border-color);">
-                <small class="text-muted d-block mt-1">اتركه فارغاً للاحتفاظ بالملف الحالي (الحد الأقصى: 20MB)</small>
+                <label for="timelimit" class="form-label fw-bold text-muted mb-2">مدة الامتحان (بالدقائق) <span
+                    class="text-danger">*</span></label>
+                <input type="number" name="timelimit" id="timelimit" class="form-control bg-transparent rounded-3"
+                  required min="1" max="300" style="color: var(--text-main); border: 1px solid var(--border-color);"
+                  placeholder="مثال: 120" value="{{ old('timelimit', $pastExam->timelimit) }}">
               </div>
+            </div>
+
+            {{-- رفع ملف صوتي جديد --}}
+            <div class="mb-4 text-start" dir="rtl">
+              <label for="voice_solution" class="form-label fw-bold text-muted mb-2">تحديث ملف الحل الصوتي الشامل</label>
+              <input type="file" name="voice_solution" id="voice_solution" class="form-control bg-transparent rounded-3"
+                accept="audio/*" style="color: var(--text-main); border: 1px solid var(--border-color);">
+              <small class="text-muted d-block mt-1">اتركه فارغاً للاحتفاظ بالملف الحالي (الحد الأقصى: 20MB)</small>
             </div>
 
             {{-- استعراض وتشغيل الملف الصوتي الحالي إن وجد --}}

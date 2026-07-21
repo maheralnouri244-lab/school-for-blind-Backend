@@ -93,6 +93,9 @@ class LessonController extends Controller
 
         } elseif ($user instanceof Teacher && $request->has('teacher_id')) {
             $query->where('teacher_id', $request->teacher_id);
+            if ($request->has('title')) {
+                $query->where('title', 'like', '%' . $request->title . '%');
+            }
         }
 
         $lessons = $query->orderBy('created_at', 'desc')->get();

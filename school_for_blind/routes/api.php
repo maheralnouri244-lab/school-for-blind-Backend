@@ -2,7 +2,8 @@
 
 use App\Http\Controllers\Admin\TeacherTransferController;
 use App\Http\Controllers\AnnouncementController;
-use App\Http\Controllers\Api\ConversationController;
+use App\Http\Controllers\ConversationController;
+use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\CaregiverController;
 use App\Http\Controllers\DonationController;
 use App\Http\Controllers\FavoriteController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\LessonController;
 use App\Http\Controllers\LiveKitWebhookController;
 use App\Http\Controllers\MagicLoginController;
 use App\Http\Controllers\OtpController;
+use App\Http\Controllers\ParentReportController;
 use App\Http\Controllers\PointRedemptionController;
 use App\Http\Controllers\PunishmentController;
 use App\Http\Controllers\QuestionBankController;
@@ -18,20 +20,21 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\StripeWebhookController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\StudentExamController;
+use App\Http\Controllers\StudentpastexamController;
 use App\Http\Controllers\StudentQuizController;
+use App\Http\Controllers\SupportTicketController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\TeacherExamController;
+use App\Http\Controllers\TeacherExamcorrectController;
+use App\Http\Controllers\Teacherpaymentcontroller;
+use App\Http\Controllers\TeacherQuizController;
 use App\Http\Middleware\CheckCallCreatorRole;
 use App\Http\Middleware\CheckIsStudent;
 use App\Http\Middleware\CheckPunishment;
 use App\Http\Middleware\CheckUserType;
 use App\Http\Middleware\IsTeacher;
 use App\Http\Middleware\PreventStudentCallActions;
-use App\Http\Controllers\StudentpastexamController;
-use App\Http\Controllers\StudentExamController;
-use App\Http\Controllers\SupportTicketController;
-
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -63,6 +66,7 @@ Route::prefix('teacher')->controller(TeacherController::class)->group(function (
     Route::middleware('auth:sanctum')->group(function () {
         Route::post('logout', 'logout')->name('teachers.logout');
         Route::get('info', 'info')->name('teachers.info');
+        Route::get('all-subjects/statistics', 'getAllSubjectsStats')->name('teachers.stats');
         // Route::get('cv', 'showCv')->name('teachers.cv');
     });
 });
@@ -245,3 +249,41 @@ Route::get('/exams/{id}/solutions', [StudentExamController::class, 'getExamWithS
 Route::post('/exams/submit-answer', [StudentExamController::class, 'submitAnswer'])->middleware('auth:sanctum');
 Route::get('/submissions/{id}/details', [StudentExamController::class, 'getSubmissionDetails'])->middleware('auth:sanctum');
 Route::post('/exams/submit', [StudentExamController::class, 'submitExam'])->middleware('auth:sanctum');
+Route::get('/student/exam-details/{id}', [StudentExamController::class, 'getExamDetails']);
+
+Route::middleware('auth:sanctum')->group(function () {
+
+    Route::get('recordings/{recordingId}/bookmarks', [BookmarkController::class, 'index']);
+
+    Route::post('bookmarks', [BookmarkController::class, 'store']);
+
+    Route::put('bookmarks/{id}', [BookmarkController::class, 'update']);
+
+    Route::delete('bookmarks/{id}', [BookmarkController::class, 'destroy']);
+
+});
+
+
+
+Route::get('/teacher/pending-essay-answers', [TeacherQuizController::class, 'getPendingEssayAnswers'])->middleware(['auth:sanctum', IsTeacher::class]);
+Route::post('/teacher/grade-full-quiz-submission', [TeacherQuizController::class, 'gradeFullQuizSubmission'])->middleware(['auth:sanctum', IsTeacher::class]);
+
+Route::middleware('auth:teacher')->group(function () {
+    Route::get('/teacher/pending-exams', [TeacherExamcorrectController::class, 'getPendingExamEssayAnswers']);
+
+    Route::post('/teacher/grade-exam', [TeacherExamcorrectController::class, 'gradeFullExamSubmission']);
+});
+
+
+Route::post('/transfer/salary/teacher', [Teacherpaymentcontroller::class, 'setupTeacherBank']);/*->middleware(['auth:sanctum', CheckUserType::class . ':admin']);*/
+Route::post('/teacher/pay-salary', [TeacherPaymentController::class, 'payTeacherSalary']);
+
+
+Route::middleware(['auth:sanctum', 'isparent'])->prefix('parent')->group(function () {
+    Route::get('/reports/daily', [ParentReportController::class, 'getDailyReport']);
+    Route::get('/reports/monthly', [ParentReportController::class, 'getMonthlyReport']);
+    Route::get('/reports/yearly', [ParentReportController::class, 'getYearlyReport']);
+    Route::post('/reports/absence-excuse', [ParentReportController::class, 'submitAbsenceExcuse']);
+    Route::post('/reports/objection', [ParentReportController::class, 'submitObjection']);
+    Route::get('/reports/student/{studentId}/subject/{subjectId}', [ParentReportController::class, 'getSubjectGrades']);
+});

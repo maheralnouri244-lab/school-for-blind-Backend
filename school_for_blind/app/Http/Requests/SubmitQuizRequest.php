@@ -27,9 +27,8 @@ class SubmitQuizRequest extends FormRequest
         'answers' => 'required|array',
         'answers.*.question_id' => 'required|integer|exists:questions,id',
         'answers.*.choice_id'   => 'nullable|integer|exists:choices,id',
-        'answers.*.text_answer' => 'nullable|string', 
 'answers.*.text_answer'  => 'nullable|string|prohibits:answers.*.audio_answer',
-'answers.*.audio_answer' => 'nullable|file|mimes:audio/mpeg,mpga,mp3,wav,m4a|max:10240|prohibits:answers.*.text_answer',
+        'answers.*.audio_answer' => 'nullable|file|mimes:audio/mpeg,mpga,mp3,wav,m4a|max:10240|prohibits:answers.*.text_answer',
         ];
     }
 public function messages(): array

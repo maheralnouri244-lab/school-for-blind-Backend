@@ -8,7 +8,19 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class SupportTicket extends Model
 {
     use SoftDeletes;
-
+protected $fillable = [
+        'sender_id',
+        'sender_type',
+        'message',
+        'attachment_path',
+        'priority',
+        'status',
+        'assigned_department',
+        'classified_by',
+    ];
+    protected $casts = [
+        'attachment_path' => 'array',
+    ];
     protected $guarded = [];
 
     public function sender()
