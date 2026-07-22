@@ -1,3 +1,5 @@
+
+
 <?php $__env->startSection('content'); ?>
  <div class="container-fluid p-0">
   <div class="d-flex justify-content-between align-items-center mb-4">
@@ -75,4 +77,4 @@
   </div>
  </div>
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Users\Ghalia_\Downloads\newbackend\school-for-blind-Backend\school_for_blind\resources\views/pages/content-monitor/index.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH D:\project\laravel\school-for-blind-Backend\school_for_blind\resources\views/pages/content-monitor/index.blade.php ENDPATH**/ ?>

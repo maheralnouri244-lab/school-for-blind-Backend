@@ -1271,7 +1271,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "7|t2ljairTj5ATABGcgYpPGXvGTTA2DXyjNT6FvRZP12fb490e",
+                  "value": "44|ACtwCvTKFHbdWmTPY4kR23mqM7H6la01k2C6Humkdc971b9f",
                   "type": "string"
                 }
               ]
@@ -1289,13 +1289,13 @@
               "formdata": [
                 {
                   "key": "room_name",
-                  "value": "test #1",
+                  "value": "test#2",
                   "type": "text",
                   "uuid": "26b7937c-5ff4-433d-8a99-e78c2a18b773"
                 },
                 {
                   "key": "class_id",
-                  "value": "8",
+                  "value": "4",
                   "type": "text",
                   "uuid": "f62e8c21-a8d5-408b-b948-6604dc8bbe01"
                 }
@@ -2918,13 +2918,13 @@
               "formdata": [
                 {
                   "key": "phone",
-                  "value": "0943576695",
+                  "value": "0981226535",
                   "type": "text",
                   "uuid": "2d290ad0-1e83-4554-9164-70f27eeb77e5"
                 },
                 {
                   "key": "password",
-                  "value": "00000000",
+                  "value": "12345678",
                   "type": "text",
                   "uuid": "24c5e1e6-f1df-4e2f-9da3-e89684690ce3"
                 }
@@ -3004,9 +3004,8 @@
                   "type": "file",
                   "uuid": "50cdf211-6039-469c-b454-aa4a23a6bb8d",
                   "src": [
-                    "postman-cloud:///1f160dc2-235a-4a50-8396-1efcd693baf7",
-                    "postman-cloud:///1f1420ce-4c54-43d0-b83b-4dd3cd9fe2f8",
-                    "/C:/Users/maher/Downloads/تخصصية 1 نظري مـ2.pdf"
+                    "/C:/Users/maher/Downloads/Telegram Desktop/عملي الاوتومات واللغات الصورية.pdf",
+                    "/C:/Users/maher/Downloads/Telegram Desktop/عملي الاوتومات واللغات الصورية.pdf"
                   ]
                 },
                 {
@@ -10722,16 +10721,22 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "7mfAS5Nd4N7TJEDTx53C3UbOLB3hE2wynQ3K4E1P4c61149a",
+                  "value": "ezVZYfvEwYJehWGokN4ROFVPDUcQKLf81GraFD5j5fb76394",
                   "type": "string"
                 }
               ]
             },
             "method": "POST",
-            "header": [],
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"id\": 41,\r\n  \"type\": \"lesson\"\r\n}\r\n",
+              "raw": "{\r\n  \"id\": 1,\r\n  \"type\": \"PastExam\"\r\n}\r\n",
               "options": {
                 "raw": {
                   "language": "json"
@@ -12215,7 +12220,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "9Kw7HTNQTOFnteVJi32rHDv7X8GRGfAwuOYuEB8W1c131bfc",
+                  "value": "43|kTCIaagFfskEvAEzT6CCisvKSRKcKmL7G9u9RHQ1f599e58f",
                   "type": "string"
                 }
               ]
@@ -12235,7 +12240,8 @@
                   "key": "message",
                   "value": "لقد نسيت كلمة سر تطبيق والدي",
                   "type": "text",
-                  "uuid": "df7d1e10-a8cc-4a5e-96dd-412419ec2e1b"
+                  "uuid": "df7d1e10-a8cc-4a5e-96dd-412419ec2e1b",
+                  "disabled": true
                 },
                 {
                   "key": "image",
@@ -16021,6 +16027,775 @@
       ]
     },
     {
+      "name": "conversation",
+      "item": [
+        {
+          "name": "teacher channel",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "43|vqiLRcAxDaruClG3skKfTGL4eyMjspTT2LB9nZxPfa577dce",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "phone",
+                  "value": "0981226535",
+                  "type": "text",
+                  "uuid": "9e1fcb36-2d13-497d-82b1-fe5beaafa5a5"
+                },
+                {
+                  "key": "full_name",
+                  "value": "maher alnouri",
+                  "type": "text",
+                  "uuid": "0592b53b-271e-4b03-a74c-e89e6c3800b0"
+                },
+                {
+                  "key": "password",
+                  "value": "12345678",
+                  "type": "text",
+                  "uuid": "6db0a4cf-1d78-4bb8-8d8e-f6f575304903"
+                },
+                {
+                  "key": "subjects",
+                  "value": "math / number theory",
+                  "type": "text",
+                  "uuid": "688fdb9e-5601-4db9-966a-e189a81ba19b"
+                },
+                {
+                  "key": "level",
+                  "value": "ninth",
+                  "type": "text",
+                  "uuid": "5e6c2252-c2c5-4575-88c0-e599873217b9"
+                },
+                {
+                  "key": "fcm_token",
+                  "value": "123",
+                  "type": "text",
+                  "uuid": "db367923-24f8-4391-9b85-3d2bb92301d1"
+                },
+                {
+                  "key": "cv",
+                  "type": "file",
+                  "uuid": "50cdf211-6039-469c-b454-aa4a23a6bb8d",
+                  "src": [
+                    "postman-cloud:///1f160dc2-235a-4a50-8396-1efcd693baf7",
+                    "postman-cloud:///1f1420ce-4c54-43d0-b83b-4dd3cd9fe2f8",
+                    "/C:/Users/maher/Downloads/تخصصية 1 نظري مـ2.pdf"
+                  ]
+                },
+                {
+                  "key": "password_confirmation",
+                  "value": "12345678",
+                  "type": "text",
+                  "uuid": "24b21d39-756c-479d-b4f5-bd751cb623ce"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/teacher/channels",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "teacher",
+                "channels"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "success",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "phone",
+                      "value": "0981226535",
+                      "type": "text",
+                      "uuid": "9e1fcb36-2d13-497d-82b1-fe5beaafa5a5"
+                    },
+                    {
+                      "key": "full_name",
+                      "value": "maher alnouri",
+                      "type": "text",
+                      "uuid": "0592b53b-271e-4b03-a74c-e89e6c3800b0"
+                    },
+                    {
+                      "key": "password",
+                      "value": "12345678",
+                      "type": "text",
+                      "uuid": "6db0a4cf-1d78-4bb8-8d8e-f6f575304903"
+                    },
+                    {
+                      "key": "subjects",
+                      "value": "math / number theory",
+                      "type": "text",
+                      "uuid": "688fdb9e-5601-4db9-966a-e189a81ba19b"
+                    },
+                    {
+                      "key": "level",
+                      "value": "ninth",
+                      "type": "text",
+                      "uuid": "5e6c2252-c2c5-4575-88c0-e599873217b9"
+                    },
+                    {
+                      "key": "fcm_token",
+                      "value": "123",
+                      "type": "text",
+                      "uuid": "db367923-24f8-4391-9b85-3d2bb92301d1"
+                    },
+                    {
+                      "key": "cv",
+                      "type": "file",
+                      "uuid": "50cdf211-6039-469c-b454-aa4a23a6bb8d",
+                      "src": [
+                        "postman-cloud:///1f160dc2-235a-4a50-8396-1efcd693baf7",
+                        "postman-cloud:///1f1420ce-4c54-43d0-b83b-4dd3cd9fe2f8",
+                        "/C:/Users/maher/Downloads/تخصصية 1 نظري مـ2.pdf"
+                      ]
+                    },
+                    {
+                      "key": "password_confirmation",
+                      "value": "12345678",
+                      "type": "text",
+                      "uuid": "24b21d39-756c-479d-b4f5-bd751cb623ce"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/teacher/channels",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "teacher",
+                    "channels"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.30"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 21 Jul 2026 14:39:34 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"data\": [\n        {\n            \"id\": 1,\n            \"type\": \"channel\",\n            \"name\": \"قناة مادة الجغرافيا - maher alnouri\",\n            \"teacher_id\": 101,\n            \"subject_id\": 3,\n            \"parent_id\": null,\n            \"admin_id\": null,\n            \"created_at\": \"2026-07-21T14:36:02.000000Z\",\n            \"updated_at\": \"2026-07-21T14:36:02.000000Z\",\n            \"discussion\": {\n                \"id\": 2,\n                \"type\": \"discussion\",\n                \"name\": \"مناقشة مادة الجغرافيا - maher alnouri\",\n                \"teacher_id\": 101,\n                \"subject_id\": 3,\n                \"parent_id\": 1,\n                \"admin_id\": null,\n                \"created_at\": \"2026-07-21T14:36:02.000000Z\",\n                \"updated_at\": \"2026-07-21T14:36:02.000000Z\"\n            }\n        }\n    ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Admin_chat",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "44|ACtwCvTKFHbdWmTPY4kR23mqM7H6la01k2C6Humkdc971b9f",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/teacher/channels/admin-chats",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "teacher",
+                "channels",
+                "admin-chats"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "success",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/teacher/channels/admin-chats",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "teacher",
+                    "channels",
+                    "admin-chats"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.30"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 21 Jul 2026 14:41:02 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"data\": [\n        {\n            \"id\": 3,\n            \"type\": \"teacher_admin\",\n            \"name\": \"محادثة الإدارة - Super Admin\",\n            \"teacher_id\": 101,\n            \"subject_id\": null,\n            \"parent_id\": null,\n            \"admin_id\": 1,\n            \"created_at\": \"2026-07-21T14:36:02.000000Z\",\n            \"updated_at\": \"2026-07-21T14:36:02.000000Z\",\n            \"admin\": {\n                \"id\": 1,\n                \"role\": \"Super Admin\",\n                \"email\": \"super_admin@app.com\"\n            }\n        },\n        {\n            \"id\": 4,\n            \"type\": \"teacher_admin\",\n            \"name\": \"محادثة الإدارة - Academic Manager\",\n            \"teacher_id\": 101,\n            \"subject_id\": null,\n            \"parent_id\": null,\n            \"admin_id\": 2,\n            \"created_at\": \"2026-07-21T14:36:02.000000Z\",\n            \"updated_at\": \"2026-07-21T14:36:02.000000Z\",\n            \"admin\": {\n                \"id\": 2,\n                \"role\": \"Academic Manager\",\n                \"email\": \"academic@app.com\"\n            }\n        }\n    ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "get message",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "43|vqiLRcAxDaruClG3skKfTGL4eyMjspTT2LB9nZxPfa577dce",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/teacher/channels/{{chat id}}/messages",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "teacher",
+                "channels",
+                "{{chat id}}",
+                "messages"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "send message",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "44|ACtwCvTKFHbdWmTPY4kR23mqM7H6la01k2C6Humkdc971b9f",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "body",
+                  "value": "مرحبا معلم",
+                  "type": "text",
+                  "uuid": "58181922-fa6c-4150-9b76-8ea12aadace5"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/teacher/channels/{{chat id}}/messages",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "teacher",
+                "channels",
+                "{{chat id}}",
+                "messages"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "success",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "body",
+                      "value": "مرحبا معلم",
+                      "type": "text",
+                      "uuid": "58181922-fa6c-4150-9b76-8ea12aadace5"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/teacher/channels/{{chat id}}/messages",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "teacher",
+                    "channels",
+                    "{{chat id}}",
+                    "messages"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.30"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 21 Jul 2026 14:43:43 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"data\": {\n        \"sender_type\": \"App\\\\Models\\\\Teacher\",\n        \"sender_id\": 101,\n        \"body\": \"مرحبا معلم\",\n        \"attachment_path\": null,\n        \"attachment_type\": null,\n        \"conversation_id\": 3,\n        \"updated_at\": \"2026-07-21T14:43:42.000000Z\",\n        \"created_at\": \"2026-07-21T14:43:42.000000Z\",\n        \"id\": 1\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "delete message",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "43|vqiLRcAxDaruClG3skKfTGL4eyMjspTT2LB9nZxPfa577dce",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/messages/{{message Id}}",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "messages",
+                "{{message Id}}"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "success",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/messages/{{message Id}}",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "messages",
+                    "{{message Id}}"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.30"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 21 Jul 2026 14:46:11 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"تم حذف الرسالة بنجاح.\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "report message",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "43|vqiLRcAxDaruClG3skKfTGL4eyMjspTT2LB9nZxPfa577dce",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "reason",
+                  "value": "ما حبيتها",
+                  "type": "text",
+                  "uuid": "d441477c-fb2e-4520-ac7c-62826cb21883"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/messages/{{message Id}}/report",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "messages",
+                "{{message Id}}",
+                "report"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "your own message",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "reason",
+                      "value": "ما حبيتها",
+                      "type": "text",
+                      "uuid": "d441477c-fb2e-4520-ac7c-62826cb21883"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/messages/{{message Id}}/report",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "messages",
+                    "{{message Id}}",
+                    "report"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.30"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 21 Jul 2026 14:47:40 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"لا يمكنك الإبلاغ عن رسالتك الخاصة.\"\n}"
+            },
+            {
+              "name": "success",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "reason",
+                      "value": "ما حبيتها",
+                      "type": "text",
+                      "uuid": "d441477c-fb2e-4520-ac7c-62826cb21883"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/messages/{{message Id}}/report",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "messages",
+                    "{{message Id}}",
+                    "report"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.30"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 21 Jul 2026 14:48:29 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"تم إرسال البلاغ بنجاح، ستقوم الإدارة بمراجعته.\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "name": "change the techer",
       "request": {
         "auth": {
@@ -16138,6 +16913,14 @@
           "body": "{\n    \"success\": true,\n    \"message\": \"تم نقل المحتوى التعليمي (الكويزات، بنك الأسئلة، والدروس) إلى الأستاذ البديل بنجاح.\"\n}"
         }
       ]
+    },
+    {
+      "name": "New Request",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
     }
   ]
 }

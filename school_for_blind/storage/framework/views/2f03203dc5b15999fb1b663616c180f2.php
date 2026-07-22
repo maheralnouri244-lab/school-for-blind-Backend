@@ -1,23 +1,24 @@
-@extends('layouts.app')
 
-@section('content')
+
+<?php $__env->startSection('content'); ?>
   <div class="container-fluid p-0">
-    {{-- رأس الصفحة --}}
+    
     <div class="d-flex justify-content-between align-items-center mb-4">
       <div>
-        <h4 class="fw-bold mb-1" style="color: var(--text-main);">{{ $conversation->name ?? 'محادثة' }}</h4>
+        <h4 class="fw-bold mb-1" style="color: var(--text-main);"><?php echo e($conversation->name ?? 'محادثة'); ?></h4>
         <small class="text-muted">
-          أستاذ المادة: {{ $conversation->teacher->full_name ?? 'غير محدد' }}
-          @if($conversation->type === 'channel')
+          أستاذ المادة: <?php echo e($conversation->teacher->full_name ?? 'غير محدد'); ?>
+
+          <?php if($conversation->type === 'channel'): ?>
             <span class="badge bg-soft-info text-info ms-2">قناة</span>
-          @elseif($conversation->type === 'discussion')
+          <?php elseif($conversation->type === 'discussion'): ?>
             <span class="badge bg-soft-warning text-warning ms-2">مجموعة نقاش</span>
-          @else
+          <?php else: ?>
             <span class="badge bg-soft-success text-success ms-2">محادثة إدارية</span>
-          @endif
+          <?php endif; ?>
         </small>
       </div>
-      <a href="{{ route('dashboard.conversations.index') }}" class="btn btn-sm"
+      <a href="<?php echo e(route('dashboard.conversations.index')); ?>" class="btn btn-sm"
         style="background-color: var(--bg-main); color: var(--text-main); border: 1px solid var(--border-color);">
         <i class="fa-solid fa-arrow-right me-1"></i> العودة للمحادثات
       </a>
@@ -25,43 +26,43 @@
 
     <div class="row">
       <div class="col-12">
-        {{-- صندوق المحادثة --}}
+        
         <div class="custom-card d-flex flex-column" style="height: 650px; padding: 20px;">
 
-          {{-- منطقة الرسائل --}}
+          
           <div id="chat-messages" class="flex-grow-1 overflow-y-auto mb-3 p-3 position-relative"
             style="background-color: var(--bg-main); border-radius: 12px; border: 1px solid var(--border-color);">
 
-            {{-- مؤشر تحميل الرسائل القديمة عند السكرول لأعلى --}}
+            
             <div id="top-loading-spinner" class="text-center py-2 d-none">
               <div class="spinner-border spinner-border-sm text-primary" role="status"></div>
               <small class="text-muted ms-2">جاري تحميل الرسائل القديمة...</small>
             </div>
 
-            {{-- يتم حشو الرسائل ديناميكياً هنا عبر الـ JavaScript --}}
+            
             <div id="messages-wrapper"></div>
           </div>
 
-          {{-- نموذج إرسال الرسالة (إذا كان الأدمن يملك صلاحية الرد) --}}
-          @if(isset($canReply) && $canReply)
+          
+          <?php if(isset($canReply) && $canReply): ?>
             <form id="send-message-form" class="mt-auto" enctype="multipart/form-data">
-              @csrf
+              <?php echo csrf_field(); ?>
               <div class="input-group p-1 rounded-3"
                 style="background-color: var(--bg-card); border: 1px solid var(--border-color);">
 
-                {{-- زر إضافة مرفق --}}
+                
                 <label class="btn btn-link text-muted m-0 d-flex align-items-center" for="attachment-input"
                   title="إرفاق ملف أو تسجيل">
                   <i class="fa-solid fa-paperclip fs-5"></i>
                 </label>
                 <input type="file" id="attachment-input" name="attachment" class="d-none">
 
-                {{-- حقل إدخال النص --}}
+                
                 <input type="text" id="message-body-input" name="body"
                   class="form-control border-0 shadow-none bg-transparent" placeholder="اكتب رسالتك هنا..."
                   style="color: var(--text-main);">
 
-                {{-- زر الإرسال --}}
+                
                 <button type="submit" class="btn btn-primary px-4 fw-bold rounded-2 d-flex align-items-center gap-2"
                   id="btn-send-msg">
                   <span>إرسال</span>
@@ -69,7 +70,7 @@
                 </button>
               </div>
 
-              {{-- المعاينة المسبقة للملف المرفق قبل الإرسال --}}
+              
               <div id="attachment-preview" class="mt-2 d-none align-items-center gap-2 p-2 rounded"
                 style="background-color: var(--hover-bg);">
                 <i class="fa-solid fa-file text-info"></i>
@@ -77,19 +78,19 @@
                 <button type="button" class="btn-close btn-sm" id="btn-remove-attachment"></button>
               </div>
             </form>
-          @else
-            {{-- تنبيه للواجهات المخصصة للمراقبة فقط --}}
+          <?php else: ?>
+            
             <div class="p-2 rounded bg-soft-warning text-warning text-center" style="font-size: 0.9rem;">
               <i class="fa-solid fa-circle-info me-1"></i> هذه الواجهة مخصصة لمراقبة وضبط المحتوى وحذف المخالفات.
             </div>
-          @endif
+          <?php endif; ?>
 
         </div>
       </div>
     </div>
   </div>
 
-  {{-- 1. مودال تأكيد الحذف --}}
+  
   <div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content glass-modal">
@@ -110,7 +111,7 @@
     </div>
   </div>
 
-  {{-- 2. مودال عرض ملف المستخدم الديناميكي (طالب أو أستاذ) --}}
+  
   <div class="modal fade" id="userProfileModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content glass-modal text-end" id="user-profile-modal-content">
@@ -121,10 +122,10 @@
       </div>
     </div>
   </div>
-@endsection
-@push('scripts')
+<?php $__env->stopSection(); ?>
+<?php $__env->startPush('scripts'); ?>
   <script type="module">
-    const conversationId = {{ $conversation->id }};
+    const conversationId = <?php echo e($conversation->id); ?>;
     const chatContainer = document.getElementById('chat-messages');
     const messagesWrapper = document.getElementById('messages-wrapper');
     const topSpinner = document.getElementById('top-loading-spinner');
@@ -146,7 +147,7 @@
       fetch(url, {
         headers: {
           'Accept': 'application/json',
-          'X-CSRF-TOKEN': '{{ csrf_token() }}'
+          'X-CSRF-TOKEN': '<?php echo e(csrf_token()); ?>'
         }
       })
         .then(res => res.json())
@@ -307,7 +308,7 @@
         fetch(`/content-monitor/conversations/${conversationId}/send`, {
           method: 'POST',
           headers: {
-            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            'X-CSRF-TOKEN': '<?php echo e(csrf_token()); ?>',
             'Accept': 'application/json'
           },
           body: formData
@@ -346,7 +347,7 @@
       fetch(`/content-monitor/conversations/messages/${messageIdToDelete}`, {
         method: 'DELETE',
         headers: {
-          'X-CSRF-TOKEN': '{{ csrf_token() }}',
+          'X-CSRF-TOKEN': '<?php echo e(csrf_token()); ?>',
           'Accept': 'application/json'
         }
       })
@@ -412,4 +413,5 @@
       }, 500);
     };
   </script>
-@endpush
+<?php $__env->stopPush(); ?>
+<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH D:\project\laravel\school-for-blind-Backend\school_for_blind\resources\views/pages/conversations/show.blade.php ENDPATH**/ ?>

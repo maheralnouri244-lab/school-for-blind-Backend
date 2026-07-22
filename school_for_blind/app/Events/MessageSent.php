@@ -27,6 +27,8 @@ class MessageSent implements ShouldBroadcastNow
 
     public function broadcastWith()
     {
+        $this->message->load('sender');
+
         return [
             'id' => $this->message->id,
             'conversation_id' => $this->message->conversation_id,
@@ -36,6 +38,7 @@ class MessageSent implements ShouldBroadcastNow
             'sender_type' => $this->message->sender_type,
             'sender_id' => $this->message->sender_id,
             'created_at' => $this->message->created_at,
+            'sender' => $this->message->sender, 
         ];
     }
 }
