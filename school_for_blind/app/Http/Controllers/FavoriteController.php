@@ -15,24 +15,15 @@ class FavoriteController extends Controller
   public function toggle(Request $request)
 {
     $request->validate([
-        'id' => 'required|integer',
+        'id'   => 'required|integer',
         'type' => 'required|string|in:lesson,quiz,PastExam,Exam',
     ]);
 
     $userId = Auth::id();
-    $map = [
-        'lesson'   => Lesson::class,
-        'quiz'     => Quiz::class,
-        'PastExam' => PastExam::class,
-        'Exam'     => Exam::class,
-    ];
-
-    $modelClass = $map[$request->type];
-    $userId = Auth::id();
 
     $favorite = Favorite::where('user_id', $userId)
         ->where('favorable_id', $request->id)
-        ->where('favorable_type', $modelClass)
+        ->where('favorable_type', $request->type) 
         ->first();
 
     if ($favorite) {
@@ -41,9 +32,9 @@ class FavoriteController extends Controller
     }
 
     Favorite::create([
-        'user_id' => $userId,
-        'favorable_id' => $request->id,
-        'favorable_type' => $modelClass,
+        'user_id'        => $userId,
+        'favorable_id'   => $request->id,
+        'favorable_type' => $request->type, 
     ]);
 
     return response()->json(['message' => 'Added', 'is_favorite' => true]);

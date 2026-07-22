@@ -10,33 +10,22 @@ use Illuminate\Http\JsonResponse;
 
 class StudentpastexamController extends Controller
 {
-    public function getPastExamsBySubject(Request $request): JsonResponse
-    {
-        $subjectId = $request->query('subject_id');
-        $userId = Auth::id();
+    public function getPastExamsBySubject(Request $request)
+{
+    $subjectId = $request->query('subject_id');
+    $userId = Auth::id();
 
-        if (!$subjectId) {
-            return response()->json(['status' => 'error', 'message' => 'يرجى تحديد subject_id'], 400);
-        }
+    $exams = PastExam::where('subject_id', $subjectId)
+        ->withExists(['favorites as is_favorited' => function ($q) use ($userId) {
+            $q->where('user_id', $userId);
+        }])
+        ->get(); 
 
-        $exams = PastExam::where('subject_id', $subjectId)
-            ->select('id', 'title', 'year', 'session')
-            ->withExists(['favorites as is_favorited' => function ($query) use ($userId) {
-                $query->where('user_id', $userId);
-            }])
-            ->get();
-
-        $formattedExams = $exams->map(function ($exam) {
-            $data = $exam->toArray();
-            $data['is_favorited'] = (bool) $exam->is_favorited;
-            return $data;
-        });
-
-        return response()->json([
-            'status' => 'success',
-            'data' => $formattedExams
-        ]);
-    }
+    return response()->json([
+        'status' => 'success',
+        'data'   => $exams
+    ]);
+}
   public function getQuestionsByPastExam($pastExamId): JsonResponse
 {
     $pastExam = PastExam::find($pastExamId);
