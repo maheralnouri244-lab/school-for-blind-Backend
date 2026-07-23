@@ -154,7 +154,7 @@ class TeacherController extends Controller
     {
         $teacher = $request->user();
         $subjects = $teacher->subjects()->get();
-        
+
         if ($subjects->isEmpty()) {
             return response()->json([
                 'status' => 'success',
@@ -167,8 +167,19 @@ class TeacherController extends Controller
 
         foreach ($subjects as $subject) {
 
-            $latestQuiz = Quiz::where('subject_id', $subject->id)->where('teacher_id', $teacher->id)->latest()->first();
-            $latestExam = Exam::where('subject_id', $subject->id)->where('teacher_id', $teacher->id)->latest()->first();
+            $latestQuiz = Quiz::where('subject_id', $subject->id)
+                ->where('teacher_id', $teacher->id)->latest()->first();
+            $latestExam = Exam::where('subject_id', $subject->id)
+                ->where('teacher_id', $teacher->id)
+                ->where('is_published', true)
+                ->where(function ($query) {
+
+                    $query
+                        ->whereNull('exam_date')
+                        ->Where('exam_date', '<=', now());
+                })
+                ->latest('exam_date')
+                ->first();
 
             $latestAssessment = null;
             $assessmentType = null;
@@ -201,8 +212,12 @@ class TeacherController extends Controller
                 $subjectStats['has_assessments'] = true;
 
                 $submissions = $assessmentType === 'quiz'
-                    ? QuizSubmission::where('quiz_id', $latestAssessment->id)->get()
-                    : ExamSubmission::where('exam_id', $latestAssessment->id)->get();
+                    ? QuizSubmission::where('quiz_id', $latestAssessment->id)
+                        ->where('status', 'graded')
+                        ->get()
+                    : ExamSubmission::where('exam_id', $latestAssessment->id)
+                        ->where('status', 'approved')
+                        ->get();
 
                 $totalStudents = $submissions->count();
                 $passedCount = 0;
@@ -267,7 +282,9 @@ class TeacherController extends Controller
             $allQuizzes = Quiz::where('subject_id', $subject->id)->where('teacher_id', $teacher->id)->get();
             foreach ($allQuizzes as $quiz) {
                 if ($quiz->totalmark > 0) {
-                    $subs = QuizSubmission::where('quiz_id', $quiz->id)->get();
+                    $subs = QuizSubmission::where('quiz_id', $quiz->id)
+                        ->where('status', 'graded')
+                        ->get();
                     if ($subs->count() > 0) {
                         $lowScorers = $subs->filter(fn($s) => ($s->total_score / $quiz->totalmark) * 100 < 40)->count();
                         $failRate = ($lowScorers / $subs->count()) * 100;
@@ -285,7 +302,9 @@ class TeacherController extends Controller
             $allExams = Exam::where('subject_id', $subject->id)->where('teacher_id', $teacher->id)->get();
             foreach ($allExams as $exam) {
                 if ($exam->totalmark > 0) {
-                    $subs = ExamSubmission::where('exam_id', $exam->id)->get();
+                    $subs = ExamSubmission::where('exam_id', $exam->id)
+                        ->where('status', 'approved')
+                        ->get();
                     if ($subs->count() > 0) {
                         $lowScorers = $subs->filter(fn($s) => ($s->score / $exam->totalmark) * 100 < 40)->count();
                         $failRate = ($lowScorers / $subs->count()) * 100;

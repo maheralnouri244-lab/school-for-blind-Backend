@@ -67,46 +67,46 @@ class SpecialTeacherSeeder extends Seeder
         $yumnaTeacher->classes()->sync($allClassIds);
 
 
-        // $allSubjectsTeacher = Teacher::firstOrCreate(
-        //     ['phone' => '0900000000'],
-        //     [
-        //         'full_name' => 'أستاذ كل المواد',
-        //         'password' => $commonPassword,
-        //         'subjects' => 'كل المواد',
-        //         'level' => 'twelfth',
-        //         'status' => 'approved',
-        //         'cv_path' => 'system/all_cv.pdf',
-        //     ]
-        // );
-        // $allSubjectsTeacher->subjects()->sync($allSubjectIds);
-        // $allSubjectsTeacher->classes()->sync($allClassIds);
+        $allSubjectsTeacher = Teacher::firstOrCreate(
+            ['phone' => '0900000000'],
+            [
+                'full_name' => 'أستاذ كل المواد',
+                'password' => $commonPassword,
+                'subjects' => 'كل المواد',
+                'level' => 'twelfth',
+                'status' => 'approved',
+                'cv_path' => 'system/all_cv.pdf',
+            ]
+        );
+        $allSubjectsTeacher->subjects()->sync($allSubjectIds);
+        $allSubjectsTeacher->classes()->sync($allClassIds);
 
-        // $ninthTeacher = Teacher::firstOrCreate(
-        //     ['phone' => '0900000009'],
-        //     [
-        //         'full_name' => 'أستاذ مواد التاسع',
-        //         'password' => $commonPassword,
-        //         'subjects' => 'مواد التاسع',
-        //         'level' => 'ninth',
-        //         'status' => 'approved',
-        //         'cv_path' => 'system/ninth_cv.pdf',
-        //     ]
-        // );
-        // $ninthTeacher->subjects()->sync($ninthSubjectIds);
-        // $ninthTeacher->classes()->sync($ninthClassIds);
+        $ninthTeacher = Teacher::firstOrCreate(
+            ['phone' => '0900000009'],
+            [
+                'full_name' => 'أستاذ مواد التاسع',
+                'password' => $commonPassword,
+                'subjects' => 'مواد التاسع',
+                'level' => 'ninth',
+                'status' => 'approved',
+                'cv_path' => 'system/ninth_cv.pdf',
+            ]
+        );
+        $ninthTeacher->subjects()->sync($ninthSubjectIds);
+        $ninthTeacher->classes()->sync($ninthClassIds);
 
-        // $twelfthTeacher = Teacher::firstOrCreate(
-        //     ['phone' => '0900000012'],
-        //     [
-        //         'full_name' => 'أستاذ مواد البكالوريا',
-        //         'password' => $commonPassword,
-        //         'subjects' => 'مواد البكالوريا',
-        //         'level' => 'twelfth',
-        //         'status' => 'approved',
-        //         'cv_path' => 'system/twelfth_cv.pdf',
-        //     ]
-        // );
-        // $twelfthTeacher->subjects()->sync($twelfthSubjectIds);
-        // $twelfthTeacher->classes()->sync($twelfthClassIds);
+        $twelfthTeacher = Teacher::firstOrCreate(
+            ['phone' => '0900000012'],
+            [
+                'full_name' => 'أستاذ مواد البكالوريا',
+                'password' => $commonPassword,
+                'subjects' => 'مواد البكالوريا',
+                'level' => 'twelfth',
+                'status' => 'approved',
+                'cv_path' => 'system/twelfth_cv.pdf',
+            ]
+        );
+        $twelfthTeacher->subjects()->sync($twelfthSubjectIds);
+        $twelfthTeacher->classes()->sync($twelfthClassIds);
     }
 }

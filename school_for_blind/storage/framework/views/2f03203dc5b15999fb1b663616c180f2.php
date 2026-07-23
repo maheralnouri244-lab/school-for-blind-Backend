@@ -44,7 +44,8 @@
           </div>
 
           
-          <?php if(isset($canReply) && $canReply): ?>
+          
+          <?php if((isset($canReply) && $canReply) || 1): ?>
             <form id="send-message-form" class="mt-auto" enctype="multipart/form-data">
               <?php echo csrf_field(); ?>
               <div class="input-group p-1 rounded-3"
@@ -174,10 +175,10 @@
 
           if (messagesWrapper.children.length === 0) {
             messagesWrapper.innerHTML = `
-                  <div id="no-messages-alert" class="text-center py-5 text-muted">
-                    <i class="fa-regular fa-comments fs-1 mb-3"></i>
-                    <p>لا توجد رسائل في هذه المحادثة بعد.</p>
-                  </div>`;
+                                  <div id="no-messages-alert" class="text-center py-5 text-muted">
+                                    <i class="fa-regular fa-comments fs-1 mb-3"></i>
+                                    <p>لا توجد رسائل في هذه المحادثة بعد.</p>
+                                  </div>`;
           }
         })
         .catch(err => console.error('Error fetching messages:', err))
@@ -193,10 +194,30 @@
       }
     });
 
-    // --- 2. رسم كرت الرسالة (HTML Generator) ---
+    // --- دالة لإعادة محاولة تحميل الصوت إذا لم يكن جاهزاً على السيرفر بعد ---
+    window.retryAudio = function (audioElement) {
+      let retries = parseInt(audioElement.dataset.retries || '0');
+      // نجرب نحمل الملف 3 مرات كحد أقصى
+      if (retries < 3) {
+        console.warn("الملف قيد الحفظ على السيرفر، جاري إعادة المحاولة...", retries + 1);
+        audioElement.dataset.retries = retries + 1;
+
+        setTimeout(() => {
+          // جلب الرابط الحالي وتحديث الطابع الزمني لكسر الكاش
+          const url = new URL(audioElement.src, window.location.origin);
+          url.searchParams.set('t', new Date().getTime());
+
+          audioElement.src = url.toString();
+          audioElement.load();
+        }, 1500); // ننتظر ثانية ونص بين كل محاولة
+      } else {
+        console.error("فشل تحميل الصوت بعد عدة محاولات.");
+      }
+    };
+
     function renderMessageHTML(msg) {
       const senderTypeClass = msg.sender_type ? msg.sender_type.split('\\').pop() : '';
-      const senderName = msg.sender ? (msg.sender.fullname || msg.sender.full_name || 'مستخدم') : 'مستخدم';
+      const senderName = msg.sender ? (msg.sender.fullname || msg.sender.full_name || msg.sender.role || 'مستخدم') : 'مستخدم';
 
       let iconClass = 'fa-user-graduate';
       let roleName = 'طالب';
@@ -214,12 +235,26 @@
 
       let attachmentHTML = '';
       if (msg.attachment_path) {
+        // تجهيز الرابط مع طابع زمني أولي
+        const timeStamp = new Date().getTime();
+        const fileUrl = msg.attachment_path.includes('?')
+          ? `${msg.attachment_path}&t=${timeStamp}`
+          : `${msg.attachment_path}?t=${timeStamp}`;
+
         if (msg.attachment_type === 'image') {
-          attachmentHTML = `<div class="mt-2"><img src="${msg.attachment_path}" class="img-fluid rounded border" style="max-width: 250px;" alt="مرفق صورة"></div>`;
+          attachmentHTML = `<div class="mt-2"><img src="${fileUrl}" class="img-fluid rounded border" style="max-width: 250px;" alt="مرفق صورة"></div>`;
         } else if (msg.attachment_type === 'voice') {
-          attachmentHTML = `<div class="mt-2"><audio controls src="${msg.attachment_path}" class="w-100" style="max-width: 300px;"></audio></div>`;
+          // التعديل هنا: استخدام src مباشرة، وإضافة onerror
+          attachmentHTML = `
+                <div class="mt-3 mb-2" style="width: 100%; min-width: 280px;">
+                  <audio controls preload="auto" class="w-100 shadow-sm rounded" style="height: 54px; outline: none;" 
+                         src="${fileUrl}" 
+                         onerror="retryAudio(this)">
+                    متصفحك لا يدعم مشغل الصوت.
+                  </audio>
+                </div>`;
         } else {
-          attachmentHTML = `<div class="mt-2"><a href="${msg.attachment_path}" target="_blank" class="btn btn-sm btn-outline-secondary"><i class="fa-solid fa-paperclip me-1"></i> فتح المرفق</a></div>`;
+          attachmentHTML = `<div class="mt-2"><a href="${fileUrl}" target="_blank" class="btn btn-sm btn-outline-secondary"><i class="fa-solid fa-paperclip me-1"></i> فتح المرفق</a></div>`;
         }
       }
 
@@ -228,37 +263,37 @@
         : '';
 
       return `
-              <div class="d-flex align-items-start mb-3 justify-content-between p-2 rounded msg-item" id="message-${msg.id}" 
-                   style="background-color: var(--bg-card); border: 1px solid var(--border-color);">
-                <div class="d-flex align-items-start gap-2">
-                  <div class="p-2 rounded ${iconBg} d-flex align-items-center justify-content-center cursor-pointer" 
-                       style="width: 38px; height: 38px;" ${profileClick} title="عرض الملف الشخصي">
-                    <i class="fa-solid ${iconClass}"></i>
-                  </div>
-                  <div>
-                    <strong class="d-block cursor-pointer text-hover-primary" style="color: var(--text-main); font-size: 0.9rem;" ${profileClick}>
-                      ${senderName}
-                      <span class="text-muted fw-normal" style="font-size: 0.75rem;">(${roleName})</span>
-                    </strong>
-                    ${msg.body ? `<p class="mb-1 mt-1" style="color: var(--text-main); font-size: 0.95rem;">${msg.body}</p>` : ''}
-                    ${attachmentHTML}
-                    <small class="text-muted d-block mt-1" style="font-size: 0.7rem;">${new Date(msg.created_at).toLocaleString('ar-EG')}</small>
-                  </div>
-                </div>
-                <button class="btn btn-sm btn-link text-danger border-0 p-1" onclick="confirmDeleteMessage(${msg.id})" title="حذف هذه الرسالة">
-                  <i class="fa-regular fa-trash-can fs-5"></i>
-                </button>
-              </div>`;
+                              <div class="d-flex align-items-start mb-3 justify-content-between p-2 rounded msg-item" id="message-${msg.id}" 
+                                   style="background-color: var(--bg-card); border: 1px solid var(--border-color);">
+                                <div class="d-flex align-items-start gap-2 w-100">
+                                  <div class="p-2 rounded ${iconBg} d-flex align-items-center justify-content-center cursor-pointer flex-shrink-0" 
+                                       style="width: 38px; height: 38px;" ${profileClick} title="عرض الملف الشخصي">
+                                    <i class="fa-solid ${iconClass}"></i>
+                                  </div>
+                                  <div class="flex-grow-1" style="max-width: 85%;">
+                                    <strong class="d-block cursor-pointer text-hover-primary" style="color: var(--text-main); font-size: 0.9rem;" ${profileClick}>
+                                      ${senderName}
+                                      <span class="text-muted fw-normal" style="font-size: 0.75rem;">(${roleName})</span>
+                                    </strong>
+                                    ${msg.body ? `<p class="mb-1 mt-1" style="color: var(--text-main); font-size: 0.95rem;">${msg.body}</p>` : ''}
+                                    ${attachmentHTML}
+                                    <small class="text-muted d-block mt-1" style="font-size: 0.7rem;">${new Date(msg.created_at).toLocaleString('ar-EG')}</small>
+                                  </div>
+                                </div>
+                                <button class="btn btn-sm btn-link text-danger border-0 p-1 flex-shrink-0" onclick="confirmDeleteMessage(${msg.id})" title="حذف هذه الرسالة">
+                                  <i class="fa-regular fa-trash-can fs-5"></i>
+                                </button>
+                              </div>`;
     }
 
     // --- 3. فتح ملف المستخدم الشخصي ---
     window.openUserProfile = function (type, id) {
       const modalContent = document.getElementById('user-profile-modal-content');
       modalContent.innerHTML = `
-              <div class="text-center py-5">
-                <div class="spinner-border text-primary" role="status"></div>
-                <p class="mt-2 text-muted">جاري تحميل بيانات الملف الشخصي...</p>
-              </div>`;
+                              <div class="text-center py-5">
+                                <div class="spinner-border text-primary" role="status"></div>
+                                <p class="mt-2 text-muted">جاري تحميل بيانات الملف الشخصي...</p>
+                              </div>`;
       profileModal.show();
 
       fetch(`/content-monitor/conversations/user-profile?type=${type}&id=${id}`, {
@@ -396,13 +431,13 @@
             })
             .listen('MessageSent', (e) => {
               console.log("💬 New message received!", e);
-
               const messageData = e.message || e;
 
               if (messageData && messageData.id) {
                 const noMsgAlert = document.getElementById('no-messages-alert');
                 if (noMsgAlert) noMsgAlert.remove();
 
+                // رسم الرسالة وإضافتها
                 messagesWrapper.insertAdjacentHTML('beforeend', renderMessageHTML(messageData));
                 scrollToBottom();
               }

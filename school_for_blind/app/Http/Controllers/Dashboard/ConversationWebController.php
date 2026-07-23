@@ -7,6 +7,7 @@ use App\Events\MessageSent;
 use App\Http\Controllers\Controller;
 use App\Models\Conversation;
 use App\Models\Message;
+use App\Models\Punishment;
 use App\Models\Student;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
@@ -51,7 +52,7 @@ class ConversationWebController extends Controller
     {
         $messages = Message::with('sender')
             ->where('conversation_id', $id)
-            ->latest() 
+            ->latest()
             ->cursorPaginate(30);
 
         $messages->through(function ($message) {
@@ -69,9 +70,9 @@ class ConversationWebController extends Controller
         $admin = Auth::guard('admin')->user();
         $conversation = Conversation::findOrFail($id);
 
-        if ($conversation->type !== 'teacher_admin' || $conversation->admin_id !== $admin->id) {
-            return response()->json(['success' => false, 'message' => 'لا تملك صلاحية الإرسال في هذه المحادثة.'], 403);
-        }
+        // if ($conversation->type !== 'teacher_admin' || $conversation->admin_id !== $admin->id) {
+        //     return response()->json(['success' => false, 'message' => 'لا تملك صلاحية الإرسال في هذه المحادثة.'], 403);
+        // }
 
         $request->validate([
             'body' => 'nullable|string',
@@ -114,17 +115,30 @@ class ConversationWebController extends Controller
         $type = $request->query('type');
         $id = $request->query('id');
 
-        if (class_basename($type) === 'Student') {
-            $user = Student::with('class')->findOrFail($id);
-            $html = view('pages.conversations.partials.student_profile_modal', compact('user'))->render();
-        } elseif (class_basename($type) === 'Teacher') {
-            $user = Teacher::with('subjects', 'classes')->findOrFail($id);
-            $html = view('pages.conversations.partials.teacher_profile_modal', compact('user'))->render();
+        $viewName = '';
+
+        if ($type === 'Student') {
+            $user = Student::find($id);
+            $viewName = 'pages.conversations.partials.student_profile_modal';
+        } elseif ($type === 'Teacher') {
+            $user = Teacher::find($id);
+            $viewName = 'pages.conversations.partials.teacher_profile_modal';
         } else {
-            return response()->json(['success' => false, 'message' => 'نوع المستخدم غير معروف'], 400);
+            return response()->json(['success' => false, 'message' => 'نوع المستخدم غير معروف']);
         }
 
-        return response()->json(['success' => true, 'html' => $html]);
+        if (!$user) {
+            return response()->json(['success' => false, 'message' => 'المستخدم غير موجود']);
+        }
+
+        $punishments = Punishment::orderBy('level', 'asc')->get();
+
+        $html = view($viewName, compact('user', 'type', 'punishments'))->render();
+
+        return response()->json([
+            'success' => true,
+            'html' => $html
+        ]);
     }
 
     public function deleteMessage($id)
