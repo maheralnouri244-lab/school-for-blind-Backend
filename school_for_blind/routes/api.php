@@ -10,6 +10,7 @@ use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\LiveKitWebhookController;
 use App\Http\Controllers\MagicLoginController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OtpController;
 use App\Http\Controllers\ParentReportController;
 use App\Http\Controllers\PointRedemptionController;
@@ -246,7 +247,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/student/submissions', [StudentQuizController::class, 'getStudentSubmissions']);
 });
 Route::post('/support-tickets', [SupportTicketController::class, 'store'])->middleware('auth:sanctum');
-Route::get('/past-exams', [StudentpastexamController::class, 'getPastExamsBySubject']);
+Route::get('/past-exams', [StudentpastexamController::class, 'getPastExamsBySubject'])->middleware('auth:sanctum');
 
 Route::get('/past-exams/{id}/questions', [StudentpastexamController::class, 'getQuestionsByPastExam']);
 
@@ -296,3 +297,5 @@ Route::middleware(['auth:sanctum', 'isparent'])->prefix('parent')->group(functio
     Route::post('/reports/objection', [ParentReportController::class, 'submitObjection']);
     Route::get('/reports/student/{studentId}/subject/{subjectId}', [ParentReportController::class, 'getSubjectGrades']);
 });
+
+Route::post('/test-notification', [NotificationController::class, 'testSend']);

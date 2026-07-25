@@ -54,7 +54,6 @@ class RoomWebController extends Controller
 
         $identity = 'Admin--' . $user->id;
         $room = Room::where('room_name', $room_name)->first();
-        \Log::info($room);
         $canPublish = true;
         
         $mutedParticipants = $room ? ($room->muted_participants ?? []) : [];

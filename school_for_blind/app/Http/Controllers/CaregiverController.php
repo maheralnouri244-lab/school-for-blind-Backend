@@ -16,8 +16,8 @@ class CaregiverController extends Controller
         $validated = $request->validated();
 
         try {
-            $caregiver = Caregiver::where('phone', '=', $validated['phone'], 'and')->first();
-            if (!$caregiver || !Hash::check($validated['password'], $caregiver->password)) {
+           $caregiver = Caregiver::where('phone', $validated['phone'])->first();
+        if (!$caregiver || !Hash::check($validated['password'], $caregiver->password)) {
                 return response()->json([
                     'success' => false,
                     'message' => 'بيانات الاعتماد غير صحيحة، يرجى التأكد من رقم الهاتف أو كلمة المرور المرسلة.'

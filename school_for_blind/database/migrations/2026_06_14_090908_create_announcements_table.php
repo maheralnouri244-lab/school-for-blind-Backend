@@ -16,8 +16,13 @@ return new class extends Migration {
             $table->string('title')->nullable();
             $table->longText('content');
             $table->enum('level', ['ninth', 'twelfth', 'all'])->default('all');
-            $table->enum('target_audience', ['student', 'parent', 'teacher'])->default('student');
+               $table->foreignId('class_id')
+          ->nullable()
+          ->constrained('classes')
+          ->onDelete('cascade');
             $table->timestamps();
+            $table->enum('target_audience', ['student', 'parent', 'teacher'])->default('student');
+         
         });
     }
 

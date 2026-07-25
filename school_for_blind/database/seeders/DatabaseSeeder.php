@@ -38,6 +38,7 @@ class DatabaseSeeder extends Seeder
             ExamSeeder::class,
             LessonSeeder::class,
             SubjectLessonsCountSeeder::class,
+            CaregiverSeeder::class,
             PunishmentSeeder::class,
             QuizSeeder::class,
             QuizSubmissionSeeder::class,
