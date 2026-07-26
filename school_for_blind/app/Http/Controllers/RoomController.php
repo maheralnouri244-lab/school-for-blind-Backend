@@ -8,6 +8,7 @@ use App\Http\Requests\Room\KickParticipantRequest;
 use App\Http\Requests\Room\MuteParticipantRequest;
 use App\Http\Requests\Room\StartCallRequest;
 use App\Http\Requests\Room\UnmuteParticipantRequest;
+use App\Jobs\CheckLateStudentsJob;
 use App\Models\Room;
 use App\Services\RoomService;
 use Illuminate\Routing\Controller;
@@ -63,6 +64,8 @@ class RoomController extends Controller
 
         $token = $this->roomService->generateToken($user, $room->room_name, $userRole, true, true);
 
+        CheckLateStudentsJob::dispatch($room)->delay(now()->addMinutes(5));
+
         return response()->json([
             'message' => 'تم إنشاء الغرفة بنجاح',
             'room_name' => $room->room_name,
@@ -82,6 +85,14 @@ class RoomController extends Controller
         $canPublish = true;
 
         if ($room) {
+
+            $kickedParticipants = $room->kicked_participants ?? [];
+            if (in_array($identity, $kickedParticipants)) {
+                return response()->json([
+                    'error' => 'لقد تم طردك من هذه المحاضرة ولا يمكنك الانضمام إليها مجدداً.'
+                ], 403);
+            }
+
             $mutedParticipants = $room->muted_participants ?? [];
             if (in_array($identity, $mutedParticipants)) {
                 $canPublish = false;
