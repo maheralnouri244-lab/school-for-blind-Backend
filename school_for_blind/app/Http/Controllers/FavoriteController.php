@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 
 class FavoriteController extends Controller
 {
-  public function toggle(Request $request)
+ public function toggle(Request $request)
 {
     $request->validate([
         'id'   => 'required|integer',
@@ -39,6 +39,7 @@ class FavoriteController extends Controller
 
     return response()->json(['message' => 'Added', 'is_favorite' => true]);
 }
+
 public function addToFavorite(Request $request)
 {
     $request->validate([

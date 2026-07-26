@@ -334,21 +334,21 @@
                               @csrf
 
                               <div class="row g-3">
-                                <div class="col-md-6 text-start" dir="rtl">
-                                  <label class="form-label small text-muted">القسم الموجه إليه المشكلة</label>
+                                <div class="col-md-4 text-start" dir="rtl">
+                                  <label class="form-label small text-muted">القسم الموجه إليه</label>
                                   <select name="assigned_department" class="form-select bg-transparent rounded-3"
                                     style="color: var(--text-main); border-color: var(--border-color);" required>
                                     <option value="" {{ is_null($ticket->assigned_department) ? 'selected' : '' }}>اختر
                                       القسم...</option>
-                                    <option value="Super Admin" {{ $ticket->assigned_department == 'Super Admin' ? 'selected' : '' }}>المدير العام (Super Admin)</option>
+                                    <option value="Super Admin" {{ $ticket->assigned_department == 'Super Admin' ? 'selected' : '' }}>المدير العام</option>
                                     <option value="Academic Manager" {{ $ticket->assigned_department == 'Academic Manager' ? 'selected' : '' }}>الموجّه الأكاديمي</option>
-                                    <option value="Moderator" {{ $ticket->assigned_department == 'Moderator' ? 'selected' : '' }}>مراقب المحتوى والبلاغات</option>
-                                    <option value="Financial Manager" {{ $ticket->assigned_department == 'Financial Manager' ? 'selected' : '' }}>المدير المالي (محاسب)</option>
+                                    <option value="Moderator" {{ $ticket->assigned_department == 'Moderator' ? 'selected' : '' }}>مراقب المحتوى</option>
+                                    <option value="Financial Manager" {{ $ticket->assigned_department == 'Financial Manager' ? 'selected' : '' }}>المدير المالي</option>
                                     <option value="Data Entry" {{ $ticket->assigned_department == 'Data Entry' ? 'selected' : '' }}>مدخل البيانات</option>
                                   </select>
                                 </div>
 
-                                <div class="col-md-6 text-start" dir="rtl">
+                                <div class="col-md-4 text-start" dir="rtl">
                                   <label class="form-label small text-muted">درجة الأولوية</label>
                                   <select name="priority" class="form-select bg-transparent rounded-3"
                                     style="color: var(--text-main); border-color: var(--border-color);" required>
@@ -359,11 +359,24 @@
                                     </option>
                                   </select>
                                 </div>
+
+                                <div class="col-md-4 text-start" dir="rtl">
+                                  <label class="form-label small text-muted">حالة الطلب</label>
+                                  <select name="status" class="form-select bg-transparent rounded-3"
+                                    style="color: var(--text-main); border-color: var(--border-color);" required>
+                                    <option value="open" {{ $ticket->status == 'open' ? 'selected' : '' }}>جديدة</option>
+                                    <option value="in_progress" {{ $ticket->status == 'in_progress' ? 'selected' : '' }}>قيد
+                                      المعالجة</option>
+                                    <option value="resolved" {{ $ticket->status == 'resolved' ? 'selected' : '' }}>محلولة
+                                    </option>
+                                    <option value="closed" {{ $ticket->status == 'closed' ? 'selected' : '' }}>مغلقة</option>
+                                  </select>
+                                </div>
                               </div>
 
                               <button type="submit" class="btn w-100 mt-3 rounded-pill fw-bold shadow-sm-hover"
                                 style="background-color: var(--accent-color); color: #111827; border: none;">
-                                اعتماد وحفظ الفرز
+                                اعتماد وحفظ التعديلات
                               </button>
                             </form>
                           </div>
@@ -371,12 +384,25 @@
                           <div class="col-12 mt-3 text-start">
                             <hr style="border-color: var(--border-color);">
                             <form action="{{ route('dashboard.support.update-status', $ticket->id) }}" method="POST"
-                              class="d-inline">
+                              class="p-3 rounded-4 d-flex flex-column gap-3"
+                              style="background-color: var(--bg-main); border: 1px dashed var(--border-color);">
                               @csrf
-                              <input type="hidden" name="status" value="resolved">
+
+                              <div class="text-start" dir="rtl">
+                                <label class="form-label small text-muted">تحديث حالة الطلب:</label>
+                                <select name="status" class="form-select bg-transparent rounded-3 mb-2"
+                                  style="color: var(--text-main); border-color: var(--border-color);" required>
+                                  <option value="open" {{ $ticket->status == 'open' ? 'selected' : '' }}>جديدة</option>
+                                  <option value="in_progress" {{ $ticket->status == 'in_progress' ? 'selected' : '' }}>قيد
+                                    المعالجة</option>
+                                  <option value="resolved" {{ $ticket->status == 'resolved' ? 'selected' : '' }}>محلولة</option>
+                                  <option value="closed" {{ $ticket->status == 'closed' ? 'selected' : '' }}>مغلقة</option>
+                                </select>
+                              </div>
+
                               <button type="submit" class="btn rounded-pill px-4 fw-bold shadow-sm-hover w-100"
                                 style="background-color: var(--accent-color); color: #111827; border: none;">
-                                <i class="fa-solid fa-check-circle me-1"></i> لقد قمت بحل المشكلة، أرشفة الطلب الآن
+                                <i class="fa-solid fa-check-circle me-1"></i> تحديث حالة الطلب
                               </button>
                             </form>
                           </div>

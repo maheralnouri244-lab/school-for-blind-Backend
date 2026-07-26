@@ -161,7 +161,6 @@ class ConversationController extends Controller
         ]);
 
         broadcast(new MessageSent($message))->toOthers();
-        // MessageSent::dispatch($message);
 
         return response()->json(['success' => true, 'data' => $message]);
     }

@@ -22,6 +22,7 @@ class AnnouncementController extends Controller
             'content' => $request->input('content'),
             'level' => $request->input('level'),
             'target_audience' => $request->input('target_audience'),
+            'class_id'        => $request->input('class_id'), 
         ]);
         event(new AnnouncementCreated($announcement));
         /*
@@ -157,8 +158,10 @@ class AnnouncementController extends Controller
 
         if (auth()->guard('student')->check()) {
             $student = auth()->guard('student')->user();
-            $query->where('target_audience', 'student')
-                ->whereIn('level', [$student->level, 'all']);
+          $query->where('target_audience', 'student')
+          ->whereIn('level', [$student->level, 'all'])
+          ->where('class_id', $student->class_id);
+
 
         } elseif (auth()->guard('caregiver')->check()) {
             $caregiver = auth()->guard('caregiver')->user();
@@ -168,7 +171,8 @@ class AnnouncementController extends Controller
         } elseif (auth()->guard('teacher')->check()) {
             $teacher = auth()->guard('teacher')->user();
             $query->where('target_audience', 'teacher')
-                ->whereIn('level', [$teacher->level, 'all']);
+          ->whereIn('level', [$teacher->level, 'all'])
+          ->where('class_id', $teacher->class_id);
 
         } elseif (auth()->guard('admin')->check()) {
             $admin = auth()->guard('admin')->user();

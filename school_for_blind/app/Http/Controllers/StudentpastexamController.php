@@ -10,7 +10,7 @@ use Illuminate\Http\JsonResponse;
 
 class StudentpastexamController extends Controller
 {
-    public function getPastExamsBySubject(Request $request)
+   public function getPastExamsBySubject(Request $request)
 {
     $subjectId = $request->query('subject_id');
     $userId = Auth::id();

@@ -7,20 +7,22 @@ use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast; 
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class AnnouncementCreated
+class AnnouncementCreated implements ShouldBroadcast 
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
+
+    public $announcement; 
 
     /**
      * Create a new event instance.
      */
     public function __construct(Announcement $announcement)
     {
-$this->announcement = $announcement;
+        $this->announcement = $announcement;
     }
 
     /**
@@ -28,7 +30,7 @@ $this->announcement = $announcement;
      *
      * @return array<int, Channel>
      */
-  public function broadcastOn(): array
+    public function broadcastOn(): array
     {
         $target = $this->announcement->target_audience; 
         $level  = $this->announcement->level;
@@ -37,10 +39,12 @@ $this->announcement = $announcement;
             new Channel("announcements.{$target}.{$level}")
         ];
     }
-public function broadcastAs(): string
+
+    public function broadcastAs(): string
     {
         return 'new-announcement';
     }
+
     public function broadcastWith(): array
     {
         return [
@@ -53,9 +57,4 @@ public function broadcastAs(): string
             'created_at'      => $this->announcement->created_at->toDateTimeString(),
         ];
     }
-
-
-
-
-
-    }
+}

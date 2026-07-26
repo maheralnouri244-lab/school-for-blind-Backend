@@ -29,6 +29,7 @@ class StoreAnnouncementRequest extends FormRequest
             'title'           => 'required_if:type,exam_schedule|string|max:255',
             'target_audience' => 'required|in:student,parent,teacher',
             'level'           => 'required_if:target_audience,student|required_if:target_audience,parent|in:ninth,twelfth,all',
+            'class_id' => 'nullable|exists:classes,id',
         ];
 
 $rules['content'] = in_array($type, ['exam_schedule', 'school_timetable']) ? 'required|array' : 'required|string';
