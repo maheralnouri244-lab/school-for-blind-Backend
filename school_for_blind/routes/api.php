@@ -191,18 +191,19 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/favorites/toggle', [FavoriteController::class, 'toggle']);
     Route::post('favorites/add', [FavoriteController::class, 'addToFavorite']);
 
-    Route::get('/favorites/lessons', [FavoriteController::class, 'favoriteLessons']) ->middleware('auth:sanctum');
+    Route::get('/favorites/lessons', [FavoriteController::class, 'favoriteLessons']) ;
 ;
 
-    Route::get('/favorites/quizzes', [FavoriteController::class, 'favoriteQuizzes']) ->middleware('auth:sanctum');
+    Route::get('/favorites/quizzes', [FavoriteController::class, 'favoriteQuizzes']) ;
 ;
-    Route::get('favorites/exams', [FavoriteController::class, 'favoriteExams']) ->middleware('auth:sanctum');
+    Route::get('favorites/exams', [FavoriteController::class, 'favoriteExams']) ;
 ;
-    Route::get('favorites/past-exams', [FavoriteController::class, 'favoritePastExams']) ->middleware('auth:sanctum');
+    Route::get('favorites/past-exams', [FavoriteController::class, 'favoritePastExams']) 
 ;
 
     Route::get('/favorites/all', [FavoriteController::class, 'allFavorites']);
 });
+
 Route::post('/favorites/remove', [FavoriteController::class, 'remove'])
     ->middleware('auth:sanctum');
 

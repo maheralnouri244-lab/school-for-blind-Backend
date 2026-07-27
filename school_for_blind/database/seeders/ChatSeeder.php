@@ -37,21 +37,21 @@ class ChatSeeder extends Seeder
                     'name' => 'مناقشة مادة ' . $subject->name . ' - ' . $teacher->full_name,
                 ]);
             }
-        }
-        $admins = Admin::whereIn('role', [
-            'Super Admin',
-            'Academic Manager',
-        ])->get();
+            $admins = Admin::whereIn('role', [
+                'Super Admin',
+                'Academic Manager',
+            ])->get();
 
-        foreach ($admins as $admin) {
-            \Log::info($admin);
-            Conversation::firstOrCreate([
-                'type' => 'teacher_admin',
-                'teacher_id' => $teacher->id,
-                'admin_id' => $admin->id,
-            ], [
-                'name' => 'محادثة الإدارة - ' . $admin->role,
-            ]);
+            foreach ($admins as $admin) {
+                \Log::info($admin);
+                Conversation::firstOrCreate([
+                    'type' => 'teacher_admin',
+                    'teacher_id' => $teacher->id,
+                    'admin_id' => $admin->id,
+                ], [
+                    'name' => 'محادثة الإدارة - ' . $admin->role,
+                ]);
+            }
         }
     }
 }
