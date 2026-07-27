@@ -63,7 +63,8 @@ Route::middleware([CheckAdminRole::class . ':Super Admin,Academic Manager'])->gr
     });
 });
 
-Route::middleware([CheckAdminRole::class . ':Super Admin,Moderator'])->group(function () {
+Route::middleware([CheckAdminRole::class . ':Super Admin,Academic Manager,
+Moderator,Support Agent,Data Entry,Financial Manager'])->group(function () {
     Route::get('/content-monitor', [ContentMonitorController::class, 'index'])->name('content.monitor');
 
     Route::prefix('reports')->name('reports.')->group(function () {
