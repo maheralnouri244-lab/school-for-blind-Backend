@@ -144,7 +144,8 @@ Route::middleware('auth:sanctum')
 Route::post('/announcements', [AnnouncementController::class, 'store']);
 Route::get('/announcements', [AnnouncementController::class, 'index']);
 Route::get('/announcements/exam/{id}', [AnnouncementController::class, 'showExam']);
-Route::get('/announcements/school-timetable/first', [AnnouncementController::class, 'firstSchoolTimetable']);
+Route::get('/announcements/school-timetable/first', [AnnouncementController::class, 'firstSchoolTimetable'])->middleware('auth:sanctum');
+;
 
 
 Route::prefix('student/quizzes')->group(function () {
@@ -190,14 +191,19 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/favorites/toggle', [FavoriteController::class, 'toggle']);
     Route::post('favorites/add', [FavoriteController::class, 'addToFavorite']);
 
-    Route::get('/favorites/lessons', [FavoriteController::class, 'favoriteLessons']);
+    Route::get('/favorites/lessons', [FavoriteController::class, 'favoriteLessons']) ;
+;
 
-    Route::get('/favorites/quizzes', [FavoriteController::class, 'favoriteQuizzes']);
-    Route::get('favorites/exams', [FavoriteController::class, 'favoriteExams']);
-    Route::get('favorites/past-exams', [FavoriteController::class, 'favoritePastExams']);
+    Route::get('/favorites/quizzes', [FavoriteController::class, 'favoriteQuizzes']) ;
+;
+    Route::get('favorites/exams', [FavoriteController::class, 'favoriteExams']) ;
+;
+    Route::get('favorites/past-exams', [FavoriteController::class, 'favoritePastExams']) 
+;
 
     Route::get('/favorites/all', [FavoriteController::class, 'allFavorites']);
 });
+
 Route::post('/favorites/remove', [FavoriteController::class, 'remove'])
     ->middleware('auth:sanctum');
 

@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 use App\Events\AnnouncementCreated;
 use App\Http\Requests\StoreAnnouncementRequest;
 use App\Models\Announcement;
-use Kreait\Laravel\Firebase\Facades\Firebase;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Kreait\Laravel\Firebase\Facades\Firebase;
 
 class AnnouncementController extends Controller
 {
@@ -22,7 +23,7 @@ class AnnouncementController extends Controller
             'content' => $request->input('content'),
             'level' => $request->input('level'),
             'target_audience' => $request->input('target_audience'),
-            'class_id'        => $request->input('class_id'), 
+            'class_id'=> $request->input('class_id'), 
         ]);
         event(new AnnouncementCreated($announcement));
         /*
@@ -154,6 +155,7 @@ class AnnouncementController extends Controller
     }
     public function firstSchoolTimetable()
     {
+        Auth::id();
         $query = Announcement::where('type', '=', 'school_timetable', 'and');
 
         if (auth()->guard('student')->check()) {

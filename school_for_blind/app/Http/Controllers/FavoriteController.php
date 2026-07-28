@@ -128,13 +128,14 @@ public function favoriteExams()
     public function favoritePastExams()
     {
         $favorites = Favorite::where('user_id', Auth::id())
-            ->where('favorable_type', PastExam::class)
+            ->where('favorable_type', 'PastExam')
             ->with('favorable')
             ->get()
             ->pluck('favorable');
 
         return response()->json($favorites);
     }
+
 public function allFavorites()
 {
     $favorites = Favorite::where('user_id', Auth::id())
