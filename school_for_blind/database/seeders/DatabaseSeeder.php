@@ -39,6 +39,7 @@ class DatabaseSeeder extends Seeder
             LessonSeeder::class,
             SubjectLessonsCountSeeder::class,
             CaregiverSeeder::class,
+            AnnouncementSeeder::class,
             PunishmentSeeder::class,
             QuizSeeder::class,
             QuizSubmissionSeeder::class,
@@ -46,6 +47,7 @@ class DatabaseSeeder extends Seeder
             ParentReportTestDataSeeder::class,
             ChatSeeder::class,
             AssessmentSubmissionSeeder::class,
+            SchoolWalletSeeder::class
         ]);
 
         User::factory()->create([

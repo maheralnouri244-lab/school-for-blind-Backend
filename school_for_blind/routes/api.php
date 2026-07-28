@@ -222,6 +222,7 @@ Route::middleware(['auth:sanctum', CheckUserType::class . ':admin'])->prefix('ad
     Route::get('/', [ReportController::class, 'index']);
     Route::patch('/{id}/status', [ReportController::class, 'updateStatus']);
 });
+
 Route::post('/stripe/webhook', [StripeWebhookController::class, 'handleWebhook']);
 
 Route::post('/livekit/webhook', [LiveKitWebhookController::class, 'handle']);

@@ -24,6 +24,7 @@ class AnnouncementController extends Controller
             'level' => $request->input('level'),
             'target_audience' => $request->input('target_audience'),
             'class_id'=> $request->input('class_id'), 
+            'teacher_id' => $request->input('teacher_id'),
         ]);
         event(new AnnouncementCreated($announcement));
         /*
@@ -170,12 +171,12 @@ class AnnouncementController extends Controller
             $query->where('target_audience', 'caregiver')
                 ->whereIn('level', [$caregiver->level, 'all']);
 
-        } elseif (auth()->guard('teacher')->check()) {
-            $teacher = auth()->guard('teacher')->user();
-            $query->where('target_audience', 'teacher')
-          ->whereIn('level', [$teacher->level, 'all'])
-          ->where('class_id', $teacher->class_id);
-
+        }elseif (auth()->guard('teacher')->check()) {
+           
+        $teacher = auth()->guard('teacher')->user();
+        $query->where('target_audience', 'teacher')
+                  ->whereIn('level', [$teacher->level, 'all'])
+                  ->where('teacher_id', $teacher->id);
         } elseif (auth()->guard('admin')->check()) {
             $admin = auth()->guard('admin')->user();
             if ($admin->role === 'teacher') {
@@ -186,11 +187,11 @@ class AnnouncementController extends Controller
             return response()->json(['message' => 'غير مصرح لك برؤية الجداول الدراسية.'], 401);
         }
 
-        $timetable = $query->latest('created_at')->first();
+       $timetable = $query->latest('created_at')->first();
 
         if (!$timetable) {
             return response()->json([
-                'message' => 'لا يوجد جدول دوام مدرسي متاح حالياً.'
+                'message' => 'لا يوجد جدول دوام مدرسي متاح لشعبك حالياً.'
             ], 404);
         }
 
@@ -202,15 +203,22 @@ class AnnouncementController extends Controller
             }
         }
 
+        if (auth()->guard('teacher')->check() && is_array($contentData)) {
+            $teacher = auth()->guard('teacher')->user();
+            
+           
+        }
+
         return response()->json([
             'id' => $timetable->id,
             'type' => $timetable->type,
             'title' => $timetable->title,
             'target_audience' => $timetable->target_audience,
             'level' => $timetable->level,
+            'class_id' => $timetable->class_id, 
             'timetable_data' => $contentData,
+            'teacher_id' => $timetable->teacher_id,
             'created_at' => $timetable->created_at,
             'updated_at' => $timetable->updated_at,
         ], 200);
-    }
-}
+    }}

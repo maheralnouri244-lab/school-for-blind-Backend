@@ -35,12 +35,17 @@ class SendAnnouncementNotification
 
         } elseif ($announcement->target_audience === 'teacher') {
             $query = Teacher::whereNotNull('fcm_token');
+            
             if ($announcement->level !== 'all') {
                 $query->where('level', $announcement->level);
             }
+            
             if ($announcement->class_id) {
-                 $query->where('class_id', $announcement->class_id);
+                $query->whereHas('classes', function ($q) use ($announcement) {
+                    $q->where('classes.id', $announcement->class_id);
+                });
             }
+            
             $tokens = $query->pluck('fcm_token')->toArray();
 
         } elseif ($announcement->target_audience === 'caregiver') {
