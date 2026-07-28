@@ -14,6 +14,10 @@ return new class extends Migration {
             $table->id();
             $table->morphs('creator');
             $table->foreignId('class_id')->constrained('classes')->onDelete('cascade');
+            $table->foreignId('subject_id')
+                ->nullable()
+                ->constrained('subjects')
+                ->onDelete('set null');
             $table->string('room_name')->unique();
             $table->enum('status', ['active', 'ended'])->default('active');
             $table->json('kicked_participants')->nullable();

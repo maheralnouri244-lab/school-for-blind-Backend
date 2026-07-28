@@ -65,4 +65,9 @@ class Room extends Model
 
         $activity->properties = $activity->properties->put('custom_info', $customInfo);
     }
+
+    public function subject()
+    {
+        return $this->belongsTo(Subject::class, 'subject_id');
+    }
 }

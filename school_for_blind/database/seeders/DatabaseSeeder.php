@@ -41,11 +41,12 @@ class DatabaseSeeder extends Seeder
             CaregiverSeeder::class,
             PunishmentSeeder::class,
             QuizSeeder::class,
-            QuizSubmissionSeeder::class,
+            // QuizSubmissionSeeder::class,
             SupportTicketSeeder::class,
             ParentReportTestDataSeeder::class,
             ChatSeeder::class,
-            AssessmentSubmissionSeeder::class,
+            // AssessmentSubmissionSeeder::class,
+            FinancialTestDataSeeder::class,
         ]);
 
         User::factory()->create([
