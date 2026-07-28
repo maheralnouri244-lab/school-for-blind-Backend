@@ -14,6 +14,7 @@ use App\Http\Controllers\MagicLoginController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Middleware\CheckAdminRole;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Dashboard\ScheduleController;
 
 /*
 'Super Admin',
@@ -63,8 +64,9 @@ Route::middleware([CheckAdminRole::class . ':Super Admin,Academic Manager'])->gr
     });
 });
 
-Route::middleware([CheckAdminRole::class . ':Super Admin,Academic Manager,
-Moderator,Support Agent,Data Entry,Financial Manager'])->group(function () {
+Route::middleware([
+    CheckAdminRole::class . ':Super Admin,Academic Manager,Moderator,Support Agent,Data Entry,Financial Manager'
+])->group(function () {
     Route::get('/content-monitor', [ContentMonitorController::class, 'index'])->name('content.monitor');
 
     Route::prefix('reports')->name('reports.')->group(function () {
@@ -137,3 +139,29 @@ Route::middleware([CheckAdminRole::class . ':Super Admin,Academic Manager,Modera
 });
 
 Route::get('/send-test-notification', [NotificationController::class, 'testSend']);
+
+use App\Http\Controllers\Dashboard\FinancialDashboardController;
+
+Route::prefix('admin/financial')->name('financial.')->middleware([
+    CheckAdminRole::class . ':Super Admin,Financial Manager'
+])->group(function () {
+
+    Route::get('/', [FinancialDashboardController::class, 'index'])->name('index');
+    Route::get('/donations', [FinancialDashboardController::class, 'donations'])->name('donations');
+    Route::get('/salaries', [FinancialDashboardController::class, 'salaries'])->name('salaries');
+    Route::get('/rewards', [FinancialDashboardController::class, 'rewards'])->name('rewards');
+    Route::get('/transactions', [FinancialDashboardController::class, 'transactions'])->name('transactions');
+
+    Route::post('/salaries/pay', [FinancialDashboardController::class, 'paySalary'])->name('paySalary');
+    Route::post('/rewards/{id}/approve', [FinancialDashboardController::class, 'approveReward'])->name('rewards.approve');
+    Route::post('/rewards/{id}/reject', [FinancialDashboardController::class, 'rejectReward'])->name('rewards.reject');
+});
+
+
+Route::middleware([CheckAdminRole::class . ':Super Admin,Academic Manager'])->prefix('dashboard/schedules')->name('dashboard.schedules.')->group(function () {
+    Route::get('/', [ScheduleController::class, 'index'])->name('index');
+    Route::get('/create', [ScheduleController::class, 'create'])->name('create');
+    Route::get('/workspace', [ScheduleController::class, 'workspace'])->name('workspace');
+    Route::post('/store-bulk', [ScheduleController::class, 'storeBulk'])->name('storeBulk');
+    Route::delete('/{id}', [ScheduleController::class, 'destroy'])->name('destroy');
+});
