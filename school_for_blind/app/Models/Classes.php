@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Classes extends Model
 {
-    protected $fillable = [
+    protected $table = 'classes';
+protected $fillable = [
         'name',
         'level',
         'number',
@@ -31,4 +32,9 @@ class Classes extends Model
     {
         return $this->hasMany(Lesson::class, 'class_id');
     }
+
+    public function schedules()
+{
+    return $this->hasMany(Schedule::class, 'class_id');
+}
 }

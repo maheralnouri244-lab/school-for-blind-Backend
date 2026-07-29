@@ -19,6 +19,7 @@ use App\Http\Controllers\QuestionBankController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RoomController;
+use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\StripeWebhookController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\StudentExamController;
@@ -222,6 +223,7 @@ Route::middleware(['auth:sanctum', CheckUserType::class . ':admin'])->prefix('ad
     Route::get('/', [ReportController::class, 'index']);
     Route::patch('/{id}/status', [ReportController::class, 'updateStatus']);
 });
+
 Route::post('/stripe/webhook', [StripeWebhookController::class, 'handleWebhook']);
 
 Route::post('/livekit/webhook', [LiveKitWebhookController::class, 'handle']);
@@ -305,3 +307,15 @@ Route::middleware(['auth:sanctum', 'isparent'])->prefix('parent')->group(functio
 });
 
 Route::post('/test-notification', [NotificationController::class, 'testSend']);
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/teacher/schedule', [ScheduleController::class, 'teacherSchedule']);
+});
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/student/schedule', [ScheduleController::class, 'studentSchedule']);
+});
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/caregiver/schedule', [ScheduleController::class, 'caregiverSchedule']);
+});

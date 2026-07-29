@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\DB;
 use Stripe\StripeClient;
 
 class Teacherpaymentcontroller extends Controller
-
 {
     public function setupTeacherBank(Request $request)
     {
@@ -23,18 +22,37 @@ class Teacherpaymentcontroller extends Controller
 
         try {
             $teacher = DB::table('teachers')->where('id', $teacherId)->first();
-
             $stripeAccountId = $teacher->stripe_account_id;
 
             if (!$stripeAccountId) {
+                $nameParts = explode(' ', $teacher->full_name);
+                $firstName = $nameParts[0] ?? 'Teacher';
+                $lastName = $nameParts[1] ?? 'Name';
+
                 $account = $stripe->accounts->create([
                     'type' => 'custom', 
-                    'country' => 'DE',
+                    'country' => 'DE', 
                     'capabilities' => [
                         'transfers' => ['requested' => true],
                     ],
+                    'business_type' => 'individual',
                     'business_profile' => [
-                        'name' => $teacher->full_name,
+                        'mcc' => '8211', 
+                        'url' => 'https://example-school.com', 
+                    ],
+                    'individual' => [
+                        'first_name' => $firstName,
+                        'last_name' => $lastName,
+                        'dob' => ['day' => 1, 'month' => 1, 'year' => 1990],
+                        'address' => [
+                            'line1' => 'Alexanderplatz 1',
+                            'city' => 'Berlin',
+                            'postal_code' => '10178',
+                        ],
+                    ],
+                    'tos_acceptance' => [
+                        'date' => time(),
+                        'ip' => '127.0.0.1', 
                     ],
                 ]);
 
@@ -88,40 +106,62 @@ class Teacherpaymentcontroller extends Controller
                 return response()->json(['error' => 'الأستاذ ليس لديه حساب بنكي مربوط'], 400);
             }
 
-            $schoolWallet = DB::table('school_wallets')->where('id', 1)->first();
-            if ($schoolWallet->balance < $amountInEur) {
-                return response()->json(['error' => 'رصيد المدرسة غير كافٍ لتحويل الراتب'], 400);
-            }
+            DB::transaction(function () use ($teacher, $amountInEur, $amountInCents) {
+                
+                $schoolWallet = DB::table('school_wallets')
+                    ->where('id', 1)
+                    ->lockForUpdate()
+                    ->first();
 
-            $stripe = new StripeClient(env('STRIPE_SECRET'));
+                if (!$schoolWallet) {
+                    throw new \Exception('محفظة المدرسة غير موجودة في النظام الداخلي', 404);
+                }
 
-            $transfer = $stripe->transfers->create([
-                'amount' => $amountInCents,
-                'currency' => 'eur',
-                'destination' => $teacher->stripe_account_id, 
-                'description' => 'راتب مستحق للأستاذ: ' . $teacher->full_name,
-            ]);
+                if ($schoolWallet->balance < $amountInEur) {
+                    throw new \Exception('رصيد المدرسة غير كافٍ لتحويل الراتب', 400);
+                }
 
-            DB::table('school_wallets')->where('id', 1)->decrement('balance', $amountInEur);
+                $stripe = new StripeClient(env('STRIPE_SECRET'));
+                $transfer = $stripe->transfers->create([
+                    'amount' => $amountInCents,
+                    'currency' => 'eur',
+                    'destination' => $teacher->stripe_account_id, 
+                    'description' => 'راتب مستحق للأستاذ: ' . $teacher->full_name,
+                ]);
 
-            DB::table('school_transactions')->insert([
-                'type' => 'withdrawal',
-                'amount' => $amountInEur,
-                'description' => 'تم تحويل راتب للأستاذ ' . $teacher->full_name . ' برقم عملية: ' . $transfer->id,
-                'created_at' => now(),
-            ]);
+                DB::table('school_wallets')
+                    ->where('id', 1)
+                    ->decrement('balance', $amountInEur);
+
+                DB::table('school_transactions')->insert([
+                    'type'           => 'withdrawal',
+                    'amount'         => $amountInEur,
+                    'description'    => 'تم تحويل راتب للأستاذ ' . $teacher->full_name . ' برقم عملية: ' . $transfer->id,
+                    'reference_id'   => $teacher->id,
+                    'reference_type' => 'App\Models\Teacher', 
+                    'created_at'     => now(),
+                    'updated_at'     => now(),
+                ]);
+            });
 
             return response()->json([
                 'status' => 'success',
                 'message' => 'تم تحويل الراتب بنجاح!'
             ], 200);
 
-        } catch (\Exception $e) {
+        } catch (\Stripe\Exception\ApiErrorException $e) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'فشل التحويل: ' . $e->getMessage()
-            ], 500);
+                'message' => 'Stripe Error: ' . $e->getMessage()
+            ], 400);
+        } catch (\Exception $e) {
+            $statusCode = $e->getCode() ?: 500;
+            $statusCode = ($statusCode >= 400 && $statusCode < 600) ? $statusCode : 500;
+            
+            return response()->json([
+                'status' => 'error',
+                'message' => 'System Error: ' . $e->getMessage()
+            ], $statusCode);
         }
     }
 }
-

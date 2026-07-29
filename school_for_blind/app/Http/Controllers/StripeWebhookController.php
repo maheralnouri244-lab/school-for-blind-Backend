@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Donation;
-use App\Models\SchoolTransaction;
-use App\Models\SchoolWallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Laravel\Reverb\Loggers\Log;
+use Illuminate\Support\Facades\Log;
 use Stripe\Webhook;
 use Stripe\Exception\SignatureVerificationException;
 
@@ -32,10 +29,8 @@ class StripeWebhookController extends Controller
         }
 
         switch ($event->type) {
-            
             case 'payment_intent.succeeded':
                 $paymentIntent = $event->data->object; 
-
                 $this->processSuccessfulPayment($paymentIntent);
                 break;
 
@@ -63,22 +58,24 @@ class StripeWebhookController extends Controller
                 }
 
                 DB::table('donations')
-                    ->where('stripe_session_id', $paymentIntent->id)
+                    ->where('id', $donation->id)
                     ->update([
                         'status' => 'completed',
                         'updated_at' => now()
                     ]);
 
-                $wallet = SchoolWallet::getWallet();
-                $wallet->balance += $donation->amount;
-                $wallet->save();
+                DB::table('school_wallets')
+                    ->where('id', 1)
+                    ->increment('balance', $donation->amount);
 
-                SchoolTransaction::create([
+                DB::table('school_transactions')->insert([
                     'type'           => 'deposit',
                     'amount'         => $donation->amount,
-                    'description'    => "تبرع ناجح وآمن ومؤكد عبر الـ Webhook من: {$donation->donor_name} بقيمة: {$donation->amount}",
+                    'description'    => "تبرع ناجح وآمن ومؤكد عبر الـ Webhook من: " . ($donation->donor_name ?? 'فاعل خير') . " بقيمة: {$donation->amount}",
                     'reference_id'   => $donation->id,
-                    'reference_type' => Donation::class,
+                    'reference_type' => 'App\Models\Donation',
+                    'created_at'     => now(),
+                    'updated_at'     => now(),
                 ]);
 
                 Log::info("تمت معالجة التبرع بنجاح عبر الـ Webhook للـ Intent: " . $paymentIntent->id);

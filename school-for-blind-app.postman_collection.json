@@ -1,10 +1,10 @@
 {
   "info": {
-    "_postman_id": "69ed107e-d42e-4b5f-9c27-11e53c1c3253",
+    "_postman_id": "9aef9af2-148e-4d79-94c8-546cc662a7aa",
     "name": "school-for-blind-app",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "56227181",
-    "_collection_link": "https://go.postman.co/collection/56192936-69ed107e-d42e-4b5f-9c27-11e53c1c3253?source=collection_link"
+    "_exporter_id": "56921522",
+    "_collection_link": "https://go.postman.co/collection/56921522-9aef9af2-148e-4d79-94c8-546cc662a7aa?source=collection_link"
   },
   "item": [
     {
@@ -865,7 +865,7 @@
           ]
         },
         {
-          "name": "New Request",
+          "name": "DataEntry",
           "request": {
             "auth": {
               "type": "bearer",
@@ -953,7 +953,7 @@
               },
               "status": "Unauthorized",
               "code": 401,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -1027,7 +1027,7 @@
               },
               "status": "Forbidden",
               "code": 403,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -1101,7 +1101,7 @@
               },
               "status": "OK",
               "code": 200,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -1138,7 +1138,7 @@
           ]
         },
         {
-          "name": "New Request",
+          "name": "paysalary",
           "request": {
             "method": "POST",
             "header": [
@@ -1214,7 +1214,7 @@
               },
               "status": "Internal Server Error",
               "code": 500,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -1247,16 +1247,227 @@
               ],
               "cookie": [],
               "body": "{\n    \"status\": \"error\",\n    \"message\": \"فشل التحويل: Attempt to read property \\\"balance\\\" on null\"\n}"
+            },
+            {
+              "name": "New Request",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"teacher_id\": 1,\r\n    \"amount\": 5\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/teacher/pay-salary",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "teacher",
+                    "pay-salary"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 28 Jul 2026 07:58:05 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"success\",\n    \"message\": \"تم تحويل الراتب بنجاح!\"\n}"
+            },
+            {
+              "name": "New Request",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"teacher_id\": 1,\r\n    \"amount\": 5000\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/teacher/pay-salary",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "teacher",
+                    "pay-salary"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 28 Jul 2026 07:59:18 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"error\": \"رصيد المدرسة غير كافٍ لتحويل الراتب\"\n}"
+            },
+            {
+              "name": "New Request",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"teacher_id\": 1,\r\n    \"amount\": 500\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/teacher/pay-salary",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "teacher",
+                    "pay-salary"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 28 Jul 2026 07:59:54 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"error\",\n    \"message\": \"Stripe Error: You have insufficient available funds in your Stripe account. Try adding funds directly to your available balance by creating Charges using the 4000000000000077 test card. See: https://stripe.com/docs/testing#available-balance\"\n}"
             }
           ]
-        },
-        {
-          "name": "New Request",
-          "request": {
-            "method": "GET",
-            "header": []
-          },
-          "response": []
         }
       ]
     },
@@ -3230,10 +3441,6 @@
                     "type": "text"
                   }
                 ],
-                "body": {
-                  "mode": "formdata",
-                  "formdata": []
-                },
                 "url": {
                   "raw": "http://localhost:8000/api/teacher/all-subjects/statistics",
                   "protocol": "http",
@@ -3251,7 +3458,7 @@
               },
               "status": "OK",
               "code": 200,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -3343,7 +3550,7 @@
                   "key": "DocumentaryEvidence",
                   "type": "file",
                   "uuid": "11d2921a-998b-4cd4-ab03-715cdffa3627",
-                  "src": "postman-cloud:///1f173cc7-2439-43b0-b94f-31b9e33f5581"
+                  "src": "postman-cloud:///1f18b0ad-3ec0-4430-8b01-4e173226df0b"
                 }
               ]
             },
@@ -4208,7 +4415,7 @@
                   },
                   "status": "OK",
                   "code": 200,
-                  "_postman_previewlanguage": null,
+                  "_postman_previewlanguage": "Text",
                   "header": [
                     {
                       "key": "Host",
@@ -4303,7 +4510,7 @@
                   },
                   "status": "OK",
                   "code": 200,
-                  "_postman_previewlanguage": null,
+                  "_postman_previewlanguage": "Text",
                   "header": [
                     {
                       "key": "Host",
@@ -4410,7 +4617,7 @@
                   },
                   "status": "OK",
                   "code": 200,
-                  "_postman_previewlanguage": null,
+                  "_postman_previewlanguage": "Text",
                   "header": [
                     {
                       "key": "Host",
@@ -4555,7 +4762,7 @@
                   },
                   "status": "Forbidden",
                   "code": 403,
-                  "_postman_previewlanguage": null,
+                  "_postman_previewlanguage": "Text",
                   "header": [
                     {
                       "key": "Host",
@@ -4643,7 +4850,7 @@
                   },
                   "status": "OK",
                   "code": 200,
-                  "_postman_previewlanguage": null,
+                  "_postman_previewlanguage": "Text",
                   "header": [
                     {
                       "key": "Host",
@@ -4744,7 +4951,7 @@
                   },
                   "status": "OK",
                   "code": 200,
-                  "_postman_previewlanguage": null,
+                  "_postman_previewlanguage": "Text",
                   "header": [
                     {
                       "key": "Host",
@@ -6287,7 +6494,7 @@
               },
               "status": "OK",
               "code": 200,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -6366,7 +6573,7 @@
               },
               "status": "OK",
               "code": 200,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -6442,15 +6649,6 @@
               "originalRequest": {
                 "method": "GET",
                 "header": [],
-                "body": {
-                  "mode": "raw",
-                  "raw": "",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
                 "url": {
                   "raw": "http://localhost:8000/api/quizzes/{{quiz_id}}/students/{{student_id}}/pending-answers",
                   "protocol": "http",
@@ -6470,7 +6668,7 @@
               },
               "status": "OK",
               "code": 200,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -6571,7 +6769,7 @@
               },
               "status": "Bad Request",
               "code": 400,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -6638,7 +6836,7 @@
               },
               "status": "OK",
               "code": 200,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -6916,7 +7114,7 @@
               },
               "status": "Forbidden",
               "code": 403,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -7589,7 +7787,9 @@
                       "key": "answers[2][audio_answer]",
                       "type": "file",
                       "uuid": "94c7cb96-4555-4fde-857f-c2877e79d5a5",
-                      "src": "postman-cloud:///1f1745d9-d44d-4330-988f-4dca0a9c0567",
+                      "src": [
+                        "postman-cloud:///1f1745d9-d44d-4330-988f-4dca0a9c0567"
+                      ],
                       "disabled": true
                     },
                     {
@@ -7627,7 +7827,7 @@
               },
               "status": "Forbidden",
               "code": 403,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -7736,7 +7936,7 @@
               },
               "status": "Forbidden",
               "code": 403,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -7802,7 +8002,7 @@
               },
               "status": "OK",
               "code": 200,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -7907,7 +8107,7 @@
               },
               "status": "OK",
               "code": 200,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -8688,7 +8888,7 @@
               },
               "status": "OK",
               "code": 200,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -9494,7 +9694,7 @@
               },
               "status": "OK",
               "code": 200,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -10028,7 +10228,7 @@
               },
               "status": "OK",
               "code": 200,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -10097,7 +10297,7 @@
               },
               "status": "OK",
               "code": 200,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -10197,7 +10397,7 @@
               },
               "status": "OK",
               "code": 200,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -10294,7 +10494,7 @@
               },
               "status": "OK",
               "code": 200,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -10336,7 +10536,7 @@
       "name": "Announcement",
       "item": [
         {
-          "name": "student_announcements",
+          "name": "create_announcement",
           "request": {
             "auth": {
               "type": "noauth"
@@ -10351,7 +10551,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"type\": \"school_timetable\",\r\n    \"target_audience\": \"student\",\r\n    \"level\": \"ninth\",\r\n    \"title\": \"برنامج الدوام الأسبوعي لعام 2026\", \r\n    \"content\": {\r\n        \"columns\": [\r\n            \"الحصة\",\r\n            \"الأحد\",\r\n            \"الإثنين\"\r\n        ],\r\n        \"rows\": [\r\n            {\r\n                \"period\": \"الأولى\",\r\n                \"sunday\": \"رياضيات\",\r\n                \"monday\": \"فيزياء\"\r\n            }\r\n        ]\r\n    }\r\n}",
+              "raw": "{\r\n    \"type\": \"school_timetable\",\r\n    \"target_audience\": \"all\",\r\n    \"title\": \"برنامج الدوام الأسبوعي لعام 2026\",\r\n    \r\n        \"content\": \"الطلاب الأعزاء، نود إعلامكم بأن عطلة نهاية الأسبوع ستبدأ من صباح الخميس القادم نظراً لأعمال الصيانة في المدرسة.\"}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -10665,13 +10865,19 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "44|PPVxcyA0nsfaJFilyNTdP7DTgbSdK0V0qIKNz8DSfdfe0456",
+                  "value": "KquOSii8p4HSwpeuOZEbsXJgGxGYlLhNiLMQ39oA11bb5e6b",
                   "type": "string"
                 }
               ]
             },
             "method": "GET",
-            "header": [],
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
             "url": {
               "raw": "http://127.0.0.1:8000/api/announcements/school-timetable/first",
               "protocol": "http",
@@ -10695,66 +10901,13 @@
               "name": "get_school_timetable",
               "originalRequest": {
                 "method": "GET",
-                "header": [],
-                "url": {
-                  "raw": "http://127.0.0.1:8000/api/announcements/school-timetable/first",
-                  "protocol": "http",
-                  "host": [
-                    "127",
-                    "0",
-                    "0",
-                    "1"
-                  ],
-                  "port": "8000",
-                  "path": [
-                    "api",
-                    "announcements",
-                    "school-timetable",
-                    "first"
-                  ]
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "_postman_previewlanguage": null,
-              "header": [
-                {
-                  "key": "Host",
-                  "value": "127.0.0.1:8000"
-                },
-                {
-                  "key": "Connection",
-                  "value": "close"
-                },
-                {
-                  "key": "X-Powered-By",
-                  "value": "PHP/8.2.12"
-                },
-                {
-                  "key": "Cache-Control",
-                  "value": "no-cache, private"
-                },
-                {
-                  "key": "Date",
-                  "value": "Thu, 02 Jul 2026 17:28:58 GMT"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                },
-                {
-                  "key": "Access-Control-Allow-Origin",
-                  "value": "*"
-                }
-              ],
-              "cookie": [],
-              "body": "{\n    \"id\": 3,\n    \"type\": \"school_timetable\",\n    \"title\": \"برنامج الدوام الأسبوعي لعام 2026\",\n    \"target_audience\": \"student\",\n    \"level\": \"ninth\",\n    \"timetable_data\": {\n        \"columns\": [\n            \"الحصة\",\n            \"الأحد\",\n            \"الإثنين\"\n        ],\n        \"rows\": [\n            {\n                \"period\": \"الأولى\",\n                \"sunday\": \"رياضيات\",\n                \"monday\": \"فيزياء\"\n            }\n        ]\n    },\n    \"created_at\": \"2026-07-02T17:24:32.000000Z\",\n    \"updated_at\": \"2026-07-02T17:24:32.000000Z\"\n}"
-            },
-            {
-              "name": "get_school_timetable",
-              "originalRequest": {
-                "method": "GET",
-                "header": [],
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
                 "url": {
                   "raw": "http://127.0.0.1:8000/api/announcements/school-timetable/first",
                   "protocol": "http",
@@ -10795,7 +10948,7 @@
                 },
                 {
                   "key": "Date",
-                  "value": "Fri, 17 Jul 2026 13:44:15 GMT"
+                  "value": "Mon, 27 Jul 2026 08:24:32 GMT"
                 },
                 {
                   "key": "Content-Type",
@@ -10807,7 +10960,72 @@
                 }
               ],
               "cookie": [],
-              "body": "{\n    \"success\": false,\n    \"message\": \"العنصر المطلوب غير موجود في قاعدة البيانات.\"\n}"
+              "body": "{\n    \"message\": \"لا يوجد جدول دوام مدرسي متاح حالياً.\"\n}"
+            },
+            {
+              "name": "get_school_timetable",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/announcements/school-timetable/first",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "announcements",
+                    "school-timetable",
+                    "first"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 27 Jul 2026 08:25:53 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"id\": 1,\n    \"type\": \"school_timetable\",\n    \"title\": \"برنامج الدوام الأسبوعي لعام 2026\",\n    \"target_audience\": \"student\",\n    \"level\": \"ninth\",\n    \"timetable_data\": {\n        \"columns\": [\n            \"الحصة\",\n            \"الأحد\",\n            \"الإثنين\"\n        ],\n        \"rows\": [\n            {\n                \"period\": \"الأولى\",\n                \"sunday\": \"رياضيات\",\n                \"monday\": \"فيزياء\"\n            }\n        ]\n    },\n    \"created_at\": \"2026-07-27T08:23:44.000000Z\",\n    \"updated_at\": \"2026-07-27T08:23:44.000000Z\"\n}"
             }
           ]
         }
@@ -11298,7 +11516,7 @@
               },
               "status": "OK",
               "code": 200,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -11391,10 +11609,6 @@
                     "type": "text"
                   }
                 ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n  \"id\": 41,\r\n  \"type\": \"Exam\"\r\n}\r\n"
-                },
                 "url": {
                   "raw": "http://127.0.0.1:8000/api/favorites/exams",
                   "protocol": "http",
@@ -11414,7 +11628,7 @@
               },
               "status": "OK",
               "code": 200,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -11507,10 +11721,6 @@
                     "type": "text"
                   }
                 ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n  \"id\": 41,\r\n  \"type\": \"Exam\"\r\n}\r\n"
-                },
                 "url": {
                   "raw": "http://127.0.0.1:8000/api/favorites/past-exams",
                   "protocol": "http",
@@ -11530,7 +11740,7 @@
               },
               "status": "OK",
               "code": 200,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -12401,14 +12611,18 @@
                       "key": "image",
                       "type": "file",
                       "uuid": "db58eacc-26b6-4134-8890-aad009c9a406",
-                      "src": "postman-cloud:///1f173cc7-2439-43b0-b94f-31b9e33f5581",
+                      "src": [
+                        "postman-cloud:///1f173cc7-2439-43b0-b94f-31b9e33f5581"
+                      ],
                       "disabled": true
                     },
                     {
                       "key": "audio",
                       "type": "file",
                       "uuid": "0f776a01-7d8b-4fae-bf9a-6957b7337cea",
-                      "src": "postman-cloud:///1f17edb6-42bd-4d90-aaf5-e5907704681a",
+                      "src": [
+                        "postman-cloud:///1f17edb6-42bd-4d90-aaf5-e5907704681a"
+                      ],
                       "disabled": true
                     }
                   ]
@@ -12431,7 +12645,7 @@
               },
               "status": "Created",
               "code": 201,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -12489,13 +12703,17 @@
                       "key": "image",
                       "type": "file",
                       "uuid": "db58eacc-26b6-4134-8890-aad009c9a406",
-                      "src": "postman-cloud:///1f173cc7-2439-43b0-b94f-31b9e33f5581"
+                      "src": [
+                        "postman-cloud:///1f173cc7-2439-43b0-b94f-31b9e33f5581"
+                      ]
                     },
                     {
                       "key": "audio",
                       "type": "file",
                       "uuid": "0f776a01-7d8b-4fae-bf9a-6957b7337cea",
-                      "src": "postman-cloud:///1f17edb6-42bd-4d90-aaf5-e5907704681a",
+                      "src": [
+                        "postman-cloud:///1f17edb6-42bd-4d90-aaf5-e5907704681a"
+                      ],
                       "disabled": true
                     }
                   ]
@@ -12518,7 +12736,7 @@
               },
               "status": "Created",
               "code": 201,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -12577,13 +12795,17 @@
                       "key": "image",
                       "type": "file",
                       "uuid": "db58eacc-26b6-4134-8890-aad009c9a406",
-                      "src": "postman-cloud:///1f173cc7-2439-43b0-b94f-31b9e33f5581"
+                      "src": [
+                        "postman-cloud:///1f173cc7-2439-43b0-b94f-31b9e33f5581"
+                      ]
                     },
                     {
                       "key": "audio",
                       "type": "file",
                       "uuid": "0f776a01-7d8b-4fae-bf9a-6957b7337cea",
-                      "src": "postman-cloud:///1f17edb6-42bd-4d90-aaf5-e5907704681a",
+                      "src": [
+                        "postman-cloud:///1f17edb6-42bd-4d90-aaf5-e5907704681a"
+                      ],
                       "disabled": true
                     }
                   ]
@@ -12606,7 +12828,7 @@
               },
               "status": "Unprocessable Content",
               "code": 422,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -12664,13 +12886,17 @@
                       "key": "image",
                       "type": "file",
                       "uuid": "db58eacc-26b6-4134-8890-aad009c9a406",
-                      "src": "postman-cloud:///1f173cc7-2439-43b0-b94f-31b9e33f5581"
+                      "src": [
+                        "postman-cloud:///1f173cc7-2439-43b0-b94f-31b9e33f5581"
+                      ]
                     },
                     {
                       "key": "audio",
                       "type": "file",
                       "uuid": "0f776a01-7d8b-4fae-bf9a-6957b7337cea",
-                      "src": "postman-cloud:///1f17edb6-42bd-4d90-aaf5-e5907704681a",
+                      "src": [
+                        "postman-cloud:///1f17edb6-42bd-4d90-aaf5-e5907704681a"
+                      ],
                       "disabled": true
                     }
                   ]
@@ -12693,7 +12919,7 @@
               },
               "status": "Created",
               "code": 201,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -12802,7 +13028,7 @@
               },
               "status": "Created",
               "code": 201,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -12889,7 +13115,7 @@
               },
               "status": "OK",
               "code": 200,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -12944,7 +13170,7 @@
               },
               "status": "OK",
               "code": 200,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -13045,7 +13271,7 @@
               },
               "status": "OK",
               "code": 200,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -13107,7 +13333,7 @@
               },
               "status": "OK",
               "code": 200,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -13169,7 +13395,7 @@
               },
               "status": "OK",
               "code": 200,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -13262,7 +13488,7 @@
               },
               "status": "OK",
               "code": 200,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -13363,7 +13589,7 @@
               },
               "status": "OK",
               "code": 200,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -13468,7 +13694,7 @@
               },
               "status": "OK",
               "code": 200,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -13563,7 +13789,7 @@
               },
               "status": "OK",
               "code": 200,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -13673,7 +13899,7 @@
               },
               "status": "OK",
               "code": 200,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -13758,7 +13984,7 @@
               },
               "status": "OK",
               "code": 200,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -13855,7 +14081,7 @@
               },
               "status": "OK",
               "code": 200,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -13952,7 +14178,7 @@
               },
               "status": "OK",
               "code": 200,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -14071,7 +14297,7 @@
               },
               "status": "OK",
               "code": 200,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -14241,7 +14467,9 @@
                       "key": "answers[0][audio_answer]",
                       "type": "file",
                       "uuid": "73a50b22-5cfc-4374-a6cf-4e44696ef607",
-                      "src": "postman-cloud:///1f17edb6-42bd-4d90-aaf5-e5907704681a"
+                      "src": [
+                        "postman-cloud:///1f17edb6-42bd-4d90-aaf5-e5907704681a"
+                      ]
                     }
                   ],
                   "options": {
@@ -14269,7 +14497,7 @@
               },
               "status": "Forbidden",
               "code": 403,
-              "_postman_previewlanguage": "",
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -14363,7 +14591,9 @@
                       "key": "answers[2][audio_answer]",
                       "type": "file",
                       "uuid": "49fa3fbf-1f9d-4e8c-b90b-fa15908e6adb",
-                      "src": "postman-cloud:///1f17edb6-42bd-4d90-aaf5-e5907704681a"
+                      "src": [
+                        "postman-cloud:///1f17edb6-42bd-4d90-aaf5-e5907704681a"
+                      ]
                     }
                   ],
                   "options": {
@@ -14391,7 +14621,7 @@
               },
               "status": "Unauthorized",
               "code": 401,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -14479,7 +14709,9 @@
                       "key": "answers[2][audio_answer]",
                       "type": "file",
                       "uuid": "49fa3fbf-1f9d-4e8c-b90b-fa15908e6adb",
-                      "src": "postman-cloud:///1f17edb6-42bd-4d90-aaf5-e5907704681a"
+                      "src": [
+                        "postman-cloud:///1f17edb6-42bd-4d90-aaf5-e5907704681a"
+                      ]
                     }
                   ],
                   "options": {
@@ -14507,7 +14739,7 @@
               },
               "status": "OK",
               "code": 200,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -14674,7 +14906,7 @@
               },
               "status": "Created",
               "code": 201,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -14767,7 +14999,7 @@
               },
               "status": "Unprocessable Content",
               "code": 422,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -14874,7 +15106,7 @@
               },
               "status": "OK",
               "code": 200,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -14939,7 +15171,7 @@
               },
               "status": "OK",
               "code": 200,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -15053,7 +15285,7 @@
               },
               "status": "Unprocessable Content",
               "code": 422,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -15126,7 +15358,7 @@
               },
               "status": "Not Found",
               "code": 404,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -15199,7 +15431,7 @@
               },
               "status": "OK",
               "code": 200,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -15304,7 +15536,7 @@
               },
               "status": "OK",
               "code": 200,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -15368,7 +15600,7 @@
               },
               "status": "Not Found",
               "code": 404,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -15472,7 +15704,7 @@
               },
               "status": "Unauthorized",
               "code": 401,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -15533,7 +15765,7 @@
               },
               "status": "OK",
               "code": 200,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -15650,7 +15882,7 @@
               },
               "status": "OK",
               "code": 200,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -15720,7 +15952,7 @@
               },
               "status": "Bad Request",
               "code": 400,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -15790,7 +16022,7 @@
               },
               "status": "Unprocessable Content",
               "code": 422,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -15895,7 +16127,7 @@
               },
               "status": "OK",
               "code": 200,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -16018,7 +16250,7 @@
               },
               "status": "Unprocessable Content",
               "code": 422,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -16091,7 +16323,7 @@
               },
               "status": "OK",
               "code": 200,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -16189,10 +16421,6 @@
                         "type": "text"
                       }
                     ],
-                    "body": {
-                      "mode": "formdata",
-                      "formdata": []
-                    },
                     "url": {
                       "raw": "http://localhost:8000/api/student/channels",
                       "protocol": "http",
@@ -16209,7 +16437,7 @@
                   },
                   "status": "OK",
                   "code": 200,
-                  "_postman_previewlanguage": null,
+                  "_postman_previewlanguage": "Text",
                   "header": [
                     {
                       "key": "Host",
@@ -16300,7 +16528,7 @@
                   },
                   "status": "OK",
                   "code": 200,
-                  "_postman_previewlanguage": null,
+                  "_postman_previewlanguage": "Text",
                   "header": [
                     {
                       "key": "Host",
@@ -16357,7 +16585,7 @@
                   },
                   "status": "OK",
                   "code": 200,
-                  "_postman_previewlanguage": null,
+                  "_postman_previewlanguage": "Text",
                   "header": [
                     {
                       "key": "Host",
@@ -16414,7 +16642,7 @@
                   },
                   "status": "OK",
                   "code": 200,
-                  "_postman_previewlanguage": null,
+                  "_postman_previewlanguage": "Text",
                   "header": [
                     {
                       "key": "Host",
@@ -16545,7 +16773,7 @@
                   },
                   "status": "Forbidden",
                   "code": 403,
-                  "_postman_previewlanguage": null,
+                  "_postman_previewlanguage": "Text",
                   "header": [
                     {
                       "key": "Host",
@@ -16619,7 +16847,7 @@
                   },
                   "status": "OK",
                   "code": 200,
-                  "_postman_previewlanguage": null,
+                  "_postman_previewlanguage": "Text",
                   "header": [
                     {
                       "key": "Host",
@@ -16677,7 +16905,9 @@
                           "key": "attachment",
                           "type": "file",
                           "uuid": "d5e1cb2b-e2de-4ad7-b83b-b1175c6f798a",
-                          "src": "/D:/project/laravel/school-for-blind-Backend/school_for_blind/database/seeders/files/default_audio.ogg"
+                          "src": [
+                            "/D:/project/laravel/school-for-blind-Backend/school_for_blind/database/seeders/files/default_audio.ogg"
+                          ]
                         }
                       ]
                     },
@@ -16699,7 +16929,7 @@
                   },
                   "status": "OK",
                   "code": 200,
-                  "_postman_previewlanguage": null,
+                  "_postman_previewlanguage": "Text",
                   "header": [
                     {
                       "key": "Host",
@@ -16757,7 +16987,9 @@
                           "key": "attachment",
                           "type": "file",
                           "uuid": "d5e1cb2b-e2de-4ad7-b83b-b1175c6f798a",
-                          "src": "/D:/project/laravel/school-for-blind-Backend/school_for_blind/database/seeders/files/default_audio.ogg"
+                          "src": [
+                            "/D:/project/laravel/school-for-blind-Backend/school_for_blind/database/seeders/files/default_audio.ogg"
+                          ]
                         }
                       ]
                     },
@@ -16779,7 +17011,7 @@
                   },
                   "status": "Forbidden",
                   "code": 403,
-                  "_postman_previewlanguage": null,
+                  "_postman_previewlanguage": "Text",
                   "header": [
                     {
                       "key": "Host",
@@ -16896,7 +17128,7 @@
                   },
                   "status": "Bad Request",
                   "code": 400,
-                  "_postman_previewlanguage": null,
+                  "_postman_previewlanguage": "Text",
                   "header": [
                     {
                       "key": "Host",
@@ -16966,7 +17198,7 @@
                   },
                   "status": "OK",
                   "code": 200,
-                  "_postman_previewlanguage": null,
+                  "_postman_previewlanguage": "Text",
                   "header": [
                     {
                       "key": "Host",
@@ -17059,7 +17291,7 @@
                   },
                   "status": "OK",
                   "code": 200,
-                  "_postman_previewlanguage": null,
+                  "_postman_previewlanguage": "Text",
                   "header": [
                     {
                       "key": "Host",
@@ -17157,7 +17389,7 @@
                   },
                   "status": "OK",
                   "code": 200,
-                  "_postman_previewlanguage": null,
+                  "_postman_previewlanguage": "Text",
                   "header": [
                     {
                       "key": "Host",
@@ -17264,7 +17496,7 @@
                   },
                   "status": "OK",
                   "code": 200,
-                  "_postman_previewlanguage": null,
+                  "_postman_previewlanguage": "Text",
                   "header": [
                     {
                       "key": "Host",
@@ -17410,63 +17642,6 @@
                         "type": "text"
                       }
                     ],
-                    "body": {
-                      "mode": "formdata",
-                      "formdata": [
-                        {
-                          "key": "phone",
-                          "value": "0981226535",
-                          "type": "text",
-                          "uuid": "9e1fcb36-2d13-497d-82b1-fe5beaafa5a5"
-                        },
-                        {
-                          "key": "full_name",
-                          "value": "maher alnouri",
-                          "type": "text",
-                          "uuid": "0592b53b-271e-4b03-a74c-e89e6c3800b0"
-                        },
-                        {
-                          "key": "password",
-                          "value": "12345678",
-                          "type": "text",
-                          "uuid": "6db0a4cf-1d78-4bb8-8d8e-f6f575304903"
-                        },
-                        {
-                          "key": "subjects",
-                          "value": "math / number theory",
-                          "type": "text",
-                          "uuid": "688fdb9e-5601-4db9-966a-e189a81ba19b"
-                        },
-                        {
-                          "key": "level",
-                          "value": "ninth",
-                          "type": "text",
-                          "uuid": "5e6c2252-c2c5-4575-88c0-e599873217b9"
-                        },
-                        {
-                          "key": "fcm_token",
-                          "value": "123",
-                          "type": "text",
-                          "uuid": "db367923-24f8-4391-9b85-3d2bb92301d1"
-                        },
-                        {
-                          "key": "cv",
-                          "type": "file",
-                          "uuid": "50cdf211-6039-469c-b454-aa4a23a6bb8d",
-                          "src": [
-                            "postman-cloud:///1f160dc2-235a-4a50-8396-1efcd693baf7",
-                            "postman-cloud:///1f1420ce-4c54-43d0-b83b-4dd3cd9fe2f8",
-                            "/C:/Users/maher/Downloads/تخصصية 1 نظري مـ2.pdf"
-                          ]
-                        },
-                        {
-                          "key": "password_confirmation",
-                          "value": "12345678",
-                          "type": "text",
-                          "uuid": "24b21d39-756c-479d-b4f5-bd751cb623ce"
-                        }
-                      ]
-                    },
                     "url": {
                       "raw": "http://127.0.0.1:8000/api/teacher/channels",
                       "protocol": "http",
@@ -17486,7 +17661,7 @@
                   },
                   "status": "OK",
                   "code": 200,
-                  "_postman_previewlanguage": null,
+                  "_postman_previewlanguage": "Text",
                   "header": [
                     {
                       "key": "Host",
@@ -17605,7 +17780,7 @@
                   },
                   "status": "OK",
                   "code": 200,
-                  "_postman_previewlanguage": null,
+                  "_postman_previewlanguage": "Text",
                   "header": [
                     {
                       "key": "Host",
@@ -17663,7 +17838,9 @@
                           "key": "attachment",
                           "type": "file",
                           "uuid": "d5e1cb2b-e2de-4ad7-b83b-b1175c6f798a",
-                          "src": "/D:/project/laravel/school-for-blind-Backend/school_for_blind/database/seeders/files/default_audio.ogg"
+                          "src": [
+                            "/D:/project/laravel/school-for-blind-Backend/school_for_blind/database/seeders/files/default_audio.ogg"
+                          ]
                         }
                       ]
                     },
@@ -17685,7 +17862,7 @@
                   },
                   "status": "OK",
                   "code": 200,
-                  "_postman_previewlanguage": null,
+                  "_postman_previewlanguage": "Text",
                   "header": [
                     {
                       "key": "Host",
@@ -17743,7 +17920,9 @@
                           "key": "attachment",
                           "type": "file",
                           "uuid": "d5e1cb2b-e2de-4ad7-b83b-b1175c6f798a",
-                          "src": "/D:/project/laravel/school-for-blind-Backend/school_for_blind/database/seeders/files/default_audio.ogg"
+                          "src": [
+                            "/D:/project/laravel/school-for-blind-Backend/school_for_blind/database/seeders/files/default_audio.ogg"
+                          ]
                         }
                       ]
                     },
@@ -17765,7 +17944,7 @@
                   },
                   "status": "Forbidden",
                   "code": 403,
-                  "_postman_previewlanguage": null,
+                  "_postman_previewlanguage": "Text",
                   "header": [
                     {
                       "key": "Host",
@@ -17882,7 +18061,7 @@
                   },
                   "status": "Bad Request",
                   "code": 400,
-                  "_postman_previewlanguage": null,
+                  "_postman_previewlanguage": "Text",
                   "header": [
                     {
                       "key": "Host",
@@ -17952,7 +18131,7 @@
                   },
                   "status": "OK",
                   "code": 200,
-                  "_postman_previewlanguage": null,
+                  "_postman_previewlanguage": "Text",
                   "header": [
                     {
                       "key": "Host",
@@ -17989,6 +18168,416 @@
               ]
             }
           ]
+        }
+      ]
+    },
+    {
+      "name": "Schedule",
+      "item": [
+        {
+          "name": "teacher",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "TDFi1FxbmgDGnGVXNU1Mm3gYA5ym3skf4ktviPHZ325228f7",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "",
+                "value": "",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/teacher/schedule",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "teacher",
+                "schedule"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "New Request",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "",
+                    "value": "",
+                    "type": "text",
+                    "disabled": true
+                  }
+                ],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/teacher/schedule",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "teacher",
+                    "schedule"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Wed, 29 Jul 2026 04:30:46 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"success\",\n    \"data\": []\n}"
+            },
+            {
+              "name": "teacher",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "",
+                    "value": "",
+                    "type": "text",
+                    "disabled": true
+                  }
+                ],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/teacher/schedule",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "teacher",
+                    "schedule"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Wed, 29 Jul 2026 04:56:06 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"1\": [\n            {\n                \"id\": 1,\n                \"class_id\": 1,\n                \"teacher_id\": 7,\n                \"subject_id\": 1,\n                \"day_of_week\": \"1\",\n                \"period_number\": 1,\n                \"start_time\": \"08:00:00\",\n                \"end_time\": \"08:45:00\",\n                \"created_at\": \"2026-07-29T03:46:05.000000Z\",\n                \"updated_at\": \"2026-07-29T03:46:05.000000Z\",\n                \"subject\": {\n                    \"id\": 1,\n                    \"name\": \"الفلسفة\",\n                    \"grade_level\": \"twelfth\",\n                    \"number_of_lessons\": null,\n                    \"total_lessons\": 24,\n                    \"deleted_at\": null,\n                    \"created_at\": \"2026-07-29T03:40:11.000000Z\",\n                    \"updated_at\": \"2026-07-29T03:40:51.000000Z\"\n                },\n                \"student_class\": {\n                    \"id\": 1,\n                    \"name\": \"First Division\",\n                    \"level\": \"ninth\",\n                    \"number\": 1,\n                    \"created_at\": \"2026-07-29T03:40:11.000000Z\",\n                    \"updated_at\": \"2026-07-29T03:40:11.000000Z\"\n                }\n            },\n            {\n                \"id\": 2,\n                \"class_id\": 1,\n                \"teacher_id\": 7,\n                \"subject_id\": 1,\n                \"day_of_week\": \"1\",\n                \"period_number\": 2,\n                \"start_time\": \"09:00:00\",\n                \"end_time\": \"09:45:00\",\n                \"created_at\": \"2026-07-29T03:46:05.000000Z\",\n                \"updated_at\": \"2026-07-29T03:46:05.000000Z\",\n                \"subject\": {\n                    \"id\": 1,\n                    \"name\": \"الفلسفة\",\n                    \"grade_level\": \"twelfth\",\n                    \"number_of_lessons\": null,\n                    \"total_lessons\": 24,\n                    \"deleted_at\": null,\n                    \"created_at\": \"2026-07-29T03:40:11.000000Z\",\n                    \"updated_at\": \"2026-07-29T03:40:51.000000Z\"\n                },\n                \"student_class\": {\n                    \"id\": 1,\n                    \"name\": \"First Division\",\n                    \"level\": \"ninth\",\n                    \"number\": 1,\n                    \"created_at\": \"2026-07-29T03:40:11.000000Z\",\n                    \"updated_at\": \"2026-07-29T03:40:11.000000Z\"\n                }\n            }\n        ]\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "student",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "PIP9jlocOp0DD7wTiRyOLEmnXTMnH5Qs88g9k3Gqfdb7008f",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/student/schedule",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "student",
+                "schedule"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "New Request",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/student/schedule",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "student",
+                    "schedule"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Wed, 29 Jul 2026 04:58:03 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"1\": [\n            {\n                \"id\": 1,\n                \"class_id\": 1,\n                \"teacher_id\": 7,\n                \"subject_id\": 1,\n                \"day_of_week\": \"1\",\n                \"period_number\": 1,\n                \"start_time\": \"08:00:00\",\n                \"end_time\": \"08:45:00\",\n                \"created_at\": \"2026-07-29T03:46:05.000000Z\",\n                \"updated_at\": \"2026-07-29T03:46:05.000000Z\",\n                \"subject\": {\n                    \"id\": 1,\n                    \"name\": \"الفلسفة\",\n                    \"grade_level\": \"twelfth\",\n                    \"number_of_lessons\": null,\n                    \"total_lessons\": 24,\n                    \"deleted_at\": null,\n                    \"created_at\": \"2026-07-29T03:40:11.000000Z\",\n                    \"updated_at\": \"2026-07-29T03:40:51.000000Z\"\n                },\n                \"student_class\": {\n                    \"id\": 1,\n                    \"name\": \"First Division\",\n                    \"level\": \"ninth\",\n                    \"number\": 1,\n                    \"created_at\": \"2026-07-29T03:40:11.000000Z\",\n                    \"updated_at\": \"2026-07-29T03:40:11.000000Z\"\n                }\n            },\n            {\n                \"id\": 2,\n                \"class_id\": 1,\n                \"teacher_id\": 7,\n                \"subject_id\": 1,\n                \"day_of_week\": \"1\",\n                \"period_number\": 2,\n                \"start_time\": \"09:00:00\",\n                \"end_time\": \"09:45:00\",\n                \"created_at\": \"2026-07-29T03:46:05.000000Z\",\n                \"updated_at\": \"2026-07-29T03:46:05.000000Z\",\n                \"subject\": {\n                    \"id\": 1,\n                    \"name\": \"الفلسفة\",\n                    \"grade_level\": \"twelfth\",\n                    \"number_of_lessons\": null,\n                    \"total_lessons\": 24,\n                    \"deleted_at\": null,\n                    \"created_at\": \"2026-07-29T03:40:11.000000Z\",\n                    \"updated_at\": \"2026-07-29T03:40:51.000000Z\"\n                },\n                \"student_class\": {\n                    \"id\": 1,\n                    \"name\": \"First Division\",\n                    \"level\": \"ninth\",\n                    \"number\": 1,\n                    \"created_at\": \"2026-07-29T03:40:11.000000Z\",\n                    \"updated_at\": \"2026-07-29T03:40:11.000000Z\"\n                }\n            },\n            {\n                \"id\": 3,\n                \"class_id\": 1,\n                \"teacher_id\": 2,\n                \"subject_id\": 2,\n                \"day_of_week\": \"1\",\n                \"period_number\": 3,\n                \"start_time\": \"10:00:00\",\n                \"end_time\": \"10:45:00\",\n                \"created_at\": \"2026-07-29T03:46:05.000000Z\",\n                \"updated_at\": \"2026-07-29T03:46:05.000000Z\",\n                \"subject\": {\n                    \"id\": 2,\n                    \"name\": \"التاريخ\",\n                    \"grade_level\": \"twelfth\",\n                    \"number_of_lessons\": null,\n                    \"total_lessons\": 29,\n                    \"deleted_at\": null,\n                    \"created_at\": \"2026-07-29T03:40:11.000000Z\",\n                    \"updated_at\": \"2026-07-29T03:40:51.000000Z\"\n                },\n                \"student_class\": {\n                    \"id\": 1,\n                    \"name\": \"First Division\",\n                    \"level\": \"ninth\",\n                    \"number\": 1,\n                    \"created_at\": \"2026-07-29T03:40:11.000000Z\",\n                    \"updated_at\": \"2026-07-29T03:40:11.000000Z\"\n                }\n            },\n            {\n                \"id\": 4,\n                \"class_id\": 1,\n                \"teacher_id\": 3,\n                \"subject_id\": 5,\n                \"day_of_week\": \"1\",\n                \"period_number\": 4,\n                \"start_time\": \"11:00:00\",\n                \"end_time\": \"11:45:00\",\n                \"created_at\": \"2026-07-29T03:46:05.000000Z\",\n                \"updated_at\": \"2026-07-29T03:46:05.000000Z\",\n                \"subject\": {\n                    \"id\": 5,\n                    \"name\": \"اللغة الإنكليزية\",\n                    \"grade_level\": \"twelfth\",\n                    \"number_of_lessons\": null,\n                    \"total_lessons\": 25,\n                    \"deleted_at\": null,\n                    \"created_at\": \"2026-07-29T03:40:11.000000Z\",\n                    \"updated_at\": \"2026-07-29T03:40:51.000000Z\"\n                },\n                \"student_class\": {\n                    \"id\": 1,\n                    \"name\": \"First Division\",\n                    \"level\": \"ninth\",\n                    \"number\": 1,\n                    \"created_at\": \"2026-07-29T03:40:11.000000Z\",\n                    \"updated_at\": \"2026-07-29T03:40:11.000000Z\"\n                }\n            }\n        ],\n        \"2\": [\n            {\n                \"id\": 5,\n                \"class_id\": 1,\n                \"teacher_id\": 4,\n                \"subject_id\": 10,\n                \"day_of_week\": \"2\",\n                \"period_number\": 1,\n                \"start_time\": \"08:00:00\",\n                \"end_time\": \"08:45:00\",\n                \"created_at\": \"2026-07-29T03:46:05.000000Z\",\n                \"updated_at\": \"2026-07-29T03:46:05.000000Z\",\n                \"subject\": {\n                    \"id\": 10,\n                    \"name\": \"علم الأحياء والأرض\",\n                    \"grade_level\": \"ninth\",\n                    \"number_of_lessons\": null,\n                    \"total_lessons\": 28,\n                    \"deleted_at\": null,\n                    \"created_at\": \"2026-07-29T03:40:11.000000Z\",\n                    \"updated_at\": \"2026-07-29T03:40:51.000000Z\"\n                },\n                \"student_class\": {\n                    \"id\": 1,\n                    \"name\": \"First Division\",\n                    \"level\": \"ninth\",\n                    \"number\": 1,\n                    \"created_at\": \"2026-07-29T03:40:11.000000Z\",\n                    \"updated_at\": \"2026-07-29T03:40:11.000000Z\"\n                }\n            },\n            {\n                \"id\": 6,\n                \"class_id\": 1,\n                \"teacher_id\": 4,\n                \"subject_id\": 4,\n                \"day_of_week\": \"2\",\n                \"period_number\": 2,\n                \"start_time\": \"09:00:00\",\n                \"end_time\": \"09:45:00\",\n                \"created_at\": \"2026-07-29T03:46:05.000000Z\",\n                \"updated_at\": \"2026-07-29T03:46:05.000000Z\",\n                \"subject\": {\n                    \"id\": 4,\n                    \"name\": \"اللغة العربية\",\n                    \"grade_level\": \"twelfth\",\n                    \"number_of_lessons\": null,\n                    \"total_lessons\": 28,\n                    \"deleted_at\": null,\n                    \"created_at\": \"2026-07-29T03:40:11.000000Z\",\n                    \"updated_at\": \"2026-07-29T03:40:51.000000Z\"\n                },\n                \"student_class\": {\n                    \"id\": 1,\n                    \"name\": \"First Division\",\n                    \"level\": \"ninth\",\n                    \"number\": 1,\n                    \"created_at\": \"2026-07-29T03:40:11.000000Z\",\n                    \"updated_at\": \"2026-07-29T03:40:11.000000Z\"\n                }\n            },\n            {\n                \"id\": 7,\n                \"class_id\": 1,\n                \"teacher_id\": 2,\n                \"subject_id\": 3,\n                \"day_of_week\": \"2\",\n                \"period_number\": 3,\n                \"start_time\": \"10:00:00\",\n                \"end_time\": \"10:45:00\",\n                \"created_at\": \"2026-07-29T03:46:05.000000Z\",\n                \"updated_at\": \"2026-07-29T03:46:05.000000Z\",\n                \"subject\": {\n                    \"id\": 3,\n                    \"name\": \"الجغرافيا\",\n                    \"grade_level\": \"twelfth\",\n                    \"number_of_lessons\": null,\n                    \"total_lessons\": 30,\n                    \"deleted_at\": null,\n                    \"created_at\": \"2026-07-29T03:40:11.000000Z\",\n                    \"updated_at\": \"2026-07-29T03:40:51.000000Z\"\n                },\n                \"student_class\": {\n                    \"id\": 1,\n                    \"name\": \"First Division\",\n                    \"level\": \"ninth\",\n                    \"number\": 1,\n                    \"created_at\": \"2026-07-29T03:40:11.000000Z\",\n                    \"updated_at\": \"2026-07-29T03:40:11.000000Z\"\n                }\n            }\n        ]\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "parent",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "ugdiotH2HDBT7F0b8zlNS366ok3adwHzlH0FU3zG1e281902",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/caregiver/schedule",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "caregiver",
+                "schedule"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "parent",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/caregiver/schedule",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "caregiver",
+                    "schedule"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Wed, 29 Jul 2026 05:02:15 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"success\",\n    \"data\": []\n}"
+            }
+          ]
+        },
+        {
+          "name": "New Request",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
         }
       ]
     },
@@ -18134,7 +18723,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "",
+          "raw": "{\r\n    \"token\": \"ejPClZfJhhaWkKUQZxg1-J:APA91bGCMWiymHeYS2BKQmAFQJryS6j_yM4LogozYnICsgqJKwPqFlzdUON5Pcj-y48z-AMRNCcr6rupNx7eF0g3GjcoNAa6iLXrX0i623gtW5zl7BkiYDo\"\r\n}",
           "options": {
             "raw": {
               "language": "json"

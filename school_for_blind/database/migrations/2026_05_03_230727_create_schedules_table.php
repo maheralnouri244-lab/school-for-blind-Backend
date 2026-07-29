@@ -12,10 +12,11 @@ return new class extends Migration {
     {
         Schema::create('schedules', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('class_id')->constrained('classes');
-            $table->foreignId('teacher_id')->constrained('teachers');
-            $table->foreignId('subject_id')->constrained('subjects');
+            $table->foreignId('class_id')->constrained('classes')->casecadeOnDelete();
+            $table->foreignId('teacher_id')->constrained('teachers')->casecadeOnDelete();
+            $table->foreignId('subject_id')->constrained('subjects')->casecadeondelete();
             $table->string('day_of_week');
+            $table->unsignedTinyInteger('period_number');
             $table->time('start_time');
             $table->time('end_time');
             $table->timestamps();

@@ -20,6 +20,10 @@ return new class extends Migration {
           ->nullable()
           ->constrained('classes')
           ->onDelete('cascade');
+          $table->foreignId('teacher_id')
+                ->nullable()
+                ->constrained('teachers')
+                ->onDelete('cascade');
             $table->timestamps();
             $table->enum('target_audience', ['student', 'parent', 'teacher'])->default('student');
          
