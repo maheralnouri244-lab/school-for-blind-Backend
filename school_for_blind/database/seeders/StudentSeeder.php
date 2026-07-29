@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Student;
-use App\Models\SchoolClass; // تأكد من اسم موديل الشعبة عندك
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Faker\Factory as Faker;

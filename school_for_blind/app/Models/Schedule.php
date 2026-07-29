@@ -13,11 +13,13 @@ class Schedule extends Model
         'day_of_week',
         'start_time',
         'end_time',
+        'period_number',
+
     ];
 
-    public function class()
+   public function studentClass()
     {
-        return $this->belongsTo(Classes::class);
+        return $this->belongsTo(Classes::class, 'class_id', 'id');
     }
 
     public function teacher()
@@ -29,4 +31,5 @@ class Schedule extends Model
     {
         return $this->belongsTo(Subject::class);
     }
+    
 }

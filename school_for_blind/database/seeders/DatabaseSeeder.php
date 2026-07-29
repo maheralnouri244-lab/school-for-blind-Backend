@@ -35,6 +35,7 @@ class DatabaseSeeder extends Seeder
             TeacherSeeder::class,
             PastExamSeeder::class,
             StudentSeeder::class,
+            scheduleSeeder::class,
             ExamSeeder::class,
             LessonSeeder::class,
             SubjectLessonsCountSeeder::class,
