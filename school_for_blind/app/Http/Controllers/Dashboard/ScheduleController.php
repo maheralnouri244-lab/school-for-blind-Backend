@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Models\Announcement;
 use App\Models\Classes;
+use App\Models\Schedule;
 use App\Models\Subject;
 use App\Models\Teacher;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -14,24 +15,36 @@ class ScheduleController extends Controller
 {
     public function index()
     {
-        $classSchedules = Announcement::whereIn('type', ['school_timetable', 'exam_schedule'])
-            ->whereNotNull('class_id')
-            ->with('class')
-            ->latest('created_at')
-            ->get()
-            ->unique('class_id');
-
-        $teachers = Teacher::where('status', 'approved')->get();
-
-        $allLatestSchedules = $classSchedules->map(function ($sched) {
-            return [
-                'class_id' => $sched->class_id,
-                'class_name' => $sched->class ? $sched->class->name . ' (شعبة ' . $sched->class->number . ')' : '',
-                'content' => is_string($sched->content) ? json_decode($sched->content, true) : $sched->content
-            ];
+        $classes = Classes::all()->map(function ($class) {
+            $latestDate = Schedule::where('class_id', $class->id)->max('updated_at');
+            if ($latestDate) {
+                $class->latest_schedules = Schedule::where('class_id', $class->id)
+                    ->with(['subject', 'teacher'])
+                    ->get();
+                $class->schedule_date = $latestDate;
+            } else {
+                $class->latest_schedules = collect();
+            }
+            return $class;
+        })->filter(function ($class) {
+            return $class->latest_schedules->isNotEmpty();
         });
 
-        return view('pages.schedules.index', compact('classSchedules', 'teachers', 'allLatestSchedules'));
+        $teachers = Teacher::where('status', 'approved')->get()->map(function ($teacher) {
+            $latestDate = Schedule::where('teacher_id', $teacher->id)->max('updated_at');
+            if ($latestDate) {
+                $teacher->latest_schedules = Schedule::where('teacher_id', $teacher->id)
+                    ->with(['subject', 'studentClass'])
+                    ->get();
+            } else {
+                $teacher->latest_schedules = collect();
+            }
+            return $teacher;
+        })->filter(function ($teacher) {
+            return $teacher->latest_schedules->isNotEmpty();
+        });
+
+        return view('pages.schedules.index', compact('classes', 'teachers'));
     }
 
     public function create()
@@ -50,39 +63,66 @@ class ScheduleController extends Controller
 
         $classes = Classes::where('level', $level)->get();
         $subjects = Subject::where('grade_level', $level)->get();
+        \Log::info('classes : ' . $classes);
+        \Log::info('subjects : ' . $subjects);
+
         $teachers = Teacher::where('status', 'approved')
             ->where('level', $level)
-            ->with(['subjects:id,name', 'classes:id'])
+            ->with(['classes'])
+            ->get()
+            ->map(function ($teacher) {
+                $teacher->subject_list = $teacher->subjects()->get();
+                return $teacher;
+            });
+
+        $classIds = $classes->pluck('id');
+        $existingSchedules = Schedule::whereIn('class_id', $classIds)
+            ->with(['subject', 'teacher'])
             ->get();
 
-        return view('pages.schedules.workspace', compact('type', 'level', 'classes', 'subjects', 'teachers'));
+        return view('pages.schedules.workspace', compact('type', 'level', 'classes', 'subjects', 'teachers', 'existingSchedules'));
     }
 
     public function storeBulk(Request $request)
     {
         $request->validate([
-            'type' => 'required|in:school_timetable,exam_schedule',
-            'level' => 'required|in:ninth,twelfth',
-            'target_audience' => 'required|in:student,teacher,parent,all',
             'schedules' => 'required|array',
         ]);
 
+        $timeSlots = [
+            1 => ['start' => '08:00:00', 'end' => '08:45:00'],
+            2 => ['start' => '08:45:00', 'end' => '09:30:00'],
+            3 => ['start' => '09:30:00', 'end' => '10:15:00'],
+            4 => ['start' => '10:15:00', 'end' => '11:00:00'],
+            5 => ['start' => '11:00:00', 'end' => '11:45:00'],
+            6 => ['start' => '11:45:00', 'end' => '12:30:00'],
+            7 => ['start' => '12:30:00', 'end' => '13:15:00'],
+            8 => ['start' => '13:15:00', 'end' => '14:00:00'],
+        ];
+
         DB::beginTransaction();
         try {
-            foreach ($request->schedules as $classId => $scheduleData) {
-                $contentJson = json_encode($scheduleData, JSON_UNESCAPED_UNICODE);
-                Announcement::updateOrCreate(
-                    [
-                        'type' => $request->type,
-                        'class_id' => $classId,
-                    ],
-                    [
-                        'title' => 'برنامج الدوام الأسبوعي - ' . ($request->level == 'ninth' ? 'الصف التاسع' : 'البكالوريا'),
-                        'level' => $request->level,
-                        'target_audience' => $request->target_audience,
-                        'content' => $contentJson,
-                    ]
-                );
+            foreach ($request->schedules as $slot) {
+                if (empty($slot['subject_id']) || empty($slot['teacher_id'])) {
+                    Schedule::where('class_id', $slot['class_id'])
+                        ->where('day_of_week', $slot['day'])
+                        ->where('period_number', $slot['period'])
+                        ->delete();
+                } else {
+                    Schedule::updateOrCreate(
+                        [
+                            'class_id' => $slot['class_id'],
+                            'day_of_week' => $slot['day'],
+                            'period_number' => $slot['period'],
+                        ],
+                        [
+                            'teacher_id' => $slot['teacher_id'],
+                            'subject_id' => $slot['subject_id'],
+                            'start_time' => $timeSlots[$slot['period']]['start'],
+                            'end_time' => $timeSlots[$slot['period']]['end'],
+                        ]
+                    );
+                }
             }
 
             DB::commit();

@@ -47,7 +47,6 @@ class DatabaseSeeder extends Seeder
             SupportTicketSeeder::class,
             ParentReportTestDataSeeder::class,
             ChatSeeder::class,
-            AssessmentSubmissionSeeder::class,
             SchoolWalletSeeder::class,
             // AssessmentSubmissionSeeder::class,
             FinancialTestDataSeeder::class,

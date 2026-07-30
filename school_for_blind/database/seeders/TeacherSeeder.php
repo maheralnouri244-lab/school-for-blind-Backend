@@ -19,17 +19,26 @@ class TeacherSeeder extends Seeder
         $faker = Faker::create('ar_SA');
 
         $classesMap = DB::table('classes')->pluck('name', 'id')->toArray();
-        
+
+        // جلب الـ IDs تبع الشعب وفصلهم حسب الصف
         $ninthClasses = DB::table('classes')->where('level', 'ninth')->pluck('id')->toArray();
         $twelfthClasses = DB::table('classes')->where('level', 'twelfth')->pluck('id')->toArray();
 
-        $availableSubjects = DB::table('subjects')->pluck('id')->toArray();
+        // جلب الـ IDs تبع المواد وفصلهم حسب الصف للأساتذة العشوائيين
+        $ninthSubjects = DB::table('subjects')->where('grade_level', 'ninth')->pluck('id')->toArray();
+        $twelfthSubjects = DB::table('subjects')->where('grade_level', 'twelfth')->pluck('id')->toArray();
+        $availableSubjectsAll = DB::table('subjects')->pluck('id')->toArray();
 
+        $commonPassword = Hash::make('12345678');
+
+        // ==========================================
+        // القسم الأول: الأساتذة المعروفين مسبقاً
+        // ==========================================
         $famousTeachers = [
             // === أساتذة البكالوريا (twelfth) ===
             ['name' => 'الأستاذ أحمد حيدر', 'subject' => 'الفلسفة', 'level' => 'twelfth', 'phone' => '0911111111'],
-            ['name' => 'الأستاذنضال يوسف', 'subject' => 'التاريخ', 'level' => 'twelfth', 'phone' => '0922222222'],
-              ['name' => 'الأستاذ موسى الرز', 'subject' => 'الجغرافيا', 'level' => 'twelfth', 'phone' => '0933333333'],
+            ['name' => 'الأستاذ نضال يوسف', 'subject' => 'التاريخ', 'level' => 'twelfth', 'phone' => '0922222222'],
+            ['name' => 'الأستاذ موسى الرز', 'subject' => 'الجغرافيا', 'level' => 'twelfth', 'phone' => '0933333333'],
             ['name' => 'الأستاذ مصطفى الشيخ أحمد', 'subject' => 'اللغة العربية', 'level' => 'twelfth', 'phone' => '0944444444'],
             ['name' => 'الأستاذ أنس أحمد', 'subject' => 'اللغة الإنكليزية', 'level' => 'twelfth', 'phone' => '0955555555'],
             ['name' => 'الأستاذ يامن قيس', 'subject' => 'اللغة الفرنسية', 'level' => 'twelfth', 'phone' => '0966666666'],
@@ -55,14 +64,14 @@ class TeacherSeeder extends Seeder
             $randomDate = $faker->dateTimeBetween('-11 months', 'now');
 
             $dbSubject = Subject::where('name', $tData['subject'])
-                                ->where('grade_level', $tData['level'])
-                                ->first();
+                ->where('grade_level', $tData['level'])
+                ->first();
 
             $teacher = Teacher::updateOrCreate(
                 ['phone' => $tData['phone']],
                 [
                     'full_name' => $tData['name'],
-                    'password' => Hash::make('12345678'),
+                    'password' => $commonPassword,
                     'level' => $level,
                     'status' => 'approved',
                     'cv_path' => 'cv_dummy.pdf',
@@ -71,30 +80,33 @@ class TeacherSeeder extends Seeder
                 ]
             );
 
+            // ربط الشعب
             $assignedClassesIds = [];
             if (!empty($availableClasses)) {
                 $classesCountToAssign = min(rand(1, 2), count($availableClasses));
                 $keys = (array) array_rand($availableClasses, $classesCountToAssign);
                 foreach ($keys as $key) {
-                    $assignedClassesIds[] = $dbSubject->id;
+                    $assignedClassesIds[] = $availableClasses[$key];
                 }
                 $teacher->classes()->sync($assignedClassesIds);
             }
 
+            // ربط المواد
             $assignedSubjectIds = [];
             if ($dbSubject) {
-$assignedClassesIds[] = $availableClasses[$key];
+                $assignedSubjectIds[] = $dbSubject->id;
             } else {
                 $fallbackSubject = Subject::where('grade_level', $level)->first();
                 if ($fallbackSubject) {
                     $assignedSubjectIds[] = $fallbackSubject->id;
-                } elseif (!empty($availableSubjects)) {
-                    $assignedSubjectIds[] = $availableSubjects[array_rand($availableSubjects)];
+                } elseif (!empty($availableSubjectsAll)) {
+                    $assignedSubjectIds[] = $availableSubjectsAll[array_rand($availableSubjectsAll)];
                 }
             }
             $teacher->subjects()->sync($assignedSubjectIds);
 
-            $assignedClassesNames = array_map(function($id) use ($classesMap) {
+            // تجهيز البيانات لطباعتها في الكونسول
+            $assignedClassesNames = array_map(function ($id) use ($classesMap) {
                 return $classesMap[$id] ?? "شعبة ($id)";
             }, $assignedClassesIds);
 
@@ -102,15 +114,16 @@ $assignedClassesIds[] = $availableClasses[$key];
             if (empty($assignedSubjectsNames)) {
                 $assignedSubjectsNames = [$tData['subject']];
             }
-$token = $teacher->createToken('teacher-test-token')->plainTextToken;
+
+            $token = $teacher->createToken('teacher-test-token')->plainTextToken;
+
             $consoleData[] = [
                 $teacher->full_name,
                 $teacher->phone,
                 $level,
-                implode(', ', $assignedSubjectsNames), 
+                implode(', ', $assignedSubjectsNames),
                 implode(', ', $assignedClassesNames),
                 $token,
-
             ];
         }
 
@@ -120,42 +133,55 @@ $token = $teacher->createToken('teacher-test-token')->plainTextToken;
             $consoleData
         );
 
-        $statuses = ['pending', 'approved', 'rejected'];
 
-        for ($i = 0; $i < 80; $i++) {
+        // ==========================================
+        // القسم الثاني: 60 أستاذ جديد بمواصفاتك
+        // ==========================================
+        for ($i = 0; $i < 60; $i++) {
             $randomDate = $faker->dateTimeBetween('-11 months', 'now');
-            $randomLevel = ['ninth', 'twelfth'][rand(0, 1)];
+            $level = ['ninth', 'twelfth'][array_rand(['ninth', 'twelfth'])];
+
+            $availableClasses = ($level === 'ninth') ? $ninthClasses : $twelfthClasses;
+            $availableSubjects = ($level === 'ninth') ? $ninthSubjects : $twelfthSubjects;
 
             $teacher = Teacher::create([
                 'full_name' => $faker->name,
                 'phone' => '09' . $faker->unique()->randomNumber(8, true),
-                'password' => Hash::make('password'),
-                'level' => $randomLevel,
-                'status' => $statuses[array_rand($statuses)],
+                'password' => $commonPassword,
+                'level' => $level,
+                'status' => 'approved',
                 'cv_path' => 'random_cv.pdf',
                 'created_at' => $randomDate,
                 'updated_at' => $randomDate,
             ]);
 
-            $levelSubjects = Subject::where('grade_level', $randomLevel)->pluck('id')->toArray();
+            // إسناد من مادتين لـ 3 مواد حصراً
+            if (!empty($availableSubjects)) {
+                $subjectsCount = rand(2, 3);
+                $subjectsCount = min($subjectsCount, count($availableSubjects));
 
-            if (!empty($levelSubjects)) {
-                $count = min(rand(1, 2), count($levelSubjects));
-                $subjectKeys = (array) array_rand($levelSubjects, $count);
-                $assignedSubjectIds = [];
-                foreach ($subjectKeys as $key) {
-                    $assignedSubjectIds[] = $levelSubjects[$key];
-                }
-                $teacher->subjects()->attach($assignedSubjectIds);
+                $subjectKeys = (array) array_rand($availableSubjects, $subjectsCount);
+                $assignedSubjectIds = array_map(function ($key) use ($availableSubjects) {
+                    return $availableSubjects[$key];
+                }, $subjectKeys);
+
+                $teacher->subjects()->sync($assignedSubjectIds);
             }
 
-            if ($teacher->status === 'approved') {
-                $pool = $randomLevel === 'ninth' ? $ninthClasses : $twelfthClasses;
-                if (!empty($pool)) {
-                    $teacher->classes()->attach($pool[array_rand($pool)]);
-                }
+            // إسناد من 4 لـ 5 شعب حصراً
+            if (!empty($availableClasses)) {
+                $classesCount = rand(4, 5);
+                $classesCount = min($classesCount, count($availableClasses));
+
+                $classKeys = (array) array_rand($availableClasses, $classesCount);
+                $assignedClassIds = array_map(function ($key) use ($availableClasses) {
+                    return $availableClasses[$key];
+                }, $classKeys);
+
+                $teacher->classes()->sync($assignedClassIds);
             }
         }
-        
+
+        $this->command->info('✅ تم توليد 60 أستاذ جديد بنجاح وربطهم بشعب ومواد صفهم حصراً!');
     }
 }

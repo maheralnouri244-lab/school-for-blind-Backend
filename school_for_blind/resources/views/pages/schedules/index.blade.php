@@ -20,7 +20,6 @@
       </div>
     </div>
 
-    {{-- تبويبات الاختيار بين جداول الشعب وجداول الأساتذة --}}
     <ul class="nav nav-pills mb-4 gap-2" id="schedulesTabs" role="tablist">
       <li class="nav-item" role="presentation">
         <button class="nav-link active fw-bold px-4 py-2" id="classes-tab" data-bs-toggle="tab"
@@ -38,7 +37,6 @@
 
     <div class="tab-content" id="schedulesTabsContent">
 
-      {{-- التبويب الأول: أحدث جداول الشعب --}}
       <div class="tab-pane fade show active" id="classes-panel" role="tabpanel">
         <div class="custom-card">
           <div class="d-flex justify-content-between align-items-center mb-4">
@@ -50,48 +48,26 @@
               <thead>
                 <tr style="border-bottom: 2px solid var(--border-color);">
                   <th scope="col" class="pb-3 text-muted fw-normal">الشعبة / الصف</th>
-                  <th scope="col" class="pb-3 text-muted fw-normal">عنوان الجدول</th>
-                  <th scope="col" class="pb-3 text-muted fw-normal">النوع</th>
-                  <th scope="col" class="pb-3 text-muted fw-normal">تاريخ النشر</th>
+                  <th scope="col" class="pb-3 text-muted fw-normal">تاريخ آخر تحديث</th>
                   <th scope="col" class="pb-3 text-muted fw-normal text-start">إجراءات</th>
                 </tr>
               </thead>
               <tbody>
-                @forelse($classSchedules as $schedule)
-                  @php
-                    $contentData = is_string($schedule->content) ? json_decode($schedule->content, true) : $schedule->content;
-                  @endphp
+                @forelse($classes as $class)
                   <tr style="border-bottom: 1px solid var(--border-color);">
-                    <td class="py-3 fw-bold">
-                      @if($schedule->class)
-                        {{ $schedule->class->name }} (شعبة {{ $schedule->class->number }})
-                      @else
-                        عام / غير محدد
-                      @endif
-                    </td>
-
-                    <td class="py-3 text-muted">{{ $schedule->title }}</td>
-
-                    <td class="py-3">
-                      @if($schedule->type === 'school_timetable')
-                        <span class="badge-status bg-soft-info px-2 py-1 rounded">برنامج دوام</span>
-                      @else
-                        <span class="badge-status bg-soft-warning px-2 py-1 rounded">برنامج امتحانات</span>
-                      @endif
-                    </td>
-
-                    <td class="py-3 text-muted">{{ $schedule->created_at->format('Y-m-d H:i') }}</td>
-
+                    <td class="py-3 fw-bold">{{ $class->name }} (شعبة {{ $class->number }})</td>
+                    <td class="py-3 text-muted">{{ \Carbon\Carbon::parse($class->schedule_date)->format('Y-m-d H:i') }}</td>
                     <td class="py-3 text-start">
                       <button type="button" class="btn btn-sm btn-outline-primary ms-1"
-                        onclick="viewClassSchedule('{{ json_encode($contentData) }}', '{{ $schedule->title }}')">
+                        data-title="جدول الدوام لشعبة: {{ $class->name }} ({{ $class->number }})"
+                        data-schedules="{{ json_encode($class->latest_schedules) }}" onclick="handleViewSchedule(this)">
                         <i class="fa-solid fa-eye me-1"></i> عرض
                       </button>
                     </td>
                   </tr>
                 @empty
                   <tr>
-                    <td colspan="5" class="text-center py-4 text-muted">لا توجد جداول منشورة حالياً.</td>
+                    <td colspan="3" class="text-center py-4 text-muted">لا توجد جداول منشورة حالياً للشعب.</td>
                   </tr>
                 @endforelse
               </tbody>
@@ -100,7 +76,6 @@
         </div>
       </div>
 
-      {{-- التبويب الثاني: جداول الأساتذة --}}
       <div class="tab-pane fade" id="teachers-panel" role="tabpanel">
         <div class="custom-card">
           <div class="d-flex justify-content-between align-items-center mb-4">
@@ -123,14 +98,16 @@
                     <td class="py-3 text-muted">{{ $teacher->level === 'ninth' ? 'التاسع' : 'البكالوريا' }}</td>
                     <td class="py-3 text-start">
                       <button type="button" class="btn btn-sm btn-outline-success"
-                        onclick="viewTeacherSchedule('{{ $teacher->full_name }}')">
+                        data-title="جدول الدوام للأستاذ: {{ $teacher->full_name }}"
+                        data-schedules="{{ json_encode($teacher->latest_schedules) }}"
+                        onclick="handleViewTeacherSchedule(this)">
                         <i class="fa-solid fa-calendar-week me-1"></i> عرض جدول الأستاذ
                       </button>
                     </td>
                   </tr>
                 @empty
                   <tr>
-                    <td colspan="3" class="text-center py-4 text-muted">لا يوجد أساتذة مسجلون.</td>
+                    <td colspan="3" class="text-center py-4 text-muted">لا يوجد أساتذة مسجلون أو ليس لديهم جداول.</td>
                   </tr>
                 @endforelse
               </tbody>
@@ -142,7 +119,6 @@
     </div>
   </div>
 
-  {{-- Modal عرض جدول الشعبة --}}
   <div class="modal fade" id="viewScheduleModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content glass-modal">
@@ -160,67 +136,47 @@
 
 @push('scripts')
   <script>
-    const allSchedulesData = @json($allLatestSchedules);
+    const daysArr = ["الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"];
+    const dayKeys = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
 
-    function viewClassSchedule(contentJson, title) {
-      let content = typeof contentJson === 'string' ? JSON.parse(contentJson) : contentJson;
-      document.getElementById('modalScheduleTitle').innerText = title;
-
-      let html = '<table class="table table-bordered text-center align-middle" style="color: var(--text-main); font-size:0.85rem;"><thead><tr class="table-dark">';
-
-      if (content && content.columns) {
-        content.columns.forEach(col => {
-          html += `<th>${col}</th>`;
-        });
-        html += '</tr></thead><tbody>';
-
-        if (content.rows) {
-          content.rows.forEach(row => {
-            html += '<tr>';
-            html += `<td class="fw-bold bg-soft-secondary">${row.period || '-'}</td>`;
-
-            let dayKeys = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
-            dayKeys.forEach(key => {
-              let val = row[key] || '-';
-              html += `<td>${val}</td>`;
-            });
-            html += '</tr>';
-          });
-        }
-        html += 'tbody></table>';
-      } else {
-        html = '<p class="text-center text-muted">لا توجد بيانات متاحة لهذا الجدول.</p>';
-      }
-
-      document.getElementById('modalScheduleContainer').innerHTML = html;
-      new bootstrap.Modal(document.getElementById('viewScheduleModal')).show();
+    function handleViewSchedule(btn) {
+      const schedules = JSON.parse(btn.getAttribute('data-schedules'));
+      const title = btn.getAttribute('data-title');
+      viewSchedule(schedules, title);
     }
 
-    function viewTeacherSchedule(teacherName) {
-      document.getElementById('modalScheduleTitle').innerText = `جدول الدوام للأستاذ: ${teacherName}`;
+    function handleViewTeacherSchedule(btn) {
+      const schedules = JSON.parse(btn.getAttribute('data-schedules'));
+      const title = btn.getAttribute('data-title');
+      viewTeacherSchedule(schedules, title);
+    }
 
-      let days = ["الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"];
-      let dayKeys = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+    function viewSchedule(schedules, title) {
+      document.getElementById('modalScheduleTitle').innerText = title;
 
-      let teacherGrid = {};
-
-      allSchedulesData.forEach(sched => {
-        let content = sched.content;
-        if (content && content.rows) {
-          content.rows.forEach((row, rowIndex) => {
-            let periodNum = rowIndex + 1;
-            dayKeys.forEach(dKey => {
-              let slotVal = row[dKey];
-              if (slotVal && slotVal.includes(`(${teacherName})`)) {
-                let subject = slotVal.replace(`(${teacherName})`, '').trim();
-                if (!teacherGrid[dKey]) teacherGrid[dKey] = {};
-                teacherGrid[dKey][periodNum] = `${subject} <br><small class="text-primary">${sched.class_name}</small>`;
-              }
-            });
-          });
-        }
+      let grid = {};
+      schedules.forEach(s => {
+        if (!grid[s.day_of_week]) grid[s.day_of_week] = {};
+        grid[s.day_of_week][s.period_number] = `${s.subject?.name || '-'} <br><small class="text-muted">(${s.teacher?.full_name || s.teacher?.first_name || '-'})</small>`;
       });
 
+      renderTable(grid);
+    }
+
+    function viewTeacherSchedule(schedules, title) {
+      document.getElementById('modalScheduleTitle').innerText = title;
+
+      let grid = {};
+      schedules.forEach(s => {
+        if (!grid[s.day_of_week]) grid[s.day_of_week] = {};
+        let className = s.student_class ? `${s.student_class.name} (${s.student_class.number})` : '-';
+        grid[s.day_of_week][s.period_number] = `${s.subject?.name || '-'} <br><small class="text-primary">${className}</small>`;
+      });
+
+      renderTable(grid);
+    }
+
+    function renderTable(grid) {
       let html = '<table class="table table-bordered text-center align-middle" style="color: var(--text-main); font-size:0.85rem;"><thead><tr class="table-dark"><th>اليوم / الحصة</th>';
       for (let p = 1; p <= 8; p++) {
         html += `<th>الحصة ${p}</th>`;
@@ -228,9 +184,9 @@
       html += '</tr></thead><tbody>';
 
       dayKeys.forEach((dKey, idx) => {
-        html += `<tr><td class="fw-bold bg-soft-secondary">${days[idx]}</td>`;
+        html += `<tr><td class="fw-bold bg-soft-secondary">${daysArr[idx]}</td>`;
         for (let p = 1; p <= 8; p++) {
-          let cellContent = (teacherGrid[dKey] && teacherGrid[dKey][p]) ? teacherGrid[dKey][p] : '-';
+          let cellContent = (grid[dKey] && grid[dKey][p]) ? grid[dKey][p] : '-';
           html += `<td>${cellContent}</td>`;
         }
         html += '</tr>';
