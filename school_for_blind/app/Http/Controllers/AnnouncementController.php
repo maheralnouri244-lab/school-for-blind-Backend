@@ -27,24 +27,7 @@ class AnnouncementController extends Controller
             'teacher_id' => $request->input('teacher_id'),
         ]);
         event(new AnnouncementCreated($announcement));
-        /*
-        | كود إشعارات الفايربيز
-
-        */
-
-        // try {
-        //     $messaging = Firebase::messaging();
-        //     $messaging->send([
-        //         'topic' => 'all_students',
-        //         'notification' => [
-        //             'title' => '📢 إعلان جديد من المدرسة',
-        //             'body'  => $request->content, // نص الإعلان نفسه
-        //         ],
-        //     ]);
-        // } catch (\Exception $e) {
-        //     \Log::error('Firebase Notification Error: ' . $e->getMessage());
-        // }
-
+       
         return response()->json([
             'message' => 'تم نشر الإعلان بنجاح للجميع',
             'data' => [
@@ -58,167 +41,69 @@ class AnnouncementController extends Controller
         ], 201);
     }
 
-    public function index()
+  public function index()
     {
         $query = Announcement::query();
+
         if (auth()->guard('student')->check()) {
             $student = auth()->guard('student')->user();
             $query->where('target_audience', 'student')
-                ->whereIn('level', [$student->level, 'all']);
+                  ->whereIn('level', [$student->level, 'all']);
 
         } elseif (auth()->guard('caregiver')->check()) {
             $caregiver = auth()->guard('caregiver')->user();
             $query->where('target_audience', 'caregiver')
-                ->whereIn('level', [$caregiver->level, 'all']);
+                  ->whereIn('level', [$caregiver->level, 'all']);
+
         } elseif (auth()->guard('teacher')->check()) {
             $teacher = auth()->guard('teacher')->user();
-
             $query->where('target_audience', 'teacher')
-                ->whereIn('level', [$teacher->level, 'all']);
+                  ->whereIn('level', [$teacher->level, 'all']);
 
         } elseif (auth()->guard('admin')->check()) {
             $admin = auth()->guard('admin')->user();
-
             if ($admin->role === 'teacher') {
                 $query->where('target_audience', 'teacher')
-                    ->whereIn('level', [$admin->level, 'all']);
+                      ->whereIn('level', [$admin->level, 'all']);
             }
-
         } else {
             return response()->json(['message' => 'غير مصرح لك برؤية الإعلانات.'], 401);
         }
 
         $announcements = $query->orderBy('created_at', 'desc')->get();
+
         if ($announcements->isEmpty()) {
             return response()->json([
                 'message' => 'لا توجد إعلانات متاحة حالياً.'
             ], 200);
         }
-        $processedAnnouncements = $announcements->map(function ($announcement) {
 
+        $processedAnnouncements = $announcements->map(function ($announcement) {
+            
             if ($announcement->type === 'exam_schedule') {
                 return [
-                    'id' => $announcement->id,
-                    'type' => $announcement->type,
-                    'title' => $announcement->title,
-                    'created_at' => $announcement->created_at,
-                    'updated_at' => $announcement->updated_at,
-                ];
-
-            } else {
-                if (is_string($announcement->content)) {
-                    $decodedContent = json_decode($announcement->content, true);
-                    $isJson = (json_last_error() === JSON_ERROR_NONE && is_array($decodedContent));
-                    $contentData = $isJson ? $decodedContent : $announcement->content;
-                } else {
-                    $contentData = $announcement->content;
-                }
-
-                return [
-                    'id' => $announcement->id,
-                    'type' => $announcement->type,
-                    'title' => $announcement->title,
+                    'id'              => $announcement->id,
+                    'type'            => $announcement->type,
+                    'title'           => $announcement->title,
                     'target_audience' => $announcement->target_audience,
-                    'grade' => $announcement->grade,
-                    'content' => $contentData,
-                    'created_at' => $announcement->created_at,
-                    'updated_at' => $announcement->updated_at,
+                    'level'           => $announcement->level,
+                    'content'         => 'تم نشر ' . $announcement->title . ' أنقر هنا للإطلاع عليه',
+                    'created_at'      => $announcement->created_at,
+                    'updated_at'      => $announcement->updated_at,
                 ];
             }
+
+            return [
+                'id'              => $announcement->id,
+                'type'            => $announcement->type,
+                'title'           => $announcement->title,
+                'target_audience' => $announcement->target_audience,
+                'level'           => $announcement->level,
+                'content'         => $announcement->content, 
+                'created_at'      => $announcement->created_at,
+                'updated_at'      => $announcement->updated_at,
+            ];
         });
 
         return response()->json($processedAnnouncements, 200);
-    }
-    public function showExam($id)
-    {
-        $announcement = Announcement::find($id, ['*']);
-
-        if (!$announcement || $announcement->type !== 'exam_schedule' || $announcement->type === 'school_timetable') {
-            return response()->json([
-                'message' => 'برنامج الامتحان غير موجود أو قد تم حذفه'
-            ], 404);
-        }
-
-        if (auth()->guard('student')->check()) {
-            $student = auth()->guard('student')->user();
-            if ($announcement->grade !== $student->grade && $announcement->grade !== 'all') {
-                return response()->json(['message' => 'عذراً، هذا البرنامج غير مخصص لصفك.'], 403);
-            }
-        }
-
-        return response()->json([
-            'id' => $announcement->id,
-            'type' => $announcement->type,
-            'title' => $announcement->title,
-            'exam_program' => $announcement->content,
-            'created_at' => $announcement->created_at
-        ], 200);
-    }
-    public function firstSchoolTimetable()
-    {
-        Auth::id();
-        $query = Announcement::where('type', '=', 'school_timetable', 'and');
-
-        if (auth()->guard('student')->check()) {
-            $student = auth()->guard('student')->user();
-          $query->where('target_audience', 'student')
-          ->whereIn('level', [$student->level, 'all'])
-          ->where('class_id', $student->class_id);
-
-
-        } elseif (auth()->guard('caregiver')->check()) {
-            $caregiver = auth()->guard('caregiver')->user();
-            $query->where('target_audience', 'caregiver')
-                ->whereIn('level', [$caregiver->level, 'all']);
-
-        }elseif (auth()->guard('teacher')->check()) {
-           
-        $teacher = auth()->guard('teacher')->user();
-        $query->where('target_audience', 'teacher')
-                  ->whereIn('level', [$teacher->level, 'all'])
-                  ->where('teacher_id', $teacher->id);
-        } elseif (auth()->guard('admin')->check()) {
-            $admin = auth()->guard('admin')->user();
-            if ($admin->role === 'teacher') {
-                $query->where('target_audience', 'teacher')
-                    ->whereIn('level', [$admin->level, 'all']);
-            }
-        } else {
-            return response()->json(['message' => 'غير مصرح لك برؤية الجداول الدراسية.'], 401);
-        }
-
-       $timetable = $query->latest('created_at')->first();
-
-        if (!$timetable) {
-            return response()->json([
-                'message' => 'لا يوجد جدول دوام مدرسي متاح لشعبك حالياً.'
-            ], 404);
-        }
-
-        $contentData = $timetable->content;
-        if (is_string($timetable->content)) {
-            $decodedContent = json_decode($timetable->content, true);
-            if (json_last_error() === JSON_ERROR_NONE && is_array($decodedContent)) {
-                $contentData = $decodedContent;
-            }
-        }
-
-        if (auth()->guard('teacher')->check() && is_array($contentData)) {
-            $teacher = auth()->guard('teacher')->user();
-            
-           
-        }
-
-        return response()->json([
-            'id' => $timetable->id,
-            'type' => $timetable->type,
-            'title' => $timetable->title,
-            'target_audience' => $timetable->target_audience,
-            'level' => $timetable->level,
-            'class_id' => $timetable->class_id, 
-            'timetable_data' => $contentData,
-            'teacher_id' => $timetable->teacher_id,
-            'created_at' => $timetable->created_at,
-            'updated_at' => $timetable->updated_at,
-        ], 200);
     }}

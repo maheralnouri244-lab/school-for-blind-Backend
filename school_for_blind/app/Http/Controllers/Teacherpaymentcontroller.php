@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\SalaryTransferred;
+use App\Models\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Stripe\StripeClient;
@@ -99,8 +101,8 @@ class Teacherpaymentcontroller extends Controller
         $amountInEur = $request->amount;
         $amountInCents = $amountInEur * 100; 
 
-        try {
-            $teacher = DB::table('teachers')->where('id', $teacherId)->first();
+      try {
+            $teacher = Teacher::find($teacherId);
 
             if (!$teacher->stripe_account_id) {
                 return response()->json(['error' => 'الأستاذ ليس لديه حساب بنكي مربوط'], 400);
@@ -143,7 +145,7 @@ class Teacherpaymentcontroller extends Controller
                     'updated_at'     => now(),
                 ]);
             });
-
+event(new SalaryTransferred($teacher, $amountInEur));
             return response()->json([
                 'status' => 'success',
                 'message' => 'تم تحويل الراتب بنجاح!'
