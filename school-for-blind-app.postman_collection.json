@@ -3,7 +3,7 @@
     "_postman_id": "9aef9af2-148e-4d79-94c8-546cc662a7aa",
     "name": "school-for-blind-app",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "56921522",
+    "_exporter_id": "56938336",
     "_collection_link": "https://go.postman.co/collection/56921522-9aef9af2-148e-4d79-94c8-546cc662a7aa?source=collection_link"
   },
   "item": [
@@ -16506,7 +16506,7 @@
               },
               "response": [
                 {
-                  "name": "no message on this chat",
+                  "name": "success no Ban",
                   "originalRequest": {
                     "method": "GET",
                     "header": [],
@@ -16528,7 +16528,7 @@
                   },
                   "status": "OK",
                   "code": 200,
-                  "_postman_previewlanguage": "Text",
+                  "_postman_previewlanguage": null,
                   "header": [
                     {
                       "key": "Host",
@@ -16548,7 +16548,7 @@
                     },
                     {
                       "key": "Date",
-                      "value": "Thu, 23 Jul 2026 09:11:43 GMT"
+                      "value": "Thu, 30 Jul 2026 13:26:17 GMT"
                     },
                     {
                       "key": "Content-Type",
@@ -16560,10 +16560,10 @@
                     }
                   ],
                   "cookie": [],
-                  "body": "{\n    \"success\": true,\n    \"data\": []\n}"
+                  "body": "{\n    \"success\": true,\n    \"data\": [\n        {\n            \"id\": 9,\n            \"conversation_id\": 1,\n            \"sender_type\": \"App\\\\Models\\\\Teacher\",\n            \"sender_id\": 2,\n            \"body\": \"مرحبا معلم\",\n            \"attachment_path\": \"http://127.0.0.1:8000/storage/chat_attachments/images/599ed351-10e5-4144-8841-2e7e91ba2e39.jpg\",\n            \"attachment_type\": \"image\",\n            \"created_at\": \"2026-07-30T11:56:57.000000Z\",\n            \"updated_at\": \"2026-07-30T11:56:57.000000Z\",\n            \"sender\": {\n                \"id\": 2,\n                \"created_at\": \"2026-07-30T09:30:03.000000Z\",\n                \"updated_at\": \"2026-07-30T09:30:03.000000Z\",\n                \"full_name\": \"غالية الياسين\",\n                \"phone\": \"0943576695\",\n                \"subjects\": \"كل المواد\",\n                \"level\": \"twelfth\",\n                \"status\": \"approved\",\n                \"stripe_account_id\": null,\n                \"cv_path\": \"system/ghalia_cv.pdf\"\n            }\n        },\n        {\n            \"id\": 10,\n            \"conversation_id\": 1,\n            \"sender_type\": \"App\\\\Models\\\\Teacher\",\n            \"sender_id\": 2,\n            \"body\": \"مرحبا معلم\",\n            \"attachment_path\": \"http://127.0.0.1:8000/storage/chat_attachments/images/d45125c8-6bce-4352-adc0-f6dc473d0de0.jpg\",\n            \"attachment_type\": \"image\",\n            \"created_at\": \"2026-07-30T11:57:27.000000Z\",\n            \"updated_at\": \"2026-07-30T11:57:27.000000Z\",\n            \"sender\": {\n                \"id\": 2,\n                \"created_at\": \"2026-07-30T09:30:03.000000Z\",\n                \"updated_at\": \"2026-07-30T09:30:03.000000Z\",\n                \"full_name\": \"غالية الياسين\",\n                \"phone\": \"0943576695\",\n                \"subjects\": \"كل المواد\",\n                \"level\": \"twelfth\",\n                \"status\": \"approved\",\n                \"stripe_account_id\": null,\n                \"cv_path\": \"system/ghalia_cv.pdf\"\n            }\n        },\n        {\n            \"id\": 11,\n            \"conversation_id\": 1,\n            \"sender_type\": \"App\\\\Models\\\\Teacher\",\n            \"sender_id\": 2,\n            \"body\": \"مرحبا معلم\",\n            \"attachment_path\": \"http://127.0.0.1:8000/storage/chat_attachments/images/2d045b52-aed5-4261-865c-e2583db539ed.jpg\",\n            \"attachment_type\": \"image\",\n            \"created_at\": \"2026-07-30T11:57:52.000000Z\",\n            \"updated_at\": \"2026-07-30T11:57:52.000000Z\",\n            \"sender\": {\n                \"id\": 2,\n                \"created_at\": \"2026-07-30T09:30:03.000000Z\",\n                \"updated_at\": \"2026-07-30T09:30:03.000000Z\",\n                \"full_name\": \"غالية الياسين\",\n                \"phone\": \"0943576695\",\n                \"subjects\": \"كل المواد\",\n                \"level\": \"twelfth\",\n                \"status\": \"approved\",\n                \"stripe_account_id\": null,\n                \"cv_path\": \"system/ghalia_cv.pdf\"\n            }\n        },\n        {\n            \"id\": 12,\n            \"conversation_id\": 1,\n            \"sender_type\": \"App\\\\Models\\\\Teacher\",\n            \"sender_id\": 2,\n            \"body\": \"hello\",\n            \"attachment_path\": \"http://127.0.0.1:8000/storage/chat_attachments/images/f4952975-de03-4978-8867-b56e30e7366b.jpg\",\n            \"attachment_type\": \"image\",\n            \"created_at\": \"2026-07-30T11:58:31.000000Z\",\n            \"updated_at\": \"2026-07-30T11:58:31.000000Z\",\n            \"sender\": {\n                \"id\": 2,\n                \"created_at\": \"2026-07-30T09:30:03.000000Z\",\n                \"updated_at\": \"2026-07-30T09:30:03.000000Z\",\n                \"full_name\": \"غالية الياسين\",\n                \"phone\": \"0943576695\",\n                \"subjects\": \"كل المواد\",\n                \"level\": \"twelfth\",\n                \"status\": \"approved\",\n                \"stripe_account_id\": null,\n                \"cv_path\": \"system/ghalia_cv.pdf\"\n            }\n        }\n    ],\n    \"isBanned\": false\n}"
                 },
                 {
-                  "name": "success",
+                  "name": "success with Ban",
                   "originalRequest": {
                     "method": "GET",
                     "header": [],
@@ -16585,7 +16585,7 @@
                   },
                   "status": "OK",
                   "code": 200,
-                  "_postman_previewlanguage": "Text",
+                  "_postman_previewlanguage": null,
                   "header": [
                     {
                       "key": "Host",
@@ -16605,7 +16605,7 @@
                     },
                     {
                       "key": "Date",
-                      "value": "Thu, 23 Jul 2026 09:14:40 GMT"
+                      "value": "Thu, 30 Jul 2026 13:31:51 GMT"
                     },
                     {
                       "key": "Content-Type",
@@ -16617,64 +16617,7 @@
                     }
                   ],
                   "cookie": [],
-                  "body": "{\n    \"success\": true,\n    \"data\": [\n        {\n            \"id\": 1,\n            \"conversation_id\": 2,\n            \"sender_type\": \"App\\\\Models\\\\Student\",\n            \"sender_id\": 1,\n            \"body\": \"مرحبا\",\n            \"attachment_path\": null,\n            \"attachment_type\": null,\n            \"created_at\": \"2026-07-23T09:13:15.000000Z\",\n            \"updated_at\": \"2026-07-23T09:13:15.000000Z\",\n            \"sender\": {\n                \"id\": 1,\n                \"fullname\": \"طالب First Division - ninth\",\n                \"fathersname\": \"عمر\",\n                \"phone\": \"0926483674\",\n                \"parent_phone\": \"0981616181\",\n                \"parent_id\": null,\n                \"class_id\": 1,\n                \"points\": 23,\n                \"fcm_token\": null,\n                \"level\": \"ninth\",\n                \"phone_verified_at\": null,\n                \"status\": \"approved\",\n                \"verification_token\": null,\n                \"total_earned_points\": 0,\n                \"token_expires_at\": null,\n                \"DocumentaryEvidence\": \"proof_6.jpg\",\n                \"created_at\": \"2025-12-11T01:37:12.000000Z\",\n                \"updated_at\": \"2025-12-11T01:37:12.000000Z\"\n            }\n        },\n        {\n            \"id\": 2,\n            \"conversation_id\": 2,\n            \"sender_type\": \"App\\\\Models\\\\Student\",\n            \"sender_id\": 1,\n            \"body\": \"مرحبا\",\n            \"attachment_path\": null,\n            \"attachment_type\": null,\n            \"created_at\": \"2026-07-23T09:14:21.000000Z\",\n            \"updated_at\": \"2026-07-23T09:14:21.000000Z\",\n            \"sender\": {\n                \"id\": 1,\n                \"fullname\": \"طالب First Division - ninth\",\n                \"fathersname\": \"عمر\",\n                \"phone\": \"0926483674\",\n                \"parent_phone\": \"0981616181\",\n                \"parent_id\": null,\n                \"class_id\": 1,\n                \"points\": 23,\n                \"fcm_token\": null,\n                \"level\": \"ninth\",\n                \"phone_verified_at\": null,\n                \"status\": \"approved\",\n                \"verification_token\": null,\n                \"total_earned_points\": 0,\n                \"token_expires_at\": null,\n                \"DocumentaryEvidence\": \"proof_6.jpg\",\n                \"created_at\": \"2025-12-11T01:37:12.000000Z\",\n                \"updated_at\": \"2025-12-11T01:37:12.000000Z\"\n            }\n        }\n    ]\n}"
-                },
-                {
-                  "name": "success",
-                  "originalRequest": {
-                    "method": "GET",
-                    "header": [],
-                    "url": {
-                      "raw": "http://localhost:8000/api/student/channels/{{conversationId}}/messages",
-                      "protocol": "http",
-                      "host": [
-                        "localhost"
-                      ],
-                      "port": "8000",
-                      "path": [
-                        "api",
-                        "student",
-                        "channels",
-                        "{{conversationId}}",
-                        "messages"
-                      ]
-                    }
-                  },
-                  "status": "OK",
-                  "code": 200,
-                  "_postman_previewlanguage": "Text",
-                  "header": [
-                    {
-                      "key": "Host",
-                      "value": "localhost:8000"
-                    },
-                    {
-                      "key": "Connection",
-                      "value": "close"
-                    },
-                    {
-                      "key": "X-Powered-By",
-                      "value": "PHP/8.3.30"
-                    },
-                    {
-                      "key": "Cache-Control",
-                      "value": "no-cache, private"
-                    },
-                    {
-                      "key": "Date",
-                      "value": "Thu, 23 Jul 2026 09:14:40 GMT"
-                    },
-                    {
-                      "key": "Content-Type",
-                      "value": "application/json"
-                    },
-                    {
-                      "key": "Access-Control-Allow-Origin",
-                      "value": "*"
-                    }
-                  ],
-                  "cookie": [],
-                  "body": "{\n    \"success\": true,\n    \"data\": [\n        {\n            \"id\": 1,\n            \"conversation_id\": 2,\n            \"sender_type\": \"App\\\\Models\\\\Student\",\n            \"sender_id\": 1,\n            \"body\": \"مرحبا\",\n            \"attachment_path\": null,\n            \"attachment_type\": null,\n            \"created_at\": \"2026-07-23T09:13:15.000000Z\",\n            \"updated_at\": \"2026-07-23T09:13:15.000000Z\",\n            \"sender\": {\n                \"id\": 1,\n                \"fullname\": \"طالب First Division - ninth\",\n                \"fathersname\": \"عمر\",\n                \"phone\": \"0926483674\",\n                \"parent_phone\": \"0981616181\",\n                \"parent_id\": null,\n                \"class_id\": 1,\n                \"points\": 23,\n                \"fcm_token\": null,\n                \"level\": \"ninth\",\n                \"phone_verified_at\": null,\n                \"status\": \"approved\",\n                \"verification_token\": null,\n                \"total_earned_points\": 0,\n                \"token_expires_at\": null,\n                \"DocumentaryEvidence\": \"proof_6.jpg\",\n                \"created_at\": \"2025-12-11T01:37:12.000000Z\",\n                \"updated_at\": \"2025-12-11T01:37:12.000000Z\"\n            }\n        },\n        {\n            \"id\": 2,\n            \"conversation_id\": 2,\n            \"sender_type\": \"App\\\\Models\\\\Student\",\n            \"sender_id\": 1,\n            \"body\": \"مرحبا\",\n            \"attachment_path\": null,\n            \"attachment_type\": null,\n            \"created_at\": \"2026-07-23T09:14:21.000000Z\",\n            \"updated_at\": \"2026-07-23T09:14:21.000000Z\",\n            \"sender\": {\n                \"id\": 1,\n                \"fullname\": \"طالب First Division - ninth\",\n                \"fathersname\": \"عمر\",\n                \"phone\": \"0926483674\",\n                \"parent_phone\": \"0981616181\",\n                \"parent_id\": null,\n                \"class_id\": 1,\n                \"points\": 23,\n                \"fcm_token\": null,\n                \"level\": \"ninth\",\n                \"phone_verified_at\": null,\n                \"status\": \"approved\",\n                \"verification_token\": null,\n                \"total_earned_points\": 0,\n                \"token_expires_at\": null,\n                \"DocumentaryEvidence\": \"proof_6.jpg\",\n                \"created_at\": \"2025-12-11T01:37:12.000000Z\",\n                \"updated_at\": \"2025-12-11T01:37:12.000000Z\"\n            }\n        }\n    ]\n}"
+                  "body": "{\n    \"success\": true,\n    \"data\": [\n        {\n            \"id\": 9,\n            \"conversation_id\": 1,\n            \"sender_type\": \"App\\\\Models\\\\Teacher\",\n            \"sender_id\": 2,\n            \"body\": \"مرحبا معلم\",\n            \"attachment_path\": \"http://127.0.0.1:8000/storage/chat_attachments/images/599ed351-10e5-4144-8841-2e7e91ba2e39.jpg\",\n            \"attachment_type\": \"image\",\n            \"created_at\": \"2026-07-30T11:56:57.000000Z\",\n            \"updated_at\": \"2026-07-30T11:56:57.000000Z\",\n            \"sender\": {\n                \"id\": 2,\n                \"created_at\": \"2026-07-30T09:30:03.000000Z\",\n                \"updated_at\": \"2026-07-30T09:30:03.000000Z\",\n                \"full_name\": \"غالية الياسين\",\n                \"phone\": \"0943576695\",\n                \"subjects\": \"كل المواد\",\n                \"level\": \"twelfth\",\n                \"status\": \"approved\",\n                \"stripe_account_id\": null,\n                \"cv_path\": \"system/ghalia_cv.pdf\"\n            }\n        },\n        {\n            \"id\": 10,\n            \"conversation_id\": 1,\n            \"sender_type\": \"App\\\\Models\\\\Teacher\",\n            \"sender_id\": 2,\n            \"body\": \"مرحبا معلم\",\n            \"attachment_path\": \"http://127.0.0.1:8000/storage/chat_attachments/images/d45125c8-6bce-4352-adc0-f6dc473d0de0.jpg\",\n            \"attachment_type\": \"image\",\n            \"created_at\": \"2026-07-30T11:57:27.000000Z\",\n            \"updated_at\": \"2026-07-30T11:57:27.000000Z\",\n            \"sender\": {\n                \"id\": 2,\n                \"created_at\": \"2026-07-30T09:30:03.000000Z\",\n                \"updated_at\": \"2026-07-30T09:30:03.000000Z\",\n                \"full_name\": \"غالية الياسين\",\n                \"phone\": \"0943576695\",\n                \"subjects\": \"كل المواد\",\n                \"level\": \"twelfth\",\n                \"status\": \"approved\",\n                \"stripe_account_id\": null,\n                \"cv_path\": \"system/ghalia_cv.pdf\"\n            }\n        },\n        {\n            \"id\": 11,\n            \"conversation_id\": 1,\n            \"sender_type\": \"App\\\\Models\\\\Teacher\",\n            \"sender_id\": 2,\n            \"body\": \"مرحبا معلم\",\n            \"attachment_path\": \"http://127.0.0.1:8000/storage/chat_attachments/images/2d045b52-aed5-4261-865c-e2583db539ed.jpg\",\n            \"attachment_type\": \"image\",\n            \"created_at\": \"2026-07-30T11:57:52.000000Z\",\n            \"updated_at\": \"2026-07-30T11:57:52.000000Z\",\n            \"sender\": {\n                \"id\": 2,\n                \"created_at\": \"2026-07-30T09:30:03.000000Z\",\n                \"updated_at\": \"2026-07-30T09:30:03.000000Z\",\n                \"full_name\": \"غالية الياسين\",\n                \"phone\": \"0943576695\",\n                \"subjects\": \"كل المواد\",\n                \"level\": \"twelfth\",\n                \"status\": \"approved\",\n                \"stripe_account_id\": null,\n                \"cv_path\": \"system/ghalia_cv.pdf\"\n            }\n        },\n        {\n            \"id\": 12,\n            \"conversation_id\": 1,\n            \"sender_type\": \"App\\\\Models\\\\Teacher\",\n            \"sender_id\": 2,\n            \"body\": \"hello\",\n            \"attachment_path\": \"http://127.0.0.1:8000/storage/chat_attachments/images/f4952975-de03-4978-8867-b56e30e7366b.jpg\",\n            \"attachment_type\": \"image\",\n            \"created_at\": \"2026-07-30T11:58:31.000000Z\",\n            \"updated_at\": \"2026-07-30T11:58:31.000000Z\",\n            \"sender\": {\n                \"id\": 2,\n                \"created_at\": \"2026-07-30T09:30:03.000000Z\",\n                \"updated_at\": \"2026-07-30T09:30:03.000000Z\",\n                \"full_name\": \"غالية الياسين\",\n                \"phone\": \"0943576695\",\n                \"subjects\": \"كل المواد\",\n                \"level\": \"twelfth\",\n                \"status\": \"approved\",\n                \"stripe_account_id\": null,\n                \"cv_path\": \"system/ghalia_cv.pdf\"\n            }\n        }\n    ],\n    \"isBanned\": true\n}"
                 }
               ]
             },
@@ -17543,7 +17486,7 @@
                   "bearer": [
                     {
                       "key": "token",
-                      "value": "43|vqiLRcAxDaruClG3skKfTGL4eyMjspTT2LB9nZxPfa577dce",
+                      "value": "65|w1Y5sujX6aqVEEXF4z97ObdEzOwurBH9yZ26ai0h6051debe",
                       "type": "string"
                     }
                   ]
@@ -17705,21 +17648,33 @@
                   "bearer": [
                     {
                       "key": "token",
-                      "value": "44|ACtwCvTKFHbdWmTPY4kR23mqM7H6la01k2C6Humkdc971b9f",
+                      "value": "65|w1Y5sujX6aqVEEXF4z97ObdEzOwurBH9yZ26ai0h6051debe",
                       "type": "string"
                     }
                   ]
                 },
                 "method": "POST",
-                "header": [],
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
                 "body": {
                   "mode": "formdata",
                   "formdata": [
                     {
                       "key": "body",
-                      "value": "مرحبا معلم",
+                      "value": "hello",
                       "type": "text",
                       "uuid": "58181922-fa6c-4150-9b76-8ea12aadace5"
+                    },
+                    {
+                      "key": "attachment",
+                      "type": "file",
+                      "uuid": "a0f691ed-e52b-473b-8b05-ce433089a98f",
+                      "src": "/D:/project/laravel/school-for-blind-Backend/school_for_blind/database/seeders/files/support_team_image.jpg"
                     }
                   ]
                 },
@@ -18164,6 +18119,103 @@
                   ],
                   "cookie": [],
                   "body": "{\n    \"success\": true,\n    \"message\": \"تم إرسال البلاغ بنجاح، ستقوم الإدارة بمراجعته.\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "get message for a chat",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "66|YvsAZliil4TYL3nK50EMpm7ILC3l4kP9bcRUjMqf18e89976",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8000/api/teacher/channels/{{conversationId}}/messages",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "teacher",
+                    "channels",
+                    "{{conversationId}}",
+                    "messages"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "success",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "http://localhost:8000/api/teacher/channels/{{conversationId}}/messages",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8000",
+                      "path": [
+                        "api",
+                        "teacher",
+                        "channels",
+                        "{{conversationId}}",
+                        "messages"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "",
+                  "header": [
+                    {
+                      "key": "Host",
+                      "value": "localhost:8000"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "close"
+                    },
+                    {
+                      "key": "X-Powered-By",
+                      "value": "PHP/8.3.30"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, private"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Thu, 30 Jul 2026 13:24:14 GMT"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Access-Control-Allow-Origin",
+                      "value": "*"
+                    }
+                  ],
+                  "cookie": [
+                    {
+                      "expires": "Invalid Date",
+                      "domain": "",
+                      "path": ""
+                    }
+                  ],
+                  "body": "{\n    \"success\": true,\n    \"data\": [\n        {\n            \"id\": 9,\n            \"conversation_id\": 1,\n            \"sender_type\": \"App\\\\Models\\\\Teacher\",\n            \"sender_id\": 2,\n            \"body\": \"مرحبا معلم\",\n            \"attachment_path\": \"http://127.0.0.1:8000/storage/chat_attachments/images/599ed351-10e5-4144-8841-2e7e91ba2e39.jpg\",\n            \"attachment_type\": \"image\",\n            \"created_at\": \"2026-07-30T11:56:57.000000Z\",\n            \"updated_at\": \"2026-07-30T11:56:57.000000Z\",\n            \"sender\": {\n                \"id\": 2,\n                \"created_at\": \"2026-07-30T09:30:03.000000Z\",\n                \"updated_at\": \"2026-07-30T09:30:03.000000Z\",\n                \"full_name\": \"غالية الياسين\",\n                \"phone\": \"0943576695\",\n                \"subjects\": \"كل المواد\",\n                \"level\": \"twelfth\",\n                \"status\": \"approved\",\n                \"stripe_account_id\": null,\n                \"cv_path\": \"system/ghalia_cv.pdf\"\n            }\n        },\n        {\n            \"id\": 10,\n            \"conversation_id\": 1,\n            \"sender_type\": \"App\\\\Models\\\\Teacher\",\n            \"sender_id\": 2,\n            \"body\": \"مرحبا معلم\",\n            \"attachment_path\": \"http://127.0.0.1:8000/storage/chat_attachments/images/d45125c8-6bce-4352-adc0-f6dc473d0de0.jpg\",\n            \"attachment_type\": \"image\",\n            \"created_at\": \"2026-07-30T11:57:27.000000Z\",\n            \"updated_at\": \"2026-07-30T11:57:27.000000Z\",\n            \"sender\": {\n                \"id\": 2,\n                \"created_at\": \"2026-07-30T09:30:03.000000Z\",\n                \"updated_at\": \"2026-07-30T09:30:03.000000Z\",\n                \"full_name\": \"غالية الياسين\",\n                \"phone\": \"0943576695\",\n                \"subjects\": \"كل المواد\",\n                \"level\": \"twelfth\",\n                \"status\": \"approved\",\n                \"stripe_account_id\": null,\n                \"cv_path\": \"system/ghalia_cv.pdf\"\n            }\n        },\n        {\n            \"id\": 11,\n            \"conversation_id\": 1,\n            \"sender_type\": \"App\\\\Models\\\\Teacher\",\n            \"sender_id\": 2,\n            \"body\": \"مرحبا معلم\",\n            \"attachment_path\": \"http://127.0.0.1:8000/storage/chat_attachments/images/2d045b52-aed5-4261-865c-e2583db539ed.jpg\",\n            \"attachment_type\": \"image\",\n            \"created_at\": \"2026-07-30T11:57:52.000000Z\",\n            \"updated_at\": \"2026-07-30T11:57:52.000000Z\",\n            \"sender\": {\n                \"id\": 2,\n                \"created_at\": \"2026-07-30T09:30:03.000000Z\",\n                \"updated_at\": \"2026-07-30T09:30:03.000000Z\",\n                \"full_name\": \"غالية الياسين\",\n                \"phone\": \"0943576695\",\n                \"subjects\": \"كل المواد\",\n                \"level\": \"twelfth\",\n                \"status\": \"approved\",\n                \"stripe_account_id\": null,\n                \"cv_path\": \"system/ghalia_cv.pdf\"\n            }\n        },\n        {\n            \"id\": 12,\n            \"conversation_id\": 1,\n            \"sender_type\": \"App\\\\Models\\\\Teacher\",\n            \"sender_id\": 2,\n            \"body\": \"hello\",\n            \"attachment_path\": \"http://127.0.0.1:8000/storage/chat_attachments/images/f4952975-de03-4978-8867-b56e30e7366b.jpg\",\n            \"attachment_type\": \"image\",\n            \"created_at\": \"2026-07-30T11:58:31.000000Z\",\n            \"updated_at\": \"2026-07-30T11:58:31.000000Z\",\n            \"sender\": {\n                \"id\": 2,\n                \"created_at\": \"2026-07-30T09:30:03.000000Z\",\n                \"updated_at\": \"2026-07-30T09:30:03.000000Z\",\n                \"full_name\": \"غالية الياسين\",\n                \"phone\": \"0943576695\",\n                \"subjects\": \"كل المواد\",\n                \"level\": \"twelfth\",\n                \"status\": \"approved\",\n                \"stripe_account_id\": null,\n                \"cv_path\": \"system/ghalia_cv.pdf\"\n            }\n        }\n    ],\n    \"isBanned\": false\n}"
                 }
               ]
             }

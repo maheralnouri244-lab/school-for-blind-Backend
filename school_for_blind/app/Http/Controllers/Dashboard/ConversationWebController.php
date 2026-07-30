@@ -9,6 +9,7 @@ use App\Models\Conversation;
 use App\Models\Message;
 use App\Models\Punishment;
 use App\Models\Student;
+use App\Models\Subject;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,10 +17,10 @@ use Illuminate\Support\Str;
 
 class ConversationWebController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $admin = Auth::guard('admin')->user();
-        $query = Conversation::with('teacher')->latest();
+        $query = Conversation::with(['teacher', 'subject'])->latest();
 
         if ($admin->role === 'Academic Manager' || $admin->role === 'Moderator') {
             $query->where(function ($q) use ($admin) {
@@ -30,8 +31,28 @@ class ConversationWebController extends Controller
                     });
             });
         }
-        $conversations = $query->paginate(15);
-        return view('pages.conversations.index', compact('conversations'));
+
+        if ($request->filled('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+
+        if ($request->filled('teacher_id')) {
+            $query->where('teacher_id', $request->teacher_id);
+        }
+
+        if ($request->filled('subject_id')) {
+            $query->where('subject_id', $request->subject_id);
+        }
+
+        if ($request->filled('type')) {
+            $query->where('type', $request->type);
+        }
+
+        $conversations = $query->paginate(15)->withQueryString();
+        $teachers = Teacher::all();
+        $subjects = Subject::all();
+
+        return view('pages.conversations.index', compact('conversations', 'teachers', 'subjects'));
     }
 
     public function show($id)
@@ -88,9 +109,10 @@ class ConversationWebController extends Controller
 
         if ($request->hasFile('attachment')) {
             $file = $request->file('attachment');
-            $attachmentType = str_starts_with($file->getMimeType(), 'image/') ? 'image' : 'file';
-            $filename = Str::uuid() . '.' . $file->getClientOriginalExtension();
-            $attachmentPath = $file->storeAs('chat_attachments/' . $attachmentType . 's', $filename, 'public');
+            $attachmentType = 'voice';
+            $extension = $file->getClientOriginalExtension() ?: 'webm';
+            $filename = Str::uuid() . '.' . $extension;
+            $attachmentPath = $file->storeAs('chat_attachments/voices', $filename, 'public');
         }
 
         $message = $conversation->messages()->create([
