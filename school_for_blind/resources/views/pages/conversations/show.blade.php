@@ -167,18 +167,29 @@
               messagesWrapper.insertAdjacentHTML('beforeend', renderMessageHTML(msg));
             });
 
+            // if (isFirstLoad) {
+            //   scrollToBottom();
+            //   isFirstLoad = false;
+            // }
+            const urlParams = new URLSearchParams(window.location.search);
+            const targetMsgId = urlParams.get('msg');
+
             if (isFirstLoad) {
-              scrollToBottom();
+              if (targetMsgId) {
+                scrollToAndHighlightMessage(targetMsgId);
+              } else {
+                scrollToBottom();
+              }
               isFirstLoad = false;
             }
           }
 
           if (messagesWrapper.children.length === 0) {
             messagesWrapper.innerHTML = `
-                                    <div id="no-messages-alert" class="text-center py-5 text-muted">
-                                      <i class="fa-regular fa-comments fs-1 mb-3"></i>
-                                      <p>لا توجد رسائل في هذه المحادثة بعد.</p>
-                                    </div>`;
+                                                <div id="no-messages-alert" class="text-center py-5 text-muted">
+                                                  <i class="fa-regular fa-comments fs-1 mb-3"></i>
+                                                  <p>لا توجد رسائل في هذه المحادثة بعد.</p>
+                                                </div>`;
           }
         })
         .catch(err => console.error('Error fetching messages:', err))
@@ -186,6 +197,22 @@
           isLoading = false;
           topSpinner.classList.add('d-none');
         });
+    }
+
+    function scrollToAndHighlightMessage(messageId) {
+      setTimeout(() => {
+        const targetEl = document.getElementById('message-' + messageId);
+        if (targetEl) {
+          targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          targetEl.style.transition = 'all 0.5s ease';
+          targetEl.style.backgroundColor = 'rgba(220, 53, 69, 0.2)';
+          targetEl.style.border = '2px solid #dc3545';
+          setTimeout(() => {
+            targetEl.style.backgroundColor = 'var(--bg-card)';
+            targetEl.style.border = '1px solid var(--border-color)';
+          }, 3000);
+        }
+      }, 300);
     }
 
     chatContainer.addEventListener('scroll', function () {
@@ -241,13 +268,13 @@
           attachmentHTML = `<div class="mt-2"><img src="${fileUrl}" class="img-fluid rounded border" style="max-width: 250px;" alt="مرفق صورة"></div>`;
         } else if (msg.attachment_type === 'voice') {
           attachmentHTML = `
-                  <div class="mt-3 mb-2" style="width: 100%; min-width: 280px;">
-                    <audio controls preload="auto" class="w-100 shadow-sm rounded" style="height: 54px; outline: none;" 
-                           src="${fileUrl}" 
-                           onerror="retryAudio(this)">
-                      متصفحك لا يدعم مشغل الصوت.
-                    </audio>
-                  </div>`;
+                              <div class="mt-3 mb-2" style="width: 100%; min-width: 280px;">
+                                <audio controls preload="auto" class="w-100 shadow-sm rounded" style="height: 54px; outline: none;" 
+                                       src="${fileUrl}" 
+                                       onerror="retryAudio(this)">
+                                  متصفحك لا يدعم مشغل الصوت.
+                                </audio>
+                              </div>`;
         } else {
           attachmentHTML = `<div class="mt-2"><a href="${fileUrl}" target="_blank" class="btn btn-sm btn-outline-secondary"><i class="fa-solid fa-paperclip me-1"></i> فتح المرفق</a></div>`;
         }
@@ -258,36 +285,36 @@
         : '';
 
       return `
-                                <div class="d-flex align-items-start mb-3 justify-content-between p-2 rounded msg-item" id="message-${msg.id}" 
-                                     style="background-color: var(--bg-card); border: 1px solid var(--border-color);">
-                                  <div class="d-flex align-items-start gap-2 w-100">
-                                    <div class="p-2 rounded ${iconBg} d-flex align-items-center justify-content-center cursor-pointer flex-shrink-0" 
-                                         style="width: 38px; height: 38px;" ${profileClick} title="عرض الملف الشخصي">
-                                      <i class="fa-solid ${iconClass}"></i>
-                                    </div>
-                                    <div class="flex-grow-1" style="max-width: 85%;">
-                                      <strong class="d-block cursor-pointer text-hover-primary" style="color: var(--text-main); font-size: 0.9rem;" ${profileClick}>
-                                        ${senderName}
-                                        <span class="text-muted fw-normal" style="font-size: 0.75rem;">(${roleName})</span>
-                                      </strong>
-                                      ${msg.body ? `<p class="mb-1 mt-1" style="color: var(--text-main); font-size: 0.95rem;">${msg.body}</p>` : ''}
-                                      ${attachmentHTML}
-                                      <small class="text-muted d-block mt-1" style="font-size: 0.7rem;">${new Date(msg.created_at).toLocaleString('ar-EG')}</small>
-                                    </div>
-                                  </div>
-                                  <button class="btn btn-sm btn-link text-danger border-0 p-1 flex-shrink-0" onclick="confirmDeleteMessage(${msg.id})" title="حذف هذه الرسالة">
-                                    <i class="fa-regular fa-trash-can fs-5"></i>
-                                  </button>
-                                </div>`;
+                                            <div class="d-flex align-items-start mb-3 justify-content-between p-2 rounded msg-item" id="message-${msg.id}" 
+                                                 style="background-color: var(--bg-card); border: 1px solid var(--border-color);">
+                                              <div class="d-flex align-items-start gap-2 w-100">
+                                                <div class="p-2 rounded ${iconBg} d-flex align-items-center justify-content-center cursor-pointer flex-shrink-0" 
+                                                     style="width: 38px; height: 38px;" ${profileClick} title="عرض الملف الشخصي">
+                                                  <i class="fa-solid ${iconClass}"></i>
+                                                </div>
+                                                <div class="flex-grow-1" style="max-width: 85%;">
+                                                  <strong class="d-block cursor-pointer text-hover-primary" style="color: var(--text-main); font-size: 0.9rem;" ${profileClick}>
+                                                    ${senderName}
+                                                    <span class="text-muted fw-normal" style="font-size: 0.75rem;">(${roleName})</span>
+                                                  </strong>
+                                                  ${msg.body ? `<p class="mb-1 mt-1" style="color: var(--text-main); font-size: 0.95rem;">${msg.body}</p>` : ''}
+                                                  ${attachmentHTML}
+                                                  <small class="text-muted d-block mt-1" style="font-size: 0.7rem;">${new Date(msg.created_at).toLocaleString('ar-EG')}</small>
+                                                </div>
+                                              </div>
+                                              <button class="btn btn-sm btn-link text-danger border-0 p-1 flex-shrink-0" onclick="confirmDeleteMessage(${msg.id})" title="حذف هذه الرسالة">
+                                                <i class="fa-regular fa-trash-can fs-5"></i>
+                                              </button>
+                                            </div>`;
     }
 
     window.openUserProfile = function (type, id) {
       const modalContent = document.getElementById('user-profile-modal-content');
       modalContent.innerHTML = `
-                                <div class="text-center py-5">
-                                  <div class="spinner-border text-primary" role="status"></div>
-                                  <p class="mt-2 text-muted">جاري تحميل بيانات الملف الشخصي...</p>
-                                </div>`;
+                                            <div class="text-center py-5">
+                                              <div class="spinner-border text-primary" role="status"></div>
+                                              <p class="mt-2 text-muted">جاري تحميل بيانات الملف الشخصي...</p>
+                                            </div>`;
       profileModal.show();
 
       fetch(`/content-monitor/conversations/user-profile?type=${type}&id=${id}`, {
@@ -365,11 +392,14 @@
         const btnSend = document.getElementById('btn-send-msg');
         btnSend.disabled = true;
 
+        const socketId = window.Echo ? window.Echo.socketId() : '';
+
         fetch(`/content-monitor/conversations/${conversationId}/send`, {
           method: 'POST',
           headers: {
             'X-CSRF-TOKEN': '{{ csrf_token() }}',
-            'Accept': 'application/json'
+            'Accept': 'application/json',
+            'X-Socket-ID': socketId
           },
           body: formData
         })
@@ -455,6 +485,9 @@
               const messageData = e.message || e;
 
               if (messageData && messageData.id) {
+                if (document.getElementById('message-' + messageData.id)) {
+                  return;
+                }
                 const noMsgAlert = document.getElementById('no-messages-alert');
                 if (noMsgAlert) noMsgAlert.remove();
 

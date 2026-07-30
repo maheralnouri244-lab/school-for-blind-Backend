@@ -61,24 +61,22 @@
                     <tr style="border-bottom: 1px solid var(--border-color);">
                       <td class="py-3">
                         <span class="fw-bold">
-                          {{-- <?php echo e(class_basename($report->reported_type)); ?> --}}
-                        {{ $report->reporter->role ?? $report->reporter->fullname ??
+                          {{--
+                          <?php echo e(class_basename($report->reported_type)); ?> --}}
+                          {{ $report->reporter->role ?? $report->reporter->fullname ??
               $report->reporter->full_name ?? 'مستخدم محذوف' }}
-              </span>
+                        </span>
 
-                        <small
-                          class="text-muted d-block">{{ class_basename($report->reporter_type) == 'Student' ? 'طالب' 
-                          : (class_basename($report->reporter_type) == 'Teacher' ? 'أستاذ' : 
-                          (class_basename($report->reporter_type) == 'Admin' ? 'أدمن' :  'اهل')) }}</small>
+                        <small class="text-muted d-block">{{ class_basename($report->reporter_type) == 'Student' ? 'طالب'
+              : (class_basename($report->reporter_type) == 'Teacher' ? 'أستاذ' :
+                (class_basename($report->reporter_type) == 'Admin' ? 'أدمن' : 'اهل')) }}</small>
                       </td>
                       <td class="py-3">
-                        <span
-                          class="fw-bold text-danger">{{ $report->reported->fullname ?? $report->reported->full_name 
-                          ?? $report->reported->role }}</span>
-                        <small
-                          class="text-muted d-block">{{ class_basename($report->reported_type) == 'Student' ? 'طالب' 
-                          : (class_basename($report->reported_type) == 'Teacher' ? 'أستاذ' : 
-                          (class_basename($report->reported_type) == 'Admin' ? 'أدمن' :  'اهل')) }}</small>
+                        <span class="fw-bold text-danger">{{ $report->reported->fullname ?? $report->reported->full_name
+              ?? $report->reported->role }}</span>
+                        <small class="text-muted d-block">{{ class_basename($report->reported_type) == 'Student' ? 'طالب'
+              : (class_basename($report->reported_type) == 'Teacher' ? 'أستاذ' :
+                (class_basename($report->reported_type) == 'Admin' ? 'أدمن' : 'اهل')) }}</small>
                       </td>
                       <td class="py-3 text-muted"
                         style="max-width: 250px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
@@ -122,11 +120,38 @@
                               style="background-color: var(--hover-bg); border: 1px solid var(--border-color);">
                               <h6 class="fw-bold mb-2" style="color: var(--text-main);">تفاصيل البلاغ:</h6>
                               <p class="text-muted mb-1"><strong>المُبلِغ:</strong>
-                                {{ $report->reporter->fullname ?? $report->reporter->full_name ?? $report->reporter->role }}</p>
+                                {{ $report->reporter->fullname ?? $report->reporter->full_name ?? $report->reporter->role }}
+                              </p>
                               <p class="text-muted mb-1"><strong>المُبلَغ عليه:</strong> <span
                                   class="text-danger">{{ $report->reported->fullname ?? $report->reported->full_name ?? $report->reporter->role }}</span>
                               </p>
                               <p class="text-muted mb-0"><strong>السبب المذكور:</strong> {{ $report->reason }}</p>
+
+                              @if(class_basename($report->reportable_type) === 'Message' && $report->reportable)
+                                <hr style="border-color: var(--border-color);">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                  <h6 class="fw-bold text-danger mb-0">محتوى الرسالة المُخالفة:</h6>
+
+                                  {{-- زر الانتقال للرسالة في المحادثة --}}
+                                  <a href="{{ route('dashboard.conversations.show', $report->reportable->conversation_id) }}?msg={{ $report->reportable->id }}"
+                                    target="_blank" class="btn btn-sm btn-outline-primary">
+                                    <i class="fa-solid fa-arrow-up-right-from-square me-1"></i> الانتقال للرسالة
+                                  </a>
+                                </div>
+
+                                <div class="p-2 rounded" style="background-color: var(--bg-card); border: 1px dashed #dc3545;">
+                                  @if($report->reportable->body)
+                                    <p class="mb-1" style="color: var(--text-main);">"{{ $report->reportable->body }}"</p>
+                                  @endif
+
+                                  @if($report->reportable->attachment_path)
+                                    <span class="badge bg-soft-secondary text-secondary mt-1">
+                                      <i class="fa-solid fa-paperclip"></i> الرسالة تحتوي على مرفق
+                                      ({{ $report->reportable->attachment_type }})
+                                    </span>
+                                  @endif
+                                </div>
+                              @endif
                             </div>
 
                             @if($report->status === 'pending')
