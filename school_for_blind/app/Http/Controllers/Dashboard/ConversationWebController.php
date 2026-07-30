@@ -60,6 +60,7 @@ class ConversationWebController extends Controller
         $admin = Auth::guard('admin')->user();
         $conversation = Conversation::with('teacher')->findOrFail($id);
         $canReply = false;
+
         if ($conversation->type === 'teacher_admin' && $conversation->admin_id === $admin->id) {
             $canReply = true;
         }
@@ -97,7 +98,7 @@ class ConversationWebController extends Controller
 
         $request->validate([
             'body' => 'nullable|string',
-            'attachment' => 'nullable|file|max:51200',
+            'attachment' => 'nullable|file|max:51200', // الحد الأقصى 50 ميغا
         ]);
 
         if (!$request->filled('body') && !$request->hasFile('attachment')) {
@@ -109,10 +110,31 @@ class ConversationWebController extends Controller
 
         if ($request->hasFile('attachment')) {
             $file = $request->file('attachment');
-            $attachmentType = 'voice';
-            $extension = $file->getClientOriginalExtension() ?: 'webm';
-            $filename = Str::uuid() . '.' . $extension;
-            $attachmentPath = $file->storeAs('chat_attachments/voices', $filename, 'public');
+            $extension = strtolower($file->getClientOriginalExtension());
+
+            // التحقق إذا كان الملف تسجيل صوتي
+            if ($request->input('is_voice') == '1' || $extension === 'webm') {
+                $attachmentType = 'voice';
+                $filename = Str::uuid() . '.webm';
+                $attachmentPath = $file->storeAs('chat_attachments/voices', $filename, 'public');
+            } else {
+                $mime = $file->getClientMimeType();
+                $filename = Str::uuid() . '.' . $extension;
+
+                // تحديد نوع المرفق بناءً على الـ Mime Type
+                if (str_starts_with($mime, 'image/')) {
+                    $attachmentType = 'image';
+                    $folder = 'chat_attachments/images';
+                } elseif (str_starts_with($mime, 'video/')) {
+                    $attachmentType = 'video';
+                    $folder = 'chat_attachments/videos';
+                } else {
+                    $attachmentType = 'file';
+                    $folder = 'chat_attachments/files';
+                }
+
+                $attachmentPath = $file->storeAs($folder, $filename, 'public');
+            }
         }
 
         $message = $conversation->messages()->create([
@@ -126,8 +148,9 @@ class ConversationWebController extends Controller
         broadcast(new MessageSent($message))->toOthers();
 
         $message->load('sender');
-        if ($message->attachment_path)
+        if ($message->attachment_path) {
             $message->attachment_path = asset($message->attachment_path);
+        }
 
         return response()->json(['success' => true, 'data' => $message]);
     }
