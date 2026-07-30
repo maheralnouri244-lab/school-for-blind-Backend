@@ -10,6 +10,8 @@ use App\Models\Message;
 use App\Models\Report;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 
 class ConversationController extends Controller
 {
@@ -106,7 +108,18 @@ class ConversationController extends Controller
             return $message;
         });
 
-        return response()->json(['success' => true, 'data' => $messages]);
+        $hasActivePunishment = DB::table('punishables')
+            ->join('punishments', 'punishables.punishment_id', '=', 'punishments.id')
+            ->where('punishables.punishable_id', $user->id)
+            ->where('punishables.punishable_type', get_class($user))
+            ->where('punishments.name', 'LIKE', '%Mute%')
+            ->where(function ($query) {
+                $query->whereNull('punishables.expires_at')
+                    ->orWhere('punishables.expires_at', '>', Carbon::now());
+            })
+            ->exists();
+
+        return response()->json(['success' => true, 'data' => $messages, 'isBanned' => $hasActivePunishment]);
     }
 
 
