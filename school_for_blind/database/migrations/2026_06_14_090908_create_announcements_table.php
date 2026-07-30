@@ -25,7 +25,7 @@ return new class extends Migration {
                 ->constrained('teachers')
                 ->onDelete('cascade');
             $table->timestamps();
-            $table->enum('target_audience', ['student', 'parent', 'teacher'])->default('student');
+            $table->enum('target_audience', ['student', 'caregiver', 'teacher','all'])->default('all');
          
         });
     }

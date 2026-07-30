@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\CallStarted;
 use App\Http\Requests\Room\EndCallRequest;
 use App\Http\Requests\Room\JoinCallRequest;
 use App\Http\Requests\Room\KickParticipantRequest;
@@ -63,6 +64,7 @@ class RoomController extends Controller
         ]);
 
         $token = $this->roomService->generateToken($user, $room->room_name, $userRole, true, true);
+        event(new CallStarted($room, $request->class_id, $userName));
 
         CheckLateStudentsJob::dispatch($room)->delay(now()->addMinutes(5));
 

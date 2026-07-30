@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\QuizCreated;
 use App\Models\Choice;
 use App\Models\Lesson;
 use App\Models\Question;
@@ -101,6 +102,10 @@ class QuizController extends Controller
             $this->recalculateQuizTotals($quiz);
             $quiz->load('questions.choices');
 
+           if ($lesson && $lesson->class_id) {
+                event(new QuizCreated($quiz, $lesson->class_id));
+            }
+           
             return response()->json([
                 'message' => 'تم إنشاء الكويز بنجاح!',
                 'quiz' => $quiz
