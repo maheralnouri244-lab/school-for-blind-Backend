@@ -29,7 +29,6 @@ class SupportTicketController extends Controller
         }
 
         if ($isSuperOrSupport && $request->has('departments') && is_array($request->departments) && count($request->departments) > 0) {
-
             $inputDepartments = $request->departments;
             if (in_array('unassigned', $inputDepartments)) {
                 $deps = array_diff($inputDepartments, ['unassigned']);
@@ -64,13 +63,14 @@ class SupportTicketController extends Controller
         $request->validate([
             'assigned_department' => 'required|string',
             'priority' => 'required|in:low,medium,high,urgent',
+            'status' => 'required|in:open,in_progress,resolved,closed',
         ]);
 
         $ticket->update([
             'assigned_department' => $request->assigned_department,
             'priority' => $request->priority,
             'classified_by' => Auth::guard('admin')->id(),
-            'status' => 'in_progress'
+            'status' => $request->status
         ]);
 
         return redirect()->back()->with('success', 'تم تصنيف الطلب وتوجيهه للقسم المختص بنجاح.');

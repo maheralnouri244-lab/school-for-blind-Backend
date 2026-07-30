@@ -14,15 +14,71 @@
     </div>
 
     <div class="custom-card">
-      <div class="d-flex justify-content-between align-items-center mb-4">
-        <h5 class="fw-bold mb-0" style="color: var(--text-main);">القائمة الحالية</h5>
-        <div class="input-group" style="width: 250px;">
-          <span class="input-group-text border-0" style="background-color: var(--bg-main); color: var(--text-muted);">
-            <i class="fa-solid fa-magnifying-glass"></i>
-          </span>
-          <input type="text" class="form-control border-0 shadow-none search-input" placeholder="بحث عن أستاذ أو مادة...">
+      <form action="{{ route('dashboard.conversations.index') }}" method="GET" class="mb-4">
+        <div class="row g-3">
+          <div class="col-12 col-md-3">
+            <label class="form-label small fw-bold" style="color: var(--text-muted);">بحث باسم المحادثة</label>
+            <div class="input-group">
+              <span class="input-group-text border-0" style="background-color: var(--bg-main); color: var(--text-muted);">
+                <i class="fa-solid fa-magnifying-glass"></i>
+              </span>
+              <input type="text" name="search" value="{{ request('search') }}"
+                class="form-control border-0 shadow-none search-input" placeholder="اكتب للبحث...">
+            </div>
+          </div>
+
+          <div class="col-12 col-md-3">
+            <label class="form-label small fw-bold" style="color: var(--text-muted);">الأستاذ</label>
+            <select name="teacher_id" class="form-select border-0 shadow-none"
+              style="background-color: var(--bg-main); color: var(--text-main);">
+              <option value="">جميع الأساتذة</option>
+              @foreach($teachers as $teacher)
+                <option value="{{ $teacher->id }}" {{ request('teacher_id') == $teacher->id ? 'selected' : '' }}>
+                  {{ $teacher->full_name ?? ($teacher->first_name . ' ' . $teacher->last_name) }}
+                </option>
+              @endforeach
+            </select>
+          </div>
+
+          <div class="col-12 col-md-2">
+            <label class="form-label small fw-bold" style="color: var(--text-muted);">المادة والصف</label>
+            <select name="subject_id" class="form-select border-0 shadow-none"
+              style="background-color: var(--bg-main); color: var(--text-main);">
+              <option value="">جميع المواد والصفوف</option>
+              @foreach($subjects as $subject)
+                <option value="{{ $subject->id }}" {{ request('subject_id') == $subject->id ? 'selected' : '' }}>
+                  {{ $subject->name }} -
+                  ({{ $subject->grade_level === 'ninth' ? 'تاسع' : ($subject->grade_level === 'twelfth' ? 'بكالوريا' : 'غير محدد') }})
+                </option>
+              @endforeach
+            </select>
+          </div>
+
+          <div class="col-12 col-md-2">
+            <label class="form-label small fw-bold" style="color: var(--text-muted);">نوع المحادثة</label>
+            <select name="type" class="form-select border-0 shadow-none"
+              style="background-color: var(--bg-main); color: var(--text-main);">
+              <option value="">جميع الأنواع</option>
+              <option value="channel" {{ request('type') == 'channel' ? 'selected' : '' }}>قناة</option>
+              <option value="discussion" {{ request('type') == 'discussion' ? 'selected' : '' }}>مناقشة</option>
+              <option value="teacher_admin" {{ request('type') == 'teacher_admin' ? 'selected' : '' }}>محادثة إدارية
+              </option>
+            </select>
+          </div>
+
+          <div class="col-12 col-md-2 d-flex align-items-end gap-2">
+            <button type="submit" class="btn w-100 fw-bold" style="background-color: var(--accent-color); color: #fff;">
+              تصفية
+            </button>
+            @if(request()->hasAny(['search', 'teacher_id', 'subject_id', 'type']))
+              <a href="{{ route('dashboard.conversations.index') }}" class="btn btn-outline-secondary"
+                title="إلغاء الفلاتر">
+                <i class="fa-solid fa-rotate-left"></i>
+              </a>
+            @endif
+          </div>
         </div>
-      </div>
+      </form>
 
       <div class="table-responsive">
         <table class="table table-hover-custom align-middle mb-0" style="color: var(--text-main);">
@@ -30,6 +86,7 @@
             <tr style="border-bottom: 2px solid var(--border-color);">
               <th scope="col" class="pb-3 text-muted fw-normal">اسم المحادثة</th>
               <th scope="col" class="pb-3 text-muted fw-normal">النوع</th>
+              <th scope="col" class="pb-3 text-muted fw-normal">المادة والصف</th>
               <th scope="col" class="pb-3 text-muted fw-normal">الأستاذ المرتبط</th>
               <th scope="col" class="pb-3 text-muted fw-normal">تاريخ الإنشاء</th>
               <th scope="col" class="pb-3 text-muted fw-normal text-start">الإجراءات</th>
@@ -48,7 +105,16 @@
                     <span class="badge-status bg-soft-success text-success px-2 py-1 rounded">محادثة إدارية</span>
                   @endif
                 </td>
-                <td class="py-3 text-muted">{{ $conv->teacher->full_name ?? 'غير محدد' }}</td>
+                <td class="py-3 text-muted">
+                  @if($conv->subject)
+                    {{ $conv->subject->name }}
+                    ({{ $conv->subject->grade_level === 'ninth' ? 'تاسع' : ($conv->subject->grade_level === 'twelfth' ? 'بكالوريا' : 'غير محدد') }})
+                  @else
+                    غير محدد
+                  @endif
+                </td>
+                <td class="py-3 text-muted">{{ $conv->teacher->full_name ?? ($conv->teacher->first_name ?? 'غير محدد') }}
+                </td>
                 <td class="py-3 text-muted">{{ $conv->created_at->format('Y-m-d') }}</td>
                 <td class="py-3 text-start">
                   <a href="{{ route('dashboard.conversations.show', $conv->id) }}" class="btn btn-sm"
@@ -59,7 +125,7 @@
               </tr>
             @empty
               <tr>
-                <td colspan="5" class="text-center py-4 text-muted">لا توجد محادثات حالياً.</td>
+                <td colspan="6" class="text-center py-4 text-muted">لا توجد محادثات تطابق الفلاتر المحددة.</td>
               </tr>
             @endforelse
           </tbody>

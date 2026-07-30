@@ -176,6 +176,35 @@
           </thead>
           <tbody>
             @forelse($tickets as $ticket)
+              @php
+                $attachData = $ticket->attachment_path;
+                $parsedAttach = is_string($attachData) ? json_decode($attachData, true) : $attachData;
+
+                $hasImage = false;
+                $hasAudio = false;
+                $imageUrl = '';
+                $audioUrl = '';
+
+                if (is_array($parsedAttach)) {
+                  if (isset($parsedAttach['image'])) {
+                    $hasImage = true;
+                    $imageUrl = asset($parsedAttach['image']);
+                  }
+                  if (isset($parsedAttach['audio'])) {
+                    $hasAudio = true;
+                    $audioUrl = asset($parsedAttach['audio']);
+                  }
+                } elseif (is_string($attachData) && !empty($attachData)) {
+                  if (preg_match('/\.(mp3|wav|ogg|m4a|weba)$/i', $attachData)) {
+                    $hasAudio = true;
+                    $audioUrl = asset(str_starts_with($attachData, 'storage/') ? $attachData : 'storage/' . $attachData);
+                  } else {
+                    $hasImage = true;
+                    $imageUrl = asset(str_starts_with($attachData, 'storage/') ? $attachData : 'storage/' . $attachData);
+                  }
+                }
+              @endphp
+
               <tr style="border-bottom: 1px solid var(--border-color);">
                 <td class="align-middle px-3">{{ $loop->iteration }}</td>
 
@@ -195,12 +224,25 @@
 
                 <td class="align-middle px-4 text-start small" style="max-width: 300px;">
                   <div class="text-truncate" title="{{ $ticket->message }}">{{ $ticket->message }}</div>
-                  @if($ticket->attachment_path)
-                    <a href="{{ asset('storage/' . $ticket->attachment_path) }}" target="_blank"
-                      class="btn btn-sm mt-2 rounded-pill fw-bold small d-inline-flex align-items-center gap-1"
-                      style="background-color: rgba(16, 185, 129, 0.1); color: #10b981; border: 1px solid #10b981; text-decoration: none;">
-                      <i class="fa-solid fa-image"></i> عرض المرفق
-                    </a>
+
+                  @if($hasImage || $hasAudio)
+                    <div class="mt-2 d-flex gap-2 flex-wrap">
+                      @if($hasImage)
+                        <button type="button" data-bs-toggle="modal" data-bs-target="#imageModal{{ $ticket->id }}"
+                          class="btn btn-sm rounded-pill fw-bold small d-inline-flex align-items-center gap-1"
+                          style="background-color: rgba(16, 185, 129, 0.1); color: #10b981; border: 1px solid #10b981;">
+                          <i class="fa-solid fa-image"></i> عرض الصورة
+                        </button>
+                      @endif
+
+                      @if($hasAudio)
+                        <button type="button" data-bs-toggle="modal" data-bs-target="#ticketModal{{ $ticket->id }}"
+                          class="btn btn-sm rounded-pill fw-bold small d-inline-flex align-items-center gap-1"
+                          style="background-color: rgba(59, 130, 246, 0.1); color: #3b82f6; border: 1px solid #3b82f6;">
+                          <i class="fa-solid fa-headphones"></i> تشغيل التسجيل
+                        </button>
+                      @endif
+                    </div>
                   @endif
                 </td>
 
@@ -310,16 +352,27 @@
                           </div>
                         </div>
 
-                        @if($ticket->attachment_path)
+                        @if($hasAudio)
                           <div class="col-12 mt-2">
-                            <label class="form-label small fw-bold mb-2">المرفقات المرسلة:</label>
+                            <label class="form-label small fw-bold mb-2">التسجيل الصوتي المرسل:</label>
+                            <div class="p-3 rounded-4 text-center border"
+                              style="background-color: var(--bg-main); border-color: var(--border-color) !important;">
+                              <audio controls class="w-100" style="height: 45px; outline: none;">
+                                <source src="{{ $audioUrl }}" type="audio/mpeg">
+                                متصفحك لا يدعم تشغيل الصوت.
+                              </audio>
+                            </div>
+                          </div>
+                        @endif
+
+                        @if($hasImage)
+                          <div class="col-12 mt-2">
+                            <label class="form-label small fw-bold mb-2">الصورة المرفقة:</label>
                             <div class="p-2 rounded-4 text-center border"
                               style="background-color: var(--bg-main); border-color: var(--border-color) !important; max-height: 350px; overflow: hidden;">
-                              <a href="{{ asset('storage/' . $ticket->attachment_path) }}" target="_blank"
-                                title="اضغط لعرض الحجم الكامل">
-                                <img src="{{ asset('storage/' . $ticket->attachment_path) }}" class="img-fluid rounded-3"
-                                  style="max-height: 330px; object-fit: contain;">
-                              </a>
+                              <img src="{{ $imageUrl }}" class="img-fluid rounded-3 cursor-pointer"
+                                style="max-height: 330px; object-fit: contain;" data-bs-toggle="modal"
+                                data-bs-target="#imageModal{{ $ticket->id }}">
                             </div>
                           </div>
                         @endif
@@ -414,6 +467,30 @@
                   </div>
                 </div>
               </div>
+
+              @if($hasImage)
+                <div class="modal fade" id="imageModal{{ $ticket->id }}" tabindex="-1" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content glass-modal text-end" dir="rtl"
+                      style="border: 1px solid var(--border-color); color: var(--text-main); border-radius: 16px; overflow: hidden; background-color: var(--bg-card);">
+                      <div class="modal-header d-flex justify-content-between align-items-center"
+                        style="border-bottom: 1px solid var(--border-color); background-color: rgba(16, 185, 129, 0.05);">
+                        <div class="d-flex align-items-center gap-3">
+                          <div class="p-2 rounded-circle bg-soft-success d-flex align-items-center justify-content-center"
+                            style="width: 40px; height: 40px;">
+                            <i class="fa-solid fa-image text-success fs-5"></i>
+                          </div>
+                          <h5 class="modal-title fw-bold mb-0" style="color: var(--text-main);">عرض الصورة المرفقة</h5>
+                        </div>
+                        <button type="button" class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body p-4 text-center">
+                        <img src="{{ $imageUrl }}" class="img-fluid rounded-3" style="max-height: 75vh; object-fit: contain;">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              @endif
 
             @empty
               <tr>

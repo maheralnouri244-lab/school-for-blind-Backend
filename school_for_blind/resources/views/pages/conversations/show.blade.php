@@ -2,7 +2,6 @@
 
 @section('content')
   <div class="container-fluid p-0">
-    {{-- رأس الصفحة --}}
     <div class="d-flex justify-content-between align-items-center mb-4">
       <div>
         <h4 class="fw-bold mb-1" style="color: var(--text-main);">{{ $conversation->name ?? 'محادثة' }}</h4>
@@ -25,31 +24,24 @@
 
     <div class="row">
       <div class="col-12">
-        {{-- صندوق المحادثة --}}
         <div class="custom-card d-flex flex-column" style="height: 650px; padding: 20px;">
 
-          {{-- منطقة الرسائل --}}
           <div id="chat-messages" class="flex-grow-1 overflow-y-auto mb-3 p-3 position-relative"
             style="background-color: var(--bg-main); border-radius: 12px; border: 1px solid var(--border-color);">
 
-            {{-- مؤشر تحميل الرسائل القديمة عند السكرول لأعلى --}}
             <div id="top-loading-spinner" class="text-center py-2 d-none">
               <div class="spinner-border spinner-border-sm text-primary" role="status"></div>
               <small class="text-muted ms-2">جاري تحميل الرسائل القديمة...</small>
             </div>
 
-            {{-- يتم حشو الرسائل ديناميكياً هنا عبر الـ JavaScript --}}
             <div id="messages-wrapper"></div>
           </div>
 
-          {{-- نموذج إرسال الرسالة (إذا كان الأدمن يملك صلاحية الرد) --}}
           {{--
           HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEee
           RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
           EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEe
           HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-          RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
-          EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEHEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
           RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
           EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEHEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
           RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
@@ -67,19 +59,15 @@
               <div class="input-group p-1 rounded-3"
                 style="background-color: var(--bg-card); border: 1px solid var(--border-color);">
 
-                {{-- زر إضافة مرفق --}}
-                <label class="btn btn-link text-muted m-0 d-flex align-items-center" for="attachment-input"
-                  title="إرفاق ملف أو تسجيل">
-                  <i class="fa-solid fa-paperclip fs-5"></i>
-                </label>
-                <input type="file" id="attachment-input" name="attachment" class="d-none">
+                <button type="button" id="btn-record-voice" class="btn btn-link text-muted m-0 d-flex align-items-center"
+                  title="تسجيل صوتي">
+                  <i class="fa-solid fa-microphone fs-5 transition-transform"></i>
+                </button>
 
-                {{-- حقل إدخال النص --}}
                 <input type="text" id="message-body-input" name="body"
                   class="form-control border-0 shadow-none bg-transparent" placeholder="اكتب رسالتك هنا..."
                   style="color: var(--text-main);">
 
-                {{-- زر الإرسال --}}
                 <button type="submit" class="btn btn-primary px-4 fw-bold rounded-2 d-flex align-items-center gap-2"
                   id="btn-send-msg">
                   <span>إرسال</span>
@@ -87,16 +75,14 @@
                 </button>
               </div>
 
-              {{-- المعاينة المسبقة للملف المرفق قبل الإرسال --}}
               <div id="attachment-preview" class="mt-2 d-none align-items-center gap-2 p-2 rounded"
                 style="background-color: var(--hover-bg);">
-                <i class="fa-solid fa-file text-info"></i>
-                <small id="attachment-file-name" class="text-muted flex-grow-1"></small>
+                <i class="fa-solid fa-microphone-lines text-info fa-beat"></i>
+                <small id="attachment-file-name" class="text-muted flex-grow-1">مقطع صوتي جاهز للإرسال</small>
                 <button type="button" class="btn-close btn-sm" id="btn-remove-attachment"></button>
               </div>
             </form>
           @else
-            {{-- تنبيه للواجهات المخصصة للمراقبة فقط --}}
             <div class="p-2 rounded bg-soft-warning text-warning text-center" style="font-size: 0.9rem;">
               <i class="fa-solid fa-circle-info me-1"></i> هذه الواجهة مخصصة لمراقبة وضبط المحتوى وحذف المخالفات.
             </div>
@@ -107,7 +93,6 @@
     </div>
   </div>
 
-  {{-- 1. مودال تأكيد الحذف --}}
   <div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content glass-modal">
@@ -128,7 +113,6 @@
     </div>
   </div>
 
-  {{-- 2. مودال عرض ملف المستخدم الديناميكي (طالب أو أستاذ) --}}
   <div class="modal fade" id="userProfileModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content glass-modal text-end" id="user-profile-modal-content">
@@ -140,6 +124,7 @@
     </div>
   </div>
 @endsection
+
 @push('scripts')
   <script type="module">
     const conversationId = {{ $conversation->id }};
@@ -155,7 +140,6 @@
     const deleteModal = new bootstrap.Modal(document.getElementById('deleteConfirmModal'));
     const profileModal = new bootstrap.Modal(document.getElementById('userProfileModal'));
 
-    // --- 1. جلب الرسائل (Infinite Scroll) ---
     function fetchMessages(url, isPrepend = false) {
       if (!url || isLoading) return;
       isLoading = true;
@@ -191,10 +175,10 @@
 
           if (messagesWrapper.children.length === 0) {
             messagesWrapper.innerHTML = `
-                                  <div id="no-messages-alert" class="text-center py-5 text-muted">
-                                    <i class="fa-regular fa-comments fs-1 mb-3"></i>
-                                    <p>لا توجد رسائل في هذه المحادثة بعد.</p>
-                                  </div>`;
+                                    <div id="no-messages-alert" class="text-center py-5 text-muted">
+                                      <i class="fa-regular fa-comments fs-1 mb-3"></i>
+                                      <p>لا توجد رسائل في هذه المحادثة بعد.</p>
+                                    </div>`;
           }
         })
         .catch(err => console.error('Error fetching messages:', err))
@@ -210,22 +194,19 @@
       }
     });
 
-    // --- دالة لإعادة محاولة تحميل الصوت إذا لم يكن جاهزاً على السيرفر بعد ---
     window.retryAudio = function (audioElement) {
       let retries = parseInt(audioElement.dataset.retries || '0');
-      // نجرب نحمل الملف 3 مرات كحد أقصى
       if (retries < 3) {
         console.warn("الملف قيد الحفظ على السيرفر، جاري إعادة المحاولة...", retries + 1);
         audioElement.dataset.retries = retries + 1;
 
         setTimeout(() => {
-          // جلب الرابط الحالي وتحديث الطابع الزمني لكسر الكاش
           const url = new URL(audioElement.src, window.location.origin);
           url.searchParams.set('t', new Date().getTime());
 
           audioElement.src = url.toString();
           audioElement.load();
-        }, 1500); // ننتظر ثانية ونص بين كل محاولة
+        }, 1500);
       } else {
         console.error("فشل تحميل الصوت بعد عدة محاولات.");
       }
@@ -251,7 +232,6 @@
 
       let attachmentHTML = '';
       if (msg.attachment_path) {
-        // تجهيز الرابط مع طابع زمني أولي
         const timeStamp = new Date().getTime();
         const fileUrl = msg.attachment_path.includes('?')
           ? `${msg.attachment_path}&t=${timeStamp}`
@@ -260,15 +240,14 @@
         if (msg.attachment_type === 'image') {
           attachmentHTML = `<div class="mt-2"><img src="${fileUrl}" class="img-fluid rounded border" style="max-width: 250px;" alt="مرفق صورة"></div>`;
         } else if (msg.attachment_type === 'voice') {
-          // التعديل هنا: استخدام src مباشرة، وإضافة onerror
           attachmentHTML = `
-                <div class="mt-3 mb-2" style="width: 100%; min-width: 280px;">
-                  <audio controls preload="auto" class="w-100 shadow-sm rounded" style="height: 54px; outline: none;" 
-                         src="${fileUrl}" 
-                         onerror="retryAudio(this)">
-                    متصفحك لا يدعم مشغل الصوت.
-                  </audio>
-                </div>`;
+                  <div class="mt-3 mb-2" style="width: 100%; min-width: 280px;">
+                    <audio controls preload="auto" class="w-100 shadow-sm rounded" style="height: 54px; outline: none;" 
+                           src="${fileUrl}" 
+                           onerror="retryAudio(this)">
+                      متصفحك لا يدعم مشغل الصوت.
+                    </audio>
+                  </div>`;
         } else {
           attachmentHTML = `<div class="mt-2"><a href="${fileUrl}" target="_blank" class="btn btn-sm btn-outline-secondary"><i class="fa-solid fa-paperclip me-1"></i> فتح المرفق</a></div>`;
         }
@@ -279,37 +258,36 @@
         : '';
 
       return `
-                              <div class="d-flex align-items-start mb-3 justify-content-between p-2 rounded msg-item" id="message-${msg.id}" 
-                                   style="background-color: var(--bg-card); border: 1px solid var(--border-color);">
-                                <div class="d-flex align-items-start gap-2 w-100">
-                                  <div class="p-2 rounded ${iconBg} d-flex align-items-center justify-content-center cursor-pointer flex-shrink-0" 
-                                       style="width: 38px; height: 38px;" ${profileClick} title="عرض الملف الشخصي">
-                                    <i class="fa-solid ${iconClass}"></i>
+                                <div class="d-flex align-items-start mb-3 justify-content-between p-2 rounded msg-item" id="message-${msg.id}" 
+                                     style="background-color: var(--bg-card); border: 1px solid var(--border-color);">
+                                  <div class="d-flex align-items-start gap-2 w-100">
+                                    <div class="p-2 rounded ${iconBg} d-flex align-items-center justify-content-center cursor-pointer flex-shrink-0" 
+                                         style="width: 38px; height: 38px;" ${profileClick} title="عرض الملف الشخصي">
+                                      <i class="fa-solid ${iconClass}"></i>
+                                    </div>
+                                    <div class="flex-grow-1" style="max-width: 85%;">
+                                      <strong class="d-block cursor-pointer text-hover-primary" style="color: var(--text-main); font-size: 0.9rem;" ${profileClick}>
+                                        ${senderName}
+                                        <span class="text-muted fw-normal" style="font-size: 0.75rem;">(${roleName})</span>
+                                      </strong>
+                                      ${msg.body ? `<p class="mb-1 mt-1" style="color: var(--text-main); font-size: 0.95rem;">${msg.body}</p>` : ''}
+                                      ${attachmentHTML}
+                                      <small class="text-muted d-block mt-1" style="font-size: 0.7rem;">${new Date(msg.created_at).toLocaleString('ar-EG')}</small>
+                                    </div>
                                   </div>
-                                  <div class="flex-grow-1" style="max-width: 85%;">
-                                    <strong class="d-block cursor-pointer text-hover-primary" style="color: var(--text-main); font-size: 0.9rem;" ${profileClick}>
-                                      ${senderName}
-                                      <span class="text-muted fw-normal" style="font-size: 0.75rem;">(${roleName})</span>
-                                    </strong>
-                                    ${msg.body ? `<p class="mb-1 mt-1" style="color: var(--text-main); font-size: 0.95rem;">${msg.body}</p>` : ''}
-                                    ${attachmentHTML}
-                                    <small class="text-muted d-block mt-1" style="font-size: 0.7rem;">${new Date(msg.created_at).toLocaleString('ar-EG')}</small>
-                                  </div>
-                                </div>
-                                <button class="btn btn-sm btn-link text-danger border-0 p-1 flex-shrink-0" onclick="confirmDeleteMessage(${msg.id})" title="حذف هذه الرسالة">
-                                  <i class="fa-regular fa-trash-can fs-5"></i>
-                                </button>
-                              </div>`;
+                                  <button class="btn btn-sm btn-link text-danger border-0 p-1 flex-shrink-0" onclick="confirmDeleteMessage(${msg.id})" title="حذف هذه الرسالة">
+                                    <i class="fa-regular fa-trash-can fs-5"></i>
+                                  </button>
+                                </div>`;
     }
 
-    // --- 3. فتح ملف المستخدم الشخصي ---
     window.openUserProfile = function (type, id) {
       const modalContent = document.getElementById('user-profile-modal-content');
       modalContent.innerHTML = `
-                              <div class="text-center py-5">
-                                <div class="spinner-border text-primary" role="status"></div>
-                                <p class="mt-2 text-muted">جاري تحميل بيانات الملف الشخصي...</p>
-                              </div>`;
+                                <div class="text-center py-5">
+                                  <div class="spinner-border text-primary" role="status"></div>
+                                  <p class="mt-2 text-muted">جاري تحميل بيانات الملف الشخصي...</p>
+                                </div>`;
       profileModal.show();
 
       fetch(`/content-monitor/conversations/user-profile?type=${type}&id=${id}`, {
@@ -328,24 +306,50 @@
         });
     }
 
-    // --- 4. إرسال رسالة جديدة (الأدمن) ---
     const sendForm = document.getElementById('send-message-form');
     if (sendForm) {
-      const attachmentInput = document.getElementById('attachment-input');
+      let mediaRecorder;
+      let audioChunks = [];
+      let audioBlob = null;
+
+      const recordBtn = document.getElementById('btn-record-voice');
+      const recordIcon = recordBtn.querySelector('i');
       const attachmentPreview = document.getElementById('attachment-preview');
-      const attachmentFileName = document.getElementById('attachment-file-name');
       const removeAttachmentBtn = document.getElementById('btn-remove-attachment');
 
-      attachmentInput.addEventListener('change', function () {
-        if (this.files.length > 0) {
-          attachmentFileName.textContent = this.files[0].name;
-          attachmentPreview.classList.remove('d-none');
-          attachmentPreview.classList.add('d-flex');
+      recordBtn.addEventListener('click', async () => {
+        if (!mediaRecorder || mediaRecorder.state === 'inactive') {
+          try {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            mediaRecorder = new MediaRecorder(stream);
+            audioChunks = [];
+
+            mediaRecorder.ondataavailable = e => {
+              if (e.data.size > 0) audioChunks.push(e.data);
+            };
+
+            mediaRecorder.onstop = () => {
+              audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+              attachmentPreview.classList.remove('d-none');
+              attachmentPreview.classList.add('d-flex');
+            };
+
+            mediaRecorder.start();
+            recordIcon.classList.remove('fa-microphone');
+            recordIcon.classList.add('fa-stop', 'text-danger', 'fa-beat-fade');
+          } catch (err) {
+            alert('عذراً، لا يمكن الوصول إلى الميكروفون.');
+          }
+        } else if (mediaRecorder.state === 'recording') {
+          mediaRecorder.stop();
+          mediaRecorder.stream.getTracks().forEach(track => track.stop());
+          recordIcon.classList.remove('fa-stop', 'text-danger', 'fa-beat-fade');
+          recordIcon.classList.add('fa-microphone');
         }
       });
 
       removeAttachmentBtn.addEventListener('click', function () {
-        attachmentInput.value = '';
+        audioBlob = null;
         attachmentPreview.classList.add('d-none');
         attachmentPreview.classList.remove('d-flex');
       });
@@ -353,6 +357,11 @@
       sendForm.addEventListener('submit', function (e) {
         e.preventDefault();
         const formData = new FormData(this);
+
+        if (audioBlob) {
+          formData.append('attachment', audioBlob, 'voice_record.webm');
+        }
+
         const btnSend = document.getElementById('btn-send-msg');
         btnSend.disabled = true;
 
@@ -383,7 +392,6 @@
       });
     }
 
-    // --- 5. حذف الرسالة ---
     window.confirmDeleteMessage = function (id) {
       messageIdToDelete = id;
       deleteModal.show();
@@ -392,7 +400,6 @@
     document.getElementById('btn-confirm-delete').addEventListener('click', function () {
       if (!messageIdToDelete) return;
 
-      // إصلاح التحذير الأصفر: إبعاد التركيز عن الزر بمجرد الضغط عليه
       this.blur();
 
       fetch(`/content-monitor/conversations/messages/${messageIdToDelete}`, {
@@ -423,11 +430,9 @@
       chatContainer.scrollTop = chatContainer.scrollHeight;
     }
 
-    // --- 6. التهيئة والـ Real-time عبر Laravel Echo ---
     window.onload = function () {
       fetchMessages(nextCursorUrl);
 
-      // التحقق من أن Echo يعمل بنجاح
       setTimeout(() => {
         if (typeof window.Echo !== 'undefined') {
           console.log("✅ Echo is ready! Connecting to Reverb...");
@@ -453,7 +458,6 @@
                 const noMsgAlert = document.getElementById('no-messages-alert');
                 if (noMsgAlert) noMsgAlert.remove();
 
-                // رسم الرسالة وإضافتها
                 messagesWrapper.insertAdjacentHTML('beforeend', renderMessageHTML(messageData));
                 scrollToBottom();
               }

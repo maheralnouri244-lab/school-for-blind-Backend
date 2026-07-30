@@ -50,6 +50,13 @@ class ConversationController extends Controller
     {
         $student = $request->user();
 
+        if (!$student->class) {
+            return response()->json([
+                'success' => false,
+                'message' => 'هذا الطالب غير مسجل في أي شعبة أو صف حالياً.'
+            ], 400);
+        }
+
         $teacherIds = $student->class->teachers()->pluck('teachers.id');
 
         $channels = Conversation::whereIn('teacher_id', $teacherIds)
@@ -65,7 +72,7 @@ class ConversationController extends Controller
     public function getMessages(Request $request, $conversationId)
     {
         $user = $request->user();
-        
+
         $conversation = Conversation::with('parent')->findOrFail($conversationId);
 
         if (class_basename($user) === 'Student') {
