@@ -55,7 +55,7 @@ $latestDate = Schedule::where('class_id', $student->class_id)->max('created_at')
         ]);
     }
 
-    public function caregiverSchedule(Request $request)
+   public function caregiverSchedule(Request $request)
     {
         $caregiver = $request->user(); 
         
@@ -68,26 +68,25 @@ $latestDate = Schedule::where('class_id', $student->class_id)->max('created_at')
 
             if ($latestDate) {
                 $latestDateOnly = Carbon::parse($latestDate)->toDateString();
-            $childSchedule = Schedule::where('class_id', $child->class_id)
-            ->whereDate('created_at', $latestDateOnly)
-            ->with(['subject', 'studentClass']) 
-            ->orderBy('day_of_week')
-                ->orderBy('start_time')
-                ->get()
-                ->groupBy('day_of_week');
+                $childSchedule = Schedule::where('class_id', $child->class_id)
+                    ->whereDate('created_at', $latestDateOnly)
+                    ->with(['subject', 'studentClass']) 
+                    ->orderBy('day_of_week')
+                    ->orderBy('start_time')
+                    ->get()
+                    ->groupBy('day_of_week');
 
-            $allSchedules[] = [
-                'student_id' => $child->id,
-                'student_name' => $child->fullname, 
-                'class_id' => $child->class_id,
-                'schedule' => $childSchedule
-            ];
-        }
+                $allSchedules[] = [
+                    'student_id' => $child->id,
+                    'student_name' => $child->fullname, 
+                    'class_id' => $child->class_id,
+                    'schedule' => $childSchedule
+                ];
+            }
+        } 
 
         return response()->json([
             'status' => 'success',
             'data' => $allSchedules
         ]);
-    } 
-}
-}
+    }}
