@@ -59,13 +59,13 @@
                                     <tbody>
                                         @php
                                             $days = [
-                                                'sunday' => 'الأحد',
-                                                'monday' => 'الإثنين',
-                                                'tuesday' => 'الثلاثاء',
-                                                'wednesday' => 'الأربعاء',
-                                                'thursday' => 'الخميس',
-                                                'friday' => 'الجمعة',
-                                                'saturday' => 'السبت'
+                                                '1' => 'الأحد',
+                                                '2' => 'الإثنين',
+                                                '3' => 'الثلاثاء',
+                                                '4' => 'الأربعاء',
+                                                '5' => 'الخميس',
+                                                '6' => 'الجمعة',
+                                                '7' => 'السبت'
                                             ];
                                         @endphp
 
@@ -431,7 +431,7 @@
 
         function saveAllSchedules() {
             let schedulesPayload = [];
-            const dayKeys = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+            const dayKeys = ["1", "2", "3", "4", "5", "6", "7"];
 
             document.querySelectorAll('.schedule-card').forEach(card => {
                 let classId = card.getAttribute('data-class-id');

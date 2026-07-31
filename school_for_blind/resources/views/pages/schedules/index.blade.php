@@ -137,8 +137,7 @@
 @push('scripts')
   <script>
     const daysArr = ["الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"];
-    const dayKeys = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
-
+    const dayKeys = ["1", "2", "3", "4", "5", "6", "7"];
     function handleViewSchedule(btn) {
       const schedules = JSON.parse(btn.getAttribute('data-schedules'));
       const title = btn.getAttribute('data-title');
