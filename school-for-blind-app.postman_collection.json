@@ -3,7 +3,7 @@
     "_postman_id": "9aef9af2-148e-4d79-94c8-546cc662a7aa",
     "name": "school-for-blind-app",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "56938336",
+    "_exporter_id": "56921522",
     "_collection_link": "https://go.postman.co/collection/56921522-9aef9af2-148e-4d79-94c8-546cc662a7aa?source=collection_link"
   },
   "item": [
@@ -28,7 +28,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"amount\": 50\r\n}",
+              "raw": "{\r\n    \"amount\": 50000\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1150,7 +1150,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"teacher_id\": 1,\r\n    \"amount\": 100\r\n}",
+              "raw": "{\r\n    \"teacher_id\": 1,\r\n    \"amount\": 50\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -5007,7 +5007,7 @@
                   }
                 ],
                 "url": {
-                  "raw": "http://127.0.0.1:8000/api/caregiver/login?phone=0948568727&password=1zk84n6jpe",
+                  "raw": "http://127.0.0.1:8000/api/caregiver/login?phone=0948568727&password=zm3acdltxx",
                   "protocol": "http",
                   "host": [
                     "127",
@@ -5028,7 +5028,7 @@
                     },
                     {
                       "key": "password",
-                      "value": "1zk84n6jpe"
+                      "value": "zm3acdltxx"
                     }
                   ]
                 }
@@ -5622,7 +5622,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "43|cEseHg9WJ8yVXl9WnQOrp2rLXMZhxU9CcNY0GnBS6c0ae6a6",
+                  "value": "Y5vblyZnkbULZDIzdzm4hzdpT50SbNctLrWouHrd397dd2cb",
                   "type": "string"
                 }
               ]
@@ -10551,7 +10551,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"type\": \"school_timetable\",\r\n    \"target_audience\": \"all\",\r\n    \"title\": \"برنامج الدوام الأسبوعي لعام 2026\",\r\n    \r\n        \"content\": \"الطلاب الأعزاء، نود إعلامكم بأن عطلة نهاية الأسبوع ستبدأ من صباح الخميس القادم نظراً لأعمال الصيانة في المدرسة.\"}",
+              "raw": "{\r\n    \"type\": \"normal\",\r\n    \"target_audience\": \"teacher\",\r\n    \"title\": \"برنامج الدوام الأسبوعي لعام 2026\",\r\n    \"level\":\"ninth\",\r\n        \"content\": \"الطلاب الأعزاء، نود إعلامكم بأن عطلة نهاية الأسبوع ستبدأ من صباح الخميس القادم نظراً لأعمال الصيانة في المدرسة.\"}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -10660,7 +10660,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "jf1io24rLabVP41ZsevA59MZCFIPHWbdcoP8h2fa9308d9ea",
+                  "value": "VEq42VKJITkTUPR8JfGH0G8LRqJAFCmpmTmaiTX4fd084dbd",
                   "type": "string"
                 }
               ]
@@ -10865,7 +10865,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "KquOSii8p4HSwpeuOZEbsXJgGxGYlLhNiLMQ39oA11bb5e6b",
+                  "value": "fam0RHXb7vau00pBkJf9T8oWBe1HMBaSzwC9xdFC2d491565",
                   "type": "string"
                 }
               ]
@@ -11042,7 +11042,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "Jn1ohjfO0BOqJ1pFKdsov2uSidNr3e5nVHMKVARYd67a165b",
+                  "value": "KquOSii8p4HSwpeuOZEbsXJgGxGYlLhNiLMQ39oA11bb5e6b",
                   "type": "string"
                 }
               ]
@@ -11675,7 +11675,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "oYeEre20RHdLlAmrkl2UzszXpmBdvfiCryC14Oer8d069e89",
+                  "value": "KquOSii8p4HSwpeuOZEbsXJgGxGYlLhNiLMQ39oA11bb5e6b",
                   "type": "string"
                 }
               ]
@@ -18526,7 +18526,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "ugdiotH2HDBT7F0b8zlNS366ok3adwHzlH0FU3zG1e281902",
+                  "value": "zioyU05xweLH1WDxCBtV8l2j1zg1q4KR7coQZ0mbe785c1b6",
                   "type": "string"
                 }
               ]
@@ -18620,6 +18620,134 @@
               ],
               "cookie": [],
               "body": "{\n    \"status\": \"success\",\n    \"data\": []\n}"
+            },
+            {
+              "name": "parent",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/caregiver/schedule",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "caregiver",
+                    "schedule"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 31 Jul 2026 04:59:41 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"success\",\n    \"data\": [\n        {\n            \"student_id\": 306,\n            \"student_name\": \"آية حمَّاميَّة\",\n            \"class_id\": 1,\n            \"schedule\": {\n                \"الأحد\": [\n                    {\n                        \"id\": 10,\n                        \"class_id\": 1,\n                        \"teacher_id\": 1,\n                        \"subject_id\": 1,\n                        \"day_of_week\": \"الأحد\",\n                        \"period_number\": 1,\n                        \"start_time\": \"08:00:00\",\n                        \"end_time\": \"08:45:00\",\n                        \"created_at\": \"2026-07-30T18:54:25.000000Z\",\n                        \"updated_at\": \"2026-07-30T18:54:25.000000Z\",\n                        \"subject\": {\n                            \"id\": 1,\n                            \"name\": \"الفلسفة\",\n                            \"grade_level\": \"twelfth\",\n                            \"number_of_lessons\": null,\n                            \"total_lessons\": 24,\n                            \"deleted_at\": null,\n                            \"created_at\": \"2026-07-30T16:46:45.000000Z\",\n                            \"updated_at\": \"2026-07-30T16:47:00.000000Z\"\n                        },\n                        \"student_class\": {\n                            \"id\": 1,\n                            \"name\": \"First Division\",\n                            \"level\": \"ninth\",\n                            \"number\": 1,\n                            \"created_at\": \"2026-07-30T16:46:45.000000Z\",\n                            \"updated_at\": \"2026-07-30T16:46:45.000000Z\"\n                        }\n                    },\n                    {\n                        \"id\": 15,\n                        \"class_id\": 1,\n                        \"teacher_id\": 4,\n                        \"subject_id\": 4,\n                        \"day_of_week\": \"الأحد\",\n                        \"period_number\": 2,\n                        \"start_time\": \"09:00:00\",\n                        \"end_time\": \"09:45:00\",\n                        \"created_at\": \"2026-07-30T18:54:25.000000Z\",\n                        \"updated_at\": \"2026-07-30T18:54:25.000000Z\",\n                        \"subject\": {\n                            \"id\": 4,\n                            \"name\": \"اللغة العربية\",\n                            \"grade_level\": \"twelfth\",\n                            \"number_of_lessons\": null,\n                            \"total_lessons\": 28,\n                            \"deleted_at\": null,\n                            \"created_at\": \"2026-07-30T16:46:45.000000Z\",\n                            \"updated_at\": \"2026-07-30T16:47:00.000000Z\"\n                        },\n                        \"student_class\": {\n                            \"id\": 1,\n                            \"name\": \"First Division\",\n                            \"level\": \"ninth\",\n                            \"number\": 1,\n                            \"created_at\": \"2026-07-30T16:46:45.000000Z\",\n                            \"updated_at\": \"2026-07-30T16:46:45.000000Z\"\n                        }\n                    }\n                ],\n                \"الأربعاء\": [\n                    {\n                        \"id\": 13,\n                        \"class_id\": 1,\n                        \"teacher_id\": 3,\n                        \"subject_id\": 5,\n                        \"day_of_week\": \"الأربعاء\",\n                        \"period_number\": 4,\n                        \"start_time\": \"11:00:00\",\n                        \"end_time\": \"11:45:00\",\n                        \"created_at\": \"2026-07-30T18:54:25.000000Z\",\n                        \"updated_at\": \"2026-07-30T18:54:25.000000Z\",\n                        \"subject\": {\n                            \"id\": 5,\n                            \"name\": \"اللغة الإنكليزية\",\n                            \"grade_level\": \"twelfth\",\n                            \"number_of_lessons\": null,\n                            \"total_lessons\": 25,\n                            \"deleted_at\": null,\n                            \"created_at\": \"2026-07-30T16:46:45.000000Z\",\n                            \"updated_at\": \"2026-07-30T16:47:00.000000Z\"\n                        },\n                        \"student_class\": {\n                            \"id\": 1,\n                            \"name\": \"First Division\",\n                            \"level\": \"ninth\",\n                            \"number\": 1,\n                            \"created_at\": \"2026-07-30T16:46:45.000000Z\",\n                            \"updated_at\": \"2026-07-30T16:46:45.000000Z\"\n                        }\n                    }\n                ],\n                \"الاثنين\": [\n                    {\n                        \"id\": 11,\n                        \"class_id\": 1,\n                        \"teacher_id\": 1,\n                        \"subject_id\": 1,\n                        \"day_of_week\": \"الاثنين\",\n                        \"period_number\": 2,\n                        \"start_time\": \"09:00:00\",\n                        \"end_time\": \"09:45:00\",\n                        \"created_at\": \"2026-07-30T18:54:25.000000Z\",\n                        \"updated_at\": \"2026-07-30T18:54:25.000000Z\",\n                        \"subject\": {\n                            \"id\": 1,\n                            \"name\": \"الفلسفة\",\n                            \"grade_level\": \"twelfth\",\n                            \"number_of_lessons\": null,\n                            \"total_lessons\": 24,\n                            \"deleted_at\": null,\n                            \"created_at\": \"2026-07-30T16:46:45.000000Z\",\n                            \"updated_at\": \"2026-07-30T16:47:00.000000Z\"\n                        },\n                        \"student_class\": {\n                            \"id\": 1,\n                            \"name\": \"First Division\",\n                            \"level\": \"ninth\",\n                            \"number\": 1,\n                            \"created_at\": \"2026-07-30T16:46:45.000000Z\",\n                            \"updated_at\": \"2026-07-30T16:46:45.000000Z\"\n                        }\n                    },\n                    {\n                        \"id\": 16,\n                        \"class_id\": 1,\n                        \"teacher_id\": 2,\n                        \"subject_id\": 3,\n                        \"day_of_week\": \"الاثنين\",\n                        \"period_number\": 3,\n                        \"start_time\": \"10:00:00\",\n                        \"end_time\": \"10:45:00\",\n                        \"created_at\": \"2026-07-30T18:54:25.000000Z\",\n                        \"updated_at\": \"2026-07-30T18:54:25.000000Z\",\n                        \"subject\": {\n                            \"id\": 3,\n                            \"name\": \"الجغرافيا\",\n                            \"grade_level\": \"twelfth\",\n                            \"number_of_lessons\": null,\n                            \"total_lessons\": 30,\n                            \"deleted_at\": null,\n                            \"created_at\": \"2026-07-30T16:46:45.000000Z\",\n                            \"updated_at\": \"2026-07-30T16:47:00.000000Z\"\n                        },\n                        \"student_class\": {\n                            \"id\": 1,\n                            \"name\": \"First Division\",\n                            \"level\": \"ninth\",\n                            \"number\": 1,\n                            \"created_at\": \"2026-07-30T16:46:45.000000Z\",\n                            \"updated_at\": \"2026-07-30T16:46:45.000000Z\"\n                        }\n                    }\n                ],\n                \"الثلاثاء\": [\n                    {\n                        \"id\": 12,\n                        \"class_id\": 1,\n                        \"teacher_id\": 2,\n                        \"subject_id\": 2,\n                        \"day_of_week\": \"الثلاثاء\",\n                        \"period_number\": 3,\n                        \"start_time\": \"10:00:00\",\n                        \"end_time\": \"10:45:00\",\n                        \"created_at\": \"2026-07-30T18:54:25.000000Z\",\n                        \"updated_at\": \"2026-07-30T18:54:25.000000Z\",\n                        \"subject\": {\n                            \"id\": 2,\n                            \"name\": \"التاريخ\",\n                            \"grade_level\": \"twelfth\",\n                            \"number_of_lessons\": null,\n                            \"total_lessons\": 29,\n                            \"deleted_at\": null,\n                            \"created_at\": \"2026-07-30T16:46:45.000000Z\",\n                            \"updated_at\": \"2026-07-30T16:47:00.000000Z\"\n                        },\n                        \"student_class\": {\n                            \"id\": 1,\n                            \"name\": \"First Division\",\n                            \"level\": \"ninth\",\n                            \"number\": 1,\n                            \"created_at\": \"2026-07-30T16:46:45.000000Z\",\n                            \"updated_at\": \"2026-07-30T16:46:45.000000Z\"\n                        }\n                    }\n                ],\n                \"الخميس\": [\n                    {\n                        \"id\": 14,\n                        \"class_id\": 1,\n                        \"teacher_id\": 4,\n                        \"subject_id\": 10,\n                        \"day_of_week\": \"الخميس\",\n                        \"period_number\": 1,\n                        \"start_time\": \"08:00:00\",\n                        \"end_time\": \"08:45:00\",\n                        \"created_at\": \"2026-07-30T18:54:25.000000Z\",\n                        \"updated_at\": \"2026-07-30T18:54:25.000000Z\",\n                        \"subject\": {\n                            \"id\": 10,\n                            \"name\": \"علم الأحياء والأرض\",\n                            \"grade_level\": \"ninth\",\n                            \"number_of_lessons\": null,\n                            \"total_lessons\": 28,\n                            \"deleted_at\": null,\n                            \"created_at\": \"2026-07-30T16:46:45.000000Z\",\n                            \"updated_at\": \"2026-07-30T16:47:00.000000Z\"\n                        },\n                        \"student_class\": {\n                            \"id\": 1,\n                            \"name\": \"First Division\",\n                            \"level\": \"ninth\",\n                            \"number\": 1,\n                            \"created_at\": \"2026-07-30T16:46:45.000000Z\",\n                            \"updated_at\": \"2026-07-30T16:46:45.000000Z\"\n                        }\n                    }\n                ]\n            }\n        }\n    ]\n}"
+            },
+            {
+              "name": "parent",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/caregiver/schedule",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "caregiver",
+                    "schedule"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 31 Jul 2026 05:10:05 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"success\",\n    \"data\": [\n        {\n            \"student_id\": 304,\n            \"student_name\": \"طالب تجريبي 3\",\n            \"class_id\": 1,\n            \"schedule\": {\n                \"الأحد\": [\n                    {\n                        \"id\": 10,\n                        \"class_id\": 1,\n                        \"teacher_id\": 1,\n                        \"subject_id\": 1,\n                        \"day_of_week\": \"الأحد\",\n                        \"period_number\": 1,\n                        \"start_time\": \"08:00:00\",\n                        \"end_time\": \"08:45:00\",\n                        \"created_at\": \"2026-07-30T18:54:25.000000Z\",\n                        \"updated_at\": \"2026-07-30T18:54:25.000000Z\",\n                        \"subject\": {\n                            \"id\": 1,\n                            \"name\": \"الفلسفة\",\n                            \"grade_level\": \"twelfth\",\n                            \"number_of_lessons\": null,\n                            \"total_lessons\": 24,\n                            \"deleted_at\": null,\n                            \"created_at\": \"2026-07-30T16:46:45.000000Z\",\n                            \"updated_at\": \"2026-07-30T16:47:00.000000Z\"\n                        },\n                        \"student_class\": {\n                            \"id\": 1,\n                            \"name\": \"First Division\",\n                            \"level\": \"ninth\",\n                            \"number\": 1,\n                            \"created_at\": \"2026-07-30T16:46:45.000000Z\",\n                            \"updated_at\": \"2026-07-30T16:46:45.000000Z\"\n                        }\n                    },\n                    {\n                        \"id\": 15,\n                        \"class_id\": 1,\n                        \"teacher_id\": 4,\n                        \"subject_id\": 4,\n                        \"day_of_week\": \"الأحد\",\n                        \"period_number\": 2,\n                        \"start_time\": \"09:00:00\",\n                        \"end_time\": \"09:45:00\",\n                        \"created_at\": \"2026-07-30T18:54:25.000000Z\",\n                        \"updated_at\": \"2026-07-30T18:54:25.000000Z\",\n                        \"subject\": {\n                            \"id\": 4,\n                            \"name\": \"اللغة العربية\",\n                            \"grade_level\": \"twelfth\",\n                            \"number_of_lessons\": null,\n                            \"total_lessons\": 28,\n                            \"deleted_at\": null,\n                            \"created_at\": \"2026-07-30T16:46:45.000000Z\",\n                            \"updated_at\": \"2026-07-30T16:47:00.000000Z\"\n                        },\n                        \"student_class\": {\n                            \"id\": 1,\n                            \"name\": \"First Division\",\n                            \"level\": \"ninth\",\n                            \"number\": 1,\n                            \"created_at\": \"2026-07-30T16:46:45.000000Z\",\n                            \"updated_at\": \"2026-07-30T16:46:45.000000Z\"\n                        }\n                    }\n                ],\n                \"الأربعاء\": [\n                    {\n                        \"id\": 13,\n                        \"class_id\": 1,\n                        \"teacher_id\": 3,\n                        \"subject_id\": 5,\n                        \"day_of_week\": \"الأربعاء\",\n                        \"period_number\": 4,\n                        \"start_time\": \"11:00:00\",\n                        \"end_time\": \"11:45:00\",\n                        \"created_at\": \"2026-07-30T18:54:25.000000Z\",\n                        \"updated_at\": \"2026-07-30T18:54:25.000000Z\",\n                        \"subject\": {\n                            \"id\": 5,\n                            \"name\": \"اللغة الإنكليزية\",\n                            \"grade_level\": \"twelfth\",\n                            \"number_of_lessons\": null,\n                            \"total_lessons\": 25,\n                            \"deleted_at\": null,\n                            \"created_at\": \"2026-07-30T16:46:45.000000Z\",\n                            \"updated_at\": \"2026-07-30T16:47:00.000000Z\"\n                        },\n                        \"student_class\": {\n                            \"id\": 1,\n                            \"name\": \"First Division\",\n                            \"level\": \"ninth\",\n                            \"number\": 1,\n                            \"created_at\": \"2026-07-30T16:46:45.000000Z\",\n                            \"updated_at\": \"2026-07-30T16:46:45.000000Z\"\n                        }\n                    }\n                ],\n                \"الاثنين\": [\n                    {\n                        \"id\": 11,\n                        \"class_id\": 1,\n                        \"teacher_id\": 1,\n                        \"subject_id\": 1,\n                        \"day_of_week\": \"الاثنين\",\n                        \"period_number\": 2,\n                        \"start_time\": \"09:00:00\",\n                        \"end_time\": \"09:45:00\",\n                        \"created_at\": \"2026-07-30T18:54:25.000000Z\",\n                        \"updated_at\": \"2026-07-30T18:54:25.000000Z\",\n                        \"subject\": {\n                            \"id\": 1,\n                            \"name\": \"الفلسفة\",\n                            \"grade_level\": \"twelfth\",\n                            \"number_of_lessons\": null,\n                            \"total_lessons\": 24,\n                            \"deleted_at\": null,\n                            \"created_at\": \"2026-07-30T16:46:45.000000Z\",\n                            \"updated_at\": \"2026-07-30T16:47:00.000000Z\"\n                        },\n                        \"student_class\": {\n                            \"id\": 1,\n                            \"name\": \"First Division\",\n                            \"level\": \"ninth\",\n                            \"number\": 1,\n                            \"created_at\": \"2026-07-30T16:46:45.000000Z\",\n                            \"updated_at\": \"2026-07-30T16:46:45.000000Z\"\n                        }\n                    },\n                    {\n                        \"id\": 16,\n                        \"class_id\": 1,\n                        \"teacher_id\": 2,\n                        \"subject_id\": 3,\n                        \"day_of_week\": \"الاثنين\",\n                        \"period_number\": 3,\n                        \"start_time\": \"10:00:00\",\n                        \"end_time\": \"10:45:00\",\n                        \"created_at\": \"2026-07-30T18:54:25.000000Z\",\n                        \"updated_at\": \"2026-07-30T18:54:25.000000Z\",\n                        \"subject\": {\n                            \"id\": 3,\n                            \"name\": \"الجغرافيا\",\n                            \"grade_level\": \"twelfth\",\n                            \"number_of_lessons\": null,\n                            \"total_lessons\": 30,\n                            \"deleted_at\": null,\n                            \"created_at\": \"2026-07-30T16:46:45.000000Z\",\n                            \"updated_at\": \"2026-07-30T16:47:00.000000Z\"\n                        },\n                        \"student_class\": {\n                            \"id\": 1,\n                            \"name\": \"First Division\",\n                            \"level\": \"ninth\",\n                            \"number\": 1,\n                            \"created_at\": \"2026-07-30T16:46:45.000000Z\",\n                            \"updated_at\": \"2026-07-30T16:46:45.000000Z\"\n                        }\n                    }\n                ],\n                \"الثلاثاء\": [\n                    {\n                        \"id\": 12,\n                        \"class_id\": 1,\n                        \"teacher_id\": 2,\n                        \"subject_id\": 2,\n                        \"day_of_week\": \"الثلاثاء\",\n                        \"period_number\": 3,\n                        \"start_time\": \"10:00:00\",\n                        \"end_time\": \"10:45:00\",\n                        \"created_at\": \"2026-07-30T18:54:25.000000Z\",\n                        \"updated_at\": \"2026-07-30T18:54:25.000000Z\",\n                        \"subject\": {\n                            \"id\": 2,\n                            \"name\": \"التاريخ\",\n                            \"grade_level\": \"twelfth\",\n                            \"number_of_lessons\": null,\n                            \"total_lessons\": 29,\n                            \"deleted_at\": null,\n                            \"created_at\": \"2026-07-30T16:46:45.000000Z\",\n                            \"updated_at\": \"2026-07-30T16:47:00.000000Z\"\n                        },\n                        \"student_class\": {\n                            \"id\": 1,\n                            \"name\": \"First Division\",\n                            \"level\": \"ninth\",\n                            \"number\": 1,\n                            \"created_at\": \"2026-07-30T16:46:45.000000Z\",\n                            \"updated_at\": \"2026-07-30T16:46:45.000000Z\"\n                        }\n                    }\n                ],\n                \"الخميس\": [\n                    {\n                        \"id\": 14,\n                        \"class_id\": 1,\n                        \"teacher_id\": 4,\n                        \"subject_id\": 10,\n                        \"day_of_week\": \"الخميس\",\n                        \"period_number\": 1,\n                        \"start_time\": \"08:00:00\",\n                        \"end_time\": \"08:45:00\",\n                        \"created_at\": \"2026-07-30T18:54:25.000000Z\",\n                        \"updated_at\": \"2026-07-30T18:54:25.000000Z\",\n                        \"subject\": {\n                            \"id\": 10,\n                            \"name\": \"علم الأحياء والأرض\",\n                            \"grade_level\": \"ninth\",\n                            \"number_of_lessons\": null,\n                            \"total_lessons\": 28,\n                            \"deleted_at\": null,\n                            \"created_at\": \"2026-07-30T16:46:45.000000Z\",\n                            \"updated_at\": \"2026-07-30T16:47:00.000000Z\"\n                        },\n                        \"student_class\": {\n                            \"id\": 1,\n                            \"name\": \"First Division\",\n                            \"level\": \"ninth\",\n                            \"number\": 1,\n                            \"created_at\": \"2026-07-30T16:46:45.000000Z\",\n                            \"updated_at\": \"2026-07-30T16:46:45.000000Z\"\n                        }\n                    }\n                ]\n            }\n        },\n        {\n            \"student_id\": 306,\n            \"student_name\": \"آية حمَّاميَّة\",\n            \"class_id\": 1,\n            \"schedule\": {\n                \"الأحد\": [\n                    {\n                        \"id\": 10,\n                        \"class_id\": 1,\n                        \"teacher_id\": 1,\n                        \"subject_id\": 1,\n                        \"day_of_week\": \"الأحد\",\n                        \"period_number\": 1,\n                        \"start_time\": \"08:00:00\",\n                        \"end_time\": \"08:45:00\",\n                        \"created_at\": \"2026-07-30T18:54:25.000000Z\",\n                        \"updated_at\": \"2026-07-30T18:54:25.000000Z\",\n                        \"subject\": {\n                            \"id\": 1,\n                            \"name\": \"الفلسفة\",\n                            \"grade_level\": \"twelfth\",\n                            \"number_of_lessons\": null,\n                            \"total_lessons\": 24,\n                            \"deleted_at\": null,\n                            \"created_at\": \"2026-07-30T16:46:45.000000Z\",\n                            \"updated_at\": \"2026-07-30T16:47:00.000000Z\"\n                        },\n                        \"student_class\": {\n                            \"id\": 1,\n                            \"name\": \"First Division\",\n                            \"level\": \"ninth\",\n                            \"number\": 1,\n                            \"created_at\": \"2026-07-30T16:46:45.000000Z\",\n                            \"updated_at\": \"2026-07-30T16:46:45.000000Z\"\n                        }\n                    },\n                    {\n                        \"id\": 15,\n                        \"class_id\": 1,\n                        \"teacher_id\": 4,\n                        \"subject_id\": 4,\n                        \"day_of_week\": \"الأحد\",\n                        \"period_number\": 2,\n                        \"start_time\": \"09:00:00\",\n                        \"end_time\": \"09:45:00\",\n                        \"created_at\": \"2026-07-30T18:54:25.000000Z\",\n                        \"updated_at\": \"2026-07-30T18:54:25.000000Z\",\n                        \"subject\": {\n                            \"id\": 4,\n                            \"name\": \"اللغة العربية\",\n                            \"grade_level\": \"twelfth\",\n                            \"number_of_lessons\": null,\n                            \"total_lessons\": 28,\n                            \"deleted_at\": null,\n                            \"created_at\": \"2026-07-30T16:46:45.000000Z\",\n                            \"updated_at\": \"2026-07-30T16:47:00.000000Z\"\n                        },\n                        \"student_class\": {\n                            \"id\": 1,\n                            \"name\": \"First Division\",\n                            \"level\": \"ninth\",\n                            \"number\": 1,\n                            \"created_at\": \"2026-07-30T16:46:45.000000Z\",\n                            \"updated_at\": \"2026-07-30T16:46:45.000000Z\"\n                        }\n                    }\n                ],\n                \"الأربعاء\": [\n                    {\n                        \"id\": 13,\n                        \"class_id\": 1,\n                        \"teacher_id\": 3,\n                        \"subject_id\": 5,\n                        \"day_of_week\": \"الأربعاء\",\n                        \"period_number\": 4,\n                        \"start_time\": \"11:00:00\",\n                        \"end_time\": \"11:45:00\",\n                        \"created_at\": \"2026-07-30T18:54:25.000000Z\",\n                        \"updated_at\": \"2026-07-30T18:54:25.000000Z\",\n                        \"subject\": {\n                            \"id\": 5,\n                            \"name\": \"اللغة الإنكليزية\",\n                            \"grade_level\": \"twelfth\",\n                            \"number_of_lessons\": null,\n                            \"total_lessons\": 25,\n                            \"deleted_at\": null,\n                            \"created_at\": \"2026-07-30T16:46:45.000000Z\",\n                            \"updated_at\": \"2026-07-30T16:47:00.000000Z\"\n                        },\n                        \"student_class\": {\n                            \"id\": 1,\n                            \"name\": \"First Division\",\n                            \"level\": \"ninth\",\n                            \"number\": 1,\n                            \"created_at\": \"2026-07-30T16:46:45.000000Z\",\n                            \"updated_at\": \"2026-07-30T16:46:45.000000Z\"\n                        }\n                    }\n                ],\n                \"الاثنين\": [\n                    {\n                        \"id\": 11,\n                        \"class_id\": 1,\n                        \"teacher_id\": 1,\n                        \"subject_id\": 1,\n                        \"day_of_week\": \"الاثنين\",\n                        \"period_number\": 2,\n                        \"start_time\": \"09:00:00\",\n                        \"end_time\": \"09:45:00\",\n                        \"created_at\": \"2026-07-30T18:54:25.000000Z\",\n                        \"updated_at\": \"2026-07-30T18:54:25.000000Z\",\n                        \"subject\": {\n                            \"id\": 1,\n                            \"name\": \"الفلسفة\",\n                            \"grade_level\": \"twelfth\",\n                            \"number_of_lessons\": null,\n                            \"total_lessons\": 24,\n                            \"deleted_at\": null,\n                            \"created_at\": \"2026-07-30T16:46:45.000000Z\",\n                            \"updated_at\": \"2026-07-30T16:47:00.000000Z\"\n                        },\n                        \"student_class\": {\n                            \"id\": 1,\n                            \"name\": \"First Division\",\n                            \"level\": \"ninth\",\n                            \"number\": 1,\n                            \"created_at\": \"2026-07-30T16:46:45.000000Z\",\n                            \"updated_at\": \"2026-07-30T16:46:45.000000Z\"\n                        }\n                    },\n                    {\n                        \"id\": 16,\n                        \"class_id\": 1,\n                        \"teacher_id\": 2,\n                        \"subject_id\": 3,\n                        \"day_of_week\": \"الاثنين\",\n                        \"period_number\": 3,\n                        \"start_time\": \"10:00:00\",\n                        \"end_time\": \"10:45:00\",\n                        \"created_at\": \"2026-07-30T18:54:25.000000Z\",\n                        \"updated_at\": \"2026-07-30T18:54:25.000000Z\",\n                        \"subject\": {\n                            \"id\": 3,\n                            \"name\": \"الجغرافيا\",\n                            \"grade_level\": \"twelfth\",\n                            \"number_of_lessons\": null,\n                            \"total_lessons\": 30,\n                            \"deleted_at\": null,\n                            \"created_at\": \"2026-07-30T16:46:45.000000Z\",\n                            \"updated_at\": \"2026-07-30T16:47:00.000000Z\"\n                        },\n                        \"student_class\": {\n                            \"id\": 1,\n                            \"name\": \"First Division\",\n                            \"level\": \"ninth\",\n                            \"number\": 1,\n                            \"created_at\": \"2026-07-30T16:46:45.000000Z\",\n                            \"updated_at\": \"2026-07-30T16:46:45.000000Z\"\n                        }\n                    }\n                ],\n                \"الثلاثاء\": [\n                    {\n                        \"id\": 12,\n                        \"class_id\": 1,\n                        \"teacher_id\": 2,\n                        \"subject_id\": 2,\n                        \"day_of_week\": \"الثلاثاء\",\n                        \"period_number\": 3,\n                        \"start_time\": \"10:00:00\",\n                        \"end_time\": \"10:45:00\",\n                        \"created_at\": \"2026-07-30T18:54:25.000000Z\",\n                        \"updated_at\": \"2026-07-30T18:54:25.000000Z\",\n                        \"subject\": {\n                            \"id\": 2,\n                            \"name\": \"التاريخ\",\n                            \"grade_level\": \"twelfth\",\n                            \"number_of_lessons\": null,\n                            \"total_lessons\": 29,\n                            \"deleted_at\": null,\n                            \"created_at\": \"2026-07-30T16:46:45.000000Z\",\n                            \"updated_at\": \"2026-07-30T16:47:00.000000Z\"\n                        },\n                        \"student_class\": {\n                            \"id\": 1,\n                            \"name\": \"First Division\",\n                            \"level\": \"ninth\",\n                            \"number\": 1,\n                            \"created_at\": \"2026-07-30T16:46:45.000000Z\",\n                            \"updated_at\": \"2026-07-30T16:46:45.000000Z\"\n                        }\n                    }\n                ],\n                \"الخميس\": [\n                    {\n                        \"id\": 14,\n                        \"class_id\": 1,\n                        \"teacher_id\": 4,\n                        \"subject_id\": 10,\n                        \"day_of_week\": \"الخميس\",\n                        \"period_number\": 1,\n                        \"start_time\": \"08:00:00\",\n                        \"end_time\": \"08:45:00\",\n                        \"created_at\": \"2026-07-30T18:54:25.000000Z\",\n                        \"updated_at\": \"2026-07-30T18:54:25.000000Z\",\n                        \"subject\": {\n                            \"id\": 10,\n                            \"name\": \"علم الأحياء والأرض\",\n                            \"grade_level\": \"ninth\",\n                            \"number_of_lessons\": null,\n                            \"total_lessons\": 28,\n                            \"deleted_at\": null,\n                            \"created_at\": \"2026-07-30T16:46:45.000000Z\",\n                            \"updated_at\": \"2026-07-30T16:47:00.000000Z\"\n                        },\n                        \"student_class\": {\n                            \"id\": 1,\n                            \"name\": \"First Division\",\n                            \"level\": \"ninth\",\n                            \"number\": 1,\n                            \"created_at\": \"2026-07-30T16:46:45.000000Z\",\n                            \"updated_at\": \"2026-07-30T16:46:45.000000Z\"\n                        }\n                    }\n                ]\n            }\n        }\n    ]\n}"
             }
           ]
         },
@@ -18628,6 +18756,52 @@
           "request": {
             "method": "GET",
             "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "teacher",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "c320RTeo6eKPuB4tP0pvj02Vt3RGUw2ahrCGwjWH0e21c15b",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "",
+                "value": "",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/teacher/schedule",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "teacher",
+                "schedule"
+              ]
+            }
           },
           "response": []
         }

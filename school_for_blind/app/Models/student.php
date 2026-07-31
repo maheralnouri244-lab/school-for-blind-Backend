@@ -107,7 +107,15 @@ class Student extends Authenticatable
         static::deleting(function ($student) {
             $student->deviceTokens()->delete();
             $student->notifications()->delete();
+       if ($student->parent_id) {
+                $parent = $student->parent;
+                
+                if ($parent && $parent->students()->count() <= 1) {
+                    $parent->delete();
+                }
+            }
         });
+       
     }
     public function notifications()
     {

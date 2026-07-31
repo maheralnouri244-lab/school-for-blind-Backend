@@ -267,7 +267,7 @@ Route::get('/exams/{id}/solutions', [StudentExamController::class, 'getExamWithS
 Route::post('/exams/submit-answer', [StudentExamController::class, 'submitAnswer'])->middleware('auth:sanctum');
 Route::get('/submissions/{id}/details', [StudentExamController::class, 'getSubmissionDetails'])->middleware('auth:sanctum');
 Route::post('/exams/submit', [StudentExamController::class, 'submitExam'])->middleware('auth:sanctum');
-Route::get('/student/exam-details/{id}', [StudentExamController::class, 'getExamDetails']);
+Route::get('/student/exam-details/{id}', [StudentExamController::class, 'getExamDetails'])->middleware('auth:sanctum');;
 
 Route::middleware('auth:sanctum')->group(function () {
 

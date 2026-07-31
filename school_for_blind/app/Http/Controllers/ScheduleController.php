@@ -55,7 +55,7 @@ class ScheduleController extends Controller
         ]);
     }
 
-    public function caregiverSchedule(Request $request)
+   public function caregiverSchedule(Request $request)
     {
         $caregiver = $request->user();
 
@@ -83,11 +83,10 @@ class ScheduleController extends Controller
                     'schedule' => $childSchedule
                 ];
             }
+        } 
 
-            return response()->json([
-                'status' => 'success',
-                'data' => $allSchedules
-            ]);
-        }
-    }
-}
+        return response()->json([
+            'status' => 'success',
+            'data' => $allSchedules
+        ]);
+    }}
