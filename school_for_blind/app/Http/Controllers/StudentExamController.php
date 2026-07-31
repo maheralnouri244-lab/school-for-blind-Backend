@@ -47,7 +47,13 @@ public function getExamsBySubject(Request $request)
 
 public function getExamDetails($id): JsonResponse
 {
-    $exam = Exam::with('questions')->find($id);
+    $userId = Auth::id();
+
+    $exam = Exam::with('questions')
+        ->withExists(['favorites as is_favorited' => function ($query) use ($userId) {
+            $query->where('user_id', $userId);
+        }])
+        ->find($id);
 
     if (!$exam) {
         return response()->json([
@@ -56,24 +62,21 @@ public function getExamDetails($id): JsonResponse
         ], 404);
     }
 
-
-
     return response()->json([
         'status'  => 'success',
         'message' => 'تم جلب تفاصيل الامتحان بنجاح.',
         'data'    => [
             'exam_id'          => $exam->id,
             'exam_title'       => $exam->title,
-            'descreption'        => $exam->description,
+            'descreption'      => $exam->description,
             'exam_date'        => $exam->exam_date,
             'duration_minutes' => $exam->duration_minutes, 
             'total_questions'  => $exam->numofquestions,     
             'total_mark'       => $exam->totalmark,          
+            'is_favorited'     => (bool) $exam->is_favorited, 
         ]
     ], 200);
 }
-
-
 public function getQuestionsByExam($examId)
 {
     $exam = Exam::with('questions.choices')->findOrFail($examId);
