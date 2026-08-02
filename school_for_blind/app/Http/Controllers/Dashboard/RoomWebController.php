@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
-use App\Models\Room;
 use App\Models\Classes;
+use App\Models\Room;
+use App\Models\Subject;
+use App\Models\Teacher;
 use App\Services\RoomService;
 use Illuminate\Http\Request;
 
@@ -149,9 +151,9 @@ class RoomWebController extends Controller
                 $duration = \Carbon\Carbon::parse($room->started_at)->diffInMinutes($room->ended_at);
 
                 if ($duration >= 30) {
-                    $room->is_paid = true;
+                    $room->payment_status = 'unpaid';
                 } else {
-                    $room->is_paid = false;
+                    $room->payment_status = 'deducted';
                 }
 
                 $room->save();
@@ -172,14 +174,28 @@ class RoomWebController extends Controller
         return view('pages.rooms.active_calls', compact('activeCalls'));
     }
 
-    public function history()
+    public function history(Request $request)
     {
-        $pastCalls = Room::where('status', 'ended')
-            ->with(['creator', 'schoolClass', 'subject'])
-            ->latest()
-            ->get();
+        $query = Room::where('status', 'ended')
+            ->with(['creator', 'schoolClass', 'subject']);
 
-        return view('pages.rooms.history', compact('pastCalls'));
+        if ($request->filled('teacher_id')) {
+            $query->where('creator_type', Teacher::class)
+                  ->where('creator_id', $request->teacher_id);
+        }
+        if ($request->filled('payment_status')) {
+            $query->where('payment_status', $request->payment_status);
+        }
+
+        if ($request->filled('subject_id')) {
+            $query->where('subject_id', $request->subject_id);
+        }
+
+        $pastCalls = $query->latest()->get();
+        $teachers = Teacher::all();
+        $subjects = Subject::all();
+
+        return view('pages.rooms.history', compact('pastCalls', 'teachers', 'subjects'));
     }
 
     public function assignSubject(Request $request)

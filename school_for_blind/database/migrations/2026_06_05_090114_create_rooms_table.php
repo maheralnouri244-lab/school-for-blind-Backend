@@ -18,7 +18,7 @@ return new class extends Migration {
                 ->nullable()
                 ->constrained('subjects')
                 ->onDelete('set null');
-            $table->boolean('is_paid')->default(false);
+            $table->enum('payment_status', ['unpaid', 'paid', 'deducted'])->default('unpaid');
             $table->string('room_name')->unique();
             $table->enum('status', ['active', 'ended'])->default('active');
             $table->json('kicked_participants')->nullable();

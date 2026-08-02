@@ -25,4 +25,12 @@ class Subject extends Model
         return $this->hasMany(Lesson::class);
     }
 
+    public function getFullNameAttribute()
+    {
+        if ($this->grade_level) {
+            return $this->name . ' - ' . ($this->grade_level=='ninth' ? 'التاسع' : 'الثاني عشر');
+        }
+        return $this->name;
     }
+
+}
