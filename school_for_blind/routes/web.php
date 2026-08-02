@@ -14,6 +14,7 @@ use App\Http\Controllers\MagicLoginController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Middleware\CheckAdminRole;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Dashboard\UserManagerController;
 use App\Http\Controllers\Dashboard\ScheduleController;
 
 /*
@@ -52,10 +53,13 @@ Route::middleware([CheckAdminRole::class . ':Super Admin,Academic Manager,Modera
 Route::middleware([CheckAdminRole::class . ':Super Admin,Academic Manager'])->group(function () {
     Route::get('/active-calls', [RoomWebController::class, 'activeCalls'])->name('admin.active-calls');
     Route::get('/rooms', [RoomWebController::class, 'index'])->name('rooms.index');
+    Route::get('/rooms/history', [RoomWebController::class, 'history'])->name('rooms.history');
     Route::get('/rooms/create', [RoomWebController::class, 'create'])->name('rooms.create');
     Route::post('/rooms', [RoomWebController::class, 'store'])->name('rooms.store');
     Route::get('/classes/{class_id}/rooms', [RoomWebController::class, 'classRooms'])->name('rooms.class');
     Route::get('/rooms/{room_name}/join', [RoomWebController::class, 'joincall'])->name('rooms.join');
+    Route::post('/rooms/assign-subject', [RoomWebController::class, 'assignSubject'])->name('rooms.assign_subject');
+    Route::post('/rooms/{id}/toggle-payment', [RoomWebController::class, 'togglePayment'])->name('rooms.toggle_payment');
     Route::prefix('rooms/actions')->name('rooms.actions.')->group(function () {
         Route::post('/kick', [RoomWebController::class, 'kickParticipant'])->name('kick');
         Route::post('/mute', [RoomWebController::class, 'muteParticipant'])->name('mute');
@@ -80,28 +84,27 @@ Route::middleware([
 Route::middleware([CheckAdminRole::class . ':Super Admin,Moderator,Academic Manager'])->prefix('punishments')->name('punishments.')->group(function () {
     Route::get('/types', [PunishmentController::class, 'indexTypes'])->name('types.index');
     Route::post('/types', [PunishmentController::class, 'storeType'])->name('types.store');
-
     Route::get('/active', [PunishmentController::class, 'activePunishments'])->name('active');
-
     Route::post('/apply', [PunishmentController::class, 'apply'])->name('apply');
     Route::post('/{id}/revoke', [PunishmentController::class, 'revoke'])->name('revoke');
 });
 
 
-Route::middleware([CheckAdminRole::class . ':Super Admin,Academic Manager,Data Entry'])->group(function () {
-    Route::get('/dashboard/students', [DashboardController::class, 'studentsList'])->name('students.index');
-    Route::get('/dashboard/teachers', [DashboardController::class, 'teachersList'])->name('teachers.index');
 
-    Route::get('/requests', function () {
-        return view('dashboard');
-    })->name('requests');
-    Route::get('/requests/{type}', [DashboardController::class, 'showRequests'])->name('requests.view');
-    Route::get('/request-details/{type}/{id}', [DashboardController::class, 'getRequestDetails']);
-    Route::post('/request-update-status/{type}/{id}', [DashboardController::class, 'updateStatus'])->name('requests.update');
-
-    Route::get('/dashboard/teachers/{id}/complete-approval', [DashboardController::class, 'showTeacherApprovalForm'])->name('teachers.approve.form');
-    Route::post('/dashboard/teachers/{id}/complete-approval', [DashboardController::class, 'completeTeacherApproval'])->name('teachers.approve.submit');
-});
+Route::middleware([CheckAdminRole::class . ':Super Admin,Academic Manager,Data Entry'])
+    ->prefix('dashboard/users')
+    ->name('dashboard.users.')
+    ->group(function () {
+        Route::get('/{type}/{id}/punishments', [UserManagerController::class, 'getUserPunishments'])->name('punishments.list');
+        Route::put('/student/{id}/update', [UserManagerController::class, 'updateStudent'])->name('student.update');
+        Route::get('/', [UserManagerController::class, 'index'])->name('index');
+        Route::get('/filter', [UserManagerController::class, 'filterUsers'])->name('filter');
+        Route::get('/fetch-data-by-level', [UserManagerController::class, 'fetchDataByLevel'])->name('fetch.by.level');
+        Route::get('/{type}/{id}/details', [UserManagerController::class, 'getUserDetails'])->name('details');
+        Route::post('/{type}/{id}/status', [UserManagerController::class, 'updateStatus'])->name('update-status');
+        Route::get('/teacher/{id}/setup', [UserManagerController::class, 'teacherSetupForm'])->name('teacher.setup');
+        Route::post('/teacher/{id}/setup', [UserManagerController::class, 'completeTeacherSetup'])->name('teacher.setup.submit');
+    });
 
 Route::middleware([CheckAdminRole::class . ':Super Admin,Academic Manager,Data Entry'])->prefix('dashboard')->name('dashboard.')->group(function () {
     Route::post('past-exams/{id}/publish', [PastExamController::class, 'publish'])->name('past-exams.publish');

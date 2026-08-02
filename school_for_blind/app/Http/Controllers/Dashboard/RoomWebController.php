@@ -55,7 +55,7 @@ class RoomWebController extends Controller
         $identity = 'Admin--' . $user->id;
         $room = Room::where('room_name', $room_name)->first();
         $canPublish = true;
-        
+
         $mutedParticipants = $room ? ($room->muted_participants ?? []) : [];
 
         if (in_array($identity, $mutedParticipants)) {
@@ -145,20 +145,76 @@ class RoomWebController extends Controller
             if ($room) {
                 $room->status = 'ended';
                 $room->ended_at = now();
+
+                $duration = \Carbon\Carbon::parse($room->started_at)->diffInMinutes($room->ended_at);
+
+                if ($duration >= 30) {
+                    $room->is_paid = true;
+                } else {
+                    $room->is_paid = false;
+                }
+
                 $room->save();
             }
 
-            return response()->json(['success' => true, 'message' => 'تم إنهاء المكالمة']);
+            return response()->json(['success' => true, 'message' => 'تم إنهاء المكالمة وحساب الأجر']);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => 'حدث خطأ أثناء الإنهاء'], 500);
         }
     }
+
     public function activeCalls()
     {
         $activeCalls = Room::where('status', 'active')
-            ->with(['creator', 'schoolclass'])
+            ->with(['creator.subjects', 'schoolClass', 'subject'])
             ->get();
 
         return view('pages.rooms.active_calls', compact('activeCalls'));
+    }
+
+    public function history()
+    {
+        $pastCalls = Room::where('status', 'ended')
+            ->with(['creator', 'schoolClass', 'subject'])
+            ->latest()
+            ->get();
+
+        return view('pages.rooms.history', compact('pastCalls'));
+    }
+
+    public function assignSubject(Request $request)
+    {
+        $request->validate([
+            'room_id' => 'required|exists:rooms,id',
+            'subject_id' => 'required|exists:subjects,id',
+        ]);
+
+        $room = Room::findOrFail($request->room_id);
+
+        $adminRole = auth()->guard('admin')->user()->role ?? '';
+        if (!in_array($adminRole, ['Super Admin', 'Academic Manager'])) {
+            return response()->json(['success' => false, 'message' => 'لا تملك صلاحية لتحديد المادة'], 403);
+        }
+
+        $room->update(['subject_id' => $request->subject_id]);
+
+        return response()->json(['success' => true, 'message' => 'تم تحديد المادة بنجاح']);
+    }
+
+    public function togglePayment(Request $request, $id)
+    {
+        if (auth()->guard('admin')->user()->role !== 'Super Admin') {
+            return response()->json(['success' => false, 'message' => 'غير مصرح لك'], 403);
+        }
+
+        $request->validate([
+            'is_paid' => 'required|boolean'
+        ]);
+
+        $room = Room::findOrFail($id);
+        $room->is_paid = $request->is_paid;
+        $room->save();
+
+        return response()->json(['success' => true]);
     }
 }

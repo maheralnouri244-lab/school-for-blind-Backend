@@ -82,5 +82,44 @@ class Teacher extends Authenticatable
         return $this->hasMany(Quiz::class);
     }
 
+    public function availabilities()
+    {
+        return $this->hasMany(TeacherAvailability::class);
+    }
+
+    public function scopeApproved($query)
+    {
+        return $query->where('status', 'approved');
+    }
+
+    public function scopePending($query)
+    {
+        return $query->where('status', 'pending');
+    }
+
+    public function scopeRejected($query)
+    {
+        return $query->where('status', 'rejected');
+    }
+
+    public function scopeByLevel($query, $level)
+    {
+        if ($level && in_array($level, ['ninth', 'twelfth'])) {
+            return $query->where('level', $level);
+        }
+        return $query;
+    }
+
+    public function scopeSearch($query, $term)
+    {
+        if ($term) {
+            return $query->where(function ($q) use ($term) {
+                $q->where('full_name', 'like', "%{$term}%")
+                    ->orWhere('phone', 'like', "%{$term}%");
+            });
+        }
+        return $query;
+    }
+
 }
 

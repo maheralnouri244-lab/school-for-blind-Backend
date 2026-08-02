@@ -107,15 +107,15 @@ class Student extends Authenticatable
         static::deleting(function ($student) {
             $student->deviceTokens()->delete();
             $student->notifications()->delete();
-       if ($student->parent_id) {
+            if ($student->parent_id) {
                 $parent = $student->parent;
-                
+
                 if ($parent && $parent->students()->count() <= 1) {
                     $parent->delete();
                 }
             }
         });
-       
+
     }
     public function notifications()
     {
@@ -139,10 +139,50 @@ class Student extends Authenticatable
             ->withPivot(['id', 'admin_id', 'expires_at'])
             ->withTimestamps();
     }
-public function bookmarks()
-{
-    return $this->hasMany(Bookmark::class);
-}
-
-
+    public function bookmarks()
+    {
+        return $this->hasMany(Bookmark::class);
     }
+
+    public function scopeApproved($query)
+    {
+        return $query->where('status', 'approved');
+    }
+
+    public function scopePending($query)
+    {
+        return $query->where('status', 'pending');
+    }
+
+    public function scopeRejected($query)
+    {
+        return $query->where('status', 'rejected');
+    }
+
+    public function scopeByLevel($query, $level)
+    {
+        if ($level && in_array($level, ['ninth', 'twelfth'])) {
+            return $query->where('level', $level);
+        }
+        return $query;
+    }
+
+    public function scopeByClass($query, $classId)
+    {
+        if ($classId) {
+            return $query->where('class_id', $classId);
+        }
+        return $query;
+    }
+
+    public function scopeSearch($query, $term)
+    {
+        if ($term) {
+            return $query->where(function ($q) use ($term) {
+                $q->where('fullname', 'like', "%{$term}%")
+                    ->orWhere('phone', 'like', "%{$term}%");
+            });
+        }
+        return $query;
+    }
+}
