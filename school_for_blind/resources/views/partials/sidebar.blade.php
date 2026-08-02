@@ -30,7 +30,7 @@
 
     <li>
       <a href="{{ route('admin.active-calls') }}"
-        class="nav-link d-flex align-items-center justify-content-between {{ request()->routeIs('admin.active-calls') ? 'nav-link-active' : 'nav-link-custom' }}">
+        class="nav-link d-flex align-items-center justify-content-between {{ request()->routeIs('admin.active-calls', 'rooms.*') ? 'nav-link-active' : 'nav-link-custom' }}">
         <span>الدروس الجارية حالياً</span>
         <div class="d-flex align-items-center gap-2">
           <span class="spinner-grow spinner-grow-sm text-danger" role="status"
