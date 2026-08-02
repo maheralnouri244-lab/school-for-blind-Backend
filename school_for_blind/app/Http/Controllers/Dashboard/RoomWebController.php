@@ -224,11 +224,10 @@ class RoomWebController extends Controller
         }
 
         $request->validate([
-            'is_paid' => 'required|boolean'
+            'payment_status' => 'required|in:paid,unpaid,deducted' 
         ]);
-
         $room = Room::findOrFail($id);
-        $room->is_paid = $request->is_paid;
+        $room->payment_status = $request->payment_status; 
         $room->save();
 
         return response()->json(['success' => true]);
