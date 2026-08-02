@@ -1,6 +1,20 @@
 @extends('layouts.app')
 
 @section('content')
+
+    <div id="splash-screen">
+        <div class="loader-grid">
+            <div class="loader-cell"></div>
+            <div class="loader-cell"></div>
+            <div class="loader-cell"></div>
+            <div class="loader-cell"></div>
+            <div class="loader-cell"></div>
+            <div class="loader-cell"></div>
+            <div class="loader-cell"></div>
+            <div class="loader-cell"></div>
+            <div class="loader-cell"></div>
+        </div>
+    </div>
     <div class="container-fluid p-0">
 
         <div class="d-flex justify-content-between align-items-center mb-3 p-3 rounded custom-card">
@@ -38,18 +52,34 @@
 
                             <div class="d-flex justify-content-between align-items-center mb-3 border-bottom pb-2 card-header-drag cursor-move"
                                 style="cursor: move;">
-                                <h5 class="fw-bold mb-0 text-primary">
-                                    <i class="fa-solid fa-up-down-left-right me-2 text-muted"></i> {{ $class->name }} (شعبة
-                                    {{ $class->number }})
-                                </h5>
-                                <span class="badge bg-soft-info text-info">تفاعلي</span>
+                                <div class="d-flex align-items-center gap-2">
+                                    <h5 class="fw-bold mb-0 text-primary">
+                                        <i class="fa-solid fa-up-down-left-right me-1 text-muted"></i> {{ $class->name }} (شعبة
+                                        {{ $class->number }})
+                                    </h5>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary border-0 ms-2"
+                                        onclick="toggleMinimizeCard(this, '{{ $class->id }}')"
+                                        style="z-index: 1050; position: relative;">
+                                        <i class="fa-solid fa-minus"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-outline-danger border-0"
+                                        onclick="clearClassSchedule('{{ $class->id }}')"
+                                        style="z-index: 1050; position: relative;">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </div>
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="badge bg-soft-warning text-warning fw-bold" id="counter-{{ $class->id }}">56
+                                        حصة متبقية</span>
+                                    <span class="badge bg-soft-info text-info">تفاعلي</span>
+                                </div>
                             </div>
 
                             <div class="table-responsive">
                                 <table class="table table-bordered text-center align-middle mb-0"
                                     style="font-size: 0.82rem; color: var(--text-main);">
                                     <thead>
-                                        <tr class="table-dark">
+                                        <tr class="table-header-custom">
                                             <th style="width: 70px;">اليوم / الحصة</th>
                                             @for($p = 1; $p <= 8; $p++)
                                                 <th>ح {{ $p }}</th>
@@ -107,13 +137,18 @@
 
                 <div class="d-flex flex-column gap-2" id="teachersList">
                     @foreach($teachers as $teacher)
-                        <div class="p-2 rounded border teacher-item" id="teacher-card-{{ $teacher->id }}"
-                            style="background-color: var(--bg-main);">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <span class="fw-bold"
-                                    style="font-size: 0.85rem; color: var(--text-main);">{{ $teacher->full_name }}</span>
-                                <span class="badge bg-success rounded-pill" id="teacher-count-{{ $teacher->id }}">0 حصص</span>
+                        <div class="teacher-wrapper">
+                            <div class="p-2 rounded border teacher-item cursor-pointer shadow-sm-hover position-relative"
+                                id="teacher-card-{{ $teacher->id }}" style="background-color: var(--bg-main); z-index: 2;"
+                                onclick="toggleTeacherInfo('{{ $teacher->id }}')">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="fw-bold"
+                                        style="font-size: 0.85rem; color: var(--text-main);">{{ $teacher->full_name }}</span>
+                                    <span class="badge bg-success rounded-pill" id="teacher-count-{{ $teacher->id }}">0
+                                        حصص</span>
+                                </div>
                             </div>
+                            <div class="teacher-info-container shadow-sm" id="teacher-info-{{ $teacher->id }}"></div>
                         </div>
                     @endforeach
                 </div>
@@ -165,6 +200,18 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="teacherAvailabilityModal" tabindex="-1" aria-hidden="true" style="z-index: 1055;">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content glass-modal">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold text-primary" id="availabilityModalTitle"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center" id="availabilityModalBody">
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @push('scripts')
@@ -199,7 +246,24 @@
                     });
                 });
             });
+
             updateTeacherCounters();
+            updateAllClassCounters();
+            evaluateGridConflicts();
+
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    document.getElementById('splash-screen').classList.add('hidden-splash');
+                });
+            });
+
+            // requestAnimationFrame(() => {
+            //     requestAnimationFrame(() => {
+            //         setTimeout(() => {
+            //             document.getElementById('splash-screen').classList.add('hidden-splash');
+            //         }, 3000);
+            //     });
+            // });
         };
 
         const canvasElement = document.getElementById('workspaceCanvas');
@@ -277,8 +341,6 @@
         }
 
         function onSubjectChanged(selectedTeacherId = null) {
-            const day = document.getElementById('selectedDay').value;
-            const period = document.getElementById('selectedPeriod').value;
             const currentClassId = document.getElementById('selectedClassId').value;
             const subjectId = document.getElementById('subjectSelect').value;
             const teacherSelect = document.getElementById('teacherSelect');
@@ -291,16 +353,10 @@
                 return;
             }
 
-            let busyTeacherIds = getBusyTeacherIdsAt(day, period, currentClassId);
-
             let availableTeachers = allTeachers.filter(t => {
                 let teachesSubject = t.subject_list && t.subject_list.some(s => s.id.toString() === subjectId.toString());
                 let assignedToClass = t.classes && t.classes.some(c => c.id.toString() === currentClassId.toString());
-                let notBusy = !busyTeacherIds.includes(t.id.toString());
-
-                return teachesSubject &&
-                    assignedToClass &&
-                    notBusy;
+                return teachesSubject && assignedToClass;
             });
 
             teacherSelect.innerHTML = '<option value="">-- اختر مدرس --</option>';
@@ -311,7 +367,6 @@
             } else {
                 alertBox.classList.add('d-none');
                 teacherSelect.disabled = false;
-
                 availableTeachers.forEach(t => {
                     let opt = document.createElement('option');
                     opt.value = t.id;
@@ -369,7 +424,8 @@
 
             updateCellUI(classId, day, period, subjectName, teacherName);
             updateTeacherCounters();
-
+            updateClassCounter(classId);
+            evaluateGridConflicts();
             bootstrap.Modal.getInstance(document.getElementById('assignModal')).hide();
         }
 
@@ -384,6 +440,8 @@
 
             updateCellUI(classId, day, period, '-', '');
             updateTeacherCounters();
+            updateClassCounter(classId);
+            evaluateGridConflicts();
             bootstrap.Modal.getInstance(document.getElementById('assignModal')).hide();
         }
 
@@ -399,11 +457,6 @@
             if (cell) {
                 cell.querySelector('.subject-text').innerText = subject;
                 cell.querySelector('.teacher-text').innerText = teacherName;
-                if (teacherName !== '') {
-                    cell.style.backgroundColor = 'rgba(163, 230, 53, 0.15)';
-                } else {
-                    cell.style.backgroundColor = 'transparent';
-                }
             }
         }
 
@@ -482,6 +535,239 @@
                     console.error(err);
                     alert('حدث خطأ بالاتصال مع السيرفر.');
                 });
+        }
+
+        function updateAllClassCounters() {
+            document.querySelectorAll('.schedule-card').forEach(card => {
+                updateClassCounter(card.getAttribute('data-class-id'));
+            });
+        }
+
+        function updateClassCounter(classId) {
+            let assignedCount = 0;
+            const totalSlots = 56;
+
+            Object.keys(gridMatrix).forEach(day => {
+                Object.keys(gridMatrix[day]).forEach(period => {
+                    if (gridMatrix[day][period][classId] && gridMatrix[day][period][classId].subjectId) {
+                        assignedCount++;
+                    }
+                });
+            });
+
+            const remaining = totalSlots - assignedCount;
+            const badge = document.getElementById(`counter-${classId}`);
+
+            if (badge) {
+                badge.innerText = `${remaining} حصة متبقية`;
+                if (remaining === 0) {
+                    badge.classList.remove('bg-soft-warning', 'text-warning');
+                    badge.classList.add('bg-soft-success', 'text-success');
+                    badge.innerText = `مكتمل`;
+                } else {
+                    badge.classList.remove('bg-soft-success', 'text-success');
+                    badge.classList.add('bg-soft-warning', 'text-warning');
+                }
+            }
+        }
+
+        function clearClassSchedule(classId) {
+            if (!confirm('هل أنت متأكد من تفريغ جدول هذه الشعبة بالكامل؟')) return;
+
+            const dayKeys = ["1", "2", "3", "4", "5", "6", "7"];
+            dayKeys.forEach(day => {
+                for (let p = 1; p <= 8; p++) {
+                    if (gridMatrix[day] && gridMatrix[day][p] && gridMatrix[day][p][classId]) {
+                        delete gridMatrix[day][p][classId];
+                        updateCellUI(classId, day, p, '-', '');
+                    }
+                }
+            });
+
+            updateTeacherCounters();
+            updateClassCounter(classId);
+            evaluateGridConflicts();
+        }
+
+        let currentHighlight = null;
+
+        document.addEventListener('dblclick', function (e) {
+            const cell = e.target.closest('.cell-slot');
+
+            if (cell) {
+                const subject = cell.querySelector('.subject-text').innerText;
+                if (subject !== '-') {
+                    toggleHighlight(subject);
+                }
+            } else {
+                removeHighlight();
+            }
+        });
+
+        function toggleHighlight(subjectName) {
+            if (currentHighlight === subjectName) {
+                removeHighlight();
+                return;
+            }
+
+            currentHighlight = subjectName;
+
+            document.querySelectorAll('.cell-slot').forEach(cell => {
+                const cellSub = cell.querySelector('.subject-text').innerText;
+                if (cellSub === subjectName) {
+                    cell.classList.remove('dimmed');
+                    cell.classList.add('highlighted');
+                } else {
+                    cell.classList.remove('highlighted');
+                    cell.classList.add('dimmed');
+                }
+            });
+        }
+
+        function removeHighlight() {
+            currentHighlight = null;
+            document.querySelectorAll('.cell-slot').forEach(cell => {
+                cell.classList.remove('dimmed', 'highlighted');
+            });
+        }
+        function evaluateGridConflicts() {
+            document.querySelectorAll('.cell-slot').forEach(cell => {
+                cell.classList.remove('bg-soft-danger', 'bg-soft-warning');
+                cell.style.backgroundColor = 'transparent';
+            });
+
+            let teacherSchedules = {};
+
+            Object.keys(gridMatrix).forEach(day => {
+                Object.keys(gridMatrix[day]).forEach(period => {
+                    Object.keys(gridMatrix[day][period]).forEach(classId => {
+                        let tId = gridMatrix[day][period][classId].teacherId;
+                        if (tId) {
+                            if (!teacherSchedules[tId]) teacherSchedules[tId] = [];
+                            teacherSchedules[tId].push({ day: day, period: period, classId: classId });
+                        }
+                    });
+                });
+            });
+
+            Object.keys(gridMatrix).forEach(day => {
+                Object.keys(gridMatrix[day]).forEach(period => {
+                    Object.keys(gridMatrix[day][period]).forEach(classId => {
+                        let tId = gridMatrix[day][period][classId].teacherId;
+                        if (!tId) return;
+
+                        let cell = document.querySelector(`.cell-slot[data-class-id="${classId}"][data-day="${day}"][data-period="${period}"]`);
+                        if (!cell) return;
+
+                        let isHardConflict = teacherSchedules[tId].filter(s => s.day === day && s.period === period).length > 1;
+
+                        let teacherData = allTeachers.find(t => t.id.toString() === tId.toString());
+                        let isAvailable = false;
+
+                        if (teacherData && teacherData.availabilities && teacherData.availabilities.length > 0) {
+                            isAvailable = teacherData.availabilities.some(a => a.day_of_week.toString() === day.toString() && a.period_number.toString() === period.toString());
+                        }
+
+                        if (isHardConflict) {
+                            cell.style.backgroundColor = '';
+                            cell.classList.add('bg-soft-danger');
+                        } else if (!isAvailable) {
+                            cell.style.backgroundColor = '';
+                            cell.classList.add('bg-soft-warning');
+                        } else {
+                            cell.style.backgroundColor = 'rgba(163, 230, 53, 0.15)';
+                        }
+                    });
+                });
+            });
+        }
+
+        function toggleTeacherInfo(teacherId) {
+            const container = document.getElementById(`teacher-info-${teacherId}`);
+            const card = document.getElementById(`teacher-card-${teacherId}`);
+
+            if (container.classList.contains('expanded')) {
+                container.classList.remove('expanded');
+                card.classList.remove('active');
+                return;
+            }
+
+            const teacher = allTeachers.find(t => t.id.toString() === teacherId.toString());
+            if (!teacher) return;
+
+            let subjectsHtml = teacher.subject_list && teacher.subject_list.length > 0
+                ? teacher.subject_list.map(s => `<span class="badge bg-soft-info text-info me-1 mb-1">${s.name}</span>`).join('')
+                : '<span class="text-muted" style="font-size:0.75rem;">لا يوجد</span>';
+
+            let classesHtml = teacher.classes && teacher.classes.length > 0
+                ? teacher.classes.map(c => `<span class="badge bg-soft-warning text-warning me-1 mb-1">${c.name} (${c.number})</span>`).join('')
+                : '<span class="text-muted" style="font-size:0.75rem;">لا يوجد</span>';
+
+            let html = `
+                                <div class="mb-3 text-end">
+                                    <div class="fw-bold text-muted mb-1" style="font-size: 0.75rem;">المواد التي يدرسها:</div>
+                                    <div class="d-flex flex-wrap justify-content-end">${subjectsHtml}</div>
+                                </div>
+                                <div class="mb-3 text-end">
+                                    <div class="fw-bold text-muted mb-1" style="font-size: 0.75rem;">الشعب المخصصة:</div>
+                                    <div class="d-flex flex-wrap justify-content-end">${classesHtml}</div>
+                                </div>
+                                <div class="fw-bold text-muted mb-2 text-end" style="font-size: 0.75rem;">أوقات التفرغ:</div>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered text-center align-middle mb-0" style="font-size: 0.7rem; color: var(--text-main);">
+                                        <thead>
+                                            <tr class="table-header-custom">   
+                                                <th class="p-1">يوم</th>
+                                                ${[1, 2, 3, 4, 5, 6, 7, 8].map(p => `<th class="p-1">${p}</th>`).join('')}
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                            `;
+
+            const dayKeys = ["1", "2", "3", "4", "5", "6", "7"];
+            const dayNames = ["أحد", "إثن", "ثلا", "أرب", "خمي", "جمع", "سبت"];
+
+            dayKeys.forEach((dKey, idx) => {
+                html += `<tr><td class="fw-bold bg-soft-secondary p-1" style="font-size: 0.65rem;">${dayNames[idx]}</td>`;
+                for (let p = 1; p <= 8; p++) {
+                    let isAvailable = false;
+                    if (teacher.availabilities && teacher.availabilities.length > 0) {
+                        isAvailable = teacher.availabilities.some(a => a.day_of_week.toString() === dKey.toString() && a.period_number.toString() === p.toString());
+                    }
+
+                    if (isAvailable) {
+                        html += `<td class="bg-soft-success text-success fw-bold p-0 align-middle"><i class="fa-solid fa-check" style="font-size: 0.6rem;"></i></td>`;
+                    } else {
+                        html += `<td class="text-muted bg-light p-0 align-middle" style="opacity: 0.5; font-size: 0.6rem;">-</td>`;
+                    }
+                }
+                html += '</tr>';
+            });
+
+            html += `
+                                        </tbody>
+                                    </table>
+                                </div>
+                            `;
+
+            container.innerHTML = html;
+            container.classList.add('expanded');
+            card.classList.add('active');
+        }
+
+        function toggleMinimizeCard(btn, classId) {
+            const card = document.getElementById(`class-card-${classId}`);
+            const icon = btn.querySelector('i');
+
+            if (card.classList.contains('card-minimized')) {
+                card.classList.remove('card-minimized');
+                icon.classList.remove('fa-plus');
+                icon.classList.add('fa-minus');
+            } else {
+                card.classList.add('card-minimized');
+                icon.classList.remove('fa-minus');
+                icon.classList.add('fa-plus');
+            }
         }
     </script>
 @endpush
