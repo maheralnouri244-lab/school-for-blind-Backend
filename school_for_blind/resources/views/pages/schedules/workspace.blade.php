@@ -38,15 +38,25 @@
         <div class="d-flex position-relative gap-3 overflow-hidden" style="min-height: 80vh;">
             <div class="flex-grow-1 position-relative overflow-hidden p-2 rounded custom-card" id="workspaceContainer"
                 style="background-color: var(--bg-main); cursor: grab;">
-                <div id="workspaceCanvas" style="width: 3500px; height: 2500px; position: absolute; top: 0; left: 0;">
+                @php
+                    $count = $classes->count();
+                    $cols = max(1, round(sqrt($count / 1.14)));
+                    $rows = ceil($count / $cols);
+                    $canvasWidth = max($cols * 620 + 100, 1000);
+                    $canvasHeight = max($rows * 540 + 100, 800);
+                @endphp
+
+                <div id="workspaceCanvas"
+                    style="width: {{ $canvasWidth }}px; height: {{ $canvasHeight }}px; position: absolute; top: 0; left: 0; transform-origin: 0 0;">
                     @foreach($classes as $index => $class)
                         @php
-                            $col = $index % 3;
-                            $row = floor($index / 3);
+                            $col = $index % $cols;
+                            $row = floor($index / $cols);
                             $left = 50 + ($col * 620);
                             $top = 50 + ($row * 540);
                         @endphp
-                        <div class="custom-card p-3 schedule-card position-absolute shadow-sm" id="class-card-{{ $class->id }}"
+                        <div class="custom-card p-3 schedule-card position-absolute shadow-sm culled-card"
+                            id="class-card-{{ $class->id }}"
                             style="width: 580px; left: {{ $left }}px; top: {{ $top }}px; z-index: 10;"
                             data-class-id="{{ $class->id }}" data-class-name="{{ $class->name }} - شعبة {{ $class->number }}">
 
@@ -250,6 +260,7 @@
             updateTeacherCounters();
             updateAllClassCounters();
             evaluateGridConflicts();
+            performCulling();
 
             requestAnimationFrame(() => {
                 requestAnimationFrame(() => {
@@ -273,6 +284,7 @@
             contain: 'outside',
             excludeClass: 'schedule-card'
         });
+        canvasElement.addEventListener('panzoomchange', performCulling);
 
         const container = document.getElementById('workspaceContainer');
         container.addEventListener('wheel', panzoom.zoomWithWheel);
@@ -704,25 +716,25 @@
                 : '<span class="text-muted" style="font-size:0.75rem;">لا يوجد</span>';
 
             let html = `
-                                <div class="mb-3 text-end">
-                                    <div class="fw-bold text-muted mb-1" style="font-size: 0.75rem;">المواد التي يدرسها:</div>
-                                    <div class="d-flex flex-wrap justify-content-end">${subjectsHtml}</div>
-                                </div>
-                                <div class="mb-3 text-end">
-                                    <div class="fw-bold text-muted mb-1" style="font-size: 0.75rem;">الشعب المخصصة:</div>
-                                    <div class="d-flex flex-wrap justify-content-end">${classesHtml}</div>
-                                </div>
-                                <div class="fw-bold text-muted mb-2 text-end" style="font-size: 0.75rem;">أوقات التفرغ:</div>
-                                <div class="table-responsive">
-                                    <table class="table table-bordered text-center align-middle mb-0" style="font-size: 0.7rem; color: var(--text-main);">
-                                        <thead>
-                                            <tr class="table-header-custom">   
-                                                <th class="p-1">يوم</th>
-                                                ${[1, 2, 3, 4, 5, 6, 7, 8].map(p => `<th class="p-1">${p}</th>`).join('')}
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                            `;
+                                                                            <div class="mb-3 text-end">
+                                                                                <div class="fw-bold text-muted mb-1" style="font-size: 0.75rem;">المواد التي يدرسها:</div>
+                                                                                <div class="d-flex flex-wrap justify-content-end">${subjectsHtml}</div>
+                                                                            </div>
+                                                                            <div class="mb-3 text-end">
+                                                                                <div class="fw-bold text-muted mb-1" style="font-size: 0.75rem;">الشعب المخصصة:</div>
+                                                                                <div class="d-flex flex-wrap justify-content-end">${classesHtml}</div>
+                                                                            </div>
+                                                                            <div class="fw-bold text-muted mb-2 text-end" style="font-size: 0.75rem;">أوقات التفرغ:</div>
+                                                                            <div class="table-responsive">
+                                                                                <table class="table table-bordered text-center align-middle mb-0" style="font-size: 0.7rem; color: var(--text-main);">
+                                                                                    <thead>
+                                                                                        <tr class="table-header-custom">   
+                                                                                            <th class="p-1">يوم</th>
+                                                                                            ${[1, 2, 3, 4, 5, 6, 7, 8].map(p => `<th class="p-1">${p}</th>`).join('')}
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                        `;
 
             const dayKeys = ["1", "2", "3", "4", "5", "6", "7"];
             const dayNames = ["أحد", "إثن", "ثلا", "أرب", "خمي", "جمع", "سبت"];
@@ -745,10 +757,10 @@
             });
 
             html += `
-                                        </tbody>
-                                    </table>
-                                </div>
-                            `;
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        `;
 
             container.innerHTML = html;
             container.classList.add('expanded');
@@ -768,6 +780,39 @@
                 icon.classList.remove('fa-minus');
                 icon.classList.add('fa-plus');
             }
+        }
+
+        function performCulling() {
+            const containerRect = container.getBoundingClientRect();
+            const canvasRect = canvasElement.getBoundingClientRect();
+            const scale = panzoom.getScale();
+
+            const buffer = 500;
+
+            document.querySelectorAll('.schedule-card').forEach(card => {
+                const x = parseFloat(card.style.left);
+                const y = parseFloat(card.style.top);
+                const w = 580;
+                const h = card.classList.contains('card-minimized') ? 80 : 540;
+
+                const cardScreenLeft = canvasRect.left + (x * scale);
+                const cardScreenRight = cardScreenLeft + (w * scale);
+                const cardScreenTop = canvasRect.top + (y * scale);
+                const cardScreenBottom = cardScreenTop + (h * scale);
+
+                const isVisible = (
+                    cardScreenRight > containerRect.left - buffer &&
+                    cardScreenLeft < containerRect.right + buffer &&
+                    cardScreenBottom > containerRect.top - buffer &&
+                    cardScreenTop < containerRect.bottom + buffer
+                );
+
+                if (isVisible) {
+                    card.classList.remove('culled-card');
+                } else {
+                    card.classList.add('culled-card');
+                }
+            });
         }
     </script>
 @endpush
