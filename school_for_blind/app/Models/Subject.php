@@ -11,6 +11,7 @@ class Subject extends Model
 {
     use SoftDeletes;
     protected $guarded = [];
+    protected $appends = ['full_name'];
     public function quizzes()
     {
         return $this->hasMany(Quiz::class);

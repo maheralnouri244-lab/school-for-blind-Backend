@@ -3,44 +3,14 @@
 @section('content')
 
     <div id="splash-screen">
-        <svg xmlns="http://www.w3.org/2000/svg" height="200px" width="200px" viewBox="0 0 200 200" class="pencil">
-            <defs>
-                <clipPath id="pencil-eraser">
-                    <rect height="30" width="30" ry="5" rx="5"></rect>
-                </clipPath>
-            </defs>
-            <circle transform="rotate(-113,100,100)" stroke-linecap="round" stroke-dashoffset="439.82"
-                stroke-dasharray="439.82 439.82" stroke-width="2" stroke="currentColor" fill="none" r="70"
-                class="pencil__stroke"></circle>
-            <g transform="translate(100,100)" class="pencil__rotate">
-                <g fill="none">
-                    <circle transform="rotate(-90)" stroke-dashoffset="402" stroke-dasharray="402.12 402.12"
-                        stroke-width="30" stroke="hsl(223,90%,50%)" r="64" class="pencil__body1"></circle>
-                    <circle transform="rotate(-90)" stroke-dashoffset="465" stroke-dasharray="464.96 464.96"
-                        stroke-width="10" stroke="hsl(223,90%,60%)" r="74" class="pencil__body2"></circle>
-                    <circle transform="rotate(-90)" stroke-dashoffset="339" stroke-dasharray="339.29 339.29"
-                        stroke-width="10" stroke="hsl(223,90%,40%)" r="54" class="pencil__body3"></circle>
-                </g>
-                <g transform="rotate(-90) translate(49,0)" class="pencil__eraser">
-                    <g class="pencil__eraser-skew">
-                        <rect height="30" width="30" ry="5" rx="5" fill="hsl(223,90%,70%)"></rect>
-                        <rect clip-path="url(#pencil-eraser)" height="30" width="5" fill="hsl(223,90%,60%)"></rect>
-                        <rect height="20" width="30" fill="hsl(223,10%,90%)"></rect>
-                        <rect height="20" width="15" fill="hsl(223,10%,70%)"></rect>
-                        <rect height="20" width="5" fill="hsl(223,10%,80%)"></rect>
-                        <rect height="2" width="30" y="6" fill="hsla(223,10%,10%,0.2)"></rect>
-                        <rect height="2" width="30" y="13" fill="hsla(223,10%,10%,0.2)"></rect>
-                    </g>
-                </g>
-                <g transform="rotate(-90) translate(49,-30)" class="pencil__point">
-                    <polygon points="15 0,30 30,0 30" fill="hsl(33,90%,70%)"></polygon>
-                    <polygon points="15 0,6 30,0 30" fill="hsl(33,90%,50%)"></polygon>
-                    <polygon points="15 0,20 10,10 10" fill="hsl(223,10%,10%)"></polygon>
-                </g>
-            </g>
-        </svg>
-    </div>
+        <div class="animation-scene">
 
+            <dotlottie-player src="{{ asset('animations/Study.lottie') }}" background="transparent" speed="1"
+                style="width: 300px; height: 300px;" loop autoplay>
+            </dotlottie-player>
+
+        </div>
+    </div>
     <div class="container-fluid p-0">
 
         <div class="d-flex justify-content-between align-items-center mb-3 p-3 rounded custom-card">
@@ -273,8 +243,6 @@
             };
         });
 
-        const splashStartTime = Date.now();
-
         window.onload = function () {
             Object.keys(gridMatrix).forEach(day => {
                 Object.keys(gridMatrix[day]).forEach(period => {
@@ -290,22 +258,20 @@
             evaluateGridConflicts();
             performCulling();
 
-            const elapsedTime = Date.now() - splashStartTime;
-            const minSplashTime = 6000;
-            const timeLeft = Math.max(0, minSplashTime - elapsedTime);
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    document.getElementById('splash-screen').classList.add('hidden-splash');
+                });
+            });
 
-            setTimeout(() => {
-                hideSplashScreen();
-            }, timeLeft);
+            // requestAnimationFrame(() => {
+            //     requestAnimationFrame(() => {
+            //         setTimeout(() => {
+            //             document.getElementById('splash-screen').classList.add('hidden-splash');
+            //         }, 6000);
+            //     });
+            // });
         };
-
-        function hideSplashScreen() {
-            const splashScreen = document.getElementById('splash-screen');
-            if (splashScreen) {
-                splashScreen.classList.add('hidden-splash');
-                setTimeout(() => splashScreen.remove(), 500);
-            }
-        }
 
         const canvasElement = document.getElementById('workspaceCanvas');
         const panzoom = Panzoom(canvasElement, {
@@ -746,25 +712,25 @@
                 : '<span class="text-muted" style="font-size:0.75rem;">لا يوجد</span>';
 
             let html = `
-                                                                                            <div class="mb-3 text-end">
-                                                                                                <div class="fw-bold text-muted mb-1" style="font-size: 0.75rem;">المواد التي يدرسها:</div>
-                                                                                                <div class="d-flex flex-wrap justify-content-end">${subjectsHtml}</div>
-                                                                                            </div>
-                                                                                            <div class="mb-3 text-end">
-                                                                                                <div class="fw-bold text-muted mb-1" style="font-size: 0.75rem;">الشعب المخصصة:</div>
-                                                                                                <div class="d-flex flex-wrap justify-content-end">${classesHtml}</div>
-                                                                                            </div>
-                                                                                            <div class="fw-bold text-muted mb-2 text-end" style="font-size: 0.75rem;">أوقات التفرغ:</div>
-                                                                                            <div class="table-responsive">
-                                                                                                <table class="table table-bordered text-center align-middle mb-0" style="font-size: 0.7rem; color: var(--text-main);">
-                                                                                                    <thead>
-                                                                                                        <tr class="table-header-custom">   
-                                                                                                            <th class="p-1">يوم</th>
-                                                                                                            ${[1, 2, 3, 4, 5, 6, 7, 8].map(p => `<th class="p-1">${p}</th>`).join('')}
-                                                                                                        </tr>
-                                                                                                    </thead>
-                                                                                                    <tbody>
-                                                                                        `;
+                                                                                <div class="mb-3 text-end">
+                                                                                    <div class="fw-bold text-muted mb-1" style="font-size: 0.75rem;">المواد التي يدرسها:</div>
+                                                                                    <div class="d-flex flex-wrap justify-content-end">${subjectsHtml}</div>
+                                                                                </div>
+                                                                                <div class="mb-3 text-end">
+                                                                                    <div class="fw-bold text-muted mb-1" style="font-size: 0.75rem;">الشعب المخصصة:</div>
+                                                                                    <div class="d-flex flex-wrap justify-content-end">${classesHtml}</div>
+                                                                                </div>
+                                                                                <div class="fw-bold text-muted mb-2 text-end" style="font-size: 0.75rem;">أوقات التفرغ:</div>
+                                                                                <div class="table-responsive">
+                                                                                    <table class="table table-bordered text-center align-middle mb-0" style="font-size: 0.7rem; color: var(--text-main);">
+                                                                                        <thead>
+                                                                                            <tr class="table-header-custom">   
+                                                                                                <th class="p-1">يوم</th>
+                                                                                                ${[1, 2, 3, 4, 5, 6, 7, 8].map(p => `<th class="p-1">${p}</th>`).join('')}
+                                                                                            </tr>
+                                                                                        </thead>
+                                                                                        <tbody>
+                                                                            `;
 
             const dayKeys = ["1", "2", "3", "4", "5", "6", "7"];
             const dayNames = ["أحد", "إثن", "ثلا", "أرب", "خمي", "جمع", "سبت"];
@@ -787,10 +753,10 @@
             });
 
             html += `
-                                                                                                    </tbody>
-                                                                                                </table>
-                                                                                            </div>
-                                                                                        `;
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </div>
+                                                                            `;
 
             container.innerHTML = html;
             container.classList.add('expanded');

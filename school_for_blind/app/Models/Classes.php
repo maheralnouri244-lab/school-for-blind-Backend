@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Classes extends Model
 {
     protected $table = 'classes';
-protected $fillable = [
+    protected $fillable = [
         'name',
         'level',
         'number',
@@ -15,7 +15,7 @@ protected $fillable = [
 
     public function students()
     {
-        return $this->hasMany(Student::class);
+        return $this->hasMany(Student::class, 'class_id');
     }
 
 
@@ -34,7 +34,7 @@ protected $fillable = [
     }
 
     public function schedules()
-{
-    return $this->hasMany(Schedule::class, 'class_id');
-}
+    {
+        return $this->hasMany(Schedule::class, 'class_id');
+    }
 }

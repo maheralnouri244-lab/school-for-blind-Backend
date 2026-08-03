@@ -16,6 +16,8 @@ use App\Http\Middleware\CheckAdminRole;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Dashboard\UserManagerController;
 use App\Http\Controllers\Dashboard\ScheduleController;
+use App\Http\Controllers\Dashboard\ClassController;
+
 
 /*
 'Super Admin',
@@ -167,4 +169,18 @@ Route::middleware([CheckAdminRole::class . ':Super Admin,Academic Manager'])->pr
     Route::get('/workspace', [ScheduleController::class, 'workspace'])->name('workspace');
     Route::post('/store-bulk', [ScheduleController::class, 'storeBulk'])->name('storeBulk');
     Route::delete('/{id}', [ScheduleController::class, 'destroy'])->name('destroy');
+});
+
+
+Route::middleware([CheckAdminRole::class . ':Super Admin,Academic Manager,Moderator'])->group(function () {
+    Route::get('/classes', [ClassController::class, 'index'])->name('classes');
+    Route::get('/classes/{id}', [ClassController::class, 'show'])->name('classes.show');
+    Route::post('/classes/{id}/teachers/attach', [ClassController::class, 'attachTeacher'])->name('classes.teachers.attach');
+    Route::delete('/classes/{class_id}/teachers/{teacher_id}/detach', [ClassController::class, 'detachTeacher'])->name('classes.teachers.detach');
+    Route::post('/classes/{class_id}/students/transfer', [ClassController::class, 'transferStudent'])->name('classes.students.transfer');
+    Route::post('/classes/{class_id}/students/suggest-points', [ClassController::class, 'suggestPoints'])->name('classes.students.suggest_points');
+    Route::get('/students/{student_id}/excuses', [ClassController::class, 'getStudentExcuses'])->name('students.excuses.get');
+    Route::post('/excuses/{id}/status', [ClassController::class, 'updateExcuseStatus'])->name('excuses.status.update');
+    Route::get('/excuses', [ClassController::class, 'allExcuses'])->name('excuses.index');
+    Route::get('/students/{student_id}/absences', [ClassController::class, 'studentAbsences'])->name('students.absences');
 });
