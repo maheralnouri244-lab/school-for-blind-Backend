@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Dashboard\UserManagerController;
 use App\Http\Controllers\Dashboard\ScheduleController;
 use App\Http\Controllers\Dashboard\ClassController;
+use App\Http\Controllers\Dashboard\StudentReportWebController;
+
 
 
 /*
@@ -183,4 +185,5 @@ Route::middleware([CheckAdminRole::class . ':Super Admin,Academic Manager,Modera
     Route::post('/excuses/{id}/status', [ClassController::class, 'updateExcuseStatus'])->name('excuses.status.update');
     Route::get('/excuses', [ClassController::class, 'allExcuses'])->name('excuses.index');
     Route::get('/students/{student_id}/absences', [ClassController::class, 'studentAbsences'])->name('students.absences');
+    Route::get('/students/{student}/reports', [StudentReportWebController::class, 'index'])->name('students.reports');
 });
