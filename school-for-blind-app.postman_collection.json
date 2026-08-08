@@ -1482,7 +1482,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "44|ACtwCvTKFHbdWmTPY4kR23mqM7H6la01k2C6Humkdc971b9f",
+                  "value": "44|0Dohw5SHUUf26EjjU8mH4ICatxth3sbPSHnLUm2i9190abc9",
                   "type": "string"
                 }
               ]
@@ -1500,7 +1500,7 @@
               "formdata": [
                 {
                   "key": "room_name",
-                  "value": "test#2",
+                  "value": "test4",
                   "type": "text",
                   "uuid": "26b7937c-5ff4-433d-8a99-e78c2a18b773"
                 },
@@ -1513,13 +1513,15 @@
               ]
             },
             "url": {
-              "raw": "https://barman-wannabe-cape.ngrok-free.dev/api/call/start",
-              "protocol": "https",
+              "raw": "http://127.0.0.1:8000/api/call/start",
+              "protocol": "http",
               "host": [
-                "barman-wannabe-cape",
-                "ngrok-free",
-                "dev"
+                "127",
+                "0",
+                "0",
+                "1"
               ],
+              "port": "8000",
               "path": [
                 "api",
                 "call",
@@ -1621,7 +1623,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "34|nISnWa54PyuV2FrxoxqXU1P1bF6NSRQXMIgssZJNc5dc85c9",
+                  "value": "43|7t8IMmj1ygm2B2yk6SjwN2iJtduXa7WAF2gD3Unl46731d2d",
                   "type": "string"
                 }
               ]
@@ -1639,20 +1641,21 @@
               "formdata": [
                 {
                   "key": "room_name",
-                  "value": "test #1",
+                  "value": "test3",
                   "type": "text",
                   "uuid": "26b7937c-5ff4-433d-8a99-e78c2a18b773"
                 }
               ]
             },
             "url": {
-              "raw": "https://barman-wannabe-cape.ngrok-free.dev/api/call/join",
-              "protocol": "https",
+              "raw": "127.0.0.1:8000/api/call/join",
               "host": [
-                "barman-wannabe-cape",
-                "ngrok-free",
-                "dev"
+                "127",
+                "0",
+                "0",
+                "1"
               ],
+              "port": "8000",
               "path": [
                 "api",
                 "call",
@@ -2627,7 +2630,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "41|sLH44PF0XFlGWU8HqTMHOAGfyeQH43sGlQwpLTjH7d28fcfa",
+                  "value": "44|0Dohw5SHUUf26EjjU8mH4ICatxth3sbPSHnLUm2i9190abc9",
                   "type": "string"
                 }
               ]
@@ -2639,7 +2642,7 @@
               "formdata": [
                 {
                   "key": "room_name",
-                  "value": "test #2",
+                  "value": "test3",
                   "type": "text",
                   "uuid": "21871f2d-332a-439e-8799-65f6ba6ea14b"
                 }
@@ -3491,860 +3494,6 @@
               ],
               "cookie": [],
               "body": "{\n    \"status\": \"success\",\n    \"data\": [\n        {\n            \"subject_id\": 1,\n            \"subject_name\": \"الفلسفة\",\n            \"has_assessments\": true,\n            \"latest_assessment\": {\n                \"id\": 3,\n                \"type\": \"exam\",\n                \"title\": \"مذاكرة الفلسفة\",\n                \"total_mark\": 200,\n                \"total_students_took_it\": 1,\n                \"passed_count\": 1,\n                \"failed_count\": 0,\n                \"score_brackets_percentages\": {\n                    \"0 - 40\": 0,\n                    \">40 - 80\": 0,\n                    \">80 - 120\": 0,\n                    \">120 - 160\": 0,\n                    \">160 - 200\": 100\n                }\n            },\n            \"critical_assessments\": [\n                {\n                    \"id\": 1,\n                    \"type\": \"exam\",\n                    \"title\": \"امتحان تجريبي - الفلسفة\",\n                    \"fail_rate\": 100\n                }\n            ]\n        },\n        {\n            \"subject_id\": 2,\n            \"subject_name\": \"التاريخ\",\n            \"has_assessments\": true,\n            \"latest_assessment\": {\n                \"id\": 2,\n                \"type\": \"exam\",\n                \"title\": \"امتحان تجريبي - التاريخ\",\n                \"total_mark\": 8,\n                \"total_students_took_it\": 3,\n                \"passed_count\": 0,\n                \"failed_count\": 3,\n                \"score_brackets_percentages\": {\n                    \"0 - 1.6\": 0,\n                    \">1.6 - 3.2\": 100,\n                    \">3.2 - 4.8\": 0,\n                    \">4.8 - 6.4\": 0,\n                    \">6.4 - 8\": 0\n                }\n            },\n            \"critical_assessments\": [\n                {\n                    \"id\": 2,\n                    \"type\": \"exam\",\n                    \"title\": \"امتحان تجريبي - التاريخ\",\n                    \"fail_rate\": 100\n                }\n            ]\n        },\n        {\n            \"subject_id\": 3,\n            \"subject_name\": \"الجغرافيا\",\n            \"has_assessments\": false,\n            \"latest_assessment\": null,\n            \"critical_assessments\": []\n        },\n        {\n            \"subject_id\": 4,\n            \"subject_name\": \"اللغة العربية\",\n            \"has_assessments\": true,\n            \"latest_assessment\": {\n                \"id\": 4,\n                \"type\": \"exam\",\n                \"title\": \"مذاكرة اللغة العربية\",\n                \"total_mark\": 100,\n                \"total_students_took_it\": 1,\n                \"passed_count\": 1,\n                \"failed_count\": 0,\n                \"score_brackets_percentages\": {\n                    \"0 - 20\": 0,\n                    \">20 - 40\": 0,\n                    \">40 - 60\": 0,\n                    \">60 - 80\": 0,\n                    \">80 - 100\": 100\n                }\n            },\n            \"critical_assessments\": []\n        },\n        {\n            \"subject_id\": 5,\n            \"subject_name\": \"اللغة الإنكليزية\",\n            \"has_assessments\": false,\n            \"latest_assessment\": null,\n            \"critical_assessments\": []\n        },\n        {\n            \"subject_id\": 6,\n            \"subject_name\": \"اللغة الفرنسية\",\n            \"has_assessments\": true,\n            \"latest_assessment\": {\n                \"id\": 31,\n                \"type\": \"quiz\",\n                \"title\": \"Quiz #31\",\n                \"total_mark\": 12,\n                \"total_students_took_it\": 0,\n                \"passed_count\": 0,\n                \"failed_count\": 0,\n                \"score_brackets_percentages\": {\n                    \"0 - 2.4\": 0,\n                    \">2.4 - 4.8\": 0,\n                    \">4.8 - 7.2\": 0,\n                    \">7.2 - 9.6\": 0,\n                    \">9.6 - 12\": 0\n                }\n            },\n            \"critical_assessments\": []\n        },\n        {\n            \"subject_id\": 7,\n            \"subject_name\": \"التربية الدينية\",\n            \"has_assessments\": false,\n            \"latest_assessment\": null,\n            \"critical_assessments\": []\n        },\n        {\n            \"subject_id\": 8,\n            \"subject_name\": \"الرياضيات (جبر)\",\n            \"has_assessments\": true,\n            \"latest_assessment\": {\n                \"id\": 41,\n                \"type\": \"quiz\",\n                \"title\": \"Quiz #41\",\n                \"total_mark\": 12,\n                \"total_students_took_it\": 0,\n                \"passed_count\": 0,\n                \"failed_count\": 0,\n                \"score_brackets_percentages\": {\n                    \"0 - 2.4\": 0,\n                    \">2.4 - 4.8\": 0,\n                    \">4.8 - 7.2\": 0,\n                    \">7.2 - 9.6\": 0,\n                    \">9.6 - 12\": 0\n                }\n            },\n            \"critical_assessments\": []\n        },\n        {\n            \"subject_id\": 9,\n            \"subject_name\": \"الفيزياء والكيمياء\",\n            \"has_assessments\": false,\n            \"latest_assessment\": null,\n            \"critical_assessments\": []\n        },\n        {\n            \"subject_id\": 10,\n            \"subject_name\": \"علم الأحياء والأرض\",\n            \"has_assessments\": true,\n            \"latest_assessment\": {\n                \"id\": 51,\n                \"type\": \"quiz\",\n                \"title\": \"Quiz #51\",\n                \"total_mark\": 12,\n                \"total_students_took_it\": 0,\n                \"passed_count\": 0,\n                \"failed_count\": 0,\n                \"score_brackets_percentages\": {\n                    \"0 - 2.4\": 0,\n                    \">2.4 - 4.8\": 0,\n                    \">4.8 - 7.2\": 0,\n                    \">7.2 - 9.6\": 0,\n                    \">9.6 - 12\": 0\n                }\n            },\n            \"critical_assessments\": []\n        },\n        {\n            \"subject_id\": 11,\n            \"subject_name\": \"التاريخ\",\n            \"has_assessments\": false,\n            \"latest_assessment\": null,\n            \"critical_assessments\": []\n        },\n        {\n            \"subject_id\": 12,\n            \"subject_name\": \"الجغرافيا\",\n            \"has_assessments\": true,\n            \"latest_assessment\": {\n                \"id\": 61,\n                \"type\": \"quiz\",\n                \"title\": \"Quiz #61\",\n                \"total_mark\": 12,\n                \"total_students_took_it\": 0,\n                \"passed_count\": 0,\n                \"failed_count\": 0,\n                \"score_brackets_percentages\": {\n                    \"0 - 2.4\": 0,\n                    \">2.4 - 4.8\": 0,\n                    \">4.8 - 7.2\": 0,\n                    \">7.2 - 9.6\": 0,\n                    \">9.6 - 12\": 0\n                }\n            },\n            \"critical_assessments\": []\n        },\n        {\n            \"subject_id\": 13,\n            \"subject_name\": \"اللغة العربية\",\n            \"has_assessments\": false,\n            \"latest_assessment\": null,\n            \"critical_assessments\": []\n        },\n        {\n            \"subject_id\": 14,\n            \"subject_name\": \"اللغة الإنكليزية\",\n            \"has_assessments\": true,\n            \"latest_assessment\": {\n                \"id\": 81,\n                \"type\": \"quiz\",\n                \"title\": \"Quiz #81\",\n                \"total_mark\": 12,\n                \"total_students_took_it\": 0,\n                \"passed_count\": 0,\n                \"failed_count\": 0,\n                \"score_brackets_percentages\": {\n                    \"0 - 2.4\": 0,\n                    \">2.4 - 4.8\": 0,\n                    \">4.8 - 7.2\": 0,\n                    \">7.2 - 9.6\": 0,\n                    \">9.6 - 12\": 0\n                }\n            },\n            \"critical_assessments\": []\n        },\n        {\n            \"subject_id\": 15,\n            \"subject_name\": \"اللغة الفرنسية\",\n            \"has_assessments\": false,\n            \"latest_assessment\": null,\n            \"critical_assessments\": []\n        },\n        {\n            \"subject_id\": 16,\n            \"subject_name\": \"التربية الدينية\",\n            \"has_assessments\": true,\n            \"latest_assessment\": {\n                \"id\": 91,\n                \"type\": \"quiz\",\n                \"title\": \"Quiz #91\",\n                \"total_mark\": 12,\n                \"total_students_took_it\": 0,\n                \"passed_count\": 0,\n                \"failed_count\": 0,\n                \"score_brackets_percentages\": {\n                    \"0 - 2.4\": 0,\n                    \">2.4 - 4.8\": 0,\n                    \">4.8 - 7.2\": 0,\n                    \">7.2 - 9.6\": 0,\n                    \">9.6 - 12\": 0\n                }\n            },\n            \"critical_assessments\": []\n        }\n    ]\n}"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "student",
-      "item": [
-        {
-          "name": "Register",
-          "request": {
-            "auth": {
-              "type": "noauth"
-            },
-            "method": "POST",
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "formdata",
-              "formdata": [
-                {
-                  "key": "fullname",
-                  "value": "آية حمَّاميَّة",
-                  "type": "text",
-                  "uuid": "2e44a314-f7fe-47fe-9aad-e552e1ca7ef6"
-                },
-                {
-                  "key": "phone",
-                  "value": "0948568727",
-                  "type": "text",
-                  "uuid": "47f0255c-fabf-4da1-936b-c38d49ed1099"
-                },
-                {
-                  "key": "parent_phone",
-                  "value": "0948568727",
-                  "type": "text",
-                  "uuid": "e7846a0b-1a00-45d1-b3ce-aafb9d07ed7f"
-                },
-                {
-                  "key": "level",
-                  "value": "twelfth",
-                  "type": "text",
-                  "uuid": "4d6ff7cf-85f4-4a70-bbf8-e376a0dccb7e"
-                },
-                {
-                  "key": "fathersname",
-                  "value": "نبيل ",
-                  "type": "text",
-                  "uuid": "2d4ba451-2caf-47f1-a24a-a0046800fea5"
-                },
-                {
-                  "key": "DocumentaryEvidence",
-                  "type": "file",
-                  "uuid": "11d2921a-998b-4cd4-ab03-715cdffa3627",
-                  "src": "postman-cloud:///1f18b0ad-3ec0-4430-8b01-4e173226df0b"
-                }
-              ]
-            },
-            "url": {
-              "raw": "http://127.0.0.1:8000/api/register",
-              "protocol": "http",
-              "host": [
-                "127",
-                "0",
-                "0",
-                "1"
-              ],
-              "port": "8000",
-              "path": [
-                "api",
-                "register"
-              ]
-            }
-          },
-          "response": [
-            {
-              "name": "repeated",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Accept",
-                    "value": "application/json",
-                    "type": "text"
-                  }
-                ],
-                "body": {
-                  "mode": "formdata",
-                  "formdata": [
-                    {
-                      "key": "fullname",
-                      "value": "Ayahammamieh",
-                      "type": "text",
-                      "uuid": "2e44a314-f7fe-47fe-9aad-e552e1ca7ef6"
-                    },
-                    {
-                      "key": "phone",
-                      "value": "0948568727",
-                      "type": "text",
-                      "uuid": "47f0255c-fabf-4da1-936b-c38d49ed1099"
-                    },
-                    {
-                      "key": "parent_phone",
-                      "value": "0948568727",
-                      "type": "text",
-                      "uuid": "e7846a0b-1a00-45d1-b3ce-aafb9d07ed7f"
-                    },
-                    {
-                      "key": "level",
-                      "value": "BAC",
-                      "type": "text",
-                      "uuid": "4d6ff7cf-85f4-4a70-bbf8-e376a0dccb7e"
-                    },
-                    {
-                      "key": "DocumentaryEvidence",
-                      "type": "file",
-                      "uuid": "b8a38190-c264-4799-89e0-05aec6447e98",
-                      "src": [
-                        "postman-cloud:///1f0e6dd7-a7a4-4640-92ed-1a45466ea5d8"
-                      ]
-                    }
-                  ]
-                },
-                "url": {
-                  "raw": "http://127.0.0.1:8000/api/register",
-                  "protocol": "http",
-                  "host": [
-                    "127",
-                    "0",
-                    "0",
-                    "1"
-                  ],
-                  "port": "8000",
-                  "path": [
-                    "api",
-                    "register"
-                  ]
-                }
-              },
-              "status": "Unprocessable Content",
-              "code": 422,
-              "_postman_previewlanguage": "Text",
-              "header": [
-                {
-                  "key": "Host",
-                  "value": "127.0.0.1:8000"
-                },
-                {
-                  "key": "Connection",
-                  "value": "close"
-                },
-                {
-                  "key": "X-Powered-By",
-                  "value": "PHP/8.2.12"
-                },
-                {
-                  "key": "Cache-Control",
-                  "value": "no-cache, private"
-                },
-                {
-                  "key": "Date",
-                  "value": "Sun, 26 Apr 2026 21:50:57 GMT"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                },
-                {
-                  "key": "Access-Control-Allow-Origin",
-                  "value": "*"
-                }
-              ],
-              "cookie": [],
-              "body": "{\n    \"message\": \"The phone has already been taken.\",\n    \"errors\": {\n        \"phone\": [\n            \"The phone has already been taken.\"\n        ]\n    }\n}"
-            },
-            {
-              "name": "success",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Accept",
-                    "value": "application/json",
-                    "type": "text"
-                  }
-                ],
-                "body": {
-                  "mode": "formdata",
-                  "formdata": [
-                    {
-                      "key": "fullname",
-                      "value": "يمنى الرفاعي",
-                      "type": "text",
-                      "uuid": "2e44a314-f7fe-47fe-9aad-e552e1ca7ef6"
-                    },
-                    {
-                      "key": "phone",
-                      "value": "+963941514033",
-                      "type": "text",
-                      "uuid": "47f0255c-fabf-4da1-936b-c38d49ed1099"
-                    },
-                    {
-                      "key": "parent_phone",
-                      "value": "0948568727",
-                      "type": "text",
-                      "uuid": "e7846a0b-1a00-45d1-b3ce-aafb9d07ed7f"
-                    },
-                    {
-                      "key": "level",
-                      "value": "twelfth",
-                      "type": "text",
-                      "uuid": "4d6ff7cf-85f4-4a70-bbf8-e376a0dccb7e"
-                    },
-                    {
-                      "key": "DocumentaryEvidence",
-                      "type": "file",
-                      "uuid": "b8a38190-c264-4799-89e0-05aec6447e98",
-                      "src": [
-                        "postman-cloud:///1f0e6dd7-a7a4-4640-92ed-1a45466ea5d8"
-                      ]
-                    },
-                    {
-                      "key": "fathersname",
-                      "value": "نبيل",
-                      "type": "text",
-                      "uuid": "2d4ba451-2caf-47f1-a24a-a0046800fea5"
-                    }
-                  ]
-                },
-                "url": {
-                  "raw": "http://127.0.0.1:8000/api/register",
-                  "protocol": "http",
-                  "host": [
-                    "127",
-                    "0",
-                    "0",
-                    "1"
-                  ],
-                  "port": "8000",
-                  "path": [
-                    "api",
-                    "register"
-                  ]
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "_postman_previewlanguage": "Text",
-              "header": [
-                {
-                  "key": "Host",
-                  "value": "127.0.0.1:8000"
-                },
-                {
-                  "key": "Connection",
-                  "value": "close"
-                },
-                {
-                  "key": "X-Powered-By",
-                  "value": "PHP/8.2.12"
-                },
-                {
-                  "key": "Cache-Control",
-                  "value": "no-cache, private"
-                },
-                {
-                  "key": "Date",
-                  "value": "Fri, 08 May 2026 18:59:51 GMT"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                },
-                {
-                  "key": "Access-Control-Allow-Origin",
-                  "value": "*"
-                }
-              ],
-              "cookie": [],
-              "body": "{\n    \"status\": \"success\",\n    \"message\": \"تم حفظ بياناتك بنجاح. حسابك الآن بانتظار مراجعة الإدارة.\",\n    \"data\": {\n        \"user\": {\n            \"id\": 1,\n            \"fullname\": \"يمنى الرفاعي\",\n            \"fathersname\": \"نبيل\",\n            \"phone\": \"+963941514033\",\n            \"status\": \"pending\",\n            \"documentary_evidence\": \"http://127.0.0.1:8000/storage/students/documents/1778266791_aya.jpg\"\n        }\n    }\n}"
-            }
-          ]
-        },
-        {
-          "name": "login",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "formdata",
-              "formdata": [
-                {
-                  "key": "fullname",
-                  "value": "Ayahammamieh",
-                  "type": "text",
-                  "uuid": "2e44a314-f7fe-47fe-9aad-e552e1ca7ef6",
-                  "disabled": true
-                },
-                {
-                  "key": "phone",
-                  "value": "0948568727",
-                  "type": "text",
-                  "uuid": "47f0255c-fabf-4da1-936b-c38d49ed1099"
-                },
-                {
-                  "key": "parent_phone",
-                  "value": "0948568727",
-                  "type": "text",
-                  "uuid": "e7846a0b-1a00-45d1-b3ce-aafb9d07ed7f",
-                  "disabled": true
-                },
-                {
-                  "key": "level",
-                  "value": "BAC",
-                  "type": "text",
-                  "uuid": "4d6ff7cf-85f4-4a70-bbf8-e376a0dccb7e",
-                  "disabled": true
-                },
-                {
-                  "key": "DocumentaryEvidence",
-                  "type": "file",
-                  "uuid": "b8a38190-c264-4799-89e0-05aec6447e98",
-                  "src": "postman-cloud:///1f0e6dd7-a7a4-4640-92ed-1a45466ea5d8",
-                  "disabled": true
-                }
-              ]
-            },
-            "url": {
-              "raw": "https://goes-litmus-uncouth.ngrok-free.dev/api/login",
-              "protocol": "https",
-              "host": [
-                "goes-litmus-uncouth",
-                "ngrok-free",
-                "dev"
-              ],
-              "path": [
-                "api",
-                "login"
-              ]
-            }
-          },
-          "response": [
-            {
-              "name": "success",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Accept",
-                    "value": "application/json",
-                    "type": "text"
-                  }
-                ],
-                "body": {
-                  "mode": "formdata",
-                  "formdata": [
-                    {
-                      "key": "fullname",
-                      "value": "Ayahammamieh",
-                      "type": "text",
-                      "uuid": "2e44a314-f7fe-47fe-9aad-e552e1ca7ef6",
-                      "disabled": true
-                    },
-                    {
-                      "key": "phone",
-                      "value": "0948568727",
-                      "type": "text",
-                      "uuid": "47f0255c-fabf-4da1-936b-c38d49ed1099"
-                    },
-                    {
-                      "key": "parent_phone",
-                      "value": "0948568727",
-                      "type": "text",
-                      "uuid": "e7846a0b-1a00-45d1-b3ce-aafb9d07ed7f",
-                      "disabled": true
-                    },
-                    {
-                      "key": "level",
-                      "value": "BAC",
-                      "type": "text",
-                      "uuid": "4d6ff7cf-85f4-4a70-bbf8-e376a0dccb7e",
-                      "disabled": true
-                    },
-                    {
-                      "key": "DocumentaryEvidence",
-                      "type": "file",
-                      "uuid": "b8a38190-c264-4799-89e0-05aec6447e98",
-                      "src": [
-                        "postman-cloud:///1f0e6dd7-a7a4-4640-92ed-1a45466ea5d8"
-                      ],
-                      "disabled": true
-                    }
-                  ]
-                },
-                "url": {
-                  "raw": "http://127.0.0.1:8000/api/login",
-                  "protocol": "http",
-                  "host": [
-                    "127",
-                    "0",
-                    "0",
-                    "1"
-                  ],
-                  "port": "8000",
-                  "path": [
-                    "api",
-                    "login"
-                  ]
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "_postman_previewlanguage": "Text",
-              "header": [
-                {
-                  "key": "Host",
-                  "value": "127.0.0.1:8000"
-                },
-                {
-                  "key": "Connection",
-                  "value": "close"
-                },
-                {
-                  "key": "X-Powered-By",
-                  "value": "PHP/8.2.12"
-                },
-                {
-                  "key": "Cache-Control",
-                  "value": "no-cache, private"
-                },
-                {
-                  "key": "Date",
-                  "value": "Sun, 26 Apr 2026 19:40:19 GMT"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                },
-                {
-                  "key": "Access-Control-Allow-Origin",
-                  "value": "*"
-                }
-              ],
-              "cookie": [],
-              "body": "{\n    \"status\": \"success\",\n    \"message\": \"تم إرسال رابط الدخول المباشر إلى رقمك على واتساب بنجاح.\"\n}"
-            },
-            {
-              "name": "failed",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Accept",
-                    "value": "application/json",
-                    "type": "text"
-                  }
-                ],
-                "body": {
-                  "mode": "formdata",
-                  "formdata": [
-                    {
-                      "key": "fullname",
-                      "value": "Ayahammamieh",
-                      "type": "text",
-                      "uuid": "2e44a314-f7fe-47fe-9aad-e552e1ca7ef6",
-                      "disabled": true
-                    },
-                    {
-                      "key": "phone",
-                      "value": "0948568727",
-                      "type": "text",
-                      "uuid": "47f0255c-fabf-4da1-936b-c38d49ed1099"
-                    },
-                    {
-                      "key": "parent_phone",
-                      "value": "0948568727",
-                      "type": "text",
-                      "uuid": "e7846a0b-1a00-45d1-b3ce-aafb9d07ed7f",
-                      "disabled": true
-                    },
-                    {
-                      "key": "level",
-                      "value": "BAC",
-                      "type": "text",
-                      "uuid": "4d6ff7cf-85f4-4a70-bbf8-e376a0dccb7e",
-                      "disabled": true
-                    },
-                    {
-                      "key": "DocumentaryEvidence",
-                      "type": "file",
-                      "uuid": "b8a38190-c264-4799-89e0-05aec6447e98",
-                      "src": [
-                        "postman-cloud:///1f0e6dd7-a7a4-4640-92ed-1a45466ea5d8"
-                      ],
-                      "disabled": true
-                    }
-                  ]
-                },
-                "url": {
-                  "raw": "http://127.0.0.1:8000/api/login",
-                  "protocol": "http",
-                  "host": [
-                    "127",
-                    "0",
-                    "0",
-                    "1"
-                  ],
-                  "port": "8000",
-                  "path": [
-                    "api",
-                    "login"
-                  ]
-                }
-              },
-              "status": "Forbidden",
-              "code": 403,
-              "_postman_previewlanguage": "Text",
-              "header": [
-                {
-                  "key": "Host",
-                  "value": "127.0.0.1:8000"
-                },
-                {
-                  "key": "Connection",
-                  "value": "close"
-                },
-                {
-                  "key": "X-Powered-By",
-                  "value": "PHP/8.2.12"
-                },
-                {
-                  "key": "Cache-Control",
-                  "value": "no-cache, private"
-                },
-                {
-                  "key": "Date",
-                  "value": "Sun, 26 Apr 2026 19:43:46 GMT"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                },
-                {
-                  "key": "Access-Control-Allow-Origin",
-                  "value": "*"
-                }
-              ],
-              "cookie": [],
-              "body": "{\n    \"status\": \"error\",\n    \"message\": \"عذراً، هذا الحساب غير موجود أو لم يتم تفعيله من قبل الإدارة بعد.\"\n}"
-            }
-          ]
-        },
-        {
-          "name": "logout",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "1|NWf79ZDVPUD1L929isqyfQYHDxLd1yI6k8aGN67d8e714c48",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "POST",
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "http://127.0.0.1:8000/api/logout",
-              "protocol": "http",
-              "host": [
-                "127",
-                "0",
-                "0",
-                "1"
-              ],
-              "port": "8000",
-              "path": [
-                "api",
-                "logout"
-              ]
-            }
-          },
-          "response": [
-            {
-              "name": "logout",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Accept",
-                    "value": "application/json",
-                    "type": "text"
-                  }
-                ],
-                "url": {
-                  "raw": "http://127.0.0.1:8000/api/logout",
-                  "protocol": "http",
-                  "host": [
-                    "127",
-                    "0",
-                    "0",
-                    "1"
-                  ],
-                  "port": "8000",
-                  "path": [
-                    "api",
-                    "logout"
-                  ]
-                }
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "_postman_previewlanguage": "Text",
-              "header": [
-                {
-                  "key": "Host",
-                  "value": "127.0.0.1:8000"
-                },
-                {
-                  "key": "Connection",
-                  "value": "close"
-                },
-                {
-                  "key": "X-Powered-By",
-                  "value": "PHP/8.2.12"
-                },
-                {
-                  "key": "Cache-Control",
-                  "value": "no-cache, private"
-                },
-                {
-                  "key": "Date",
-                  "value": "Mon, 01 Jun 2026 05:56:57 GMT"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                },
-                {
-                  "key": "Access-Control-Allow-Origin",
-                  "value": "*"
-                }
-              ],
-              "cookie": [],
-              "body": "{\n    \"success\": false,\n    \"logged_out\": true,\n    \"message\": \" عذراً، انتهت صلاحية الجلسة أو تم تسجيل الخروج مسبقاً. يرجى العودة لصفحة تسجيل الدخول\"\n}"
-            }
-          ]
-        },
-        {
-          "name": "url",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json",
-                "type": "text"
-              },
-              {
-                "key": "ngrok-skip-browser-warning",
-                "value": "true",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "https://stays-ability-accustom.ngrok-free.dev/magic-login/1?expires=1780200876&signature=4c17c61ad301410e4877bde2912682bf83c93163ff668de6dcf3439ae64f0b91",
-              "protocol": "https",
-              "host": [
-                "stays-ability-accustom",
-                "ngrok-free",
-                "dev"
-              ],
-              "path": [
-                "magic-login",
-                "1"
-              ],
-              "query": [
-                {
-                  "key": "expires",
-                  "value": "1780200876"
-                },
-                {
-                  "key": "signature",
-                  "value": "4c17c61ad301410e4877bde2912682bf83c93163ff668de6dcf3439ae64f0b91"
-                }
-              ]
-            }
-          },
-          "response": [
-            {
-              "name": "time_out",
-              "originalRequest": {
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "Accept",
-                    "value": "application/json",
-                    "type": "text"
-                  }
-                ],
-                "url": {
-                  "raw": "http://127.0.0.1:8000/api/magic-login/1?expires=1777378855&signature=856016403575063c5cbef475e72601ff136160270ff21e1caff53b3ca449bfc0",
-                  "protocol": "http",
-                  "host": [
-                    "127",
-                    "0",
-                    "0",
-                    "1"
-                  ],
-                  "port": "8000",
-                  "path": [
-                    "api",
-                    "magic-login",
-                    "1"
-                  ],
-                  "query": [
-                    {
-                      "key": "expires",
-                      "value": "1777378855"
-                    },
-                    {
-                      "key": "signature",
-                      "value": "856016403575063c5cbef475e72601ff136160270ff21e1caff53b3ca449bfc0"
-                    }
-                  ]
-                }
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "_postman_previewlanguage": "Text",
-              "header": [
-                {
-                  "key": "Host",
-                  "value": "127.0.0.1:8000"
-                },
-                {
-                  "key": "Connection",
-                  "value": "close"
-                },
-                {
-                  "key": "X-Powered-By",
-                  "value": "PHP/8.2.12"
-                },
-                {
-                  "key": "Cache-Control",
-                  "value": "no-cache, private"
-                },
-                {
-                  "key": "Date",
-                  "value": "Tue, 28 Apr 2026 12:24:10 GMT"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                },
-                {
-                  "key": "Access-Control-Allow-Origin",
-                  "value": "*"
-                }
-              ],
-              "cookie": [],
-              "body": "{\n    \"message\": \"عذراً، الرابط منتهي الصلاحية أو غير صالح.\"\n}"
-            },
-            {
-              "name": "success",
-              "originalRequest": {
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "Accept",
-                    "value": "application/json",
-                    "type": "text"
-                  }
-                ],
-                "url": {
-                  "raw": "http://127.0.0.1:8000/api/magic-login/1?expires=1777380351&signature=ca73c88cbdbf955654ef1e4de31528b9e3896d8970a7006f8b032a960e6f1dfa",
-                  "protocol": "http",
-                  "host": [
-                    "127",
-                    "0",
-                    "0",
-                    "1"
-                  ],
-                  "port": "8000",
-                  "path": [
-                    "api",
-                    "magic-login",
-                    "1"
-                  ],
-                  "query": [
-                    {
-                      "key": "expires",
-                      "value": "1777380351"
-                    },
-                    {
-                      "key": "signature",
-                      "value": "ca73c88cbdbf955654ef1e4de31528b9e3896d8970a7006f8b032a960e6f1dfa"
-                    }
-                  ]
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "_postman_previewlanguage": "Text",
-              "header": [
-                {
-                  "key": "Host",
-                  "value": "127.0.0.1:8000"
-                },
-                {
-                  "key": "Connection",
-                  "value": "close"
-                },
-                {
-                  "key": "X-Powered-By",
-                  "value": "PHP/8.2.12"
-                },
-                {
-                  "key": "Cache-Control",
-                  "value": "no-cache, private"
-                },
-                {
-                  "key": "Date",
-                  "value": "Tue, 28 Apr 2026 12:31:41 GMT"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                },
-                {
-                  "key": "Access-Control-Allow-Origin",
-                  "value": "*"
-                }
-              ],
-              "cookie": [],
-              "body": "{\n    \"status\": \"success\",\n    \"message\": \"تم تسجيل الدخول بنجاح\",\n    \"token\": \"1|UJBPzJauRQ7VXlmDbbMwRxbBQKoPc4G4BIKXnEN030c85dcd\",\n    \"user\": {\n        \"id\": 1,\n        \"fullname\": \"Ayahammamieh\",\n        \"phone\": \"0948568727\",\n        \"parent_phone\": \"0948568727\",\n        \"points\": 0,\n        \"fcm_token\": null,\n        \"level\": \"twelfth\",\n        \"phone_verified_at\": \"2026-04-28 12:28:55\",\n        \"status\": \"approved\",\n        \"otp_expires_at\": null,\n        \"verification_token\": null,\n        \"token_expires_at\": null,\n        \"DocumentaryEvidence\": \"students/documents/1777379335_aya.jpg\",\n        \"created_at\": \"2026-04-28T12:28:55.000000Z\",\n        \"updated_at\": \"2026-04-28T12:28:55.000000Z\"\n    }\n}"
             }
           ]
         }
@@ -8039,7 +7188,7 @@
           ]
         },
         {
-          "name": "New Request",
+          "name": "submissions",
           "request": {
             "auth": {
               "type": "bearer",
@@ -8140,6 +7289,111 @@
               ],
               "cookie": [],
               "body": "{\n    \"status\": \"success\",\n    \"data\": [\n        {\n            \"submission_id\": 1,\n            \"quiz_id\": 1,\n            \"quiz_name\": \"اختبار رقم 1\",\n            \"total_score\": 8,\n            \"status\": \"pending\",\n            \"submitted_at\": \"2026-07-13 10:16\",\n            \"details\": [\n                {\n                    \"question_id\": 1,\n                    \"question\": \"اختر الخيار الصحيح رقم 1\",\n                    \"type\": \"mcq\",\n                    \"student_text_answer\": null,\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 1\n                },\n                {\n                    \"question_id\": 2,\n                    \"question\": \"اختر الخيار الصحيح رقم 2\",\n                    \"type\": \"mcq\",\n                    \"student_text_answer\": null,\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 1\n                },\n                {\n                    \"question_id\": 3,\n                    \"question\": \"اختر الخيار الصحيح رقم 3\",\n                    \"type\": \"mcq\",\n                    \"student_text_answer\": null,\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 1\n                },\n                {\n                    \"question_id\": 4,\n                    \"question\": \"اختر الخيار الصحيح رقم 4\",\n                    \"type\": \"mcq\",\n                    \"student_text_answer\": null,\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 1\n                },\n                {\n                    \"question_id\": 5,\n                    \"question\": \"العبارة رقم 1 صحيحة.\",\n                    \"type\": \"TF\",\n                    \"student_text_answer\": \"True\",\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 1\n                },\n                {\n                    \"question_id\": 6,\n                    \"question\": \"العبارة رقم 2 صحيحة.\",\n                    \"type\": \"TF\",\n                    \"student_text_answer\": \"False\",\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 1\n                },\n                {\n                    \"question_id\": 7,\n                    \"question\": \"العبارة رقم 3 صحيحة.\",\n                    \"type\": \"TF\",\n                    \"student_text_answer\": \"True\",\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 1\n                },\n                {\n                    \"question_id\": 8,\n                    \"question\": \"العبارة رقم 4 صحيحة.\",\n                    \"type\": \"TF\",\n                    \"student_text_answer\": \"False\",\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 1\n                },\n                {\n                    \"question_id\": 9,\n                    \"question\": \"اكتب اسم عاصمة سوريا.\",\n                    \"type\": \"TEXT\",\n                    \"student_text_answer\": \"هذه إجابة تجريبية من الطالب على السؤال النصي.\",\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 0\n                },\n                {\n                    \"question_id\": 10,\n                    \"question\": \"ما لون السماء في النهار؟\",\n                    \"type\": \"TEXT\",\n                    \"student_text_answer\": \"هذه إجابة تجريبية من الطالب على السؤال النصي.\",\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 0\n                },\n                {\n                    \"question_id\": 11,\n                    \"question\": \"اكتب كلمة الترحيب.\",\n                    \"type\": \"TEXT\",\n                    \"student_text_answer\": \"هذه إجابة تجريبية من الطالب على السؤال النصي.\",\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 0\n                },\n                {\n                    \"question_id\": 12,\n                    \"question\": \"ما حاصل 2 + 2 ؟\",\n                    \"type\": \"TEXT\",\n                    \"student_text_answer\": \"هذه إجابة تجريبية من الطالب على السؤال النصي.\",\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 0\n                }\n            ]\n        },\n        {\n            \"submission_id\": 4,\n            \"quiz_id\": 2,\n            \"quiz_name\": \"اختبار رقم 2\",\n            \"total_score\": 8,\n            \"status\": \"pending\",\n            \"submitted_at\": \"2026-07-13 10:16\",\n            \"details\": [\n                {\n                    \"question_id\": 1,\n                    \"question\": \"اختر الخيار الصحيح رقم 1\",\n                    \"type\": \"mcq\",\n                    \"student_text_answer\": null,\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 1\n                },\n                {\n                    \"question_id\": 2,\n                    \"question\": \"اختر الخيار الصحيح رقم 2\",\n                    \"type\": \"mcq\",\n                    \"student_text_answer\": null,\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 1\n                },\n                {\n                    \"question_id\": 3,\n                    \"question\": \"اختر الخيار الصحيح رقم 3\",\n                    \"type\": \"mcq\",\n                    \"student_text_answer\": null,\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 1\n                },\n                {\n                    \"question_id\": 4,\n                    \"question\": \"اختر الخيار الصحيح رقم 4\",\n                    \"type\": \"mcq\",\n                    \"student_text_answer\": null,\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 1\n                },\n                {\n                    \"question_id\": 5,\n                    \"question\": \"العبارة رقم 1 صحيحة.\",\n                    \"type\": \"TF\",\n                    \"student_text_answer\": \"True\",\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 1\n                },\n                {\n                    \"question_id\": 6,\n                    \"question\": \"العبارة رقم 2 صحيحة.\",\n                    \"type\": \"TF\",\n                    \"student_text_answer\": \"False\",\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 1\n                },\n                {\n                    \"question_id\": 7,\n                    \"question\": \"العبارة رقم 3 صحيحة.\",\n                    \"type\": \"TF\",\n                    \"student_text_answer\": \"True\",\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 1\n                },\n                {\n                    \"question_id\": 8,\n                    \"question\": \"العبارة رقم 4 صحيحة.\",\n                    \"type\": \"TF\",\n                    \"student_text_answer\": \"False\",\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 1\n                },\n                {\n                    \"question_id\": 9,\n                    \"question\": \"اكتب اسم عاصمة سوريا.\",\n                    \"type\": \"TEXT\",\n                    \"student_text_answer\": \"هذه إجابة تجريبية من الطالب على السؤال النصي.\",\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 0\n                },\n                {\n                    \"question_id\": 10,\n                    \"question\": \"ما لون السماء في النهار؟\",\n                    \"type\": \"TEXT\",\n                    \"student_text_answer\": \"هذه إجابة تجريبية من الطالب على السؤال النصي.\",\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 0\n                },\n                {\n                    \"question_id\": 11,\n                    \"question\": \"اكتب كلمة الترحيب.\",\n                    \"type\": \"TEXT\",\n                    \"student_text_answer\": \"هذه إجابة تجريبية من الطالب على السؤال النصي.\",\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 0\n                },\n                {\n                    \"question_id\": 12,\n                    \"question\": \"ما حاصل 2 + 2 ؟\",\n                    \"type\": \"TEXT\",\n                    \"student_text_answer\": \"هذه إجابة تجريبية من الطالب على السؤال النصي.\",\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 0\n                }\n            ]\n        },\n        {\n            \"submission_id\": 7,\n            \"quiz_id\": 3,\n            \"quiz_name\": \"اختبار رقم 3\",\n            \"total_score\": 8,\n            \"status\": \"pending\",\n            \"submitted_at\": \"2026-07-13 10:16\",\n            \"details\": [\n                {\n                    \"question_id\": 1,\n                    \"question\": \"اختر الخيار الصحيح رقم 1\",\n                    \"type\": \"mcq\",\n                    \"student_text_answer\": null,\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 1\n                },\n                {\n                    \"question_id\": 2,\n                    \"question\": \"اختر الخيار الصحيح رقم 2\",\n                    \"type\": \"mcq\",\n                    \"student_text_answer\": null,\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 1\n                },\n                {\n                    \"question_id\": 3,\n                    \"question\": \"اختر الخيار الصحيح رقم 3\",\n                    \"type\": \"mcq\",\n                    \"student_text_answer\": null,\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 1\n                },\n                {\n                    \"question_id\": 4,\n                    \"question\": \"اختر الخيار الصحيح رقم 4\",\n                    \"type\": \"mcq\",\n                    \"student_text_answer\": null,\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 1\n                },\n                {\n                    \"question_id\": 5,\n                    \"question\": \"العبارة رقم 1 صحيحة.\",\n                    \"type\": \"TF\",\n                    \"student_text_answer\": \"True\",\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 1\n                },\n                {\n                    \"question_id\": 6,\n                    \"question\": \"العبارة رقم 2 صحيحة.\",\n                    \"type\": \"TF\",\n                    \"student_text_answer\": \"False\",\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 1\n                },\n                {\n                    \"question_id\": 7,\n                    \"question\": \"العبارة رقم 3 صحيحة.\",\n                    \"type\": \"TF\",\n                    \"student_text_answer\": \"True\",\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 1\n                },\n                {\n                    \"question_id\": 8,\n                    \"question\": \"العبارة رقم 4 صحيحة.\",\n                    \"type\": \"TF\",\n                    \"student_text_answer\": \"False\",\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 1\n                },\n                {\n                    \"question_id\": 9,\n                    \"question\": \"اكتب اسم عاصمة سوريا.\",\n                    \"type\": \"TEXT\",\n                    \"student_text_answer\": \"هذه إجابة تجريبية من الطالب على السؤال النصي.\",\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 0\n                },\n                {\n                    \"question_id\": 10,\n                    \"question\": \"ما لون السماء في النهار؟\",\n                    \"type\": \"TEXT\",\n                    \"student_text_answer\": \"هذه إجابة تجريبية من الطالب على السؤال النصي.\",\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 0\n                },\n                {\n                    \"question_id\": 11,\n                    \"question\": \"اكتب كلمة الترحيب.\",\n                    \"type\": \"TEXT\",\n                    \"student_text_answer\": \"هذه إجابة تجريبية من الطالب على السؤال النصي.\",\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 0\n                },\n                {\n                    \"question_id\": 12,\n                    \"question\": \"ما حاصل 2 + 2 ؟\",\n                    \"type\": \"TEXT\",\n                    \"student_text_answer\": \"هذه إجابة تجريبية من الطالب على السؤال النصي.\",\n                    \"student_audio_answer\": null,\n                    \"is_correct\": 0\n                }\n            ]\n        }\n    ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "solved",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "3qBnmMbRK4v2ryi4KF81R3EUMF6ytR7ZDpheQ9hffcd41a15",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/student/solved-quizzes",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "student",
+                "solved-quizzes"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "New Request",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/student/solved-quizzes",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "student",
+                    "solved-quizzes"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 08 Aug 2026 13:55:41 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"success\",\n    \"count\": 1,\n    \"data\": [\n        {\n            \"submission_id\": 1,\n            \"quiz_id\": 781,\n            \"quiz_title\": \"كويز درس: \",\n            \"subject_id\": 1,\n            \"lesson_id\": 1,\n            \"total_score\": 85,\n            \"quiz_max_mark\": 100,\n            \"status\": \"graded\",\n            \"submitted_at\": \"2026-08-08 13:32\"\n        }\n    ]\n}"
             }
           ]
         }
@@ -9501,7 +8755,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "7mfAS5Nd4N7TJEDTx53C3UbOLB3hE2wynQ3K4E1P4c61149a",
+                  "value": "GJkS9wrBECaSon35jbZaAIkMwN8YFFaxM5eW3fu5bb715860",
                   "type": "string"
                 }
               ]
@@ -10551,7 +9805,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"type\": \"normal\",\r\n    \"target_audience\": \"teacher\",\r\n    \"title\": \"برنامج الدوام الأسبوعي لعام 2026\",\r\n    \"level\":\"ninth\",\r\n        \"content\": \"الطلاب الأعزاء، نود إعلامكم بأن عطلة نهاية الأسبوع ستبدأ من صباح الخميس القادم نظراً لأعمال الصيانة في المدرسة.\"}",
+              "raw": "{\r\n    \"type\": \"exam_schedule\",\r\n    \"target_audience\":\"teacher\",\r\n     \"level\":\"twelfth\",\r\n    \"title\": \"برنامج امتحانات الفصل الثاني لعام 2026\", \r\n    \"content\": {\r\n        \"columns\": [\r\n            \"اليوم والتاريخ\",\r\n            \"المادة\",\r\n            \"التوقيت\"\r\n        ],\r\n        \"rows\": [\r\n            {\r\n                \"date\": \"الأحد 2026-06-21\",\r\n                \"subject\": \"الرياضيات\",\r\n                \"time\": \"09:00 AM - 11:00 AM\"\r\n            }\r\n        ]\r\n    }\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -10772,7 +10026,7 @@
               "raw": ""
             },
             "url": {
-              "raw": "http://127.0.0.1:8000/api/announcements/exam/1",
+              "raw": "http://127.0.0.1:8000/api/announcements/exam/3",
               "protocol": "http",
               "host": [
                 "127",
@@ -10785,7 +10039,7 @@
                 "api",
                 "announcements",
                 "exam",
-                "1"
+                "3"
               ]
             }
           },
@@ -11042,7 +10296,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "KquOSii8p4HSwpeuOZEbsXJgGxGYlLhNiLMQ39oA11bb5e6b",
+                  "value": "GJkS9wrBECaSon35jbZaAIkMwN8YFFaxM5eW3fu5bb715860",
                   "type": "string"
                 }
               ]
@@ -11057,7 +10311,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"id\": 2,\r\n  \"type\": \"PastExam\"\r\n}\r\n",
+              "raw": "{\r\n  \"id\": 1,\r\n  \"type\": \"quiz\"\r\n}\r\n",
               "options": {
                 "raw": {
                   "language": "json"
@@ -11162,7 +10416,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "iswnf4DVPMh32s93BdZdoG8bN3r7o8kmRXcnLbN9f2198277",
+                  "value": "GJkS9wrBECaSon35jbZaAIkMwN8YFFaxM5eW3fu5bb715860",
                   "type": "string"
                 }
               ]
@@ -11266,10 +10520,33 @@
         {
           "name": "favorite_quiz",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "GJkS9wrBECaSon35jbZaAIkMwN8YFFaxM5eW3fu5bb715860",
+                  "type": "string"
+                }
+              ]
+            },
             "method": "GET",
             "header": [],
             "url": {
-              "raw": ""
+              "raw": "http://127.0.0.1:8000/api/favorites/quizzes",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "favorites",
+                "quizzes"
+              ]
             }
           },
           "response": [
@@ -11336,6 +10613,64 @@
               ],
               "cookie": [],
               "body": "[\n    {\n        \"id\": 1,\n        \"numofquestions\": 2,\n        \"timelimit\": 30,\n        \"totalmark\": 20,\n        \"subject_id\": 8,\n        \"lesson_id\": 110,\n        \"teacher_id\": 3,\n        \"created_at\": \"2026-06-21T17:41:02.000000Z\",\n        \"updated_at\": \"2026-06-21T17:41:02.000000Z\",\n        \"subject_name\": \"الرياضيات (جبر)\",\n        \"teacher_name\": \"الأستاذ موسى الرز\",\n        \"subject\": {\n            \"id\": 8,\n            \"name\": \"الرياضيات (جبر)\",\n            \"grade_level\": \"ninth\",\n            \"number_of_lessons\": null,\n            \"total_lessons\": 24,\n            \"deleted_at\": null,\n            \"created_at\": \"2026-06-21T17:29:16.000000Z\",\n            \"updated_at\": \"2026-06-21T17:29:50.000000Z\"\n        },\n        \"teacher\": {\n            \"id\": 3,\n            \"created_at\": \"2025-10-04T08:26:03.000000Z\",\n            \"updated_at\": \"2025-10-04T08:26:03.000000Z\",\n            \"full_name\": \"الأستاذ موسى الرز\",\n            \"phone\": \"0933333333\",\n            \"subjects\": \"\",\n            \"level\": \"twelfth\",\n            \"status\": \"approved\",\n            \"cv_path\": \"cv_dummy.pdf\"\n        }\n    }\n]"
+            },
+            {
+              "name": "favorite_quiz",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/favorites/quizzes",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "favorites",
+                    "quizzes"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 08 Aug 2026 19:29:53 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n    {\n        \"id\": 1,\n        \"numofquestions\": 12,\n        \"timelimit\": 15,\n        \"totalmark\": 12,\n        \"subject_id\": 2,\n        \"lesson_id\": 21,\n        \"teacher_id\": 2,\n        \"created_at\": \"2026-08-08T14:04:56.000000Z\",\n        \"updated_at\": \"2026-08-08T14:04:56.000000Z\",\n        \"subject_name\": \"التاريخ\",\n        \"teacher_name\": \"غالية الياسين\",\n        \"subject\": {\n            \"id\": 2,\n            \"name\": \"التاريخ\",\n            \"grade_level\": \"twelfth\",\n            \"number_of_lessons\": null,\n            \"total_lessons\": 29,\n            \"deleted_at\": null,\n            \"created_at\": \"2026-08-08T14:04:54.000000Z\",\n            \"updated_at\": \"2026-08-08T14:05:15.000000Z\",\n            \"full_name\": \"التاريخ - الثاني عشر\"\n        },\n        \"teacher\": {\n            \"id\": 2,\n            \"created_at\": \"2026-08-08T14:04:55.000000Z\",\n            \"updated_at\": \"2026-08-08T14:04:55.000000Z\",\n            \"full_name\": \"غالية الياسين\",\n            \"phone\": \"0943576695\",\n            \"subjects\": \"كل المواد\",\n            \"level\": \"twelfth\",\n            \"status\": \"approved\",\n            \"stripe_account_id\": null,\n            \"cv_path\": \"system/ghalia_cv.pdf\"\n        }\n    }\n]"
             }
           ]
         },
@@ -11393,7 +10728,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "iswnf4DVPMh32s93BdZdoG8bN3r7o8kmRXcnLbN9f2198277",
+                  "value": "GJkS9wrBECaSon35jbZaAIkMwN8YFFaxM5eW3fu5bb715860",
                   "type": "string"
                 }
               ]
@@ -11427,7 +10762,76 @@
               ]
             }
           },
-          "response": []
+          "response": [
+            {
+              "name": "all_favorite",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/favorites/all",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "favorites",
+                    "all"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 08 Aug 2026 19:13:42 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n    {\n        \"type\": \"lesson\",\n        \"data\": {\n            \"id\": 1,\n            \"title\": \"المعرفة ومصادرها\",\n            \"subject_id\": 1,\n            \"teacher_id\": 2,\n            \"class_id\": 11,\n            \"created_at\": \"2026-08-08T14:04:55.000000Z\",\n            \"updated_at\": \"2026-08-08T14:04:55.000000Z\",\n            \"deleted_at\": null,\n            \"has_quiz\": true\n        }\n    }\n]"
+            }
+          ]
         },
         {
           "name": "add",
@@ -11563,7 +10967,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "oYeEre20RHdLlAmrkl2UzszXpmBdvfiCryC14Oer8d069e89",
+                  "value": "GJkS9wrBECaSon35jbZaAIkMwN8YFFaxM5eW3fu5bb715860",
                   "type": "string"
                 }
               ]
@@ -11599,7 +11003,7 @@
           },
           "response": [
             {
-              "name": "New Request",
+              "name": "favorite_exams",
               "originalRequest": {
                 "method": "GET",
                 "header": [
@@ -11609,6 +11013,10 @@
                     "type": "text"
                   }
                 ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"id\": 41,\r\n  \"type\": \"Exam\"\r\n}\r\n"
+                },
                 "url": {
                   "raw": "http://127.0.0.1:8000/api/favorites/exams",
                   "protocol": "http",
@@ -11628,7 +11036,7 @@
               },
               "status": "OK",
               "code": 200,
-              "_postman_previewlanguage": "Text",
+              "_postman_previewlanguage": null,
               "header": [
                 {
                   "key": "Host",
@@ -11648,7 +11056,7 @@
                 },
                 {
                   "key": "Date",
-                  "value": "Mon, 13 Jul 2026 14:33:36 GMT"
+                  "value": "Sat, 08 Aug 2026 19:27:59 GMT"
                 },
                 {
                   "key": "Content-Type",
@@ -11660,7 +11068,7 @@
                 }
               ],
               "cookie": [],
-              "body": "[\n    null\n]"
+              "body": "[\n    {\n        \"id\": 1,\n        \"teacher_id\": 2,\n        \"title\": \"امتحان تجريبي - الفلسفة\",\n        \"description\": \"امتحان شامل لاختبار قدرات الطلاب\",\n        \"subject_id\": 1,\n        \"exam_date\": null,\n        \"duration_minutes\": 60,\n        \"numofquestions\": 3,\n        \"totalmark\": 8,\n        \"is_published\": 1,\n        \"created_at\": \"2026-08-08T14:05:11.000000Z\",\n        \"updated_at\": \"2026-08-08T14:05:11.000000Z\"\n    }\n]"
             }
           ]
         },
@@ -11675,7 +11083,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "KquOSii8p4HSwpeuOZEbsXJgGxGYlLhNiLMQ39oA11bb5e6b",
+                  "value": "GJkS9wrBECaSon35jbZaAIkMwN8YFFaxM5eW3fu5bb715860",
                   "type": "string"
                 }
               ]
@@ -11711,7 +11119,7 @@
           },
           "response": [
             {
-              "name": "New Request",
+              "name": "favorite_past_exams",
               "originalRequest": {
                 "method": "GET",
                 "header": [
@@ -11721,6 +11129,10 @@
                     "type": "text"
                   }
                 ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"id\": 41,\r\n  \"type\": \"Exam\"\r\n}\r\n"
+                },
                 "url": {
                   "raw": "http://127.0.0.1:8000/api/favorites/past-exams",
                   "protocol": "http",
@@ -11740,7 +11152,7 @@
               },
               "status": "OK",
               "code": 200,
-              "_postman_previewlanguage": "Text",
+              "_postman_previewlanguage": null,
               "header": [
                 {
                   "key": "Host",
@@ -11760,7 +11172,7 @@
                 },
                 {
                   "key": "Date",
-                  "value": "Mon, 13 Jul 2026 14:34:47 GMT"
+                  "value": "Sat, 08 Aug 2026 19:26:27 GMT"
                 },
                 {
                   "key": "Content-Type",
@@ -11772,7 +11184,7 @@
                 }
               ],
               "cookie": [],
-              "body": "[]"
+              "body": "[\n    {\n        \"id\": 1,\n        \"title\": \"امتحان شهادة الدراسة الثانوية - كيمياء - الدورة الأولى\",\n        \"numofquestions\": 6,\n        \"timelimit\": 120,\n        \"totalmark\": 6,\n        \"subject_id\": 17,\n        \"year\": \"2021\",\n        \"session\": \"first\",\n        \"voice_solution_path\": null,\n        \"is_published\": 1,\n        \"created_at\": \"2026-08-08T14:05:09.000000Z\",\n        \"updated_at\": \"2026-08-08T14:05:09.000000Z\"\n    }\n]"
             }
           ]
         }
@@ -13938,6 +13350,16 @@
         {
           "name": "info",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "zQyGFBCI21L77tnv642QCSsHbmW2IX909bBojOA47f4d20f1",
+                  "type": "string"
+                }
+              ]
+            },
             "method": "GET",
             "header": [],
             "url": {
@@ -14017,6 +13439,65 @@
               ],
               "cookie": [],
               "body": "{\n    \"status\": \"success\",\n    \"message\": \"تم جلب تفاصيل الامتحان بنجاح.\",\n    \"data\": {\n        \"exam_id\": 1,\n        \"exam_title\": \"امتحان تجريبي - الفلسفة\",\n        \"descreption\": \"امتحان شامل لاختبار قدرات الطلاب\",\n        \"exam_date\": null,\n        \"duration_minutes\": 60,\n        \"total_questions\": 3,\n        \"total_mark\": 8\n    }\n}"
+            },
+            {
+              "name": "info",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/student/exam-details/1",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "student",
+                    "exam-details",
+                    "1"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 31 Jul 2026 05:54:20 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"success\",\n    \"message\": \"تم جلب تفاصيل الامتحان بنجاح.\",\n    \"data\": {\n        \"exam_id\": 1,\n        \"exam_title\": \"امتحان تجريبي - الفلسفة\",\n        \"descreption\": \"امتحان شامل لاختبار قدرات الطلاب\",\n        \"exam_date\": null,\n        \"duration_minutes\": 60,\n        \"total_questions\": 3,\n        \"total_mark\": 8,\n        \"is_favorited\": true\n    }\n}"
             }
           ]
         },
@@ -18804,6 +18285,860 @@
             }
           },
           "response": []
+        }
+      ]
+    },
+    {
+      "name": "student",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "fullname",
+                  "value": "آية حمَّاميَّة",
+                  "type": "text",
+                  "uuid": "2e44a314-f7fe-47fe-9aad-e552e1ca7ef6"
+                },
+                {
+                  "key": "phone",
+                  "value": "0948568727",
+                  "type": "text",
+                  "uuid": "47f0255c-fabf-4da1-936b-c38d49ed1099"
+                },
+                {
+                  "key": "parent_phone",
+                  "value": "0948568727",
+                  "type": "text",
+                  "uuid": "e7846a0b-1a00-45d1-b3ce-aafb9d07ed7f"
+                },
+                {
+                  "key": "level",
+                  "value": "twelfth",
+                  "type": "text",
+                  "uuid": "4d6ff7cf-85f4-4a70-bbf8-e376a0dccb7e"
+                },
+                {
+                  "key": "fathersname",
+                  "value": "نبيل ",
+                  "type": "text",
+                  "uuid": "2d4ba451-2caf-47f1-a24a-a0046800fea5"
+                },
+                {
+                  "key": "DocumentaryEvidence",
+                  "type": "file",
+                  "uuid": "11d2921a-998b-4cd4-ab03-715cdffa3627",
+                  "src": "postman-cloud:///1f18b0ad-3ec0-4430-8b01-4e173226df0b"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/register",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "register"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "repeated",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "fullname",
+                      "value": "Ayahammamieh",
+                      "type": "text",
+                      "uuid": "2e44a314-f7fe-47fe-9aad-e552e1ca7ef6"
+                    },
+                    {
+                      "key": "phone",
+                      "value": "0948568727",
+                      "type": "text",
+                      "uuid": "47f0255c-fabf-4da1-936b-c38d49ed1099"
+                    },
+                    {
+                      "key": "parent_phone",
+                      "value": "0948568727",
+                      "type": "text",
+                      "uuid": "e7846a0b-1a00-45d1-b3ce-aafb9d07ed7f"
+                    },
+                    {
+                      "key": "level",
+                      "value": "BAC",
+                      "type": "text",
+                      "uuid": "4d6ff7cf-85f4-4a70-bbf8-e376a0dccb7e"
+                    },
+                    {
+                      "key": "DocumentaryEvidence",
+                      "type": "file",
+                      "uuid": "b8a38190-c264-4799-89e0-05aec6447e98",
+                      "src": [
+                        "postman-cloud:///1f0e6dd7-a7a4-4640-92ed-1a45466ea5d8"
+                      ]
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/register",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "register"
+                  ]
+                }
+              },
+              "status": "Unprocessable Content",
+              "code": 422,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 26 Apr 2026 21:50:57 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"The phone has already been taken.\",\n    \"errors\": {\n        \"phone\": [\n            \"The phone has already been taken.\"\n        ]\n    }\n}"
+            },
+            {
+              "name": "success",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "fullname",
+                      "value": "يمنى الرفاعي",
+                      "type": "text",
+                      "uuid": "2e44a314-f7fe-47fe-9aad-e552e1ca7ef6"
+                    },
+                    {
+                      "key": "phone",
+                      "value": "+963941514033",
+                      "type": "text",
+                      "uuid": "47f0255c-fabf-4da1-936b-c38d49ed1099"
+                    },
+                    {
+                      "key": "parent_phone",
+                      "value": "0948568727",
+                      "type": "text",
+                      "uuid": "e7846a0b-1a00-45d1-b3ce-aafb9d07ed7f"
+                    },
+                    {
+                      "key": "level",
+                      "value": "twelfth",
+                      "type": "text",
+                      "uuid": "4d6ff7cf-85f4-4a70-bbf8-e376a0dccb7e"
+                    },
+                    {
+                      "key": "DocumentaryEvidence",
+                      "type": "file",
+                      "uuid": "b8a38190-c264-4799-89e0-05aec6447e98",
+                      "src": [
+                        "postman-cloud:///1f0e6dd7-a7a4-4640-92ed-1a45466ea5d8"
+                      ]
+                    },
+                    {
+                      "key": "fathersname",
+                      "value": "نبيل",
+                      "type": "text",
+                      "uuid": "2d4ba451-2caf-47f1-a24a-a0046800fea5"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/register",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "register"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 08 May 2026 18:59:51 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"success\",\n    \"message\": \"تم حفظ بياناتك بنجاح. حسابك الآن بانتظار مراجعة الإدارة.\",\n    \"data\": {\n        \"user\": {\n            \"id\": 1,\n            \"fullname\": \"يمنى الرفاعي\",\n            \"fathersname\": \"نبيل\",\n            \"phone\": \"+963941514033\",\n            \"status\": \"pending\",\n            \"documentary_evidence\": \"http://127.0.0.1:8000/storage/students/documents/1778266791_aya.jpg\"\n        }\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "fullname",
+                  "value": "Ayahammamieh",
+                  "type": "text",
+                  "uuid": "2e44a314-f7fe-47fe-9aad-e552e1ca7ef6",
+                  "disabled": true
+                },
+                {
+                  "key": "phone",
+                  "value": "0948568727",
+                  "type": "text",
+                  "uuid": "47f0255c-fabf-4da1-936b-c38d49ed1099"
+                },
+                {
+                  "key": "parent_phone",
+                  "value": "0948568727",
+                  "type": "text",
+                  "uuid": "e7846a0b-1a00-45d1-b3ce-aafb9d07ed7f",
+                  "disabled": true
+                },
+                {
+                  "key": "level",
+                  "value": "BAC",
+                  "type": "text",
+                  "uuid": "4d6ff7cf-85f4-4a70-bbf8-e376a0dccb7e",
+                  "disabled": true
+                },
+                {
+                  "key": "DocumentaryEvidence",
+                  "type": "file",
+                  "uuid": "b8a38190-c264-4799-89e0-05aec6447e98",
+                  "src": "postman-cloud:///1f0e6dd7-a7a4-4640-92ed-1a45466ea5d8",
+                  "disabled": true
+                }
+              ]
+            },
+            "url": {
+              "raw": "https://goes-litmus-uncouth.ngrok-free.dev/api/login",
+              "protocol": "https",
+              "host": [
+                "goes-litmus-uncouth",
+                "ngrok-free",
+                "dev"
+              ],
+              "path": [
+                "api",
+                "login"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "success",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "fullname",
+                      "value": "Ayahammamieh",
+                      "type": "text",
+                      "uuid": "2e44a314-f7fe-47fe-9aad-e552e1ca7ef6",
+                      "disabled": true
+                    },
+                    {
+                      "key": "phone",
+                      "value": "0948568727",
+                      "type": "text",
+                      "uuid": "47f0255c-fabf-4da1-936b-c38d49ed1099"
+                    },
+                    {
+                      "key": "parent_phone",
+                      "value": "0948568727",
+                      "type": "text",
+                      "uuid": "e7846a0b-1a00-45d1-b3ce-aafb9d07ed7f",
+                      "disabled": true
+                    },
+                    {
+                      "key": "level",
+                      "value": "BAC",
+                      "type": "text",
+                      "uuid": "4d6ff7cf-85f4-4a70-bbf8-e376a0dccb7e",
+                      "disabled": true
+                    },
+                    {
+                      "key": "DocumentaryEvidence",
+                      "type": "file",
+                      "uuid": "b8a38190-c264-4799-89e0-05aec6447e98",
+                      "src": [
+                        "postman-cloud:///1f0e6dd7-a7a4-4640-92ed-1a45466ea5d8"
+                      ],
+                      "disabled": true
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/login",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "login"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 26 Apr 2026 19:40:19 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"success\",\n    \"message\": \"تم إرسال رابط الدخول المباشر إلى رقمك على واتساب بنجاح.\"\n}"
+            },
+            {
+              "name": "failed",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "fullname",
+                      "value": "Ayahammamieh",
+                      "type": "text",
+                      "uuid": "2e44a314-f7fe-47fe-9aad-e552e1ca7ef6",
+                      "disabled": true
+                    },
+                    {
+                      "key": "phone",
+                      "value": "0948568727",
+                      "type": "text",
+                      "uuid": "47f0255c-fabf-4da1-936b-c38d49ed1099"
+                    },
+                    {
+                      "key": "parent_phone",
+                      "value": "0948568727",
+                      "type": "text",
+                      "uuid": "e7846a0b-1a00-45d1-b3ce-aafb9d07ed7f",
+                      "disabled": true
+                    },
+                    {
+                      "key": "level",
+                      "value": "BAC",
+                      "type": "text",
+                      "uuid": "4d6ff7cf-85f4-4a70-bbf8-e376a0dccb7e",
+                      "disabled": true
+                    },
+                    {
+                      "key": "DocumentaryEvidence",
+                      "type": "file",
+                      "uuid": "b8a38190-c264-4799-89e0-05aec6447e98",
+                      "src": [
+                        "postman-cloud:///1f0e6dd7-a7a4-4640-92ed-1a45466ea5d8"
+                      ],
+                      "disabled": true
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/login",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "login"
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 26 Apr 2026 19:43:46 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"error\",\n    \"message\": \"عذراً، هذا الحساب غير موجود أو لم يتم تفعيله من قبل الإدارة بعد.\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "logout",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "1|NWf79ZDVPUD1L929isqyfQYHDxLd1yI6k8aGN67d8e714c48",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/logout",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "logout"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "logout",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/logout",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "logout"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 01 Jun 2026 05:56:57 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"logged_out\": true,\n    \"message\": \" عذراً، انتهت صلاحية الجلسة أو تم تسجيل الخروج مسبقاً. يرجى العودة لصفحة تسجيل الدخول\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "url",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "ngrok-skip-browser-warning",
+                "value": "true",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://stays-ability-accustom.ngrok-free.dev/magic-login/1?expires=1780200876&signature=4c17c61ad301410e4877bde2912682bf83c93163ff668de6dcf3439ae64f0b91",
+              "protocol": "https",
+              "host": [
+                "stays-ability-accustom",
+                "ngrok-free",
+                "dev"
+              ],
+              "path": [
+                "magic-login",
+                "1"
+              ],
+              "query": [
+                {
+                  "key": "expires",
+                  "value": "1780200876"
+                },
+                {
+                  "key": "signature",
+                  "value": "4c17c61ad301410e4877bde2912682bf83c93163ff668de6dcf3439ae64f0b91"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "time_out",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/magic-login/1?expires=1777378855&signature=856016403575063c5cbef475e72601ff136160270ff21e1caff53b3ca449bfc0",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "magic-login",
+                    "1"
+                  ],
+                  "query": [
+                    {
+                      "key": "expires",
+                      "value": "1777378855"
+                    },
+                    {
+                      "key": "signature",
+                      "value": "856016403575063c5cbef475e72601ff136160270ff21e1caff53b3ca449bfc0"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 28 Apr 2026 12:24:10 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"عذراً، الرابط منتهي الصلاحية أو غير صالح.\"\n}"
+            },
+            {
+              "name": "success",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/magic-login/1?expires=1777380351&signature=ca73c88cbdbf955654ef1e4de31528b9e3896d8970a7006f8b032a960e6f1dfa",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "magic-login",
+                    "1"
+                  ],
+                  "query": [
+                    {
+                      "key": "expires",
+                      "value": "1777380351"
+                    },
+                    {
+                      "key": "signature",
+                      "value": "ca73c88cbdbf955654ef1e4de31528b9e3896d8970a7006f8b032a960e6f1dfa"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 28 Apr 2026 12:31:41 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"success\",\n    \"message\": \"تم تسجيل الدخول بنجاح\",\n    \"token\": \"1|UJBPzJauRQ7VXlmDbbMwRxbBQKoPc4G4BIKXnEN030c85dcd\",\n    \"user\": {\n        \"id\": 1,\n        \"fullname\": \"Ayahammamieh\",\n        \"phone\": \"0948568727\",\n        \"parent_phone\": \"0948568727\",\n        \"points\": 0,\n        \"fcm_token\": null,\n        \"level\": \"twelfth\",\n        \"phone_verified_at\": \"2026-04-28 12:28:55\",\n        \"status\": \"approved\",\n        \"otp_expires_at\": null,\n        \"verification_token\": null,\n        \"token_expires_at\": null,\n        \"DocumentaryEvidence\": \"students/documents/1777379335_aya.jpg\",\n        \"created_at\": \"2026-04-28T12:28:55.000000Z\",\n        \"updated_at\": \"2026-04-28T12:28:55.000000Z\"\n    }\n}"
+            }
+          ]
         }
       ]
     },
