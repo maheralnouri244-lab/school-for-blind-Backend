@@ -10,6 +10,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('punishment_id')->constrained('punishments')->cascadeOnDelete();
             $table->morphs('punishable');
+            $table->string('user_phone')->nullable()->index();
             $table->foreignId('admin_id')->constrained('admins')->cascadeOnDelete();
             $table->timestamp('expires_at')->nullable();
             $table->timestamps();

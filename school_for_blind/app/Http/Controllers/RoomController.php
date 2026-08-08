@@ -193,7 +193,7 @@ class RoomController extends Controller
                 $room->status = 'ended';
                 $room->ended_at = now();
                 $duration = \Carbon\Carbon::parse($room->started_at)->diffInMinutes($room->ended_at);
-                $room->is_paid = ($duration >= 30) ? true : false;
+                $room->payment_status = ($duration >= 30) ? 'unpaid' : 'deducted';
                 $room->save();
             }
 

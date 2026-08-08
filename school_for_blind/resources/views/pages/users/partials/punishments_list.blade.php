@@ -11,15 +11,24 @@
             </tr>
         </thead>
         <tbody>
-            @forelse($user->punishments as $index => $punishment)
+            {{-- تم التعديل هنا لقراءة المتغير الممرر من الكونترولر مباشرة --}}
+            @forelse($punishments as $index => $record)
                 @php
-                    $isExpired = $punishment->pivot->expires_at && \Carbon\Carbon::parse($punishment->pivot->expires_at)->isPast();
+                    // $record يمثل سطر من جدول punishables
+                    // و $record->punishment تجلب نوع العقوبة المرتبط
+                    $punishmentType = $record->punishment;
+                    $isExpired = $record->expires_at && \Carbon\Carbon::parse($record->expires_at)->isPast();
                 @endphp
                 <tr>
                     <td>{{ $index + 1 }}</td>
-                    <td class="fw-bold text-danger">{{ $punishment->description ?? $punishment->name }}</td>
-                    <td>{{ $punishment->pivot->created_at ? $punishment->pivot->created_at->format('Y-m-d H:i') : '-' }}</td>
-                    <td>{{ $punishment->pivot->expires_at ? \Carbon\Carbon::parse($punishment->pivot->expires_at)->format('Y-m-d H:i') : 'دائمة' }}</td>
+                    {{-- عرض اسم أو وصف العقوبة --}}
+                    <td class="fw-bold text-danger">{{ $punishmentType->description ?? $punishmentType->name }}</td>
+
+                    {{-- جلب التواريخ من السجل نفسه (بدون pivot) --}}
+                    <td>{{ $record->created_at ? $record->created_at->format('Y-m-d H:i') : '-' }}</td>
+                    <td>{{ $record->expires_at ? \Carbon\Carbon::parse($record->expires_at)->format('Y-m-d H:i') : 'دائمة' }}
+                    </td>
+
                     <td>
                         @if($isExpired)
                             <span class="badge bg-secondary">منتهية</span>
@@ -29,7 +38,9 @@
                     </td>
                     <td>
                         @if(!$isExpired)
-                            <form action="{{ route('punishments.revoke', $punishment->pivot->id) }}" method="POST" class="d-inline" onsubmit="return confirm('هل أنت متأكد من إلغاء هذه العقوبة؟')">
+                            {{-- إلغاء العقوبة يتم عن طريق ID السجل في جدول punishables --}}
+                            <form action="{{ route('punishments.revoke', $record->id) }}" method="POST" class="d-inline"
+                                onsubmit="return confirm('هل أنت متأكد من إلغاء هذه العقوبة؟')">
                                 @csrf
                                 <button type="submit" class="btn btn-sm btn-outline-success">إلغاء العقوبة</button>
                             </form>
@@ -40,7 +51,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="6" class="text-center py-4 text-muted">لا يوجد أي عقوبات مسجلة لهذا الحساب.</td>
+                    <td colspan="6" class="text-center py-4 text-muted">لا يوجد أي عقوبات مسجلة لهذا المستخدم أو رقمه.</td>
                 </tr>
             @endforelse
         </tbody>

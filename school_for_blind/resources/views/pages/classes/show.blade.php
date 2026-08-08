@@ -416,9 +416,58 @@
       </div>
     </div>
   </div>
+  {{-- Modal سجل العقوبات --}}
+  <div class="modal fade" id="userPunishmentsModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content glass-modal text-end" dir="rtl"
+        style="border: 1px solid var(--border-color); color: var(--text-main);">
+        <div class="modal-header border-0 p-4">
+          <h5 class="fw-bold mb-0 text-danger"><i class="fa-solid fa-triangle-exclamation me-2"></i>سجل عقوبات المستخدم
+          </h5>
+          <button type="button" class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-4" id="punishments-modal-body">
+          <div class="text-center py-4"><i class="fa-solid fa-circle-notch fa-spin fs-2 text-muted"></i></div>
+        </div>
+      </div>
+    </div>
+  </div>
 @endsection
 @push('scripts')
   <script>
+
+    // دالة جلب وعرض سجل العقوبات
+    window.fetchUserPunishments = function (type, id) {
+      const punModalElement = document.getElementById('userPunishmentsModal');
+      let punModal = bootstrap.Modal.getInstance(punModalElement);
+      if (!punModal) {
+        punModal = new bootstrap.Modal(punModalElement);
+      }
+
+      const body = document.getElementById('punishments-modal-body');
+      body.innerHTML = '<div class="text-center py-4"><i class="fa-solid fa-circle-notch fa-spin fs-2 text-muted"></i></div>';
+
+      punModal.show();
+
+      // هنا نستخدم نفس الراوت الخاص بالـ UserManagerController والذي عدلناه ليبحث بالرقم
+      fetch(`/dashboard/users/${type}/${id}/punishments`, {
+        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            body.innerHTML = data.html;
+          } else {
+            console.error("Server Error:", data);
+            body.innerHTML = `<div class="text-center py-4 text-danger"><i class="fa-solid fa-triangle-exclamation mb-2 fs-1"></i><br>حدث خطأ بالسيرفر.</div>`;
+          }
+        })
+        .catch(error => {
+          body.innerHTML = '<div class="text-center py-4 text-danger">حدث خطأ أثناء الاتصال بالسيرفر.</div>';
+          console.error("Fetch Error:", error);
+        });
+    };
+
     function confirmDetachTeacher(teacherId, teacherName) {
       if (confirm(`هل أنت متأكد أنك تريد إلغاء ربط الأستاذ ${teacherName} من هذه الشعبة؟`)) {
         let form = document.createElement('form');
@@ -427,9 +476,9 @@
         url = url.replace(':teacher_id', teacherId);
         form.action = url;
         form.innerHTML = `
-                              @csrf
-                              @method('DELETE')
-                          `;
+                                    @csrf
+                                    @method('DELETE')
+                                `;
         document.body.appendChild(form);
         form.submit();
       }
@@ -492,9 +541,9 @@
     function openExcusesModal(studentId, studentName) {
       document.getElementById('excusesStudentNameDisplay').textContent = studentName;
       document.getElementById('excusesModalBody').innerHTML = `
-             <div class="d-flex justify-content-center align-items-center" style="height: 150px;">
-                 <div class="spinner-border text-info" role="status"></div>
-             </div>`;
+                   <div class="d-flex justify-content-center align-items-center" style="height: 150px;">
+                       <div class="spinner-border text-info" role="status"></div>
+                   </div>`;
 
       var excusesModal = new bootstrap.Modal(document.getElementById('excusesModal'));
       excusesModal.show();

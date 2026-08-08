@@ -86,6 +86,7 @@ Route::middleware([
 });
 
 Route::middleware([CheckAdminRole::class . ':Super Admin,Moderator,Academic Manager'])->prefix('punishments')->name('punishments.')->group(function () {
+    Route::get('/api-types', [PunishmentController::class, 'getTypesJson'])->name('api.types');
     Route::get('/types', [PunishmentController::class, 'indexTypes'])->name('types.index');
     Route::post('/types', [PunishmentController::class, 'storeType'])->name('types.store');
     Route::get('/active', [PunishmentController::class, 'activePunishments'])->name('active');

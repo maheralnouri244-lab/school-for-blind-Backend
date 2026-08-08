@@ -136,12 +136,11 @@
   </div>
 
   {{-- إظهار سجل العقوبات فقط إذا لم يكن الطلب قيد الانتظار --}}
-  @if($user->status !== 'pending')
-   <button type="button" class="btn btn-outline-danger w-100 fw-bold"
-    onclick="fetchUserPunishments('teacher', {{ $user->id }})">
-    <i class="fa-solid fa-gavel me-2"></i>عرض سجل العقوبات
-   </button>
-  @endif
+  {{-- تم إزالة شرط الـ pending لتمكين الإدارة من رؤية ماضي المعلم قبل قبوله --}}
+  <button type="button" class="btn btn-outline-danger w-100 fw-bold mt-2"
+   onclick="fetchUserPunishments('teacher', {{ $user->id }})">
+   <i class="fa-solid fa-gavel me-2"></i>عرض سجل العقوبات
+  </button>
  </div>
 
  <input type="hidden" id="current_user_status" value="{{ $user->status }}">

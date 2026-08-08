@@ -44,6 +44,7 @@
  </div>
  {{-- الإجراءات (تظهر فقط إذا تم القبول أو الرفض) --}}
  <div class="col-12 mt-3 pt-3 border-top d-flex flex-column gap-2">
+  {{-- زر التعديل يبقى مخفياً في حالة الانتظار --}}
   @if($user->status !== 'pending')
    <button type="button" class="btn btn-primary w-100 fw-bold" data-id="{{ $user->id }}"
     data-fullname="{{ $user->fullname }}" data-fathersname="{{ $user->fathersname ?? '' }}"
@@ -51,12 +52,13 @@
     data-class="{{ $user->class_id }}" onclick="openEditStudentModal(this)">
     <i class="fa-solid fa-pen-to-square ms-2"></i> تعديل بيانات الطالب
    </button>
-
-   <button type="button" class="btn btn-outline-danger w-100 fw-bold"
-    onclick="fetchUserPunishments('student', {{ $user->id }})">
-    <i class="fa-solid fa-gavel me-2"></i>عرض سجل العقوبات
-   </button>
   @endif
+
+  {{-- زر العقوبات يظهر دائماً (خارج الشرط) --}}
+  <button type="button" class="btn btn-outline-danger w-100 fw-bold"
+   onclick="fetchUserPunishments('student', {{ $user->id }})">
+   <i class="fa-solid fa-gavel me-2"></i>عرض سجل العقوبات
+  </button>
  </div>
 
  <input type="hidden" id="current_user_status" value="{{ $user->status }}">

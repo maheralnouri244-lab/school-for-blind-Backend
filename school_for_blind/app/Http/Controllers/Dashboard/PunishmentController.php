@@ -18,6 +18,12 @@ class PunishmentController extends Controller
         return view('pages.punishments.types.index', compact('punishments'));
     }
 
+    public function getTypesJson()
+    {
+        $punishments = Punishment::orderBy('level', 'asc')->get();
+        return response()->json($punishments);
+    }
+
     public function storeType(Request $request)
     {
         $request->validate([
@@ -25,6 +31,7 @@ class PunishmentController extends Controller
             'level' => 'required|integer|min:1',
             'description' => 'nullable|string',
             'duration_minutes' => 'nullable|integer|min:1',
+            'target_type' => 'required|in:student,teacher,all',
         ]);
 
         Punishment::create([
@@ -32,6 +39,7 @@ class PunishmentController extends Controller
             'level' => $request->level,
             'description' => $request->description,
             'duration_minutes' => $request->duration_minutes,
+            'target_type' => $request->target_type,
         ]);
 
         return back()->with('success', 'تم إضافة نوع العقوبة بنجاح!');
@@ -48,16 +56,18 @@ class PunishmentController extends Controller
         ]);
 
         $punishment = Punishment::findOrFail($request->punishment_id);
-
         $minutes = $request->duration_minutes ?? $punishment->duration_minutes;
-        
         $expiresAt = $minutes ? Carbon::now()->addMinutes($minutes) : null;
+
+        $userModel = $request->punishable_type;
+        $user = $userModel::findOrFail($request->punishable_id);
 
         Punishable::create([
             'punishable_id' => $request->punishable_id,
             'punishable_type' => $request->punishable_type,
+            'user_phone' => $user->phone,
             'punishment_id' => $punishment->id,
-            'admin_id' => Auth::guard('admin')->id(), 
+            'admin_id' => Auth::guard('admin')->id(),
             'expires_at' => $expiresAt,
         ]);
 
@@ -72,9 +82,9 @@ class PunishmentController extends Controller
     public function activePunishments(Request $request)
     {
         $activePunishments = Punishable::with(['punishment', 'admin', 'punishable'])
-            ->where(function($query) {
+            ->where(function ($query) {
                 $query->whereNull('expires_at')
-                      ->orWhere('expires_at', '>', Carbon::now());
+                    ->orWhere('expires_at', '>', Carbon::now());
             })
             ->latest()
             ->paginate(15);
@@ -85,7 +95,7 @@ class PunishmentController extends Controller
     public function revoke($id)
     {
         $punishable = Punishable::findOrFail($id);
-        
+
         $punishable->update([
             'expires_at' => Carbon::now()
         ]);

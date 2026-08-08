@@ -144,6 +144,54 @@
       </div>
     </div>
   </div>
+  <!-- المودال الجديد لفرض العقوبات -->
+  <div class="modal fade" id="newPunishmentModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered text-end" dir="rtl">
+      <div class="modal-content glass-modal border-0 shadow-lg" style="border-radius: 16px;">
+        <div class="modal-header border-bottom pb-3" style="border-color: var(--border-color) !important;">
+          <div class="d-flex align-items-center gap-2">
+            <div class="p-2 rounded-circle bg-soft-danger d-flex align-items-center justify-content-center"
+              style="width: 40px; height: 40px;">
+              <i class="fa-solid fa-gavel text-danger fs-5"></i>
+            </div>
+            <div>
+              <h5 class="modal-title fw-bold mb-0" style="color: var(--text-main);">فرض إجراء إداري</h5>
+              <small class="text-muted">المستخدم: <span id="new_user_name_display"
+                  class="fw-bold text-danger"></span></small>
+            </div>
+          </div>
+          <button type="button" class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <form action="{{ route('punishments.apply') }}" method="POST">
+          @csrf
+          <input type="hidden" name="punishable_id" id="new_punishable_id">
+          <input type="hidden" name="punishable_type" id="new_punishable_type">
+
+          <div class="modal-body py-4">
+            <div class="mb-3">
+              <label class="form-label text-muted fw-bold mb-2">اختر الإجراء / العقوبة المناسبة:</label>
+              {{-- تم استخدام كلاس search-input من ملفك لتصميم الحقل --}}
+              <select name="punishment_id" id="new_punishment_select" class="form-select search-input" required>
+                <option value="" disabled selected>جاري تحميل العقوبات...</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="modal-footer border-top pt-3 d-flex justify-content-between"
+            style="border-color: var(--border-color) !important;">
+            <button type="button" class="btn btn-secondary px-4 fw-bold" data-bs-dismiss="modal"
+              style="border-radius: 8px;">إلغاء</button>
+            <button type="submit" class="btn btn-danger px-4 fw-bold d-flex align-items-center gap-2"
+              style="border-radius: 8px;">
+              <i class="fa-solid fa-check"></i>
+              <span>تأكيد فرض العقوبة</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 @endsection
 
 @push('scripts')
@@ -418,7 +466,6 @@
       document.getElementById('edit_parent_phone').value = parentPhone;
       document.getElementById('edit_level').value = level;
 
-      // جلب الشعب بناءً على مستوى الطالب وتحديد شعبته الحالية
       fetchClassesForEditModal(level, classId);
 
       const editModalElement = document.getElementById('editStudentModal');
@@ -429,7 +476,6 @@
       editModal.show();
     };
 
-    // حفظ التعديلات وإرسالها للسيرفر
     document.getElementById('editStudentForm').addEventListener('submit', function (e) {
       e.preventDefault();
       const id = document.getElementById('edit_student_id').value;
@@ -439,7 +485,7 @@
         phone: document.getElementById('edit_phone').value,
         parent_phone: document.getElementById('edit_parent_phone').value,
         level: document.getElementById('edit_level').value,
-        class_id: document.getElementById('edit_class_id').value, // إرسال الشعبة الجديدة
+        class_id: document.getElementById('edit_class_id').value,
       };
 
       fetch(`/dashboard/users/student/${id}/update`, {
@@ -461,5 +507,57 @@
           }
         });
     });
+    window.openNewPunishmentModal = function (button) {
+      event.stopPropagation();
+      // 1. استخراج البيانات من الزر نفسه بكل نظافة وسهولة
+      const userId = button.getAttribute('data-user-id');
+      const userModel = button.getAttribute('data-user-model');
+      const targetType = button.getAttribute('data-target-type');
+      const userName = button.getAttribute('data-user-name');
+
+      // 2. تعبئة البيانات في المودال
+      document.getElementById('new_punishable_id').value = userId;
+      document.getElementById('new_punishable_type').value = userModel;
+      document.getElementById('new_user_name_display').textContent = userName;
+
+      const selectElem = document.getElementById('new_punishment_select');
+      selectElem.innerHTML = '<option value="" disabled selected>جاري تحميل العقوبات...</option>';
+
+      // 3. إظهار المودال للمستخدم فوراً لتجربة استخدام أسرع
+      const modalElement = document.getElementById('newPunishmentModal');
+      document.body.appendChild(modalElement); // حل جذري لمشكلة الـ Z-index
+      const modal = bootstrap.Modal.getOrCreateInstance(modalElement);
+      modal.show();
+
+      // 4. جلب قائمة العقوبات من السيرفر وفلترتها
+      fetch(`/punishments/api-types`, {
+        headers: {
+          'Accept': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest'
+        }
+      })
+        .then(res => res.json())
+        .then(data => {
+          selectElem.innerHTML = '<option value="" disabled selected>-- اختر الإجراء المناسب --</option>';
+
+          // الفلترة الصحيحة بناءً على نوع المستخدم المستهدف أو "الكل"
+          const filteredPunishments = data.filter(p => p.target_type === targetType || p.target_type === 'all');
+
+          if (filteredPunishments.length === 0) {
+            selectElem.innerHTML = '<option value="" disabled>لا يوجد عقوبات متاحة لهذا النوع</option>';
+            return;
+          }
+
+          filteredPunishments.forEach(p => {
+            selectElem.insertAdjacentHTML('beforeend',
+              `<option value="${p.id}">${p.name} - (${p.description || 'بدون وصف'})</option>`
+            );
+          });
+        })
+        .catch(error => {
+          selectElem.innerHTML = '<option value="" disabled>حدث خطأ في تحميل البيانات</option>';
+          console.error("Error fetching punishments:", error);
+        });
+    };
   </script>
 @endpush

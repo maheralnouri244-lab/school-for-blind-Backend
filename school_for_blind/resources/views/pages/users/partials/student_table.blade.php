@@ -7,6 +7,7 @@
     <th scope="col" class="py-3 text-muted fw-bold text-center border-0">رقم الهاتف</th>
     <th scope="col" class="py-3 text-muted fw-bold text-center border-0">المستوى</th>
     <th scope="col" class="py-3 px-4 text-muted fw-bold text-start border-0">الحالة</th>
+    <th scope="col" class="py-3 px-4 text-muted fw-bold text-start border-0">فرض عقوبة</th>
    </tr>
   </thead>
   <tbody>
@@ -43,10 +44,24 @@
        {{ $statusText }}
       </span>
      </td>
+     <td>
+      @if($student->status === 'approved')
+       <button type="button" class="btn btn-sm btn-light text-danger rounded-circle ms-2"
+        data-user-id="{{ $student->id }}" data-user-model="App\Models\Student" data-target-type="student"
+        data-user-name="{{ $student->fullname }}" onclick="openNewPunishmentModal(this)" title="إجراء إداري / عقوبة">
+        <i class="fa-solid fa-gavel"></i>
+       </button>
+      @else
+       <span class="btn btn-sm btn-light text-muted rounded-circle ms-2"
+        title="لا يمكن معاقبة مستخدم قيد الانتظار أو مرفوض" style="opacity: 0.5; cursor: not-allowed;">
+        <i class="fa-solid fa-ban"></i>
+       </span>
+      @endif
+     </td>
     </tr>
    @empty
     <tr>
-     <td colspan="4" class="text-center py-5 text-muted">
+     <td colspan="5" class="text-center py-5 text-muted">
       <i class="fa-regular fa-folder-open fs-1 mb-3 d-block" style="opacity: 0.5;"></i>
       لا يوجد طلاب لعرضهم حالياً.
      </td>

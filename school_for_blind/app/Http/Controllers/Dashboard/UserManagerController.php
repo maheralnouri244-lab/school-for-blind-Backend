@@ -172,13 +172,21 @@ class UserManagerController extends Controller
     public function getUserPunishments($type, $id)
     {
         $model = $type === 'teacher' ? Teacher::class : Student::class;
-        $user = $model::with([
-            'punishments' => function ($q) {
-                $q->withPivot(['id', 'admin_id', 'expires_at', 'created_at']);
-            }
-        ])->findOrFail($id);
 
-        $html = view('pages.users.partials.punishments_list', compact('user', 'type'))->render();
+        $user = method_exists($model, 'trashed')
+            ? $model::withTrashed()->findOrFail($id)
+            : $model::findOrFail($id);
+
+        $punishments = \App\Models\Punishable::with(['punishment', 'admin'])
+            ->where('user_phone', $user->phone)
+            ->orWhere(function ($query) use ($model, $id) {
+                $query->where('punishable_type', $model)
+                    ->where('punishable_id', $id);
+            })
+            ->latest()
+            ->get();
+
+        $html = view('pages.users.partials.punishments_list', compact('user', 'punishments', 'type'))->render();
 
         return response()->json([
             'success' => true,
