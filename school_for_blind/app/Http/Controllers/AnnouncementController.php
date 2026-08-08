@@ -106,4 +106,56 @@ class AnnouncementController extends Controller
         });
 
         return response()->json($processedAnnouncements, 200);
-    }}
+    }
+     public function showExam($id)
+
+    {
+
+        $announcement = Announcement::find($id, ['*']);
+
+
+
+        if (!$announcement || $announcement->type !== 'exam_schedule' || $announcement->type === 'school_timetable') {
+
+            return response()->json([
+
+                'message' => 'برنامج الامتحان غير موجود أو قد تم حذفه'
+
+            ], 404);
+
+        }
+
+
+
+        if (auth()->guard('student')->check()) {
+
+            $student = auth()->guard('student')->user();
+
+            if ($announcement->grade !== $student->grade && $announcement->grade !== 'all') {
+
+                return response()->json(['message' => 'عذراً، هذا البرنامج غير مخصص لصفك.'], 403);
+
+            }
+
+        }
+
+
+
+        return response()->json([
+
+            'id' => $announcement->id,
+
+            'type' => $announcement->type,
+
+            'title' => $announcement->title,
+
+            'exam_program' => $announcement->content,
+
+            'created_at' => $announcement->created_at
+
+        ], 200);
+
+    }
+    
+    
+    }
