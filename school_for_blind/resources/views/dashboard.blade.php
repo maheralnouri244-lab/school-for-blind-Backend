@@ -22,19 +22,26 @@
           </div>
 
           {{-- القسم السفلي: أزرار التحكم الأفقية (تم تعديل زر الطلبات للأزرق والنص لـ طلبات الانضمام) --}}
-          <div class="d-flex gap-2 mt-auto">
-            <a href="{{ route('students.index') }}" class="btn btn-sm flex-grow-1 py-2 fw-bold"
-              style="background-color: var(--bg-main); color: var(--text-main); border: 1px solid var(--border-color); border-radius: 8px;">
-              عرض الكل
+          <div class="d-flex align-items-center gap-2 mt-auto pt-3 border-top"
+            style="border-color: var(--border-color) !important;">
+            {{-- زر إدارة الكل (ثانوي متناسق مع الكرت) --}}
+            <a href="{{ route('dashboard.users.index', ['type' => 'student']) }}"
+              class="btn flex-grow-1 py-2 px-3 fw-bold d-flex align-items-center justify-content-center gap-2 transition-all"
+              style="background-color: var(--bg-main); color: var(--text-main); border: 1px solid var(--border-color); border-radius: 10px; font-size: 0.9rem;">
+              <i class="fa-solid fa-users-gear text-muted"></i>
+              <span>إدارة الطلاب</span>
             </a>
-            <a href="{{ route('requests.view', 'student') }}"
-              class="btn btn-sm flex-grow-1 py-2 fw-bold d-flex align-items-center justify-content-center gap-2"
-              style="background-color: rgba(59, 130, 246, 0.12); color: #3b82f6; border: none; border-radius: 8px;">
-              <span>طلبات الانضمام</span>
-              <span class="badge rounded-pill px-2 py-1"
-                style="background-color: rgba(59, 130, 246, 0.25); color: #3b82f6; font-size: 0.85rem;">
-                {{ $pendingstudentsCount }}
-              </span>
+
+            {{-- زر طلبات الانضمام (بارز وعصري بلون أساسي متناسق) --}}
+            <a href="{{ route('dashboard.users.index', ['type' => 'student', 'status' => 'pending']) }}"
+              class="btn flex-grow-1 py-2 px-3 fw-bold d-flex align-items-center justify-content-center gap-2 transition-all shadow-sm"
+              style="background-color: #3b82f6; color: #ffffff; border: none; border-radius: 10px; font-size: 0.9rem;">
+              <i class="fa-solid fa-user-plus"></i>
+              <span>الطلبات</span>
+              @if(isset($pendingstudentsCount) && $pendingstudentsCount > 0)
+                <span class="badge bg-white text-primary rounded-pill px-2 py-1"
+                  style="font-size: 0.75rem;">{{ $pendingstudentsCount }}</span>
+              @endif
             </a>
           </div>
 
@@ -58,19 +65,26 @@
           </div>
 
           {{-- القسم السفلي: أزرار التحكم الأفقية جنب بعض --}}
-          <div class="d-flex gap-2 mt-auto">
-            <a href="{{ route('teachers.index') }}" class="btn btn-sm flex-grow-1 py-2 fw-bold"
-              style="background-color: var(--bg-main); color: var(--text-main); border: 1px solid var(--border-color); border-radius: 8px;">
-              عرض الكل
+          <div class="d-flex align-items-center gap-2 mt-auto pt-3 border-top"
+            style="border-color: var(--border-color) !important;">
+            {{-- زر إدارة الكل (ثانوي متناسق مع الكرت) --}}
+            <a href="{{ route('dashboard.users.index', ['type' => 'teacher']) }}"
+              class="btn flex-grow-1 py-2 px-3 fw-bold d-flex align-items-center justify-content-center gap-2 transition-all"
+              style="background-color: var(--bg-main); color: var(--text-main); border: 1px solid var(--border-color); border-radius: 10px; font-size: 0.9rem;">
+              <i class="fa-solid fa-chalkboard-user text-muted"></i>
+              <span>إدارة المعلمين</span>
             </a>
-            <a href="{{ route('requests.view', 'teacher') }}"
-              class="btn btn-sm flex-grow-1 py-2 fw-bold d-flex align-items-center justify-content-center gap-2"
-              style="background-color: rgba(163, 230, 53, 0.12); color: var(--accent-color); border: none; border-radius: 8px;">
-              <span>طلبات الانضمام</span>
-              <span class="badge rounded-pill px-2 py-1"
-                style="background-color: rgba(163, 230, 53, 0.25); color: var(--accent-color); font-size: 0.85rem;">
-                {{ $pendingteachersCount }}
-              </span>
+
+            {{-- زر طلبات الانضمام (بارز بلون أخضر زمردي هادئ ومريح للعين) --}}
+            <a href="{{ route('dashboard.users.index', ['type' => 'teacher', 'status' => 'pending']) }}"
+              class="btn flex-grow-1 py-2 px-3 fw-bold d-flex align-items-center justify-content-center gap-2 transition-all shadow-sm"
+              style="background-color: #84cc16; color: #ffffff; border: none; border-radius: 10px; font-size: 0.9rem;">
+              <i class="fa-solid fa-user-check"></i>
+              <span>الطلبات</span>
+              @if(isset($pendingteachersCount) && $pendingteachersCount > 0)
+                <span class="badge bg-white text-success rounded-pill px-2 py-1"
+                  style="font-size: 0.75rem;">{{ $pendingteachersCount }}</span>
+              @endif
             </a>
           </div>
 

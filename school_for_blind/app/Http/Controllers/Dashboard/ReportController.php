@@ -19,14 +19,16 @@ class ReportController extends Controller
             $query->where('status', 'pending');
         }
 
+        $punishmentQuery = Punishment::query();
         if ($request->filled('user_type')) {
             $type = $request->user_type === 'student' ? 'App\Models\Student' : 'App\Models\Teacher';
             $query->where('reported_type', $type);
+            $targetType = $request->user_type === 'student' ? 'student' : 'teacher';
+            $punishmentQuery->whereIn('target_type', [$targetType, 'all']);
         }
 
         $reports = $query->latest()->paginate(10);
-
-        $punishments = Punishment::orderBy('level', 'asc')->get();
+        $punishments = $punishmentQuery->orderBy('level', 'asc')->get();
 
         return view('pages.reports.index', compact('reports', 'punishments'));
     }

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
-use App\Models\Room;
 use App\Models\Classes;
+use App\Models\Room;
+use App\Models\Subject;
+use App\Models\Teacher;
 use App\Services\RoomService;
 use Illuminate\Http\Request;
 
@@ -55,7 +57,7 @@ class RoomWebController extends Controller
         $identity = 'Admin--' . $user->id;
         $room = Room::where('room_name', $room_name)->first();
         $canPublish = true;
-        
+
         $mutedParticipants = $room ? ($room->muted_participants ?? []) : [];
 
         if (in_array($identity, $mutedParticipants)) {
@@ -97,15 +99,15 @@ class RoomWebController extends Controller
         try {
             $this->roomService->muteParticipant($request->room_name, $request->target_identity, $request->track_sid);
 
-            $room = Room::where('room_name', $request->room_name)->first();
-            if ($room) {
-                $muted = $room->muted_participants ?? [];
-                if (!in_array($request->target_identity, $muted)) {
-                    $muted[] = $request->target_identity;
-                    $room->muted_participants = $muted;
-                    $room->save();
-                }
-            }
+            // $room = Room::where('room_name', $request->room_name)->first();
+            // if ($room) {
+            //     $muted = $room->muted_participants ?? [];
+            //     if (!in_array($request->target_identity, $muted)) {
+            //         $muted[] = $request->target_identity;
+            //         $room->muted_participants = $muted;
+            //         $room->save();
+            //     }
+            // }
 
             return response()->json(['success' => true, 'message' => 'تم الكتم بنجاح']);
         } catch (\Exception $e) {
@@ -118,15 +120,15 @@ class RoomWebController extends Controller
         try {
             $this->roomService->unmuteParticipant($request->room_name, $request->target_identity);
 
-            $room = Room::where('room_name', $request->room_name)->first();
-            if ($room) {
-                $muted = $room->muted_participants ?? [];
-                if (($key = array_search($request->target_identity, $muted)) !== false) {
-                    unset($muted[$key]);
-                    $room->muted_participants = array_values($muted);
-                    $room->save();
-                }
-            }
+            // $room = Room::where('room_name', $request->room_name)->first();
+            // if ($room) {
+            //     $muted = $room->muted_participants ?? [];
+            //     if (($key = array_search($request->target_identity, $muted)) !== false) {
+            //         unset($muted[$key]);
+            //         $room->muted_participants = array_values($muted);
+            //         $room->save();
+            //     }
+            // }
 
             return response()->json(['success' => true, 'message' => 'تم فك الكتم']);
         } catch (\Exception $e) {
@@ -145,20 +147,89 @@ class RoomWebController extends Controller
             if ($room) {
                 $room->status = 'ended';
                 $room->ended_at = now();
+
+                $duration = \Carbon\Carbon::parse($room->started_at)->diffInMinutes($room->ended_at);
+
+                if ($duration >= 30) {
+                    $room->payment_status = 'unpaid';
+                } else {
+                    $room->payment_status = 'deducted';
+                }
+
                 $room->save();
             }
 
-            return response()->json(['success' => true, 'message' => 'تم إنهاء المكالمة']);
+            return response()->json(['success' => true, 'message' => 'تم إنهاء المكالمة وحساب الأجر']);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => 'حدث خطأ أثناء الإنهاء'], 500);
         }
     }
+
     public function activeCalls()
     {
         $activeCalls = Room::where('status', 'active')
-            ->with(['creator', 'schoolclass'])
+            ->with(['creator.subjects', 'schoolClass', 'subject'])
             ->get();
 
         return view('pages.rooms.active_calls', compact('activeCalls'));
+    }
+
+    public function history(Request $request)
+    {
+        $query = Room::where('status', 'ended')
+            ->with(['creator', 'schoolClass', 'subject']);
+
+        if ($request->filled('teacher_id')) {
+            $query->where('creator_type', Teacher::class)
+                  ->where('creator_id', $request->teacher_id);
+        }
+        if ($request->filled('payment_status')) {
+            $query->where('payment_status', $request->payment_status);
+        }
+
+        if ($request->filled('subject_id')) {
+            $query->where('subject_id', $request->subject_id);
+        }
+
+        $pastCalls = $query->latest()->get();
+        $teachers = Teacher::all();
+        $subjects = Subject::all();
+
+        return view('pages.rooms.history', compact('pastCalls', 'teachers', 'subjects'));
+    }
+
+    public function assignSubject(Request $request)
+    {
+        $request->validate([
+            'room_id' => 'required|exists:rooms,id',
+            'subject_id' => 'required|exists:subjects,id',
+        ]);
+
+        $room = Room::findOrFail($request->room_id);
+
+        $adminRole = auth()->guard('admin')->user()->role ?? '';
+        if (!in_array($adminRole, ['Super Admin', 'Academic Manager'])) {
+            return response()->json(['success' => false, 'message' => 'لا تملك صلاحية لتحديد المادة'], 403);
+        }
+
+        $room->update(['subject_id' => $request->subject_id]);
+
+        return response()->json(['success' => true, 'message' => 'تم تحديد المادة بنجاح']);
+    }
+
+    public function togglePayment(Request $request, $id)
+    {
+        if (auth()->guard('admin')->user()->role !== 'Super Admin') {
+            return response()->json(['success' => false, 'message' => 'غير مصرح لك'], 403);
+        }
+
+        $request->validate([
+            'payment_status' => 'required|in:paid,unpaid,deducted' 
+        ]);
+        $room = Room::findOrFail($id);
+        $room->payment_status = $request->payment_status; 
+        $room->save();
+
+        return response()->json(['success' => true]);
     }
 }

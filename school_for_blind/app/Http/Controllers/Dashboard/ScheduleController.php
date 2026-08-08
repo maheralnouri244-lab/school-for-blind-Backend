@@ -68,7 +68,7 @@ class ScheduleController extends Controller
 
         $teachers = Teacher::where('status', 'approved')
             ->where('level', $level)
-            ->with(['classes'])
+            ->with(['classes', 'availabilities'])
             ->get()
             ->map(function ($teacher) {
                 $teacher->subject_list = $teacher->subjects()->get();
@@ -88,6 +88,28 @@ class ScheduleController extends Controller
         $request->validate([
             'schedules' => 'required|array',
         ]);
+
+        $teacherTracker = [];
+
+        foreach ($request->schedules as $slot) {
+            if (!empty($slot['teacher_id'])) {
+                $timeKey = $slot['day'] . '-' . $slot['period'];
+                $teacherId = $slot['teacher_id'];
+
+                if (!isset($teacherTracker[$timeKey])) {
+                    $teacherTracker[$timeKey] = [];
+                }
+
+                if (in_array($teacherId, $teacherTracker[$timeKey])) {
+                    return response()->json([
+                        'status' => 'error',
+                        'message' => 'تعذر الحفظ! يوجد تعارض: هناك أستاذ مخصص لأكثر من شعبة في نفس اليوم والحصة.'
+                    ], 422);
+                }
+
+                $teacherTracker[$timeKey][] = $teacherId;
+            }
+        }
 
         $timeSlots = [
             1 => ['start' => '08:00:00', 'end' => '08:45:00'],

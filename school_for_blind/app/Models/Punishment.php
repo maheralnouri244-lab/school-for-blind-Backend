@@ -11,5 +11,6 @@ class Punishment extends Model
         'description',
         'level',
         'duration',
+        'target_type',
     ];
 }

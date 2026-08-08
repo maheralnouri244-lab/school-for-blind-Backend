@@ -33,6 +33,7 @@ class FinancialDashboardController extends Controller
         $rooms = Room::where('creator_type', Teacher::class)
             ->where('creator_id', $teacherId)
             ->where('status', 'ended')
+            ->where('payment_status', 'unpaid')
             ->get();
 
         $calculatedSalary = 0;
@@ -219,6 +220,13 @@ class FinancialDashboardController extends Controller
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
+
+            Room::where('creator_type', Teacher::class)
+                ->where('creator_id', $teacherId)
+                ->where('status', 'ended')
+                ->where('payment_status', 'unpaid')
+                ->whereNotNull('subject_id')
+                ->update(['payment_status' => 'paid']);
 
             return redirect()->back()->with('success', 'تم تحويل الراتب بنجاح للأستاذ ' . $teacher->full_name);
         } catch (\Exception $e) {

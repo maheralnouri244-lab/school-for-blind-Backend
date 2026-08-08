@@ -176,7 +176,11 @@ class ConversationWebController extends Controller
             return response()->json(['success' => false, 'message' => 'المستخدم غير موجود']);
         }
 
-        $punishments = Punishment::orderBy('level', 'asc')->get();
+        $targetType = $type === 'Student' ? 'student' : 'teacher';
+
+        $punishments = Punishment::whereIn('target_type', [$targetType, 'all'])
+            ->orderBy('level', 'asc')
+            ->get();
 
         $html = view($viewName, compact('user', 'type', 'punishments'))->render();
 

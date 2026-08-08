@@ -27,7 +27,7 @@ class Caregiver extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
-            
+
         ];
     }
 
@@ -35,24 +35,24 @@ class Caregiver extends Authenticatable
     {
         return $this->hasMany(Student::class, 'parent_id');
     }
-public function donations()
-{
-    return $this->morphMany(Donation::class, 'donatable');
-}
-    
-public function deviceTokens()
-{
-    return $this->morphMany(DeviceToken::class, 'tokenable');
-}
-protected static function booted()
+    public function donations()
+    {
+        return $this->morphMany(Donation::class, 'donatable');
+    }
+
+    public function deviceTokens()
+    {
+        return $this->morphMany(DeviceToken::class, 'tokenable');
+    }
+    protected static function booted()
     {
         static::deleting(function ($caregiver) {
             $caregiver->deviceTokens()->delete();
             $caregiver->notifications()->delete();
         });
     }
-public function notifications()
-{
-    return $this->morphMany(Notification::class, 'notifiable');
-}
+    public function notifications()
+    {
+        return $this->morphMany(Notification::class, 'notifiable');
+    }
 }

@@ -14,6 +14,7 @@ class Punishable extends MorphPivot
         'punishment_id',
         'punishable_id',
         'punishable_type',
+        'user_phone',
         'admin_id',
         'expires_at',
     ];
