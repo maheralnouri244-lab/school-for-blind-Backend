@@ -99,15 +99,15 @@ class RoomWebController extends Controller
         try {
             $this->roomService->muteParticipant($request->room_name, $request->target_identity, $request->track_sid);
 
-            $room = Room::where('room_name', $request->room_name)->first();
-            if ($room) {
-                $muted = $room->muted_participants ?? [];
-                if (!in_array($request->target_identity, $muted)) {
-                    $muted[] = $request->target_identity;
-                    $room->muted_participants = $muted;
-                    $room->save();
-                }
-            }
+            // $room = Room::where('room_name', $request->room_name)->first();
+            // if ($room) {
+            //     $muted = $room->muted_participants ?? [];
+            //     if (!in_array($request->target_identity, $muted)) {
+            //         $muted[] = $request->target_identity;
+            //         $room->muted_participants = $muted;
+            //         $room->save();
+            //     }
+            // }
 
             return response()->json(['success' => true, 'message' => 'تم الكتم بنجاح']);
         } catch (\Exception $e) {
@@ -120,15 +120,15 @@ class RoomWebController extends Controller
         try {
             $this->roomService->unmuteParticipant($request->room_name, $request->target_identity);
 
-            $room = Room::where('room_name', $request->room_name)->first();
-            if ($room) {
-                $muted = $room->muted_participants ?? [];
-                if (($key = array_search($request->target_identity, $muted)) !== false) {
-                    unset($muted[$key]);
-                    $room->muted_participants = array_values($muted);
-                    $room->save();
-                }
-            }
+            // $room = Room::where('room_name', $request->room_name)->first();
+            // if ($room) {
+            //     $muted = $room->muted_participants ?? [];
+            //     if (($key = array_search($request->target_identity, $muted)) !== false) {
+            //         unset($muted[$key]);
+            //         $room->muted_participants = array_values($muted);
+            //         $room->save();
+            //     }
+            // }
 
             return response()->json(['success' => true, 'message' => 'تم فك الكتم']);
         } catch (\Exception $e) {

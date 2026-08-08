@@ -142,15 +142,15 @@ class RoomController extends Controller
         try {
             $this->roomService->muteParticipant($request->room_name, $targetIdentity, $request->track_sid);
 
-            $room = Room::where('room_name', $request->room_name)->first();
-            if ($room) {
-                $muted = $room->muted_participants ?? [];
-                if (!in_array($targetIdentity, $muted)) {
-                    $muted[] = $targetIdentity;
-                    $room->muted_participants = $muted;
-                    $room->save();
-                }
-            }
+            // $room = Room::where('room_name', $request->room_name)->first();
+            // if ($room) {
+            //     $muted = $room->muted_participants ?? [];
+            //     if (!in_array($targetIdentity, $muted)) {
+            //         $muted[] = $targetIdentity;
+            //         $room->muted_participants = $muted;
+            //         $room->save();
+            //     }
+            // }
 
             return response()->json(['message' => 'تم كتم المستخدم بنجاح وسحب صلاحية التحدث']);
         } catch (\Exception $e) {
@@ -166,15 +166,15 @@ class RoomController extends Controller
         try {
             $this->roomService->unmuteParticipant($request->room_name, $targetIdentity);
 
-            $room = Room::where('room_name', $request->room_name)->first();
-            if ($room) {
-                $muted = $room->muted_participants ?? [];
-                if (($key = array_search($targetIdentity, $muted)) !== false) {
-                    unset($muted[$key]);
-                    $room->muted_participants = array_values($muted);
-                    $room->save();
-                }
-            }
+            // $room = Room::where('room_name', $request->room_name)->first();
+            // if ($room) {
+            //     $muted = $room->muted_participants ?? [];
+            //     if (($key = array_search($targetIdentity, $muted)) !== false) {
+            //         unset($muted[$key]);
+            //         $room->muted_participants = array_values($muted);
+            //         $room->save();
+            //     }
+            // }
 
             return response()->json(['message' => 'تم فك الكتم عن المستخدم بنجاح']);
         } catch (\Exception $e) {
