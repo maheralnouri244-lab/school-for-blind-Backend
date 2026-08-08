@@ -319,3 +319,5 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/caregiver/schedule', [ScheduleController::class, 'caregiverSchedule']);
 });
+
+Route::get('/student/solved-quizzes', [StudentQuizController::class, 'getSolvedQuizzes'])->middleware('auth:sanctum');

@@ -1,9 +1,8 @@
 <?php
-
 namespace App\Events;
 
 use App\Models\Quiz;
-use Illuminate\Broadcasting\Channel;
+use Illuminate\Broadcasting\PrivateChannel; 
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
@@ -25,7 +24,7 @@ class QuizCreated implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new Channel("quizzes.class.{$this->class_id}")
+            new PrivateChannel("quizzes.class.{$this->class_id}")
         ];
     }
 
@@ -38,11 +37,13 @@ class QuizCreated implements ShouldBroadcast
     {
         return [
             'id'             => $this->quiz->id,
-            'subject_name'   => $this->quiz->subject_name,
+            'subject_name'   => $this->quiz->subject_name ,
             'lesson_id'      => $this->quiz->lesson_id,
             'numofquestions' => $this->quiz->numofquestions,
             'timelimit'      => $this->quiz->timelimit,
+            'totalmark'      => $this->quiz->totalmark, 
             'created_at'     => $this->quiz->created_at->toDateTimeString(),
+            'message'        => 'تم إضافة اختبار جديد!' 
         ];
     }
 }

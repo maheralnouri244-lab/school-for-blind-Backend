@@ -282,4 +282,42 @@ public function getStudentSubmissions(): JsonResponse
         'data'   => $data
     ]);
 }
-}
+public function getSolvedQuizzes(): JsonResponse
+{
+    $studentId = Auth::id();
+
+    $submissions = QuizSubmission::with(['quiz.lesson', 'quiz.subject'])
+        ->where('student_id', $studentId)
+        ->orderBy('created_at', 'desc')
+        ->get();
+
+    $solvedQuizzes = $submissions->map(function ($submission) {
+        $quiz = $submission->quiz;
+
+        $quizTitle = $quiz && $quiz->lesson ? 'كويز درس: ' . $quiz->lesson->name : null;
+        if (!$quizTitle && $quiz && $quiz->subject) {
+            $quizTitle = 'كويز مادة: ' . $quiz->subject->name;
+        }
+        if (!$quizTitle) {
+            $quizTitle = 'اختبار رقم ' . $submission->quiz_id;
+        }
+
+        return [
+            'submission_id' => $submission->id,
+            'quiz_id'       => $submission->quiz_id,
+            'quiz_title'    => $quizTitle,
+            'subject_id'    => $quiz->subject_id ?? null,
+            'lesson_id'     => $quiz->lesson_id ?? null,
+            'total_score'   => $submission->total_score,
+            'quiz_max_mark' => $quiz->totalmark ?? null,
+            'status'        => $submission->status,
+            'submitted_at'  => $submission->created_at ? $submission->created_at->format('Y-m-d H:i') : null,
+        ];
+    });
+
+    return response()->json([
+        'status' => 'success',
+        'count'  => $solvedQuizzes->count(),
+        'data'   => $solvedQuizzes
+    ]);
+}}
