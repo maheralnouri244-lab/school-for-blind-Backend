@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Events\MessageDeleted;
 use App\Events\MessageSent;
 use App\Http\Controllers\Controller;
+use App\Jobs\SendChatMessageFcmNotification;
 use App\Models\Conversation;
 use App\Models\Message;
 use App\Models\Report;
@@ -181,6 +182,7 @@ class ConversationController extends Controller
         ]);
 
         broadcast(new MessageSent($message))->toOthers();
+        SendChatMessageFcmNotification::dispatch($message);
 
         return response()->json(['success' => true, 'data' => $message]);
     }

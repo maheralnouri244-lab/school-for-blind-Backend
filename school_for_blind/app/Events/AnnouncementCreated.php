@@ -5,39 +5,32 @@ namespace App\Events;
 use App\Models\Announcement;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast; 
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class AnnouncementCreated implements ShouldBroadcast 
+class AnnouncementCreated implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $announcement; 
+    public $announcement;
 
-    /**
-     * Create a new event instance.
-     */
     public function __construct(Announcement $announcement)
     {
         $this->announcement = $announcement;
     }
 
-    /**
-     * Get the channels the event should broadcast on.
-     *
-     * @return array<int, Channel>
-     */
+    
     public function broadcastOn(): array
     {
         $target = $this->announcement->target_audience; 
-        $level  = $this->announcement->level;
+        $sectionId = $this->announcement->section_id;   
 
-        return [
-            new Channel("announcements.{$target}.{$level}")
-        ];
+        if ($target === 'section' && $sectionId) {
+            return [new Channel("announcements.section.{$sectionId}")];
+        }
+
+        return [new Channel("announcements.{$target}")];
     }
 
     public function broadcastAs(): string
@@ -45,15 +38,22 @@ class AnnouncementCreated implements ShouldBroadcast
         return 'new-announcement';
     }
 
+    
     public function broadcastWith(): array
     {
+        $content = $this->announcement->content;
+        if (is_string($content)) {
+            $decoded = json_decode($content, true);
+            $content = (json_last_error() === JSON_ERROR_NONE) ? $decoded : $content;
+        }
+
         return [
-            'id'              => $this->announcement->id,
-            'type'            => $this->announcement->type,
-            'title'           => $this->announcement->title,
-            'content'         => is_string($this->announcement->content) ? json_decode($this->announcement->content, true) ?: $this->announcement->content : $this->announcement->content,
-            'target_audience' => $this->announcement->target_audience,
-            'level'           => $this->announcement->level,
+            'id'              => (string) $this->announcement->id,
+            'type'            => (string) $this->announcement->type,
+            'title'           => (string) $this->announcement->title,
+            'content'         => $content,
+            'target_audience' => (string) $this->announcement->target_audience,
+            'section_id'      => $this->announcement->section_id ? (string) $this->announcement->section_id : null,
             'created_at'      => $this->announcement->created_at->toDateTimeString(),
         ];
     }

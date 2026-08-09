@@ -131,50 +131,47 @@ class LessonController extends Controller
     }
     // ==============================================================================================================================================================================================================================================================================================================================
 
-    public function getLessonsBySubject($subjectId)
-    {
-        $studentId = Auth::id();
-        $lessons = Lesson::with('teacher:id,full_name', 'quiz:id,lesson_id')->where('subject_id', $subjectId)
-            //  ->with('record') 
-            ->withExists([
-                'favorites as is_favorited' => function ($query) use ($studentId) {
-                    $query->where('user_id', $studentId);
-                }
-            ])
-            ->get();
-        $quizIds = $lessons->pluck('quiz.id')->filter();
+  public function getLessonsBySubject($subjectId)
+{
+    $studentId = Auth::id();
 
-        $solvedQuizIds = DB::table('quiz_submissions')
-            ->where('student_id', $studentId)
-            ->whereIn('quiz_id', $quizIds)
-            ->pluck('quiz_id')
-            ->toArray();
+    $lessons = Lesson::with('teacher:id,full_name', 'quiz:id,lesson_id')
+        ->where('subject_id', $subjectId)
+        ->get();
 
-        $formattedLessons = $lessons->map(function ($lesson) use ($solvedQuizIds) {
-            $data = $lesson->toArray();
+    $favoritedLessonIds = DB::table('favorites')
+        ->where('user_id', $studentId)
+        ->where('favorable_type', 'App\Models\Lesson')
+        ->pluck('favorable_id')
+        ->toArray();
 
-            $data['teacher_name'] = $lesson->teacher->full_name ?? 'غير معروف';
-            unset($data['teacher']);
+    $quizIds = $lessons->pluck('quiz.id')->filter();
 
+    $solvedQuizIds = DB::table('quiz_submissions')
+        ->where('student_id', $studentId)
+        ->whereIn('quiz_id', $quizIds)
+        ->pluck('quiz_id')
+        ->toArray();
 
-            $data['is_favorited'] = $lesson->is_favorited;
+    $formattedLessons = $lessons->map(function ($lesson) use ($solvedQuizIds, $favoritedLessonIds) {
+        $data = $lesson->toArray();
 
-            $data['is_quiz_solved'] = false;
-            if ($lesson->quiz) {
-                $data['is_quiz_solved'] = in_array($lesson->quiz->id, $solvedQuizIds);
-            }
+        $data['teacher_name'] = $lesson->teacher->full_name ?? 'غير معروف';
+        unset($data['teacher']);
 
-            unset($data['quiz']);
+        $data['is_favorited'] = in_array($lesson->id, $favoritedLessonIds);
 
+        $data['is_quiz_solved'] = $lesson->quiz ? in_array($lesson->quiz->id, $solvedQuizIds) : false;
+        unset($data['quiz']);
 
-            return $data;
-        });
+        return $data;
+    });
 
-        return response()->json([
-            'subject_id' => $subjectId,
-            'lessons' => $formattedLessons
-        ]);
-    }
+    return response()->json([
+        'subject_id' => $subjectId,
+        'lessons' => $formattedLessons
+    ]);
+}
     public function getLessonRecord($lessonId)
     {
         $lesson = Lesson::with('records')->find($lessonId);

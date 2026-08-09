@@ -291,7 +291,14 @@ public function getSolvedQuizzes(): JsonResponse
         ->orderBy('created_at', 'desc')
         ->get();
 
-    $solvedQuizzes = $submissions->map(function ($submission) {
+    
+    $favoritedQuizIds = DB::table('favorites')
+        ->where('user_id', $studentId)
+        ->where('favorable_type', 'App\Models\Quiz') 
+        ->pluck('favorable_id')
+        ->toArray();
+
+    $solvedQuizzes = $submissions->map(function ($submission) use ($favoritedQuizIds) {
         $quiz = $submission->quiz;
 
         $quizTitle = $quiz && $quiz->lesson ? 'كويز درس: ' . $quiz->lesson->name : null;
@@ -308,6 +315,7 @@ public function getSolvedQuizzes(): JsonResponse
             'quiz_title'    => $quizTitle,
             'subject_id'    => $quiz->subject_id ?? null,
             'lesson_id'     => $quiz->lesson_id ?? null,
+            'is_favorited'  => in_array($submission->quiz_id, $favoritedQuizIds), 
             'total_score'   => $submission->total_score,
             'quiz_max_mark' => $quiz->totalmark ?? null,
             'status'        => $submission->status,
@@ -320,4 +328,5 @@ public function getSolvedQuizzes(): JsonResponse
         'count'  => $solvedQuizzes->count(),
         'data'   => $solvedQuizzes
     ]);
-}}
+}
+}

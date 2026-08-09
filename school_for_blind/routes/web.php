@@ -188,3 +188,7 @@ Route::middleware([CheckAdminRole::class . ':Super Admin,Academic Manager,Modera
     Route::get('/students/{student_id}/absences', [ClassController::class, 'studentAbsences'])->name('students.absences');
     Route::get('/students/{student}/reports', [StudentReportWebController::class, 'index'])->name('students.reports');
 });
+
+Route::get('/fcm-test', function () {
+    return view('fcm_test');
+});

@@ -1,9 +1,12 @@
 <?php
 
+use App\Models\Admin;
+use App\Models\Caregiver;
 use Illuminate\Support\Facades\Broadcast;
 use App\Models\Conversation;
 use App\Models\Student;
 use App\Models\Classes;
+use App\Models\Teacher;
 
 Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
@@ -35,6 +38,14 @@ Broadcast::channel('quizzes.class.{classId}', function ($user, $classId) {
     if ($user instanceof Student) {
         return (int) $user->class_id === (int) $classId;
     }
+
+    return false;
+});
+Broadcast::channel('announcements.{target}', function ($user, $target) {
+    if ($target === 'students' && $user instanceof Student) return true;
+    if ($target === 'teachers' && $user instanceof Teacher) return true;
+    if ($target === 'caregivers' && $user instanceof Caregiver) return true;
+    if ($user instanceof Admin) return true;
 
     return false;
 });
