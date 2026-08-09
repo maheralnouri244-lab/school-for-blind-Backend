@@ -66,23 +66,4 @@ class AnnouncementSeeder extends Seeder
             ]
         ];
 
-        DB::table('announcements')->insert([
-            'type' => 'school_timetable',
-            'title' => 'برنامج الدوام الأسبوعي لعام 2026',
-            'content' => json_encode($timetableData, JSON_UNESCAPED_UNICODE),
-            'level' => 'all',
-            'target_audience' => 'teacher',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]);
-        DB::table('announcements')->insert([
-            'type' => 'school_timetable',
-            'title' => 'برنامج الدوام الأسبوعي لعام 2026',
-            'content' => json_encode($timetableData, JSON_UNESCAPED_UNICODE),
-            'level' => 'all',
-            'target_audience' => 'student',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]);
-    }
-}
+    }}
