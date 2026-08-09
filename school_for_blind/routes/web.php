@@ -149,6 +149,7 @@ Route::middleware([CheckAdminRole::class . ':Super Admin,Academic Manager,Modera
 Route::get('/send-test-notification', [NotificationController::class, 'testSend']);
 
 use App\Http\Controllers\Dashboard\FinancialDashboardController;
+use App\Http\Controllers\Dashboard\AnnouncementDashboardController;
 
 Route::prefix('admin/financial')->name('financial.')->middleware([
     CheckAdminRole::class . ':Super Admin,Financial Manager'
@@ -187,4 +188,12 @@ Route::middleware([CheckAdminRole::class . ':Super Admin,Academic Manager,Modera
     Route::get('/excuses', [ClassController::class, 'allExcuses'])->name('excuses.index');
     Route::get('/students/{student_id}/absences', [ClassController::class, 'studentAbsences'])->name('students.absences');
     Route::get('/students/{student}/reports', [StudentReportWebController::class, 'index'])->name('students.reports');
+});
+
+Route::middleware([CheckAdminRole::class . ':Super Admin,Academic Manager,Moderator'])->group(function () {
+    Route::get('/announcements', function () {
+        return view('pages.announcements.index');
+    })->name('announcements.index');
+    Route::get('/api/dashboard/announcements', [AnnouncementDashboardController::class, 'index'])->name('dashboard.announcements.api');
+    Route::post('/api/dashboard/announcements', [AnnouncementDashboardController::class, 'store'])->name('dashboard.announcements.store');
 });

@@ -65,6 +65,13 @@
         <i class="fa-regular fa-folder-open"></i>
       </a>
     </li>
+    <li>
+      <a href="{{ route('announcements.index') }}"
+        class="nav-link d-flex align-items-center justify-content-between {{ request()->routeIs('announcements.*') ? 'nav-link-active' : 'nav-link-custom' }}">
+        <span>الإعلانات والتنبيهات</span>
+          <i class="fa-solid fa-bullhorn text-warning"></i>
+      </a>
+    </li>
 
     <li>
       <a href="{{ route('logs.index') }}"
@@ -86,34 +93,33 @@
       </a>
 
       <div class="collapse {{ request()->routeIs('financial.*') ? 'show' : '' }}" id="financialDropdown">
-        <ul class="nav flex-column me-4 mt-2 gap-1"
-          style="border-right: 1px solid var(--border-color); padding-right: 15px;">
+        <ul class=" nav flex-column me-4 mt-2 gap-1"
+        style="border-right: 1px solid var(--border-color); padding-right: 15px;">
 
-          <li class="nav-item">
-            <a href="{{ route('financial.index') }}"
-              class="nav-link py-2 {{ request()->routeIs('financial.index') ? 'fw-bold text-success' : 'text-muted' }}"
-              style="font-size: 0.9rem;">
+    <li class="nav-item">
+      <a href="{{ route('financial.index') }}"
+        class="nav-link py-2 {{ request()->routeIs('financial.index') ? 'fw-bold text-success' : 'text-muted' }}" style="font-size: 0.9rem;">
               اللوحة الرئيسية
             </a>
           </li>
 
-          <li class="nav-item">
-            <a href="{{ route('financial.donations') }}"
-              class="nav-link py-2 {{ request()->routeIs('financial.donations') ? 'fw-bold text-success' : 'text-muted' }}"
-              style="font-size: 0.9rem;">
+          <li class=" nav-item">
+        <a href="{{ route('financial.donations') }}"
+          class="nav-link py-2 {{ request()->routeIs('financial.donations') ? 'fw-bold text-success' : 'text-muted' }}"
+          style="font-size: 0.9rem;">
               سجل التبرعات
             </a>
           </li>
 
-          <li class="nav-item">
-            <a href="{{ route('financial.salaries') }}"
-              class="nav-link py-2 {{ request()->routeIs('financial.salaries') ? 'fw-bold text-success' : 'text-muted' }}"
-              style="font-size: 0.9rem;">
+          <li class=" nav-item">
+          <a href="{{ route('financial.salaries') }}"
+            class="nav-link py-2 {{ request()->routeIs('financial.salaries') ? 'fw-bold text-success' : 'text-muted' }}"
+            style="font-size: 0.9rem;">
               رواتب الأساتذة
             </a>
           </li>
 
-          <li class="nav-item">
+          <li class=" nav-item">
             <a href="{{ route('financial.rewards') }}"
               class="nav-link py-2 {{ request()->routeIs('financial.rewards') ? 'fw-bold text-success' : 'text-muted' }}"
               style="font-size: 0.9rem;">
@@ -121,54 +127,54 @@
             </a>
           </li>
 
-          <li class="nav-item">
-            <a href="{{ route('financial.transactions') }}"
-              class="nav-link py-2 {{ request()->routeIs('financial.transactions') ? 'fw-bold text-success' : 'text-muted' }}"
-              style="font-size: 0.9rem;">
-              التدقيق المالي
-            </a>
-          </li>
-
-        </ul>
-      </div>
-    </li>
-
-    {{-- قسم المحتوى الأكاديمي --}}
-    <li class="nav-item mt-3 mb-1 px-3" style="color: var(--text-muted); font-size: 0.85rem;">المحتوى الأكاديمي</li>
-
-    <li>
-      <a href="{{ route('dashboard.past-exams.index') }}"
-        class="nav-link d-flex align-items-center justify-content-between {{ request()->routeIs('dashboard.past-exams.*') ? 'nav-link-active' : 'nav-link-custom' }}">
-        <span>الدورات الوزارية</span>
-        <i class="fa-solid fa-book-open"></i>
-      </a>
-    </li>
-
-    <li>
-      <a href="{{ route('dashboard.exams.index') }}"
-        class="nav-link d-flex align-items-center justify-content-between {{ request()->routeIs('dashboard.exams.*') ? 'nav-link-active' : 'nav-link-custom' }}">
-        <span>الامتحانات و المذاكرات</span>
-        <i class="fa-solid fa-file-signature"></i>
-      </a>
-    </li>
-
-    <li>
-      <a href="{{ route('dashboard.schedules.index') }}"
-        class="nav-link d-flex align-items-center justify-content-between {{ request()->routeIs('dashboard.schedules.*') ? 'nav-link-active' : 'nav-link-custom' }}">
-        <span>إدارة الجداول</span>
-        <i class="fa-regular fa-calendar-days"></i>
-      </a>
+          <li class=" nav-item">
+              <a href="{{ route('financial.transactions') }}"
+                class="nav-link py-2 {{ request()->routeIs('financial.transactions') ? 'fw-bold text-success' : 'text-muted' }}"
+                style="font-size: 0.9rem;">
+                التدقيق المالي
+              </a>
     </li>
 
   </ul>
+</div>
+</li>
 
-  <hr style="border-color: var(--border-color);">
+{{-- قسم المحتوى الأكاديمي --}}
+<li class="nav-item mt-3 mb-1 px-3" style="color: var(--text-muted); font-size: 0.85rem;">المحتوى الأكاديمي</li>
 
-  <div class="d-flex align-items-center px-3 pb-2 mt-2">
-    <div class="form-check form-switch" style="transform: scale(1.4); transform-origin: right;">
-      <input class="form-check-input" type="checkbox" role="switch" id="themeSwitch" onclick="toggleTheme()" checked
-        style="background-color: #a3e635; border-color: #a3e635; cursor: pointer;">
-    </div>
+<li>
+  <a href="{{ route('dashboard.past-exams.index') }}"
+    class="nav-link d-flex align-items-center justify-content-between {{ request()->routeIs('dashboard.past-exams.*') ? 'nav-link-active' : 'nav-link-custom' }}">
+    <span>الدورات الوزارية</span>
+      <i class="fa-solid fa-book-open"></i>
+  </a>
+</li>
+
+<li>
+  <a href="{{ route('dashboard.exams.index') }}"
+    class="nav-link d-flex align-items-center justify-content-between {{ request()->routeIs('dashboard.exams.*') ? 'nav-link-active' : 'nav-link-custom' }}">
+    <span>الامتحانات و المذاكرات</span>
+      <i class="fa-solid fa-file-signature"></i>
+  </a>
+</li>
+
+<li>
+  <a href="{{ route('dashboard.schedules.index') }}"
+    class="nav-link d-flex align-items-center justify-content-between {{ request()->routeIs('dashboard.schedules.*') ? 'nav-link-active' : 'nav-link-custom' }}">
+    <span>إدارة الجداول</span>
+    <i class="fa-regular fa-calendar-days"></i>
+  </a>
+</li>
+
+</ul>
+
+<hr style="border-color: var(--border-color);">
+
+<div class="d-flex align-items-center px-3 pb-2 mt-2">
+  <div class="form-check form-switch" style="transform: scale(1.4); transform-origin: right;">
+    <input class="form-check-input" type="checkbox" role="switch" id="themeSwitch" onclick="toggleTheme()" checked
+      style="background-color: #a3e635; border-color: #a3e635; cursor: pointer;">
   </div>
+</div>
 
 </div>
