@@ -13,10 +13,18 @@
     <div class="row mb-4">
       <div class="col-12 d-flex justify-content-between align-items-center">
         <h3 class="fw-bold m-0" style="color: var(--text-main);">إدارة الجداول الدراسية والامتحانات</h3>
-        <a href="{{ route('dashboard.schedules.create') }}" class="btn px-4 py-2 fw-bold"
-          style="background-color: var(--accent-color); color: #000; border-radius: 8px;">
-          <i class="fa-solid fa-plus ms-2"></i> إنشاء جدول جديد
-        </a>
+        <div class="d-flex gap-2">
+          <button type="button" class="btn px-4 py-2 fw-bold shadow-sm"
+            style="background-color: #3b82f6; color: #fff; border-radius: 8px;" data-bs-toggle="modal"
+            data-bs-target="#quickAnnouncementModal">
+            <i class="fa-solid fa-bullhorn ms-2"></i> تعميم الجداول
+          </button>
+
+          <a href="{{ route('dashboard.schedules.create') }}" class="btn px-4 py-2 fw-bold shadow-sm"
+            style="background-color: var(--accent-color); color: #000; border-radius: 8px;">
+            <i class="fa-solid fa-plus ms-2"></i> إنشاء جدول جديد
+          </a>
+        </div>
       </div>
     </div>
 
@@ -132,6 +140,50 @@
       </div>
     </div>
   </div>
+  <!-- Modal: نشر إعلان الجداول السريع -->
+  <div class="modal fade" id="quickAnnouncementModal" tabindex="-1" aria-hidden="true" dir="rtl">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content glass-modal">
+        <div class="modal-header border-bottom">
+          <h5 class="modal-title fw-bold" style="color: var(--text-main);">إرسال تعميم بخصوص الجداول</h5>
+          <button type="button" class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form id="quickAnnouncementForm">
+          @csrf
+          <div class="modal-body text-start">
+            <p class="text-muted small mb-4">هذا التعميم سيتم إرساله فوراً إلى جميع الطلاب والمعلمين وأولياء الأمور
+              كإشعار.</p>
+
+            <div class="mb-3">
+              <label class="form-label fw-bold" style="color: var(--text-main);">نوع الجدول</label>
+              <select name="type" id="quickType" class="form-select"
+                style="background-color: var(--bg-main); color: var(--text-main); border-color: var(--border-color);">
+                <option value="normal">جدول دوام جديد</option>
+                <option value="exam_schedule">جدول امتحانات</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-bold" style="color: var(--text-main);">الرسالة (اختياري)</label>
+              <textarea id="quickContent" class="form-control" rows="3"
+                placeholder="اتركه فارغاً وسيتم إرسال: تم اصدار جداول جديدة..."
+                style="background-color: var(--bg-main); color: var(--text-main); border-color: var(--border-color);"></textarea>
+              <small class="text-muted mt-1 d-block">سيتم ملء هذه الخانة تلقائياً إذا تركتها فارغة.</small>
+            </div>
+
+            <div id="quickAlert" class="alert d-none mt-2 mb-0"></div>
+          </div>
+          <div class="modal-footer border-top">
+            <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal">إلغاء</button>
+            <button type="submit" class="btn px-4" style="background-color: #3b82f6; color: #fff;" id="quickSubmitBtn">
+              <span id="quickBtnText">إرسال التعميم الآن</span>
+              <span id="quickBtnLoader" class="spinner-border spinner-border-sm d-none"></span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 @endsection
 
 @push('scripts')
@@ -196,5 +248,92 @@
       document.getElementById('modalScheduleContainer').innerHTML = html;
       new bootstrap.Modal(document.getElementById('viewScheduleModal')).show();
     }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const quickForm = document.getElementById('quickAnnouncementForm');
+
+      if (quickForm) {
+        quickForm.addEventListener('submit', function (e) {
+          e.preventDefault();
+
+          let typeSelect = document.getElementById('quickType');
+          let contentField = document.getElementById('quickContent');
+
+          let finalContent = contentField.value.trim();
+          if (finalContent === '') {
+            if (typeSelect.value === 'exam_schedule') {
+              finalContent = "تم إصدار جداول امتحانات جديدة، يرجى الاطلاع عليها من قسم الجداول.";
+            } else {
+              finalContent = "تم إصدار جداول دوام أسبوعية جديدة، يرجى الاطلاع عليها للالتزام بالمواعيد.";
+            }
+          }
+
+          let payload = {
+            _token: document.querySelector('input[name="_token"]').value,
+            title: 'تحديث هام بخصوص الجداول',
+            content: finalContent,
+            type: typeSelect.value,
+            target_audience: ['all'],
+            level: ['all']           
+          };
+
+          let submitBtn = document.getElementById('quickSubmitBtn');
+          let btnText = document.getElementById('quickBtnText');
+          let btnLoader = document.getElementById('quickBtnLoader');
+          let alertBox = document.getElementById('quickAlert');
+
+          submitBtn.disabled = true;
+          btnText.classList.add('d-none');
+          btnLoader.classList.remove('d-none');
+          alertBox.classList.add('d-none');
+
+          fetch('{{ route("dashboard.announcements.store") }}', {
+            method: 'POST',
+            body: JSON.stringify(payload),
+            headers: {
+              'Content-Type': 'application/json',
+              'X-Requested-With': 'XMLHttpRequest',
+              'Accept': 'application/json'
+            }
+          })
+            .then(response => response.json().then(data => ({ status: response.status, body: data })))
+            .then(res => {
+              if (res.status === 201 || res.status === 200) {
+                alertBox.className = 'alert alert-success mt-2 mb-0';
+                alertBox.innerHTML = '<i class="fa-solid fa-check me-2"></i> تم إرسال التعميم للمدرسة بنجاح!';
+                alertBox.classList.remove('d-none');
+
+                quickForm.reset();
+                contentField.value = ''; 
+
+                setTimeout(() => {
+                  let modalInstance = bootstrap.Modal.getInstance(document.getElementById('quickAnnouncementModal'));
+                  modalInstance.hide();
+                  alertBox.classList.add('d-none');
+                }, 2000);
+              } else {
+                let errorTxt = res.body.message || 'حدث خطأ أثناء الإرسال';
+                if (res.body.errors) {
+                  errorTxt = Object.values(res.body.errors).map(err => err.join('<br>')).join('<br>');
+                }
+
+                alertBox.className = 'alert alert-danger mt-2 mb-0';
+                alertBox.innerHTML = '<i class="fa-solid fa-triangle-exclamation me-2"></i> ' + errorTxt;
+                alertBox.classList.remove('d-none');
+              }
+            })
+            .catch(error => {
+              alertBox.className = 'alert alert-danger mt-2 mb-0';
+              alertBox.innerHTML = 'حدث خطأ في الاتصال بالسيرفر.';
+              alertBox.classList.remove('d-none');
+            })
+            .finally(() => {
+              submitBtn.disabled = false;
+              btnText.classList.remove('d-none');
+              btnLoader.classList.add('d-none');
+            });
+        });
+      }
+    });
   </script>
 @endpush
