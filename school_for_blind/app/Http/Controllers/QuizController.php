@@ -8,6 +8,7 @@ use App\Models\Lesson;
 use App\Models\Question;
 use App\Models\Quiz;
 use App\Models\QuizSubmission;
+use App\Models\Student;
 use App\Models\StudentAnswer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -98,14 +99,32 @@ class QuizController extends Controller
                 }
             }
 
-            DB::commit();
+         DB::commit();
+
             $this->recalculateQuizTotals($quiz);
             $quiz->load('questions.choices');
 
-           if ($lesson && $lesson->class_id) {
+            if ($lesson && $lesson->class_id) {
                 event(new QuizCreated($quiz, $lesson->class_id));
+
+                $studentsTokens = Student::where('class_id', $lesson->class_id)
+                    ->whereNotNull('fcm_token')
+                    ->pluck('fcm_token')
+                    ->toArray();
+
+                if (!empty($studentsTokens)) {
+                    $this->sendFcmNotification(
+                        $studentsTokens,
+                        'اختبار جديد! 📝',
+                        "تم إضافة اختبار جديد في مادة {$quiz->subject_name}",
+                        [
+                            'quiz_id' => (string) $quiz->id, 
+                            'type'    => 'new_quiz'
+                        ]
+                    );
+                }
             }
-           
+            
             return response()->json([
                 'message' => 'تم إنشاء الكويز بنجاح!',
                 'quiz' => $quiz
@@ -117,7 +136,7 @@ class QuizController extends Controller
                 'error' => 'حدث خطأ أثناء الحفظ',
                 'details' => $e->getMessage()
             ], 500);
-        }
+        }   
     }
 
     public function index(Request $request)

@@ -34,6 +34,7 @@ class AppServiceProvider extends ServiceProvider
             'caregiver' => \App\Models\Caregiver::class,
             'PastExam' => \App\Models\PastExam::class,
         'Exam'=> \App\Models\Exam::class,
+        'lesson'=> \App\Models\Lesson::class,
         ]);
     }
 }

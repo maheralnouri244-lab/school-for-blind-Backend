@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Broadcast;
 use App\Models\Conversation;
+use App\Models\Student;
+use App\Models\Classes;
 
 Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
@@ -28,3 +30,11 @@ Broadcast::channel('conversation.{id}', function ($user, $id) {
 
     return false;
 }, ['guards' => ['sanctum', 'web', 'admin']]);
+
+Broadcast::channel('quizzes.class.{classId}', function ($user, $classId) {
+    if ($user instanceof Student) {
+        return (int) $user->class_id === (int) $classId;
+    }
+
+    return false;
+});
