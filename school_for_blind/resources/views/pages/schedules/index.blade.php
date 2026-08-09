@@ -41,6 +41,12 @@
           <i class="fa-solid fa-chalkboard-user ms-2"></i> جداول الأساتذة
         </button>
       </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link fw-bold px-4 py-2" id="exams-tab" data-bs-toggle="tab" data-bs-target="#exams-panel"
+          type="button" role="tab">
+          <i class="fa-solid fa-file-signature ms-2"></i> جداول الامتحانات
+        </button>
+      </li>
     </ul>
 
     <div class="tab-content" id="schedulesTabsContent">
@@ -123,7 +129,59 @@
           </div>
         </div>
       </div>
+      <!-- لوحة جداول الامتحانات -->
+      <div class="tab-pane fade" id="exams-panel" role="tabpanel">
+        <div class="custom-card">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h5 class="fw-bold mb-0" style="color: var(--text-main);">أحدث جداول الامتحانات المنشورة</h5>
+          </div>
 
+          <div class="table-responsive">
+            <table class="table table-hover-custom align-middle mb-0" style="color: var(--text-main);">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color);">
+                  <th scope="col" class="pb-3 text-muted fw-normal">المرحلة الدراسية</th>
+                  <th scope="col" class="pb-3 text-muted fw-normal">عنوان الجدول</th>
+                  <th scope="col" class="pb-3 text-muted fw-normal">تاريخ النشر</th>
+                  <th scope="col" class="pb-3 text-muted fw-normal text-start">إجراءات</th>
+                </tr>
+              </thead>
+              <tbody>
+                @php
+                  // نجلب أحدث إعلان امتحان لكل مرحلة (هذا الكود يفضل أن يكون في الكونترولر، لكن وضعناه هنا للتسهيل بناءً على طلبك بالتركيز على الواجهة)
+                  $latestNinthExam = \App\Models\Announcement::where('type', 'exam_schedule')->where('level', 'ninth')->orderBy('created_at', 'desc')->first();
+                  $latestTwelfthExam = \App\Models\Announcement::where('type', 'exam_schedule')->where('level', 'twelfth')->orderBy('created_at', 'desc')->first();
+                  $examsList = array_filter([$latestNinthExam, $latestTwelfthExam]);
+                @endphp
+
+                @forelse($examsList as $exam)
+                  <tr style="border-bottom: 1px solid var(--border-color);">
+                    <td class="py-3 fw-bold">
+                      <span
+                        class="badge {{ $exam->level == 'ninth' ? 'bg-soft-info text-info' : 'bg-soft-warning text-warning' }}">
+                        {{ $exam->level == 'ninth' ? 'الصف التاسع' : 'البكالوريا' }}
+                      </span>
+                    </td>
+                    <td class="py-3 fw-bold">{{ $exam->title ?? 'برنامج امتحانات' }}</td>
+                    <td class="py-3 text-muted">{{ $exam->created_at->format('Y-m-d H:i') }}</td>
+                    <td class="py-3 text-start">
+                      <button type="button" class="btn btn-sm btn-outline-primary ms-1"
+                        data-title="{{ $exam->title ?? 'برنامج امتحانات ' . ($exam->level == 'ninth' ? 'التاسع' : 'البكالوريا') }}"
+                        data-content="{{ $exam->content }}" onclick="handleViewExamSchedule(this)">
+                        <i class="fa-solid fa-eye me-1"></i> عرض الجدول
+                      </button>
+                    </td>
+                  </tr>
+                @empty
+                  <tr>
+                    <td colspan="4" class="text-center py-4 text-muted">لا توجد جداول امتحانات منشورة حالياً.</td>
+                  </tr>
+                @endforelse
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -274,7 +332,7 @@
             content: finalContent,
             type: typeSelect.value,
             target_audience: ['all'],
-            level: ['all']           
+            level: ['all']
           };
 
           let submitBtn = document.getElementById('quickSubmitBtn');
@@ -304,7 +362,7 @@
                 alertBox.classList.remove('d-none');
 
                 quickForm.reset();
-                contentField.value = ''; 
+                contentField.value = '';
 
                 setTimeout(() => {
                   let modalInstance = bootstrap.Modal.getInstance(document.getElementById('quickAnnouncementModal'));
@@ -335,5 +393,55 @@
         });
       }
     });
+    function handleViewExamSchedule(btn) {
+      let contentStr = btn.getAttribute('data-content');
+      let title = btn.getAttribute('data-title');
+
+      try {
+        let contentObj = JSON.parse(contentStr);
+        if (typeof contentObj === 'string') {
+          contentObj = JSON.parse(contentObj);
+        }
+        viewExamSchedule(contentObj, title);
+      } catch (e) {
+        console.error("خطأ في قراءة بيانات الامتحان:", e);
+        alert("تعذر قراءة بيانات الجدول. قد يكون التنسيق غير مدعوم.");
+      }
+    }
+
+    function viewExamSchedule(examData, title) {
+      document.getElementById('modalScheduleTitle').innerText = title;
+
+      if (!examData || !examData.columns || !examData.rows) {
+        document.getElementById('modalScheduleContainer').innerHTML = '<div class="alert alert-warning text-center">لا توجد بيانات صحيحة لعرضها.</div>';
+        new bootstrap.Modal(document.getElementById('viewScheduleModal')).show();
+        return;
+      }
+
+      let html = '<table class="table table-bordered table-striped text-center align-middle" style="color: var(--text-main); font-size:0.9rem;">';
+
+      html += '<thead class="table-dark"><tr>';
+      examData.columns.forEach(col => {
+        html += `<th>${col}</th>`;
+      });
+      html += '</tr></thead><tbody>';
+
+      if (examData.rows.length === 0) {
+        html += `<tr><td colspan="${examData.columns.length}" class="text-muted py-4">الجدول فارغ</td></tr>`;
+      } else {
+        examData.rows.forEach(row => {
+          html += '<tr>';
+          html += `<td class="fw-bold">${row.date}</td>`;
+          html += `<td class="fw-bold text-primary">${row.subject}</td>`;
+          html += `<td><span class="badge" style="background-color: var(--hover-bg); color: var(--text-main); border: 1px solid var(--border-color); font-size:0.85rem;">${row.time}</span></td>`;
+          html += '</tr>';
+        });
+      }
+
+      html += '</tbody></table>';
+
+      document.getElementById('modalScheduleContainer').innerHTML = html;
+      new bootstrap.Modal(document.getElementById('viewScheduleModal')).show();
+    }
   </script>
 @endpush

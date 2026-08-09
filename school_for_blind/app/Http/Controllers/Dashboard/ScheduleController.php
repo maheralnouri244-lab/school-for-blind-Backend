@@ -161,4 +161,15 @@ class ScheduleController extends Controller
             ], 500);
         }
     }
+
+    public function examworkspace(Request $request)
+    {
+        $type = $request->query('type');
+        $level = $request->query('level');
+        if (!$type || !$level) {
+            return redirect()->route('dashboard.schedules.create')->with('error', 'الرجاء تحديد نوع الجدول والمرحلة.');
+        }
+        $subjects = Subject::where('grade_level', $level)->get();
+        return view('pages.schedules.exam_workspace', compact('type', 'level', 'subjects'));
+    }
 }
