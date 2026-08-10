@@ -8,6 +8,7 @@ use Laravel\Sanctum\HasApiTokens;
 use App\Traits\UploadFileTrait;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Student extends Authenticatable
 {
@@ -117,9 +118,9 @@ class Student extends Authenticatable
         });
 
     }
-    public function notifications()
+  public function notifications(): MorphMany
     {
-        return $this->morphMany(Notification::class, 'notifiable');
+        return $this->morphMany(Notification::class, 'notifiable')->latest();
     }
 
     public function reportsMade()
@@ -185,4 +186,5 @@ class Student extends Authenticatable
         }
         return $query;
     }
+    
 }
