@@ -191,11 +191,10 @@ Route::middleware([CheckAdminRole::class . ':Super Admin,Academic Manager,Modera
     Route::get('/students/{student}/reports', [StudentReportWebController::class, 'index'])->name('students.reports');
 });
 
-<<<<<<< HEAD
 Route::get('/fcm-test', function () {
     return view('fcm_test');
 });
-=======
+
 Route::middleware([CheckAdminRole::class . ':Super Admin,Academic Manager,Moderator'])->group(function () {
     Route::get('/announcements', function () {
         return view('pages.announcements.index');
@@ -203,4 +202,3 @@ Route::middleware([CheckAdminRole::class . ':Super Admin,Academic Manager,Modera
     Route::get('/api/dashboard/announcements', [AnnouncementDashboardController::class, 'index'])->name('dashboard.announcements.api');
     Route::post('/api/dashboard/announcements', [AnnouncementDashboardController::class, 'store'])->name('dashboard.announcements.store');
 });
->>>>>>> 99372a55b3e58d89b81d7b26ec28eb4e90479f86
