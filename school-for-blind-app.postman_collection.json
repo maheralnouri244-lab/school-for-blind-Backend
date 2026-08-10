@@ -7300,7 +7300,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "3qBnmMbRK4v2ryi4KF81R3EUMF6ytR7ZDpheQ9hffcd41a15",
+                  "value": "GJkS9wrBECaSon35jbZaAIkMwN8YFFaxM5eW3fu5bb715860",
                   "type": "string"
                 }
               ]
@@ -7394,6 +7394,70 @@
               ],
               "cookie": [],
               "body": "{\n    \"status\": \"success\",\n    \"count\": 1,\n    \"data\": [\n        {\n            \"submission_id\": 1,\n            \"quiz_id\": 781,\n            \"quiz_title\": \"كويز درس: \",\n            \"subject_id\": 1,\n            \"lesson_id\": 1,\n            \"total_score\": 85,\n            \"quiz_max_mark\": 100,\n            \"status\": \"graded\",\n            \"submitted_at\": \"2026-08-08 13:32\"\n        }\n    ]\n}"
+            },
+            {
+              "name": "solved",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/student/solved-quizzes",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "student",
+                    "solved-quizzes"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 09 Aug 2026 11:54:40 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"success\",\n    \"count\": 1,\n    \"data\": [\n        {\n            \"submission_id\": 1,\n            \"quiz_id\": 4,\n            \"quiz_title\": \"كويز درس: \",\n            \"subject_id\": 2,\n            \"lesson_id\": 24,\n            \"is_favorited\": true,\n            \"total_score\": 85,\n            \"quiz_max_mark\": 12,\n            \"status\": \"graded\",\n            \"submitted_at\": \"2026-08-08 14:09\"\n        }\n    ]\n}"
             }
           ]
         }
@@ -9805,7 +9869,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"type\": \"exam_schedule\",\r\n    \"target_audience\":\"teacher\",\r\n     \"level\":\"twelfth\",\r\n    \"title\": \"برنامج امتحانات الفصل الثاني لعام 2026\", \r\n    \"content\": {\r\n        \"columns\": [\r\n            \"اليوم والتاريخ\",\r\n            \"المادة\",\r\n            \"التوقيت\"\r\n        ],\r\n        \"rows\": [\r\n            {\r\n                \"date\": \"الأحد 2026-06-21\",\r\n                \"subject\": \"الرياضيات\",\r\n                \"time\": \"09:00 AM - 11:00 AM\"\r\n            }\r\n        ]\r\n    }\r\n}",
+              "raw": "{\r\n    \"type\": \"exam_schedule\",\r\n    \"target_audience\":\"student\",\r\n     \"level\":\"ninth\",\r\n    \"title\": \"برنامج امتحانات الفصل الثاني لعام 2026\", \r\n    \"content\": {\r\n        \"columns\": [\r\n            \"اليوم والتاريخ\",\r\n            \"المادة\",\r\n            \"التوقيت\"\r\n        ],\r\n        \"rows\": [\r\n            {\r\n                \"date\": \"الأحد 2026-06-21\",\r\n                \"subject\": \"الرياضيات\",\r\n                \"time\": \"09:00 AM - 11:00 AM\"\r\n            }\r\n        ]\r\n    }\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -10311,7 +10375,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"id\": 1,\r\n  \"type\": \"quiz\"\r\n}\r\n",
+              "raw": "{\r\n  \"id\": 4,\r\n  \"type\": \"quiz\"\r\n}\r\n",
               "options": {
                 "raw": {
                   "language": "json"
@@ -16110,7 +16174,7 @@
                   "bearer": [
                     {
                       "key": "token",
-                      "value": "23|UGc9RhA65JlVGLlPJWsvGD8XUqp1l8zRRwSNZwNQ4cd379b1",
+                      "value": "GJkS9wrBECaSon35jbZaAIkMwN8YFFaxM5eW3fu5bb715860",
                       "type": "string"
                     }
                   ]
@@ -16128,7 +16192,7 @@
                   "formdata": [
                     {
                       "key": "body",
-                      "value": "مرحبا",
+                      "value": "مرحبا😊",
                       "type": "text",
                       "uuid": "2d290ad0-1e83-4554-9164-70f27eeb77e5"
                     },
@@ -16141,7 +16205,7 @@
                   ]
                 },
                 "url": {
-                  "raw": "http://localhost:8000/api/student/channels/{{conversationId}}/messages",
+                  "raw": "http://localhost:8000/api/student/channels/2/messages",
                   "protocol": "http",
                   "host": [
                     "localhost"
@@ -16151,7 +16215,7 @@
                     "api",
                     "student",
                     "channels",
-                    "{{conversationId}}",
+                    "2",
                     "messages"
                   ]
                 }
@@ -19137,6 +19201,356 @@
               ],
               "cookie": [],
               "body": "{\n    \"status\": \"success\",\n    \"message\": \"تم تسجيل الدخول بنجاح\",\n    \"token\": \"1|UJBPzJauRQ7VXlmDbbMwRxbBQKoPc4G4BIKXnEN030c85dcd\",\n    \"user\": {\n        \"id\": 1,\n        \"fullname\": \"Ayahammamieh\",\n        \"phone\": \"0948568727\",\n        \"parent_phone\": \"0948568727\",\n        \"points\": 0,\n        \"fcm_token\": null,\n        \"level\": \"twelfth\",\n        \"phone_verified_at\": \"2026-04-28 12:28:55\",\n        \"status\": \"approved\",\n        \"otp_expires_at\": null,\n        \"verification_token\": null,\n        \"token_expires_at\": null,\n        \"DocumentaryEvidence\": \"students/documents/1777379335_aya.jpg\",\n        \"created_at\": \"2026-04-28T12:28:55.000000Z\",\n        \"updated_at\": \"2026-04-28T12:28:55.000000Z\"\n    }\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "fcm",
+      "item": [
+        {
+          "name": "Add",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "0KEC6gT5C8d8hLexgJAKOx2gHWrLGT1h1YnmLIQY512b47d7",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"fcm_token\": \"eGTgRM8_D_eOECIrDtDYOa:APA91bG8TJTQ...\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/fcm-token",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "fcm-token"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Add",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"fcm_token\": \"eGTgRM8_D_eOECIrDtDYOa:APA91bG8TJTQ...\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/fcm-token",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "fcm-token"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 10 Aug 2026 12:26:25 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"تم تحديث التوكن بنجاح.\",\n    \"data\": {\n        \"user_id\": 1,\n        \"user_type\": \"Student\",\n        \"fcm_token\": \"eGTgRM8_D_eOECIrDtDYOa:APA91bG8TJTQ...\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Remove",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "0KEC6gT5C8d8hLexgJAKOx2gHWrLGT1h1YnmLIQY512b47d7",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"fcm_token\": \"eGTgRM8_D_eOECIrDtDYOa:APA91bG8TJTQ...\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/fcm-token",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "fcm-token"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Remove",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"fcm_token\": \"eGTgRM8_D_eOECIrDtDYOa:APA91bG8TJTQ...\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/fcm-token",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "fcm-token"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 10 Aug 2026 12:30:06 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"تم تسجيل الخروج بنجاح.\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "notification",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "FCpZoACzAIPnwejscJWPKc3o7tqV1t1NzoDJreIv2a50716c",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/notifications",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "notifications"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "New Request",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/notifications",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "notifications"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 10 Aug 2026 13:27:57 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"تم جلب الإشعارات بنجاح.\",\n    \"data\": {\n        \"unread_count\": 2,\n        \"total_count\": 2,\n        \"notifications\": [\n            {\n                \"id\": 2,\n                \"title\": \"📢 إعلان جديد: كك\",\n                \"body\": \"كك\",\n                \"data\": {\n                    \"type\": \"announcement\",\n                    \"announcement_id\": \"2\",\n                    \"target_audience\": \"student\",\n                    \"screen\": \"AnnouncementDetailsScreen\"\n                },\n                \"is_read\": false,\n                \"read_at\": null,\n                \"created_at\": \"منذ 13 دقيقة\",\n                \"timestamp\": \"2026-08-10T13:14:26+00:00\"\n            },\n            {\n                \"id\": 1,\n                \"title\": \"📢 إعلان جديد: عطلة\",\n                \"body\": \"نتمنى لكم عطلة سعيدة\",\n                \"data\": {\n                    \"type\": \"announcement\",\n                    \"announcement_id\": \"1\",\n                    \"target_audience\": \"student\",\n                    \"screen\": \"AnnouncementDetailsScreen\"\n                },\n                \"is_read\": false,\n                \"read_at\": null,\n                \"created_at\": \"منذ 13 دقيقة\",\n                \"timestamp\": \"2026-08-10T13:14:24+00:00\"\n            }\n        ]\n    }\n}"
             }
           ]
         }

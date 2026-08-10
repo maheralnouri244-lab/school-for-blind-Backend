@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Services\FcmService;
 use App\Events\QuizCreated;
 use App\Models\Choice;
 use App\Models\Lesson;
@@ -104,31 +104,30 @@ class QuizController extends Controller
             $this->recalculateQuizTotals($quiz);
             $quiz->load('questions.choices');
 
-            if ($lesson && $lesson->class_id) {
-                event(new QuizCreated($quiz, $lesson->class_id));
+           if ($lesson && $lesson->class_id) {
+    event(new QuizCreated($quiz, $lesson->class_id));
 
-                $studentsTokens = Student::where('class_id', $lesson->class_id)
-                    ->whereNotNull('fcm_token')
-                    ->pluck('fcm_token')
-                    ->toArray();
+    $students = Student::where('class_id', $lesson->class_id)
+        ->whereNotNull('fcm_token')
+        ->get();
 
-                if (!empty($studentsTokens)) {
-                    $this->sendFcmNotification(
-                        $studentsTokens,
-                        'اختبار جديد! 📝',
-                        "تم إضافة اختبار جديد في مادة {$quiz->subject_name}",
-                        [
-                            'quiz_id' => (string) $quiz->id, 
-                            'type'    => 'new_quiz'
-                        ]
-                    );
-                }
-            }
-            
-            return response()->json([
-                'message' => 'تم إنشاء الكويز بنجاح!',
-                'quiz' => $quiz
-            ], 201);
+    if ($students->isNotEmpty()) {
+        $fcmService = app(FcmService::class);
+        $subjectName = $quiz->subject->name ?? 'المادة'; 
+
+        foreach ($students as $student) {
+            $fcmService->sendNotification(
+                $student, 
+                'اختبار جديد! 📝',
+                "تم إضافة اختبار جديد في مادة {$subjectName}",
+                [
+                    'quiz_id' => (string) $quiz->id, 
+                    'type'    => 'new_quiz'
+                ]
+            );
+        }
+    }
+}
 
         } catch (\Exception $e) {
             DB::rollBack();
