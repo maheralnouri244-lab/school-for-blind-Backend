@@ -171,6 +171,7 @@ Route::middleware([CheckAdminRole::class . ':Super Admin,Academic Manager'])->pr
     Route::get('/', [ScheduleController::class, 'index'])->name('index');
     Route::get('/create', [ScheduleController::class, 'create'])->name('create');
     Route::get('/workspace', [ScheduleController::class, 'workspace'])->name('workspace');
+    Route::get('/exam-workspace', [ScheduleController::class, 'examworkspace'])->name('examworkspace');
     Route::post('/store-bulk', [ScheduleController::class, 'storeBulk'])->name('storeBulk');
     Route::delete('/{id}', [ScheduleController::class, 'destroy'])->name('destroy');
 });
