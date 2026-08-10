@@ -2,10 +2,14 @@
 
 namespace App\Services;
 
+use App\Models\Caregiver;
 use Google\Client as GoogleClient;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Cache;
+use App\Models\Notification;
+use App\Models\Student;
+use App\Models\Teacher;
 
 class FcmService
 {
@@ -27,11 +31,47 @@ class FcmService
         });
     }
 
-    public function sendNotification(string $fcmToken, string $title, string $body, ?array $data = []): bool
+    public function sendNotification($target, string $title, string $body, ?array $data = [], $notifiable = null): bool
     {
         try {
-            $accessToken = $this->getAccessToken();
+            $fcmToken = null;
 
+            if (is_object($target)) {
+                $notifiable = $target;
+                $fcmToken = $target->fcm_token ?? null;
+            } elseif (is_string($target)) {
+                $fcmToken = $target;
+
+                if (!$notifiable) {
+                    $notifiable = Student::where('fcm_token', $fcmToken)->first()
+                        ?? Teacher::where('fcm_token', $fcmToken)->first()
+                        ?? Caregiver::where('fcm_token', $fcmToken)->first();
+                }
+            }
+
+            if ($notifiable && is_object($notifiable)) {
+                try {
+                    Notification::create([
+                        'notifiable_type' => get_class($notifiable),
+                        'notifiable_id'   => $notifiable->id,
+                        'title'           => $title,
+                        'body'            => $body,
+                        'data'            => !empty($data) ? json_encode($data) : null,
+                    ]);
+                    Log::info("Notification saved successfully for {$notifiable->id}");
+                } catch (\Exception $dbEx) {
+                    Log::error('DB Notification Save Failed: ' . $dbEx->getMessage());
+                }
+            } else {
+                Log::warning('Notification sent via FCM only (User not found for token: ' . $fcmToken . ')');
+            }
+
+            if (empty($fcmToken)) {
+                Log::warning('FCM Warning: Empty FCM token provided.');
+                return false;
+            }
+
+            $accessToken = $this->getAccessToken();
             if (!$accessToken) {
                 Log::error('FCM Error: Could not retrieve Access Token.');
                 return false;
@@ -56,11 +96,7 @@ class FcmService
                 $message["data"] = $formattedData;
             }
 
-            $payload = [
-                "message" => $message
-            ];
-
-            $response = Http::withToken($accessToken)->post($url, $payload);
+            $response = Http::withToken($accessToken)->post($url, ["message" => $message]);
 
             if ($response->successful()) {
                 return true;

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
-
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -42,7 +42,7 @@ class Caregiver extends Authenticatable
 
     public function deviceTokens()
     {
-        return $this->morphMany(DeviceToken::class, 'tokenable');
+        return $this->morphMany(DeviceToken::class, 'tokenable');   
     }
     protected static function booted()
     {
@@ -51,8 +51,8 @@ class Caregiver extends Authenticatable
             $caregiver->notifications()->delete();
         });
     }
-    public function notifications()
+   public function notifications(): MorphMany
     {
-        return $this->morphMany(Notification::class, 'notifiable');
+        return $this->morphMany(Notification::class, 'notifiable')->latest();
     }
 }

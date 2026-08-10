@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Subject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -48,9 +49,9 @@ class Teacher extends Authenticatable
             $teacher->notifications()->delete();
         });
     }
-    public function notifications()
+ public function notifications(): MorphMany
     {
-        return $this->morphMany(Notification::class, 'notifiable');
+        return $this->morphMany(Notification::class, 'notifiable')->latest();
     }
 
     public function reportsMade()

@@ -7,6 +7,7 @@ use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\CaregiverController;
 use App\Http\Controllers\DonationController;
 use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\FcmTokenController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\LiveKitWebhookController;
 use App\Http\Controllers\MagicLoginController;
@@ -321,3 +322,11 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 Route::get('/student/solved-quizzes', [StudentQuizController::class, 'getSolvedQuizzes'])->middleware('auth:sanctum');
+Route::middleware('auth:sanctum')->group(function () {
+    
+    Route::post('/fcm-token', [FcmTokenController::class, 'updateFcmToken']);
+    
+    Route::delete('/fcm-token', [FcmTokenController::class, 'logout']);
+    
+});
+Route::get('/notifications', [NotificationController::class, 'index'])->middleware('auth:sanctum'); 
