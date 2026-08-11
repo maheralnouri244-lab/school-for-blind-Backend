@@ -1,6 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
+  <div id="splash-screen">
+    <img src="{{ asset('images/WHITE2.png') }}" alt="SESB Light" class="splash-logo logo-light">
+    <img src="{{ asset('images/DARK2.png') }}" alt="SESB Dark" class="splash-logo logo-dark">
+  </div>
+
+  <div class="container-fluid p-0"></div>
   <div class="container-fluid p-0">
 
     <div class="row g-4 mb-4">
@@ -313,6 +319,17 @@
 
 @push('scripts')
   <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      setTimeout(function () {
+        const splash = document.getElementById('splash-screen');
+        if (splash) {
+          splash.classList.add('hidden-splash');
+          setTimeout(() => {
+            splash.style.display = 'none';
+          }, 500);
+        }
+      }, 2000);
+    });
     Chart.defaults.color = '#9ca3af';
     Chart.defaults.borderColor = '#2d3748';
 

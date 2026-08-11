@@ -214,7 +214,7 @@ select option {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: var(--bg-main);
+    background-color: var(--bg-main); 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -222,38 +222,28 @@ select option {
     transition: opacity 0.5s ease, visibility 0.5s ease;
 }
 
-.loader-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+.splash-logo {
+    max-width: 300px;
+    height: auto;
+    animation: logo-pulse 2s infinite ease-in-out;
 }
 
-.loader-cell {
-    width: 30px;
-    height: 30px;
-    background-color: var(--accent-color);
-    border-radius: 4px;
-    animation: pulse 1.5s infinite ease-in-out;
+@keyframes logo-pulse {
+    0% { transform: scale(0.9); opacity: 0.8; }
+    50% { transform: scale(1.05); opacity: 1; }
+    100% { transform: scale(0.9); opacity: 0.8; }
 }
 
-.loader-cell:nth-child(1) { animation-delay: 0.1s; }
-.loader-cell:nth-child(2) { animation-delay: 0.2s; }
-.loader-cell:nth-child(3) { animation-delay: 0.3s; }
-.loader-cell:nth-child(4) { animation-delay: 0.4s; }
-.loader-cell:nth-child(5) { animation-delay: 0.5s; }
-.loader-cell:nth-child(6) { animation-delay: 0.6s; }
-.loader-cell:nth-child(7) { animation-delay: 0.7s; }
-.loader-cell:nth-child(8) { animation-delay: 0.8s; }
-.loader-cell:nth-child(9) { animation-delay: 0.9s; }
+.logo-dark { display: none; } 
+.logo-light { display: block; }
 
-@keyframes pulse {
-    0%, 100% { transform: scale(0.8); opacity: 0.5; }
-    50% { transform: scale(1); opacity: 1; }
-}
+[data-theme="dark"] .logo-light { display: none; }
+[data-theme="dark"] .logo-dark { display: block; }
 
 .hidden-splash {
     opacity: 0;
     visibility: hidden;
+    pointer-events: none;
 }
 
 .dimmed {
