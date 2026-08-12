@@ -46,7 +46,7 @@ class FinancialDashboardController extends Controller
                 continue;
             }
 
-            $subjectPivot = $teacher->subjects->where('id', $room->subject_id)->first();
+            $subjectPivot = $teacher->subjects()->get()->where('id', $room->subject_id)->first();
             $priceForLesson = $subjectPivot ? $subjectPivot->pivot->price_for_lesson : 0;
 
             $calculatedSalary += $priceForLesson;
