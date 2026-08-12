@@ -2,8 +2,8 @@
 
 @section('content')
   <div id="splash-screen">
-    <img src="{{ asset('images/WHITE2.png') }}" alt="SESB Light" class="splash-logo logo-light">
-    <img src="{{ asset('images/DARK2.png') }}" alt="SESB Dark" class="splash-logo logo-dark">
+    <img src="{{ asset('img/logo-light.png') }}" alt="SESB Light" class="splash-logo logo-light">
+    <img src="{{ asset('img/logo-dark.png') }}" alt="SESB Dark" class="splash-logo logo-dark">
   </div>
 
   <div class="container-fluid p-0"></div>
@@ -11,11 +11,9 @@
 
     <div class="row g-4 mb-4">
 
-      {{-- 1. مركز تحكم الطلاب (Students Hub) --}}
       <div class="col-lg-4">
         <div class="custom-card h-100 d-flex flex-column justify-content-between">
 
-          {{-- القسم العلوي: الإحصائية --}}
           <div class="d-flex justify-content-between align-items-start mb-4">
             <div>
               <p class="text-muted mb-1 fs-6 fw-bold">إجمالي الطلاب المسجلين</p>
@@ -27,10 +25,9 @@
             </div>
           </div>
 
-          {{-- القسم السفلي: أزرار التحكم الأفقية (تم تعديل زر الطلبات للأزرق والنص لـ طلبات الانضمام) --}}
           <div class="d-flex align-items-center gap-2 mt-auto pt-3 border-top"
             style="border-color: var(--border-color) !important;">
-            {{-- زر إدارة الكل (ثانوي متناسق مع الكرت) --}}
+
             <a href="{{ route('dashboard.users.index', ['type' => 'student']) }}"
               class="btn flex-grow-1 py-2 px-3 fw-bold d-flex align-items-center justify-content-center gap-2 transition-all"
               style="background-color: var(--bg-main); color: var(--text-main); border: 1px solid var(--border-color); border-radius: 10px; font-size: 0.9rem;">
@@ -38,7 +35,6 @@
               <span>إدارة الطلاب</span>
             </a>
 
-            {{-- زر طلبات الانضمام (بارز وعصري بلون أساسي متناسق) --}}
             <a href="{{ route('dashboard.users.index', ['type' => 'student', 'status' => 'pending']) }}"
               class="btn flex-grow-1 py-2 px-3 fw-bold d-flex align-items-center justify-content-center gap-2 transition-all shadow-sm"
               style="background-color: #3b82f6; color: #ffffff; border: none; border-radius: 10px; font-size: 0.9rem;">
@@ -54,11 +50,9 @@
         </div>
       </div>
 
-      {{-- 2. matrix تحكم المعلمين (Teachers Hub) --}}
       <div class="col-lg-4">
         <div class="custom-card h-100 d-flex flex-column justify-content-between">
 
-          {{-- القسم العلوي: الإحصائية --}}
           <div class="d-flex justify-content-between align-items-start mb-4">
             <div>
               <p class="text-muted mb-1 fs-6 fw-bold">إجمالي المعلمين المسجلين</p>
@@ -70,10 +64,9 @@
             </div>
           </div>
 
-          {{-- القسم السفلي: أزرار التحكم الأفقية جنب بعض --}}
           <div class="d-flex align-items-center gap-2 mt-auto pt-3 border-top"
             style="border-color: var(--border-color) !important;">
-            {{-- زر إدارة الكل (ثانوي متناسق مع الكرت) --}}
+
             <a href="{{ route('dashboard.users.index', ['type' => 'teacher']) }}"
               class="btn flex-grow-1 py-2 px-3 fw-bold d-flex align-items-center justify-content-center gap-2 transition-all"
               style="background-color: var(--bg-main); color: var(--text-main); border: 1px solid var(--border-color); border-radius: 10px; font-size: 0.9rem;">
@@ -81,7 +74,6 @@
               <span>إدارة المعلمين</span>
             </a>
 
-            {{-- زر طلبات الانضمام (بارز بلون أخضر زمردي هادئ ومريح للعين) --}}
             <a href="{{ route('dashboard.users.index', ['type' => 'teacher', 'status' => 'pending']) }}"
               class="btn flex-grow-1 py-2 px-3 fw-bold d-flex align-items-center justify-content-center gap-2 transition-all shadow-sm"
               style="background-color: #84cc16; color: #ffffff; border: none; border-radius: 10px; font-size: 0.9rem;">
@@ -97,7 +89,6 @@
         </div>
       </div>
 
-      {{-- 3. قسم مراقب المحتوى (Control Hub) بارتفاع كامل ومحاذاة مثالية --}}
       <div class="col-lg-4">
         <a href="{{ route('content.monitor') }}" class="text-decoration-none d-block h-100">
           <div class="custom-card h-100 shadow-sm-hover" style="transition: transform 0.2s; cursor: pointer;">
@@ -110,7 +101,6 @@
             </div>
 
             <ul class="list-unstyled d-flex flex-column gap-3 mb-0">
-              {{-- 1. البلاغات: تدرج من الرمادي للفسفوري --}}
               <li class="d-flex align-items-center justify-content-between p-2 rounded shadow-sm-hover"
                 style="transition: all 0.2s;">
                 <div class="d-flex align-items-center">
@@ -121,7 +111,6 @@
                 <i class="fa-solid fa-chevron-left text-muted fs-6"></i>
               </li>
 
-              {{-- 2. مشاكل تقنية: تدرج من الرمادي للأزرق --}}
               <li class="d-flex align-items-center justify-content-between p-2 rounded shadow-sm-hover"
                 style="transition: all 0.2s;">
                 <div class="d-flex align-items-center">
@@ -132,7 +121,6 @@
                 <i class="fa-solid fa-chevron-left text-muted fs-6"></i>
               </li>
 
-              {{-- 3. المحتوى: تدرج من الرمادي للفسفوري --}}
               <li class="d-flex align-items-center justify-content-between p-2 rounded shadow-sm-hover"
                 style="transition: all 0.2s;">
                 <div class="d-flex align-items-center">
@@ -143,7 +131,6 @@
                 <i class="fa-solid fa-chevron-left text-muted fs-6"></i>
               </li>
 
-              {{-- 4. المحادثات: تدرج من الرمادي للأزرق --}}
               <li class="d-flex align-items-center justify-content-between p-2 rounded shadow-sm-hover"
                 style="transition: all 0.2s;">
                 <div class="d-flex align-items-center">
@@ -189,20 +176,21 @@
             </a>
           </div>
 
-          <div class="table-responsive">
+          <div class="table-responsive"
+            style="border-radius: 16px; border: 1px solid var(--border-color); overflow: hidden;">
             <table class="table table-hover-custom align-middle mb-0" style="color: var(--text-main);">
               <thead>
                 <tr style="border-bottom: 2px solid var(--border-color);">
-                  <th scope="col" class="pb-3 text-muted fw-normal">الأنشطة</th>
-                  <th scope="col" class="pb-3 text-muted fw-normal">القسم</th>
-                  <th scope="col" class="pb-3 text-muted fw-normal">الحالة</th>
-                  <th scope="col" class="pb-3 text-muted fw-normal text-start">التاريخ</th>
+                  <th scope="col" class="pb-3 text-muted fw-normal text-end px-3">الأنشطة</th>
+                  <th scope="col" class="pb-3 text-muted fw-normal text-end px-3">القسم</th>
+                  <th scope="col" class="pb-3 text-muted fw-normal text-end px-3">الحالة</th>
+                  <th scope="col" class="pb-3 text-muted fw-normal text-start px-3">التاريخ</th>
                 </tr>
               </thead>
               <tbody>
                 @forelse($activities as $log)
                   <tr style="border-bottom: 1px solid var(--border-color);">
-                    <td class="py-3">
+                    <td class="py-3 px-3">
                       <div class="d-flex align-items-center">
                         <div class="rounded-circle p-2 me-2 d-flex align-items-center justify-content-center"
                           style="width: 35px; height: 35px; background-color: var(--bg-main);">
@@ -216,18 +204,14 @@
                             <i class="fa-solid fa-file-signature text-info fs-6"></i>
                           @endif
                         </div>
-                        {{-- <span>
-                          {{ $log->getExtraProperty('custom_info.lesson_name') ?? 'تحديث على بيانات ' .
-                          class_basename($log->subject_type) }}
-                        </span> --}}
                       </div>
                     </td>
 
-                    <td class="py-3 text-muted">
+                    <td class="py-3 text-muted px-3">
                       {{ class_basename($log->subject_type) }}
                     </td>
 
-                    <td class="py-3">
+                    <td class="py-3 px-3">
                       @php
                         $eventColors = ['created' => 'success', 'updated' => 'warning', 'deleted' => 'danger'];
                         $eventNames = ['created' => 'إنشاء', 'updated' => 'تعديل', 'deleted' => 'حذف'];
@@ -239,23 +223,14 @@
                       </span>
                     </td>
 
-                    <td class="py-3 text-muted text-start">
-                      {{-- ضفنا div وجمعنا فيه الـ flex بدال ما نخليه على الـ td --}}
+                    <td class="py-3 text-muted text-start px-3">
                       <div class="d-flex justify-content-between align-items-center">
                         <span>{{ $log->created_at->format('Y-m-d') }}</span>
-
-                        {{-- زر التفاصيل
                         <button type="button" class="btn btn-sm btn-outline-secondary ms-2" data-bs-toggle="modal"
                           data-bs-target="#logModal{{ $log->id }}">
                           <i class="fa-solid fa-eye"></i>
                         </button>
                       </div>
-                    </td> --}}
-
-                    <button type="button" class="btn btn-sm btn-outline-secondary ms-2" data-bs-toggle="modal"
-                      data-bs-target="#logModal{{ $log->id }}">
-                      <i class="fa-solid fa-eye"></i>
-                    </button>
                     </td>
                   </tr>
 
