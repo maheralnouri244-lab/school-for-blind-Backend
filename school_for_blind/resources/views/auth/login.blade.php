@@ -4,68 +4,114 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title> SESB - تسجيل الدخول</title>
+  <title>SESB - تسجيل الدخول</title>
   <style>
-    /* --- DESIGN SYSTEM & CSS VARIABLES --- */
     :root {
-      /* Light Mode Palette */
-      --bg-color: #F3F6F9;
-      --card-bg: #FFFFFF;
-      --text-primary: #1F2937;
-      --text-secondary: #6B7280;
-      --border-color: #E5E7EB;
-
-      /* Accessibility Accents */
-      --primary-accent: #2563EB;
-      /* Solid blue for buttons */
-      --focus-ring: 0 0 0 4px rgba(37, 99, 235, 0.5);
-      --success-green: #22C55E;
-      /* Vibrant logo green */
-
-      /* Sizing & Radius */
+      --bg-main: #f3f4f6;
+      --bg-card: #ffffff;
+      --border-color: #e5e7eb;
+      --text-main: #1f2937;
+      --text-muted: #6b7280;
+      --accent-color: #3b82f6;
+      --focus-ring: 0 0 0 4px rgba(59, 130, 246, 0.5);
       --radius-md: 8px;
       --radius-lg: 12px;
       --shadow-card: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-      --transition: all 0.2s ease-in-out;
+      --transition: all 0.3s ease-in-out;
     }
 
-    /* --- DARK MODE PALETTE --- */
-    .dark-mode {
-      --bg-color: #111827;
-      /* Deep Navy */
-      --card-bg: #1F2937;
-      /* Slightly lighter slate */
-      --text-primary: #FFFFFF;
-      --text-secondary: #9CA3AF;
-      --border-color: #374151;
-
-      --primary-accent: #3B82F6;
-      /* Brighter blue for contrast */
-      --focus-ring: 0 0 0 4px rgba(59, 130, 246, 0.6);
-
+    [data-theme="dark"] {
+      --bg-main: #0b1120;
+      --bg-card: #151c2c;
+      --border-color: #2d3748;
+      --text-main: #ffffff;
+      --text-muted: #9ca3af;
+      --accent-color: #84cc16;
+      --focus-ring: 0 0 0 4px rgba(132, 204, 22, 0.5);
       --shadow-card: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
     }
 
-    /* --- BASE STYLES --- */
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: system-ui, -apple-system, sans-serif;
+      font-family: 'Amiri', system-ui, -apple-system, sans-serif;
     }
 
     body {
-      background-color: var(--bg-color);
-      color: var(--text-primary);
+      background-color: var(--bg-main);
+      color: var(--text-main);
       display: flex;
       align-items: center;
       justify-content: center;
       min-height: 100vh;
       padding: 20px;
-      transition: var(--transition);
+      transition: background-color 0.3s ease, color 0.3s ease;
+      position: relative;
+      overflow: hidden;
     }
 
-    /* --- ACCESSIBILITY HELPER --- */
+    .watermark-container {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(1);
+      width: 100%;
+      max-width: 600px;
+      opacity: 0.03;
+      z-index: -1;
+      pointer-events: none;
+      transition: opacity 1s ease, transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .watermark-container.active {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(0.5);
+      z-index: 9998;
+    }
+
+    .watermark-logo {
+      width: 100%;
+      height: auto;
+    }
+
+    .logo-dark {
+      display: none;
+    }
+
+    .logo-light {
+      display: block;
+    }
+
+    [data-theme="dark"] .logo-light {
+      display: none;
+    }
+
+    [data-theme="dark"] .logo-dark {
+      display: block;
+    }
+
+    #splash-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: var(--bg-main);
+      opacity: 0;
+      visibility: hidden;
+      z-index: 9997;
+      transition: opacity 0.5s ease;
+    }
+
+    #splash-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
     .sr-only {
       position: absolute;
       width: 1px;
@@ -78,53 +124,46 @@
       border-width: 0;
     }
 
-    /* --- LOGIN CONTAINER --- */
     .login-card {
-      background-color: var(--card-bg);
+      background-color: var(--bg-card);
       padding: 40px;
+      border: 1px solid var(--border-color);
       border-radius: var(--radius-lg);
       box-shadow: var(--shadow-card);
       width: 100%;
       max-width: 480px;
       transition: var(--transition);
       text-align: center;
+      position: relative;
+      z-index: 10;
     }
 
-    /* --- LOGO & HEADER --- */
+    .login-card.fade-out {
+      opacity: 0;
+      transform: translateY(20px);
+      pointer-events: none;
+    }
+
     .brand-header {
       margin-bottom: 30px;
-    }
-
-    .logo-placeholder {
-      width: 80px;
-      height: 80px;
-      background-color: var(--success-green);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 40px;
-      color: white;
-      margin: 0 auto 15px;
     }
 
     .main-heading {
       font-size: 28px;
       font-weight: 800;
       margin-bottom: 8px;
+      color: var(--text-main);
     }
 
     .sub-heading {
       font-size: 16px;
-      color: var(--text-secondary);
+      color: var(--text-muted);
       margin-bottom: 30px;
     }
 
-    /* --- FORM STYLES --- */
     .form-group {
       margin-bottom: 20px;
       text-align: right;
-      /* Consistent RTL */
     }
 
     .form-label {
@@ -132,7 +171,7 @@
       font-weight: 600;
       font-size: 14px;
       margin-bottom: 8px;
-      color: var(--text-primary);
+      color: var(--text-main);
     }
 
     .input-wrapper {
@@ -143,32 +182,29 @@
       width: 100%;
       padding: 14px 16px;
       font-size: 16px;
-      border: 2px solid var(--border-color);
+      border: 1px solid var(--border-color);
       border-radius: var(--radius-md);
-      background-color: var(--card-bg);
-      color: var(--text-primary);
+      background-color: var(--bg-main);
+      color: var(--text-main);
       transition: var(--transition);
     }
 
-    /* CRUCIAL: Accessible Focus States */
     .form-input:focus {
       outline: none;
-      border-color: var(--primary-accent);
+      border-color: var(--accent-color);
       box-shadow: var(--focus-ring);
     }
 
-    /* Large input size for touch/low-vision */
     .form-input::placeholder {
-      color: var(--text-secondary);
-      opacity: 0.7;
+      color: var(--text-muted);
+      opacity: 0.8;
     }
 
-    /* --- BUTTONS --- */
     .submit-btn {
       width: 100%;
       padding: 16px;
-      background-color: var(--primary-accent);
-      color: white;
+      background-color: var(--accent-color);
+      color: #ffffff;
       border: none;
       border-radius: var(--radius-md);
       font-size: 18px;
@@ -182,30 +218,29 @@
       opacity: 0.9;
     }
 
-    /* Accessible Focus State for Button */
     .submit-btn:focus {
       outline: none;
       box-shadow: var(--focus-ring);
     }
 
-    /* --- MODE TOGGLE (Fixed Top Right) --- */
     .theme-switch-wrapper {
       position: fixed;
       top: 20px;
       left: 20px;
-      /* Adjusted for RTL layout comfort */
       display: flex;
       align-items: center;
       gap: 10px;
-      background: var(--card-bg);
+      background: var(--bg-card);
       padding: 10px 15px;
+      border: 1px solid var(--border-color);
       border-radius: 50px;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      z-index: 20;
     }
 
     .theme-label {
       font-size: 14px;
-      color: var(--text-secondary);
+      color: var(--text-muted);
     }
 
     .theme-switch {
@@ -228,7 +263,7 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background-color: #ccc;
+      background-color: var(--border-color);
       transition: .4s;
       border-radius: 34px;
     }
@@ -246,7 +281,7 @@
     }
 
     input:checked+.slider {
-      background-color: var(--primary-accent);
+      background-color: var(--accent-color);
     }
 
     input:focus+.slider {
@@ -280,7 +315,7 @@
       transform: translateY(-50%);
       background: none;
       border: none;
-      color: var(--text-secondary);
+      color: var(--text-muted);
       cursor: pointer;
       padding: 4px;
       display: flex;
@@ -290,7 +325,7 @@
     }
 
     .password-toggle-btn:hover {
-      color: var(--primary-accent);
+      color: var(--accent-color);
     }
 
     .password-input-padded {
@@ -301,8 +336,14 @@
 
 <body>
 
-  <main>
+  <div class="watermark-container" id="watermark">
+    <img src="{{ asset('img/logo-light.png') }}" alt="Watermark Light" class="watermark-logo logo-light">
+    <img src="{{ asset('img/logo-dark.png') }}" alt="Watermark Dark" class="watermark-logo logo-dark">
+  </div>
 
+  <div id="splash-overlay"></div>
+
+  <main>
     <div class="theme-switch-wrapper">
       <span class="theme-label" id="theme-status">الوضع الفاتح</span>
       <label class="theme-switch" for="checkbox">
@@ -312,21 +353,18 @@
       </label>
     </div>
 
-    <section class="login-card" aria-labelledby="login-heading">
-
+    <section class="login-card" id="loginCard" aria-labelledby="login-heading">
       <div class="brand-header">
-        <div class="logo-placeholder" aria-hidden="true">😊</div>
-
         <h1 id="login-heading" class="main-heading">تسجيل الدخول</h1>
         <p class="sub-heading">مرحباً بك في لوحة قيادة مدرسة SESB</p>
       </div>
 
-      <form action="{{ route('dashboard.login') }}" method="POST">
+      <form id="loginForm" action="{{ route('dashboard.login') }}" method="POST">
         @csrf
 
         @if ($errors->any())
           <div
-            style="background-color: #FEE2E2; color: #DC2626; padding: 12px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #FECACA; text-align: right;">
+            style="background-color: rgba(220, 38, 38, 0.1); color: #dc2626; padding: 12px; border-radius: 8px; margin-bottom: 20px; border: 1px solid rgba(220, 38, 38, 0.2); text-align: right;">
             <ul style="list-style: none; margin: 0; padding: 0;">
               @foreach ($errors->all() as $error)
                 <li>⚠️ {{ $error }}</li>
@@ -348,7 +386,6 @@
           <div class="input-wrapper">
             <input type="password" id="password" name="password" class="form-input password-input-padded"
               placeholder="ادخل كلمة المرور" required>
-
             <button type="button" id="togglePasswordBtn" class="password-toggle-btn" aria-label="إظهار كلمة المرور">
               <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -378,9 +415,8 @@
     const currentTheme = localStorage.getItem('theme');
 
     if (currentTheme) {
-      document.documentElement.classList.add(currentTheme);
-
-      if (currentTheme === 'dark-mode') {
+      document.documentElement.setAttribute('data-theme', currentTheme);
+      if (currentTheme === 'dark') {
         toggleSwitch.checked = true;
         themeStatus.textContent = "الوضع الداكن";
       }
@@ -388,12 +424,12 @@
 
     function switchTheme(e) {
       if (e.target.checked) {
-        document.documentElement.classList.add('dark-mode');
-        localStorage.setItem('theme', 'dark-mode');
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
         themeStatus.textContent = "الوضع الداكن";
       } else {
-        document.documentElement.classList.remove('dark-mode');
-        localStorage.setItem('theme', 'light-mode');
+        document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'light');
         themeStatus.textContent = "الوضع الفاتح";
       }
     }
@@ -407,7 +443,6 @@
 
     togglePasswordBtn.addEventListener('click', function () {
       const isPassword = passwordInput.getAttribute('type') === 'password';
-
       passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
 
       if (isPassword) {
@@ -416,6 +451,28 @@
       } else {
         eyeIcon.style.display = 'block';
         eyeSlashIcon.style.display = 'none';
+      }
+    });
+
+    const loginForm = document.getElementById('loginForm');
+    const watermark = document.getElementById('watermark');
+    const splashOverlay = document.getElementById('splash-overlay');
+    const loginCard = document.getElementById('loginCard');
+
+    loginForm.addEventListener('submit', function (e) {
+      const usernameVal = document.getElementById('username').value.trim();
+      const passwordVal = document.getElementById('password').value.trim();
+
+      if (usernameVal && passwordVal) {
+        e.preventDefault();
+
+        loginCard.classList.add('fade-out');
+        splashOverlay.classList.add('active');
+        watermark.classList.add('active');
+
+        setTimeout(() => {
+          loginForm.submit();
+        }, 1500);
       }
     });
   </script>

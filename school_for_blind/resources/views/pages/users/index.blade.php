@@ -8,17 +8,17 @@
       </div>
     </div>
 
-    <div class="custom-card mb-4">
+    <div class="custom-card mb-4 shadow-sm" style="border-radius: 16px;">
       <div class="row g-3">
         <div class="col-md-2">
-          <select id="filter-type" class="form-select search-input">
+          <select id="filter-type" class="form-select search-input py-2">
             <option value="student">الطلاب</option>
             <option value="teacher">المعلمين</option>
             <option value="caregiver">أولياء الأمور</option>
           </select>
         </div>
         <div class="col-md-2">
-          <select id="filter-status" class="form-select search-input">
+          <select id="filter-status" class="form-select search-input py-2">
             <option value="">كل الحالات</option>
             <option value="pending">قيد الانتظار</option>
             <option value="approved">مقبول</option>
@@ -26,14 +26,14 @@
           </select>
         </div>
         <div class="col-md-2">
-          <select id="filter-level" class="form-select search-input">
+          <select id="filter-level" class="form-select search-input py-2">
             <option value="">كل المستويات</option>
             <option value="ninth">التاسع</option>
             <option value="twelfth">البكالوريا</option>
           </select>
         </div>
         <div class="col-md-3">
-          <select id="filter-class" class="form-select search-input">
+          <select id="filter-class" class="form-select search-input py-2">
             <option value="">كل الشعب</option>
             @foreach($classes as $class)
               <option value="{{ $class->id }}">
@@ -43,12 +43,19 @@
           </select>
         </div>
         <div class="col-md-3">
-          <input type="text" id="filter-search" class="form-control search-input" placeholder="بحث بالاسم أو الرقم...">
+          <div class="input-group">
+            <span class="input-group-text border-0"
+              style="background-color: var(--bg-main); color: var(--text-muted); border-radius: 0 8px 8px 0;">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </span>
+            <input type="text" id="filter-search" class="form-control search-input py-2 border-start-0"
+              placeholder="بحث بالاسم أو الرقم..." style="border-radius: 8px 0 0 8px;">
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="custom-card">
+    <div class="custom-card shadow-sm" style="border-radius: 16px; overflow: hidden;">
       <div id="table-container">
         <div class="text-center py-5">
           <i class="fa-solid fa-circle-notch fa-spin fs-1 text-muted"></i>
@@ -60,36 +67,38 @@
 
   <div class="modal fade" id="dynamicDetailsModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
-      <div class="modal-content glass-modal" style="border: 1px solid var(--border-color); color: var(--text-main);">
+      <div class="modal-content glass-modal border-0 shadow-lg">
         <div class="modal-header border-0 p-4">
           <h4 class="fw-bold mb-0" id="modal-user-name" style="color: var(--text-main);"></h4>
           <button type="button" class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body p-4 text-end" dir="rtl">
           <div id="modal-body-content"></div>
-          <div id="student-action-container" class="mt-4 pt-3 border-top d-none">
-            <label class="form-label fw-bold">حدد الشعبة:</label>
-            <select id="modal_class_id" class="form-select search-input"></select>
+          <div id="student-action-container" class="mt-4 pt-3 border-top d-none"
+            style="border-color: var(--border-color) !important;">
+            <label class="form-label fw-bold mb-2 text-muted">حدد الشعبة:</label>
+            <select id="modal_class_id" class="form-select search-input py-2"></select>
           </div>
         </div>
         <div class="modal-footer border-0 p-4 d-none" id="modal-footer-actions">
-          <div class="d-flex gap-2 w-100 text-end" dir="rtl">
-            <button id="btn-approve" class="btn btn-success flex-grow-1 py-3 fw-bold d-none">تأكيد القبول</button>
-            <a id="btn-teacher-setup" href="#" class="btn btn-primary flex-grow-1 py-3 fw-bold d-none">إعداد بيانات المعلم
-              وقبوله</a>
-            <button id="btn-reject" class="btn btn-danger flex-grow-1 py-3 fw-bold d-none">رفض نهائي</button>
+          <div class="d-flex gap-3 w-100 text-end" dir="rtl">
+            <button id="btn-approve" class="btn btn-accept flex-grow-1 py-3 shadow-sm d-none rounded-3">تأكيد
+              القبول</button>
+            <a id="btn-teacher-setup" href="#"
+              class="btn btn-primary flex-grow-1 py-3 shadow-sm fw-bold d-none rounded-3">إعداد بيانات المعلم وقبوله</a>
+            <button id="btn-reject" class="btn btn-reject flex-grow-1 py-3 shadow-sm d-none rounded-3">رفض نهائي</button>
           </div>
         </div>
       </div>
     </div>
   </div>
+
   <div class="modal fade" id="userPunishmentsModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
-      <div class="modal-content glass-modal text-end" dir="rtl"
-        style="border: 1px solid var(--border-color); color: var(--text-main);">
-        <div class="modal-header border-0 p-4">
-          <h5 class="fw-bold mb-0 text-danger"><i class="fa-solid fa-triangle-exclamation me-2"></i>سجل عقوبات المستخدم
-          </h5>
+      <div class="modal-content glass-modal border-0 shadow-lg text-end" dir="rtl">
+        <div class="modal-header border-bottom p-4" style="border-color: var(--border-color) !important;">
+          <h5 class="fw-bold mb-0" style="color: var(--danger-color);"><i
+              class="fa-solid fa-triangle-exclamation me-2"></i>سجل العقوبات</h5>
           <button type="button" class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body p-4" id="punishments-modal-body">
@@ -101,63 +110,63 @@
 
   <div class="modal fade" id="editStudentModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content glass-modal text-end" dir="rtl"
-        style="border: 1px solid var(--border-color); color: var(--text-main);">
-        <div class="modal-header border-0 p-4">
-          <h5 class="fw-bold mb-0">تعديل بيانات الطالب</h5>
+      <div class="modal-content glass-modal border-0 shadow-lg text-end" dir="rtl">
+        <div class="modal-header border-bottom p-4" style="border-color: var(--border-color) !important;">
+          <h5 class="fw-bold mb-0 text-main">تعديل بيانات الطالب</h5>
           <button type="button" class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body p-4">
           <form id="editStudentForm">
             <input type="hidden" id="edit_student_id">
             <div class="mb-3">
-              <label class="form-label">الاسم الكامل</label>
+              <label class="form-label text-muted fw-bold">الاسم الكامل</label>
               <input type="text" id="edit_fullname" class="form-control search-input" required>
             </div>
             <div class="mb-3">
-              <label class="form-label">اسم الأب</label>
+              <label class="form-label text-muted fw-bold">اسم الأب</label>
               <input type="text" id="edit_fathersname" class="form-control search-input">
             </div>
             <div class="mb-3">
-              <label class="form-label">رقم الهاتف</label>
-              <input type="text" id="edit_phone" class="form-control search-input" dir="ltr" required>
+              <label class="form-label text-muted fw-bold">رقم الهاتف</label>
+              <input type="text" id="edit_phone" class="form-control search-input text-end" dir="ltr" required>
             </div>
             <div class="mb-3">
-              <label class="form-label">رقم ولي الأمر</label>
-              <input type="text" id="edit_parent_phone" class="form-control search-input" dir="ltr" required>
+              <label class="form-label text-muted fw-bold">رقم ولي الأمر</label>
+              <input type="text" id="edit_parent_phone" class="form-control search-input text-end" dir="ltr" required>
             </div>
             <div class="mb-3">
-              <label class="form-label">المستوى</label>
+              <label class="form-label text-muted fw-bold">المستوى</label>
               <select id="edit_level" class="form-select search-input">
                 <option value="ninth">تاسع</option>
                 <option value="twelfth">بكالوريا</option>
               </select>
             </div>
-            <div class="mb-3">
-              <label class="form-label">الشعبة</label>
+            <div class="mb-4">
+              <label class="form-label text-muted fw-bold">الشعبة</label>
               <select id="edit_class_id" class="form-select search-input">
                 <option value="">-- اختر الشعبة --</option>
               </select>
-              <button type="submit" class="btn btn-primary w-100 py-2 fw-bold">حفظ التعديلات</button>
+            </div>
+            <button type="submit" class="btn btn-primary w-100 py-3 fw-bold rounded-3 shadow-sm">حفظ التعديلات</button>
           </form>
         </div>
       </div>
     </div>
   </div>
-  <!-- المودال الجديد لفرض العقوبات -->
+
   <div class="modal fade" id="newPunishmentModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered text-end" dir="rtl">
-      <div class="modal-content glass-modal border-0 shadow-lg" style="border-radius: 16px;">
-        <div class="modal-header border-bottom pb-3" style="border-color: var(--border-color) !important;">
-          <div class="d-flex align-items-center gap-2">
+      <div class="modal-content glass-modal border-0 shadow-lg">
+        <div class="modal-header border-bottom p-4" style="border-color: var(--border-color) !important;">
+          <div class="d-flex align-items-center gap-3">
             <div class="p-2 rounded-circle bg-soft-danger d-flex align-items-center justify-content-center"
-              style="width: 40px; height: 40px;">
-              <i class="fa-solid fa-gavel text-danger fs-5"></i>
+              style="width: 45px; height: 45px;">
+              <i class="fa-solid fa-gavel fs-5" style="color: var(--danger-color);"></i>
             </div>
             <div>
-              <h5 class="modal-title fw-bold mb-0" style="color: var(--text-main);">فرض إجراء إداري</h5>
-              <small class="text-muted">المستخدم: <span id="new_user_name_display"
-                  class="fw-bold text-danger"></span></small>
+              <h5 class="modal-title fw-bold mb-1" style="color: var(--text-main);">فرض إجراء إداري</h5>
+              <small class="text-muted">المستخدم: <span id="new_user_name_display" class="fw-bold"
+                  style="color: var(--danger-color);"></span></small>
             </div>
           </div>
           <button type="button" class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -168,22 +177,20 @@
           <input type="hidden" name="punishable_id" id="new_punishable_id">
           <input type="hidden" name="punishable_type" id="new_punishable_type">
 
-          <div class="modal-body py-4">
-            <div class="mb-3">
+          <div class="modal-body p-4">
+            <div class="mb-2">
               <label class="form-label text-muted fw-bold mb-2">اختر الإجراء / العقوبة المناسبة:</label>
-              {{-- تم استخدام كلاس search-input من ملفك لتصميم الحقل --}}
-              <select name="punishment_id" id="new_punishment_select" class="form-select search-input" required>
+              <select name="punishment_id" id="new_punishment_select" class="form-select search-input py-2" required>
                 <option value="" disabled selected>جاري تحميل العقوبات...</option>
               </select>
             </div>
           </div>
 
-          <div class="modal-footer border-top pt-3 d-flex justify-content-between"
+          <div class="modal-footer border-top p-4 d-flex justify-content-between"
             style="border-color: var(--border-color) !important;">
-            <button type="button" class="btn btn-secondary px-4 fw-bold" data-bs-dismiss="modal"
-              style="border-radius: 8px;">إلغاء</button>
-            <button type="submit" class="btn btn-danger px-4 fw-bold d-flex align-items-center gap-2"
-              style="border-radius: 8px;">
+            <button type="button" class="btn btn-outline-custom px-4 py-2 fw-bold" data-bs-dismiss="modal">إلغاء</button>
+            <button type="submit"
+              class="btn btn-reject px-4 py-2 fw-bold d-flex align-items-center gap-2 rounded-3 shadow-sm">
               <i class="fa-solid fa-check"></i>
               <span>تأكيد فرض العقوبة</span>
             </button>
@@ -387,7 +394,6 @@
         });
     };
 
-    // كود تقديم فورم التعديل (Submit Form)
     document.getElementById('editStudentForm').addEventListener('submit', function (e) {
       e.preventDefault();
       const id = document.getElementById('edit_student_id').value;
@@ -419,7 +425,6 @@
         });
     });
 
-    // دالة لجلب الشعب حسب المستوى وتحديد الشعبة الحالية للطالب
     function fetchClassesForEditModal(level, selectedClassId = null) {
       const classSelect = document.getElementById('edit_class_id');
       classSelect.innerHTML = '<option value="">جاري التحميل...</option>';
@@ -441,7 +446,6 @@
         });
     }
 
-    // مراقبة تغيير المستوى في فورم التعديل لجلب الشعب الجديدة
     document.getElementById('edit_level').addEventListener('change', function () {
       fetchClassesForEditModal(this.value);
     });
@@ -501,21 +505,20 @@
         .then(response => {
           if (response.success) {
             bootstrap.Modal.getInstance(document.getElementById('editStudentModal')).hide();
-            document.getElementById('filter-type').dispatchEvent(new Event('change')); // تحديث الجدول فوراً
+            document.getElementById('filter-type').dispatchEvent(new Event('change'));
           } else {
             alert('حدث خطأ أثناء حفظ التعديلات!');
           }
         });
     });
+
     window.openNewPunishmentModal = function (button) {
       event.stopPropagation();
-      // 1. استخراج البيانات من الزر نفسه بكل نظافة وسهولة
       const userId = button.getAttribute('data-user-id');
       const userModel = button.getAttribute('data-user-model');
       const targetType = button.getAttribute('data-target-type');
       const userName = button.getAttribute('data-user-name');
 
-      // 2. تعبئة البيانات في المودال
       document.getElementById('new_punishable_id').value = userId;
       document.getElementById('new_punishable_type').value = userModel;
       document.getElementById('new_user_name_display').textContent = userName;
@@ -523,13 +526,11 @@
       const selectElem = document.getElementById('new_punishment_select');
       selectElem.innerHTML = '<option value="" disabled selected>جاري تحميل العقوبات...</option>';
 
-      // 3. إظهار المودال للمستخدم فوراً لتجربة استخدام أسرع
       const modalElement = document.getElementById('newPunishmentModal');
-      document.body.appendChild(modalElement); // حل جذري لمشكلة الـ Z-index
+      document.body.appendChild(modalElement);
       const modal = bootstrap.Modal.getOrCreateInstance(modalElement);
       modal.show();
 
-      // 4. جلب قائمة العقوبات من السيرفر وفلترتها
       fetch(`/punishments/api-types`, {
         headers: {
           'Accept': 'application/json',
@@ -540,7 +541,6 @@
         .then(data => {
           selectElem.innerHTML = '<option value="" disabled selected>-- اختر الإجراء المناسب --</option>';
 
-          // الفلترة الصحيحة بناءً على نوع المستخدم المستهدف أو "الكل"
           const filteredPunishments = data.filter(p => p.target_type === targetType || p.target_type === 'all');
 
           if (filteredPunishments.length === 0) {
@@ -556,7 +556,6 @@
         })
         .catch(error => {
           selectElem.innerHTML = '<option value="" disabled>حدث خطأ في تحميل البيانات</option>';
-          console.error("Error fetching punishments:", error);
         });
     };
   </script>
