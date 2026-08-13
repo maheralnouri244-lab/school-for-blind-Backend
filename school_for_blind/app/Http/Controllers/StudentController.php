@@ -116,7 +116,8 @@ class StudentController extends Controller
                     'message' => 'المستخدم غير موجود أو غير مصرح له.'
                 ], Response::HTTP_UNAUTHORIZED);
             }
-
+$student->timestamps = false;
+$student->update(['fcm_token' => null]);
             $student->currentAccessToken()->delete();
             return response()->json([
                 'success' => true,

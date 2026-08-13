@@ -55,4 +55,5 @@ class Caregiver extends Authenticatable
     {
         return $this->morphMany(Notification::class, 'notifiable')->latest();
     }
+    
 }
