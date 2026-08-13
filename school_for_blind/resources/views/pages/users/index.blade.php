@@ -390,10 +390,8 @@
       }
 
       const punModalElement = document.getElementById('userPunishmentsModal');
-      let punModal = bootstrap.Modal.getInstance(punModalElement);
-      if (!punModal) {
-        punModal = new bootstrap.Modal(punModalElement);
-      }
+      document.body.appendChild(punModalElement); // Fixes the Z-index freeze
+      const punModal = bootstrap.Modal.getOrCreateInstance(punModalElement);
 
       const body = document.getElementById('punishments-modal-body');
       body.innerHTML = '<div class="text-center py-4"><i class="fa-solid fa-circle-notch fa-spin fs-2 text-muted"></i></div>';
@@ -401,16 +399,24 @@
       punModal.show();
 
       fetch(`/dashboard/users/${type}/${id}/punishments`, {
-        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        headers: { 'X-Requested-With': 'XMLHttpRequest', 'Accept': 'application/json' }
       })
-        .then(res => res.json())
+        .then(res => {
+          if (res.status === 401 || res.status === 419) {
+            window.location.reload();
+            throw new Error('Expired');
+          }
+          return res.json();
+        })
         .then(data => {
           if (data.success) {
             body.innerHTML = data.html;
           }
         })
         .catch(error => {
-          body.innerHTML = '<div class="text-center py-4 text-danger">حدث خطأ أثناء جلب البيانات.</div>';
+          if (error.message !== 'Expired') {
+            body.innerHTML = '<div class="text-center py-4 text-danger">حدث خطأ أثناء جلب البيانات.</div>';
+          }
         });
     };
 
@@ -450,9 +456,15 @@
       classSelect.innerHTML = '<option value="">جاري التحميل...</option>';
 
       fetch(`/dashboard/users/fetch-data-by-level?level=${level}`, {
-        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        headers: { 'X-Requested-With': 'XMLHttpRequest', 'Accept': 'application/json' }
       })
-        .then(res => res.json())
+        .then(res => {
+          if (res.status === 401 || res.status === 419) {
+            window.location.reload();
+            throw new Error('Expired');
+          }
+          return res.json();
+        })
         .then(data => {
           classSelect.innerHTML = '<option value="">-- اختر الشعبة --</option>';
           if (data.classes && data.classes.length > 0) {
@@ -463,12 +475,11 @@
           } else {
             classSelect.innerHTML = '<option value="">لا يوجد شعب لهذا المستوى</option>';
           }
+        })
+        .catch(error => {
+          if (error.message !== 'Expired') console.error("Error fetching data:", error);
         });
     }
-
-    document.getElementById('edit_level').addEventListener('change', function () {
-      fetchClassesForEditModal(this.value);
-    });
 
     window.openEditStudentModal = function (button) {
       const detailsModalElement = document.getElementById('dynamicDetailsModal');
@@ -493,12 +504,14 @@
       fetchClassesForEditModal(level, classId);
 
       const editModalElement = document.getElementById('editStudentModal');
-      let editModal = bootstrap.Modal.getInstance(editModalElement);
-      if (!editModal) {
-        editModal = new bootstrap.Modal(editModalElement);
-      }
+      document.body.appendChild(editModalElement); // Fixes the Z-index freeze
+      const editModal = bootstrap.Modal.getOrCreateInstance(editModalElement);
       editModal.show();
     };
+
+    document.getElementById('edit_level').addEventListener('change', function () {
+      fetchClassesForEditModal(this.value);
+    });
 
     document.getElementById('editStudentForm').addEventListener('submit', function (e) {
       e.preventDefault();
@@ -517,18 +530,29 @@
         headers: {
           'Content-Type': 'application/json',
           'X-CSRF-TOKEN': '{{ csrf_token() }}',
-          'X-Requested-With': 'XMLHttpRequest'
+          'X-Requested-With': 'XMLHttpRequest',
+          'Accept': 'application/json'
         },
         body: JSON.stringify(data)
       })
-        .then(res => res.json())
+        .then(res => {
+          if (res.status === 401 || res.status === 419) {
+            window.location.reload();
+            throw new Error('Expired');
+          }
+          return res.json();
+        })
         .then(response => {
           if (response.success) {
             bootstrap.Modal.getInstance(document.getElementById('editStudentModal')).hide();
-            document.getElementById('filter-type').dispatchEvent(new Event('change'));
+            const applyBtn = document.getElementById('btn-apply-filters');
+            if (applyBtn) applyBtn.click();
           } else {
             alert('حدث خطأ أثناء حفظ التعديلات!');
           }
+        })
+        .catch(error => {
+          if (error.message !== 'Expired') alert('حدث خطأ أثناء حفظ التعديلات!');
         });
     });
 
