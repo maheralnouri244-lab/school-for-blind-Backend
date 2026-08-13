@@ -271,7 +271,10 @@
       activeUserId = id;
       activeUserType = type;
 
-      const modal = new bootstrap.Modal(document.getElementById('dynamicDetailsModal'));
+      const modalElement = document.getElementById('dynamicDetailsModal');
+      const modal = bootstrap.Modal.getOrCreateInstance(modalElement);
+      document.body.appendChild(modalElement);
+
       document.getElementById('modal-body-content').innerHTML = '<div class="text-center py-5"><i class="fa-solid fa-circle-notch fa-spin fs-1 text-muted"></i></div>';
       document.getElementById('student-action-container').classList.add('d-none');
       document.getElementById('modal-footer-actions').classList.add('d-none');
@@ -282,9 +285,18 @@
       modal.show();
 
       fetch(`/dashboard/users/${type}/${id}/details`, {
-        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest',
+          'Accept': 'application/json'
+        }
       })
-        .then(res => res.json())
+        .then(res => {
+          if (res.status === 401 || res.status === 419) {
+            window.location.reload();
+            throw new Error('Expired');
+          }
+          return res.json();
+        })
         .then(data => {
           document.getElementById('modal-user-name').innerText = data.name;
           document.getElementById('modal-body-content').innerHTML = data.html;
@@ -305,7 +317,10 @@
               classSelectModal.innerHTML = '<option value="">جاري التحميل...</option>';
 
               fetch(`/dashboard/users/fetch-data-by-level?level=${data.level}`, {
-                headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                headers: {
+                  'X-Requested-With': 'XMLHttpRequest',
+                  'Accept': 'application/json'
+                }
               })
                 .then(res => res.json())
                 .then(classData => {
@@ -319,6 +334,11 @@
               btnSetup.classList.remove('d-none');
               btnSetup.href = `/dashboard/users/teacher/${id}/setup`;
             }
+          }
+        })
+        .catch(error => {
+          if (error.message !== 'Expired') {
+            document.getElementById('modal-body-content').innerHTML = '<div class="text-center py-4 text-danger">حدث خطأ أثناء جلب البيانات.</div>';
           }
         });
     };
