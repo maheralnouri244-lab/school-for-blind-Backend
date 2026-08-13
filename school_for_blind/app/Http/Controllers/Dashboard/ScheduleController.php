@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Events\SchedulePublished;
 use App\Http\Controllers\Controller;
 use App\Models\Classes;
 use App\Models\Schedule;
@@ -148,8 +149,13 @@ class ScheduleController extends Controller
             }
 
             DB::commit();
+            $updatedClassIds = collect($request->schedules)->pluck('class_id')->unique();
 
-            return response()->json([
+            foreach ($updatedClassIds as $classId) {
+                event(new SchedulePublished($classId));
+            }
+
+return response()->json([
                 'status' => 'success',
                 'message' => 'تم حفظ ونشر جميع الجداول بنجاح!'
             ]);

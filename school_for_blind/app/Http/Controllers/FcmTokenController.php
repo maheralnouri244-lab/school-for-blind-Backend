@@ -39,19 +39,15 @@ class FcmTokenController extends Controller
     
     public function logout(Request $request): JsonResponse
 {
-    $user = $request->user();
+   $user = $request->user();
 
-    if ($user) {
-        $user->timestamps = false;
-        $user->update(['fcm_token' => null]);
-
-        if (method_exists($user, 'currentAccessToken') && $user->currentAccessToken()) {
-            $user->currentAccessToken()->delete();
+        if ($user) {
+            $user->timestamps = false;
+            $user->update(['fcm_token' => null]);
         }
-    }
 
-    return response()->json([
-        'success' => true,
-        'message' => 'تم تسجيل الخروج بنجاح.'
-    ], 200);
-}}
+        return response()->json([
+            'success' => true,
+            'message' => 'تم تصفير توكن الإشعارات بنجاح.'
+        ], 200);
+    }}

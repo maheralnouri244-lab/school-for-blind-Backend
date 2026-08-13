@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Events\AbsenceExcuseStatusUpdated;
 use App\Http\Controllers\Controller;
 use App\Models\Classes;
 use App\Models\Absence;
@@ -121,7 +122,7 @@ class ClassController extends Controller
         $excuse->update([
             'status' => $request->status
         ]);
-
+event(new AbsenceExcuseStatusUpdated($excuse));
         return response()->json(['success' => true, 'message' => 'تم تحديث حالة التبرير بنجاح.']);
     }
 

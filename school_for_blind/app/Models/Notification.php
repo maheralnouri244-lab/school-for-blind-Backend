@@ -7,9 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Notification extends Model
 {
     protected $fillable = [
-'title',
-'body',
-'is_read',
+'notifiable_type',
+        'notifiable_id',
+        'title',
+        'body',
+        'data',
+        'read_at',
 ];
 public function notifiable()
 {
