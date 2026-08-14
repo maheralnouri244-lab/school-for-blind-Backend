@@ -295,7 +295,7 @@ Route::middleware('auth:teacher')->group(function () {
 
 
 Route::post('/transfer/salary/teacher', [Teacherpaymentcontroller::class, 'setupTeacherBank']);/*->middleware(['auth:sanctum', CheckUserType::class . ':admin']);*/
-Route::post('/teacher/pay-salary', [TeacherPaymentController::class, 'payTeacherSalary']);
+Route::post('/teacher/pay-salary', [Teacherpaymentcontroller::class, 'payTeacherSalary']);
 
 
 Route::middleware(['auth:sanctum', 'isparent'])->prefix('parent')->group(function () {
@@ -327,6 +327,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/fcm-token', [FcmTokenController::class, 'updateFcmToken']);
     
     Route::delete('/fcm-token', [FcmTokenController::class, 'logout']);
-    
+    Route::post('/toggle-mute', [NotificationController::class, 'toggleMute']);
+    Route::get('/mute-status', [NotificationController::class, 'getMuteStatus']);
 });
 Route::get('/notifications', [NotificationController::class, 'index'])->middleware('auth:sanctum'); 

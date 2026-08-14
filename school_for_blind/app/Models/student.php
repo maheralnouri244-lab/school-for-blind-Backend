@@ -27,6 +27,7 @@ class Student extends Authenticatable
         'DocumentaryEvidence',
         'total_earned_points',
         'stripe_account_id',
+        'notifications_enabled'
 
     ];
 

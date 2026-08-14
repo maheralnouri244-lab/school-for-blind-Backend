@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Events\SalaryTransferred;
 use App\Http\Controllers\Controller;
 use App\Models\Teacher;
 use App\Models\Room;
@@ -227,6 +228,7 @@ class FinancialDashboardController extends Controller
                 ->where('payment_status', 'unpaid')
                 ->whereNotNull('subject_id')
                 ->update(['payment_status' => 'paid']);
+                event(new SalaryTransferred($teacher, $amountInEur));
 
             return redirect()->back()->with('success', 'تم تحويل الراتب بنجاح للأستاذ ' . $teacher->full_name);
         } catch (\Exception $e) {

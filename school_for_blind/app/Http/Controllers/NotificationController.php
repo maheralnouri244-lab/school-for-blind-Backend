@@ -18,7 +18,7 @@ class NotificationController extends Controller
                 'message' => 'المستخدم غير موثق.'
             ], 401);
         }
-
+$isMuted = !(bool) ($user->notifications_enabled ?? true);
         $notifications = Notification::where('notifiable_type', get_class($user))
             ->where('notifiable_id', $user->id)
             ->latest()
@@ -52,9 +52,60 @@ class NotificationController extends Controller
             'message' => 'تم جلب الإشعارات بنجاح.',
             'data'    => [
                 'unread_count'  => $unreadCount,
+                'is_muted'      => $isMuted,
                 'total_count'   => $notifications->count(),
                 'notifications' => $formattedNotifications,
             ]
         ], 200);
     }
-}
+
+   
+    public function toggleMute(Request $request): JsonResponse
+    {
+        $user = $request->user();
+
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => 'المستخدم غير موثق.'
+            ], 401);
+        }
+
+        $currentState = (bool) ($user->notifications_enabled ?? true);
+        $newState = !$currentState;
+
+        $user->notifications_enabled = $newState;
+        $user->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => $newState ? 'تم تفعيل الإشعارات بنجاح.' : 'تم كتم الإشعارات بنجاح.',
+            'data'    => [
+                'notifications_enabled' => $newState
+            ]
+        ], 200);
+    }
+    
+    public function getMuteStatus(Request $request): JsonResponse
+    {
+        $user = $request->user();
+
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => 'المستخدم غير موثق.'
+            ], 401);
+        }
+
+        $isEnabled = (bool) ($user->notifications_enabled ?? true);
+
+        return response()->json([
+            'success' => true,
+            'data'    => [
+                'notifications_enabled' => $isEnabled,
+                'status'                => $isEnabled ? 'enabled' : 'muted',
+            ]
+        ], 200);
+    }
+    
+    }

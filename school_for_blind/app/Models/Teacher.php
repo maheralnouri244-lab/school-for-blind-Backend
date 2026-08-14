@@ -33,6 +33,7 @@ class Teacher extends Authenticatable
         'remember_token',
         'fcm_token',
         // 'cv_path',
+        'notifications_enabled'
     ];
     public function donations()
     {

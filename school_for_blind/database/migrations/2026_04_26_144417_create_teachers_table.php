@@ -23,6 +23,7 @@ return new class extends Migration {
             $table->string('stripe_account_id')->nullable();
             $table->string('cv_path');
             $table->text('fcm_token')->nullable();
+            $table->boolean('notifications_enabled')->default(true);
             $table->rememberToken();
         });
     }

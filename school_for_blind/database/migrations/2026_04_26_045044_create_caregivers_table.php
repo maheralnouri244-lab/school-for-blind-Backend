@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->string('fcm_token')->nullable();
             $table->string('password');
             $table->rememberToken();
+            $table->boolean('notifications_enabled')->default(true);
             $table->timestamps();
         });
     }
