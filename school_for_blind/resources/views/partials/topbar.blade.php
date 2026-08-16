@@ -1,10 +1,15 @@
 <header class="d-flex align-items-center justify-content-between p-3 border-bottom shadow-sm"
   style="background-color: var(--bg-card); border-color: var(--border-color) !important;">
 
-  <div class="dropdown">
-    <div class="d-flex align-items-center gap-3 p-2 rounded cursor-pointer transition-all shadow-sm-hover"
-      data-bs-toggle="dropdown" aria-expanded="false">
+  <div class="d-flex align-items-center gap-4">
+    <a href="{{ route('my-space') }}"
+      class="btn d-flex align-items-center gap-2 px-4 py-2 rounded-pill fw-bold shadow-sm transition-all text-white"
+      style="background-color: #3b82f6; border: none; font-size: 0.9rem;">
+      <i class="fa-solid fa-briefcase"></i>
+      مساحتي
+    </a>
 
+    <div class="d-flex align-items-center gap-3 p-2 rounded transition-all">
       <img
         src="{{ Auth::guard('admin')->user()->profile_image ?? 'https://ui-avatars.com/api/?name=' . urlencode(Auth::guard('admin')->user()->name ?? 'Admin') . '&background=3b82f6&color=fff' }}"
         alt="Admin Avatar" class="rounded-circle shadow-sm" width="45" height="45"
@@ -18,25 +23,7 @@
           {{ Auth::guard('admin')->user()->role }}
         </span>
       </div>
-
-      <i class="fa-solid fa-chevron-down ms-2 transition-transform"
-        style="font-size: 0.8rem; color: var(--text-muted);"></i>
     </div>
-
-    <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 mt-2"
-      style="background-color: var(--bg-card); border-radius: 12px; min-width: 200px;">
-
-      <li>
-        <a class="dropdown-item d-flex align-items-center gap-3 py-2 px-3 transition-all" href="#">
-          <i class="fa-regular fa-circle-user text-muted fs-5"></i>
-          <span class="fw-bold" style="color: var(--text-main); font-size: 0.9rem;">الملف الشخصي</span>
-        </a>
-      </li>
-
-      <li>
-        <hr class="dropdown-divider my-2" style="border-color: var(--border-color);">
-      </li>
-    </ul>
   </div>
 
   <div class="d-none d-md-flex align-items-center bg-soft-info px-3 py-2 rounded-pill"

@@ -100,6 +100,13 @@ class PunishmentSeeder extends Seeder
                 'duration_minutes' => 10080,
                 'target_type' => 'student',
             ],
+            [
+                'name' => 'Dismissal',
+                'level' => 3,
+                'description' => 'فصل نهائي من النظام وتجميد الحساب',
+                'duration_minutes' => null,
+                'target_type' => 'student',
+            ],
 
             // ==========================================
             // عقوبات الأساتذة (teacher)
@@ -129,13 +136,7 @@ class PunishmentSeeder extends Seeder
                 'duration_minutes' => null,
                 'target_type' => 'all',
             ],
-            [
-                'name' => 'Dismissal',
-                'level' => 1,
-                'description' => 'فصل نهائي من النظام وتجميد الحساب',
-                'duration_minutes' => null,
-                'target_type' => 'all',
-            ],
+
         ];
 
         foreach ($punishments as $punishment) {

@@ -18,6 +18,8 @@ use App\Http\Controllers\Dashboard\UserManagerController;
 use App\Http\Controllers\Dashboard\ScheduleController;
 use App\Http\Controllers\Dashboard\ClassController;
 use App\Http\Controllers\Dashboard\StudentReportWebController;
+use App\Http\Controllers\Dashboard\MySpaceController;
+
 
 
 
@@ -206,4 +208,10 @@ Route::middleware([CheckAdminRole::class . ':Super Admin,Academic Manager,Modera
     })->name('announcements.index');
     Route::get('/api/dashboard/announcements', [AnnouncementDashboardController::class, 'index'])->name('dashboard.announcements.api');
     Route::post('/api/dashboard/announcements', [AnnouncementDashboardController::class, 'store'])->name('dashboard.announcements.store');
+});
+
+
+Route::middleware([CheckAdminRole::class . ':Super Admin,Academic Manager,Moderator,Support Agent,Data Entry,Financial Manager'])->group(function () {
+    Route::get('/my-space', [MySpaceController::class, 'index'])->name('my-space');
+    Route::post('/my-space/notes', [MySpaceController::class, 'storeNote'])->name('notes.store');
 });
