@@ -45,37 +45,33 @@ use Illuminate\Support\Facades\Route;
 Route::post('verify-otp', [OtpController::class, 'verify']);
 Route::post('register', [StudentController::class, 'register']);
 Route::post('login', [StudentController::class, 'login']);
-Route::middleware(['auth:sanctum', 'CheckIsStudent'])->group(function () {
-
-    Route::post('/logout', [StudentController::class, 'logout']);
-});
 Route::post('/auth/exchange-token', [MagicLoginController::class, 'exchangeToken']);
-// Route::get('magic-login/{id}', [StudentController::class, 'magicLogin'])
-//     ->name('student.magic.login');
-//     ->middleware('signed');
-
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
-
 Route::prefix('otp')->controller(OtpController::class)->group(function () {
     Route::post('send', 'sendOtp')->name('otp.send')->middleware('throttle:3,1');
     Route::post('verify', 'verifyOtp')->name('otp.verify');
 });
 
+
+Route::middleware(['auth:sanctum', 'CheckIsStudent', 'CheckIfDismissed'])->group(function () {
+    Route::post('/logout', [StudentController::class, 'logout']);
+    });
+
+Route::get('/user', function (Request $request) {
+    return $request->user();
+})->middleware(['auth:sanctum', 'CheckIfDismissed']);
+
 Route::prefix('teacher')->controller(TeacherController::class)->group(function () {
     Route::post('register', 'register')->name('users.register');
     Route::post('login', 'login')->name('users.login');
-    Route::middleware('auth:sanctum')->group(function () {
+    Route::middleware(['auth:sanctum', 'CheckIfDismissed'])->group(function () {
         Route::post('logout', 'logout')->name('teachers.logout');
         Route::get('info', 'info')->name('teachers.info');
         Route::get('all-subjects/statistics', 'getAllSubjectsStats')->name('teachers.stats');
-        // Route::get('cv', 'showCv')->name('teachers.cv');
     });
 });
 
 Route::post('/caregiver/login', [CaregiverController::class, 'login']);
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware(['auth:sanctum', 'CheckIfDismissed'])->group(function () {
     Route::post('/caregiver/logout', [CaregiverController::class, 'logout']);
 });
 
@@ -83,13 +79,13 @@ Route::post('/donation/checkout', [DonationController::class, 'checkout']);
 Route::post('/donation/confirm', [DonationController::class, 'confirmPayment']);
 Route::get('/donation/success', [DonationController::class, 'success'])->name('donation.success');
 Route::get('/donation/cancel', [DonationController::class, 'cancel'])->name('donation.cancel');
-Route::middleware('auth:sanctum')->group(function () {});
+Route::middleware(['auth:sanctum', 'CheckIfDismissed'])->group(function () {});
 Route::post('/point-redemption/request', [PointRedemptionController::class, 'store'])->middleware('auth:sanctum');
-Route::prefix('admin/point-redemption')->middleware(['auth:sanctum'])->group(function () {
+Route::prefix('admin/point-redemption')->middleware(['auth:sanctum', 'CheckIfDismissed'])->group(function () {
     Route::post('/{redemptionRequest}/approve', [PointRedemptionController::class, 'approve']);
     Route::get('/{redemptionRequest}/reject', [PointRedemptionController::class, 'reject']);
 });
-Route::prefix('call')->middleware('auth:sanctum')->group(function () {
+Route::prefix('call')->middleware(['auth:sanctum', 'CheckIfDismissed'])->group(function () {
     Route::get('/active-calls', [RoomController::class, 'getActiveCallsForStudent']);
     Route::post('/start', [RoomController::class, 'startCall'])->middleware(CheckCallCreatorRole::class);
     Route::post('/join', [RoomController::class, 'joinCall']);
@@ -102,7 +98,7 @@ Route::prefix('call')->middleware('auth:sanctum')->group(function () {
 });
 
 Route::prefix('quizzes')->group(function () {
-    Route::middleware(['auth:sanctum', 'isTeacher'])->group(function () {
+    Route::middleware(['auth:sanctum', 'isTeacher', 'CheckIfDismissed'])->group(function () {
         Route::post('/', [QuizController::class, 'store']);
         Route::get('/teacher/list', [QuizController::class, 'index']);
         Route::post('/{id}', [QuizController::class, 'update']);
@@ -113,9 +109,7 @@ Route::prefix('quizzes')->group(function () {
         Route::get('/{quizId}/submissions', [QuizController::class, 'getQuizSubmissions']);
         Route::get('/{quizId}/students/{studentId}/pending-answers', [QuizController::class, 'getPendingTextAnswers']);
     });
-    // Route::middleware(['auth:sanctum', 'CheckIsStudent'])->group(function () {
-    // });
-    Route::middleware('auth:sanctum')->group(function () {
+    Route::middleware(['auth:sanctum', 'CheckIfDismissed'])->group(function () {
         Route::post('/{id}/submit', [QuizController::class, 'submitQuiz']);
         Route::get('/{id}/student-view', [QuizController::class, 'getStudentQuiz']);
         Route::get('/{id}', [QuizController::class, 'show']);
@@ -123,7 +117,7 @@ Route::prefix('quizzes')->group(function () {
     });
 });
 
-Route::middleware(['auth:sanctum', 'isTeacher'])->prefix('exam')->controller(TeacherExamController::class)->group(function () {
+Route::middleware(['auth:sanctum', 'isTeacher', 'CheckIfDismissed'])->prefix('exam')->controller(TeacherExamController::class)->group(function () {
     Route::post('/', 'store');
     Route::get('/pending-grading', 'getExamsPendingGrading');
     Route::get('/{examId}/submissions', 'getExamSubmissions');
@@ -131,9 +125,9 @@ Route::middleware(['auth:sanctum', 'isTeacher'])->prefix('exam')->controller(Tea
     Route::post('/{examId}/students/{studentId}/grade', 'gradeTextAnswers');
     Route::get('/my-exams', 'myExams');
     Route::get('/my-exams/{exam_id}', 'show');
-});
-
-Route::middleware('auth:sanctum')
+    });
+    
+    Route::middleware(['auth:sanctum', 'CheckIfDismissed'])
     ->prefix('lessons')
     ->controller(LessonController::class)
     ->group(function () {
@@ -142,20 +136,20 @@ Route::middleware('auth:sanctum')
         Route::get('{lesson}', 'show');
         Route::match(['put', 'patch'], '{lesson}', 'update');
         Route::delete('{lesson}', 'destroy');
-    });
+        });
 Route::post('/announcements', [AnnouncementController::class, 'store']);
 Route::get('/announcements', [AnnouncementController::class, 'index']);
 Route::get('/announcements/exam/{id}', [AnnouncementController::class, 'showExam']);
-Route::get('/announcements/school-timetable/first', [AnnouncementController::class, 'firstSchoolTimetable'])->middleware('auth:sanctum');
+Route::get('/announcements/school-timetable/first', [AnnouncementController::class, 'firstSchoolTimetable'])->middleware(['auth:sanctum', 'CheckIfDismissed']);
 ;
 
 
 Route::prefix('student/quizzes')->group(function () {
-
+    
     Route::get('{id}/questions', [StudentQuizController::class, 'getQuizQuestions']);
-});
-Route::middleware('auth:sanctum')->group(function () {
-    //  Route::post('search-info', [StudentQuizController::class, 'getQuizInfoByNames']);
+    });
+    Route::middleware(['auth:sanctum', 'CheckIfDismissed'])->group(function () {
+        //  Route::post('search-info', [StudentQuizController::class, 'getQuizInfoByNames']);
     // Route::post('student/quizzes/search-info', [StudentQuizController::class, 'getQuizInfo']);
     Route::post('student/quizzes/search-info', [StudentQuizController::class, 'getQuizInfoByNames']);
 });
@@ -163,7 +157,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
 Route::post('/get-quiz-info', [QuizController::class, 'getQuizInfoByNames']);
-Route::middleware(['auth:sanctum', IsTeacher::class])->prefix('question-bank')->group(function () {
+Route::middleware(['auth:sanctum', IsTeacher::class, 'CheckIfDismissed'])->prefix('question-bank')->group(function () {
     Route::get('/', [QuestionBankController::class, 'index']);
     Route::post('/', [QuestionBankController::class, 'store']);
     Route::get('/{id}', [QuestionBankController::class, 'show']);
@@ -174,12 +168,12 @@ Route::middleware(['auth:sanctum', IsTeacher::class])->prefix('question-bank')->
 Route::middleware(['auth:sanctum', CheckUserType::class . ':admin'])->prefix('admin/teachers')->group(function () {
     Route::post('/transfer-assets', [TeacherTransferController::class, 'transferAssets']);
 });
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware(['auth:sanctum', 'CheckIfDismissed'])->group(function () {
 
     Route::post('quiz/submit', [StudentQuizController::class, 'submitQuiz']);
 });
 
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware(['auth:sanctum', 'CheckIfDismissed'])->group(function () {
     Route::get('/subjects/{id}/lessons', [LessonController::class, 'getLessonsBySubject']);
     Route::get('student/quizzes/{quizId}/review', [StudentQuizController::class, 'getQuizReview']);
 });
@@ -188,75 +182,75 @@ Route::get('/subjects/{id}/lessons/count', [LessonController::class, 'getLessons
 Route::get('/subjects/{id}/lessons/progress', [LessonController::class, 'getLessonsProgress']);
 
 
-Route::middleware('auth:sanctum')->group(function () {
-
+Route::middleware(['auth:sanctum', 'CheckIfDismissed'])->group(function () {
+    
     Route::post('/favorites/toggle', [FavoriteController::class, 'toggle']);
     Route::post('favorites/add', [FavoriteController::class, 'addToFavorite']);
-
+    
     Route::get('/favorites/lessons', [FavoriteController::class, 'favoriteLessons']) ;
 ;
 
-    Route::get('/favorites/quizzes', [FavoriteController::class, 'favoriteQuizzes']) ;
+Route::get('/favorites/quizzes', [FavoriteController::class, 'favoriteQuizzes']) ;
 ;
-    Route::get('favorites/exams', [FavoriteController::class, 'favoriteExams']) ;
+Route::get('favorites/exams', [FavoriteController::class, 'favoriteExams']) ;
 ;
-    Route::get('favorites/past-exams', [FavoriteController::class, 'favoritePastExams']) 
+Route::get('favorites/past-exams', [FavoriteController::class, 'favoritePastExams']) 
 ;
 
-    Route::get('/favorites/all', [FavoriteController::class, 'allFavorites']);
+Route::get('/favorites/all', [FavoriteController::class, 'allFavorites']);
 });
 
 Route::post('/favorites/remove', [FavoriteController::class, 'remove'])
-    ->middleware('auth:sanctum');
+->middleware(['auth:sanctum', 'CheckIfDismissed']);
 
 
 Route::middleware(['auth:sanctum', CheckUserType::class . ':admin'])->prefix('admin/punishments')->group(function () {
     Route::post('/apply', [PunishmentController::class, 'applyPunishment']);
     Route::patch('/{id}/revoke', [PunishmentController::class, 'revokePunishment']);
-});
+    });
 
 
-Route::middleware(['auth:sanctum', CheckPunishment::class . ':Report Ban'])->group(function () {
+Route::middleware(['auth:sanctum', CheckPunishment::class . ':Report Ban', 'CheckIfDismissed'])->group(function () {
     Route::post('/reports', [ReportController::class, 'store']);
 });
 
 Route::middleware(['auth:sanctum', CheckUserType::class . ':admin'])->prefix('admin/reports')->group(function () {
     Route::get('/', [ReportController::class, 'index']);
     Route::patch('/{id}/status', [ReportController::class, 'updateStatus']);
-});
-
+    });
+    
 Route::post('/stripe/webhook', [StripeWebhookController::class, 'handleWebhook']);
 
 Route::post('/livekit/webhook', [LiveKitWebhookController::class, 'handle']);
 
-Route::middleware(['auth:sanctum', IsTeacher::class])->prefix('teacher/channels')->group(function () {
+Route::middleware(['auth:sanctum', IsTeacher::class, 'CheckIfDismissed'])->prefix('teacher/channels')->group(function () {
     Route::get('/', [ConversationController::class, 'getTeacherChannels']);
     Route::get('/admin-chats', [ConversationController::class, 'getTeacherAdminConversations']);
     Route::get('/{conversationId}/messages', [ConversationController::class, 'getMessages']);
     Route::post('/{conversationId}/messages', [ConversationController::class, 'sendMessage'])
         ->middleware(CheckPunishment::class . ':Mute');
-    Route::post('/{conversationId}/read', [ConversationController::class, 'markAsRead']);
+        Route::post('/{conversationId}/read', [ConversationController::class, 'markAsRead']);
+        });
+        
+        Route::middleware(['auth:sanctum', CheckIsStudent::class, 'CheckIfDismissed'])->prefix('student/channels')->group(function () {
+            Route::get('/', [ConversationController::class, 'getStudentChannels']);
+            Route::get('/{conversationId}/messages', [ConversationController::class, 'getMessages']);
+            Route::post('/{conversationId}/messages', [ConversationController::class, 'sendMessage'])
+            ->middleware(CheckPunishment::class . ':Mute');
+            Route::post('/{conversationId}/read', [ConversationController::class, 'markAsRead']);
+            });
+            
+            Route::middleware(['auth:sanctum', 'CheckIfDismissed'])->group(function () {
+                Route::delete('/messages/{messageId}', [ConversationController::class, 'deleteMessage']);
+                Route::post('/messages/{messageId}/report', [ConversationController::class, 'reportMessage']);
 });
 
-Route::middleware(['auth:sanctum', CheckIsStudent::class])->prefix('student/channels')->group(function () {
-    Route::get('/', [ConversationController::class, 'getStudentChannels']);
-    Route::get('/{conversationId}/messages', [ConversationController::class, 'getMessages']);
-    Route::post('/{conversationId}/messages', [ConversationController::class, 'sendMessage'])
-        ->middleware(CheckPunishment::class . ':Mute');
-    Route::post('/{conversationId}/read', [ConversationController::class, 'markAsRead']);
-});
 
-Route::middleware('auth:sanctum')->group(function () {
-    Route::delete('/messages/{messageId}', [ConversationController::class, 'deleteMessage']);
-    Route::post('/messages/{messageId}/report', [ConversationController::class, 'reportMessage']);
-});
-
-
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware(['auth:sanctum', 'CheckIfDismissed'])->group(function () {
     Route::get('/student/submissions', [StudentQuizController::class, 'getStudentSubmissions']);
 });
-Route::post('/support-tickets', [SupportTicketController::class, 'store'])->middleware('auth:sanctum');
-Route::get('/past-exams', [StudentpastexamController::class, 'getPastExamsBySubject'])->middleware('auth:sanctum');
+Route::post('/support-tickets', [SupportTicketController::class, 'store'])->middleware(['auth:sanctum', 'CheckIfDismissed']);
+Route::get('/past-exams', [StudentpastexamController::class, 'getPastExamsBySubject'])->middleware(['auth:sanctum', 'CheckIfDismissed']);
 
 Route::get('/past-exams/{id}/questions', [StudentpastexamController::class, 'getQuestionsByPastExam']);
 
@@ -265,41 +259,41 @@ Route::get('/past-exams/{id}/solutions', [StudentpastexamController::class, 'get
 Route::get('/exams', [StudentExamController::class, 'getExamsBySubject']);
 Route::get('/exams/{id}/questions', [StudentExamController::class, 'getQuestionsByExam']);
 Route::get('/exams/{id}/solutions', [StudentExamController::class, 'getExamWithSolutions']);
-Route::post('/exams/submit-answer', [StudentExamController::class, 'submitAnswer'])->middleware('auth:sanctum');
-Route::get('/submissions/{id}/details', [StudentExamController::class, 'getSubmissionDetails'])->middleware('auth:sanctum');
-Route::post('/exams/submit', [StudentExamController::class, 'submitExam'])->middleware('auth:sanctum');
-Route::get('/student/exam-details/{id}', [StudentExamController::class, 'getExamDetails'])->middleware('auth:sanctum');;
+Route::post('/exams/submit-answer', [StudentExamController::class, 'submitAnswer'])->middleware(['auth:sanctum', 'CheckIfDismissed']);
+Route::get('/submissions/{id}/details', [StudentExamController::class, 'getSubmissionDetails'])->middleware(['auth:sanctum', 'CheckIfDismissed']);
+Route::post('/exams/submit', [StudentExamController::class, 'submitExam'])->middleware(['auth:sanctum', 'CheckIfDismissed']);
+Route::get('/student/exam-details/{id}', [StudentExamController::class, 'getExamDetails'])->middleware(['auth:sanctum', 'CheckIfDismissed']);
 
-Route::middleware('auth:sanctum')->group(function () {
-
+Route::middleware(['auth:sanctum', 'CheckIfDismissed'])->group(function () {
+    
     Route::get('recordings/{recordingId}/bookmarks', [BookmarkController::class, 'index']);
-
+    
     Route::post('bookmarks', [BookmarkController::class, 'store']);
-
+    
     Route::put('bookmarks/{id}', [BookmarkController::class, 'update']);
-
+    
     Route::delete('bookmarks/{id}', [BookmarkController::class, 'destroy']);
+    
+    });
+    
+    
+    
+    Route::get('/teacher/pending-essay-answers', [TeacherQuizController::class, 'getPendingEssayAnswers'])->middleware(['auth:sanctum', IsTeacher::class, 'CheckIfDismissed']);
+Route::post('/teacher/grade-full-quiz-submission', [TeacherQuizController::class, 'gradeFullQuizSubmission'])->middleware(['auth:sanctum', IsTeacher::class, 'CheckIfDismissed']);
 
-});
-
-
-
-Route::get('/teacher/pending-essay-answers', [TeacherQuizController::class, 'getPendingEssayAnswers'])->middleware(['auth:sanctum', IsTeacher::class]);
-Route::post('/teacher/grade-full-quiz-submission', [TeacherQuizController::class, 'gradeFullQuizSubmission'])->middleware(['auth:sanctum', IsTeacher::class]);
-
-Route::middleware('auth:teacher')->group(function () {
+Route::middleware(['auth:teacher', 'CheckIfDismissed'])->group(function () {
     Route::get('/teacher/pending-exams', [TeacherExamcorrectController::class, 'getPendingExamEssayAnswers']);
 
     Route::post('/teacher/grade-exam', [TeacherExamcorrectController::class, 'gradeFullExamSubmission']);
-});
-
-
-Route::post('/transfer/salary/teacher', [Teacherpaymentcontroller::class, 'setupTeacherBank']);/*->middleware(['auth:sanctum', CheckUserType::class . ':admin']);*/
-Route::post('/teacher/pay-salary', [Teacherpaymentcontroller::class, 'payTeacherSalary']);
-
-
-Route::middleware(['auth:sanctum', 'isparent'])->prefix('parent')->group(function () {
-    Route::get('/reports/daily', [ParentReportController::class, 'getDailyReport']);
+    });
+    
+    
+    Route::post('/transfer/salary/teacher', [Teacherpaymentcontroller::class, 'setupTeacherBank']);/*->middleware(['auth:sanctum', CheckUserType::class . ':admin']);*/
+    Route::post('/teacher/pay-salary', [Teacherpaymentcontroller::class, 'payTeacherSalary']);
+    
+    
+    Route::middleware(['auth:sanctum', 'isparent', 'CheckIfDismissed'])->prefix('parent')->group(function () {
+        Route::get('/reports/daily', [ParentReportController::class, 'getDailyReport']);
     Route::get('/reports/monthly', [ParentReportController::class, 'getMonthlyReport']);
     Route::get('/reports/yearly', [ParentReportController::class, 'getYearlyReport']);
     Route::post('/reports/absence-excuse', [ParentReportController::class, 'submitAbsenceExcuse']);
@@ -309,25 +303,33 @@ Route::middleware(['auth:sanctum', 'isparent'])->prefix('parent')->group(functio
 
 Route::post('/test-notification', [NotificationController::class, 'testSend']);
 
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware(['auth:sanctum', 'CheckIfDismissed'])->group(function () {
     Route::get('/teacher/schedule', [ScheduleController::class, 'teacherSchedule']);
-});
-
-Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/student/schedule', [ScheduleController::class, 'studentSchedule']);
-});
-
-Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/caregiver/schedule', [ScheduleController::class, 'caregiverSchedule']);
-});
-
-Route::get('/student/solved-quizzes', [StudentQuizController::class, 'getSolvedQuizzes'])->middleware('auth:sanctum');
-Route::middleware('auth:sanctum')->group(function () {
+    });
+    
+    Route::middleware(['auth:sanctum', 'CheckIfDismissed'])->group(function () {
+        Route::get('/student/schedule', [ScheduleController::class, 'studentSchedule']);
+        });
+        
+        Route::middleware(['auth:sanctum', 'CheckIfDismissed'])->group(function () {
+            Route::get('/caregiver/schedule', [ScheduleController::class, 'caregiverSchedule']);
+            });
+            
+            Route::get('/student/solved-quizzes', [StudentQuizController::class, 'getSolvedQuizzes'])->middleware(['auth:sanctum', 'CheckIfDismissed']);
+Route::middleware(['auth:sanctum', 'CheckIfDismissed'])->group(function () {
     
     Route::post('/fcm-token', [FcmTokenController::class, 'updateFcmToken']);
     
     Route::delete('/fcm-token', [FcmTokenController::class, 'logout']);
     Route::post('/toggle-mute', [NotificationController::class, 'toggleMute']);
     Route::get('/mute-status', [NotificationController::class, 'getMuteStatus']);
-});
-Route::get('/notifications', [NotificationController::class, 'index'])->middleware('auth:sanctum'); 
+    });
+    Route::get('/notifications', [NotificationController::class, 'index'])->middleware(['auth:sanctum', 'CheckIfDismissed']); 
+    
+    
+    // Route::get('magic-login/{id}', [StudentController::class, 'magicLogin'])
+    //     ->name('student.magic.login');
+//     ->middleware('signed');
+ 
+    // Route::middleware(['auth:sanctum', 'CheckIsStudent'])->group(function () {
+    // });

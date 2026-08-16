@@ -31,6 +31,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'isTeacher' => \App\Http\Middleware\IsTeacher::class,
             'CheckPunishment' => \App\Http\Middleware\CheckPunishment::class,
             'isparent' => \App\Http\Middleware\IsParent::class,
+            'CheckIfDismissed' => \App\Http\Middleware\CheckIfDismissed::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

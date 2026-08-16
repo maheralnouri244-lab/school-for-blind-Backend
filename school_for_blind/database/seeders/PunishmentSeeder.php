@@ -86,6 +86,20 @@ class PunishmentSeeder extends Seeder
                 'duration_minutes' => 43200,
                 'target_type' => 'student',
             ],
+            [
+                'name' => 'Dismissal',
+                'level' => 1,
+                'description' => 'فصل لمدة 3 ايام من النظام وتجميد الحساب',
+                'duration_minutes' => 4320,
+                'target_type' => 'student',
+            ],
+            [
+                'name' => 'Dismissal',
+                'level' => 2,
+                'description' => 'فصل لمدة اسبوع من النظام وتجميد الحساب',
+                'duration_minutes' => 10080,
+                'target_type' => 'student',
+            ],
 
             // ==========================================
             // عقوبات الأساتذة (teacher)
@@ -104,13 +118,6 @@ class PunishmentSeeder extends Seeder
                 'duration_minutes' => null,
                 'target_type' => 'teacher',
             ],
-            [
-                'name' => 'Account Suspension',
-                'level' => 3,
-                'description' => 'إيقاف الحساب مؤقتاً (لمدة 3 أيام)',
-                'duration_minutes' => 4320,
-                'target_type' => 'teacher',
-            ],
 
             // ==========================================
             // عقوبات عامة للجميع (all)
@@ -119,6 +126,13 @@ class PunishmentSeeder extends Seeder
                 'name' => 'General Notice',
                 'level' => 1,
                 'description' => 'تنبيه إداري عام لمخالفة شروط الاستخدام',
+                'duration_minutes' => null,
+                'target_type' => 'all',
+            ],
+            [
+                'name' => 'Dismissal',
+                'level' => 1,
+                'description' => 'فصل نهائي من النظام وتجميد الحساب',
                 'duration_minutes' => null,
                 'target_type' => 'all',
             ],
