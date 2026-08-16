@@ -70,7 +70,6 @@
      <thead>
       <tr style="border-bottom: 2px solid var(--border-color);">
        <th scope="col" class="pb-3 text-muted fw-normal">المدرس</th>
-       <th scope="col" class="pb-3 text-muted fw-normal">المادة / التخصص</th>
        <th scope="col" class="pb-3 text-muted fw-normal">حالة حساب Stripe</th>
        <th scope="col" class="pb-3 text-muted fw-normal">الراتب المستحق</th>
        <th scope="col" class="pb-3 text-muted fw-normal text-start">إجراء التحويل</th>
@@ -79,6 +78,8 @@
      <tbody>
       @forelse($pendingTeachers ?? [] as $teacher)
        <tr style="border-bottom: 1px solid var(--border-color);">
+
+        {{-- بيانات المدرس --}}
         <td class="py-3">
          <div class="d-flex align-items-center">
           <div class="rounded-circle p-2 me-2 d-flex align-items-center justify-content-center bg-soft-info"
@@ -87,17 +88,12 @@
           </div>
           <div>
            <span class="d-block fw-bold">{{ $teacher->full_name }}</span>
-           <small class="text-muted">{{ $teacher->phone ?? '' }}</small>
+           <small class="text-muted">{{ $teacher->phone ?? 'لا يوجد رقم' }}</small>
           </div>
          </div>
         </td>
 
-        <td class="py-3 text-muted">
-         {{ $teacher->subjects ?? 'غير محدد' }}
-        </td>
-
         <td class="py-3">
-         {{-- التحقق من ربط حساب البنك الخاص بالمدرس --}}
          @if($teacher->stripe_account_id)
           <span class="badge-status bg-soft-success text-success">
            <i class="fa-solid fa-link me-1"></i> مربوط وجاهز
@@ -109,14 +105,17 @@
          @endif
         </td>
 
-        <td class="py-3 fw-bold text-warning" dir="ltr">
-         €{{ number_format($teacher->salary ?? 0, 2) }}
+        {{-- الراتب المستحق --}}
+        <td class="py-3 fw-bold text-warning">
+         <span dir="ltr" class="d-inline-block">
+          €{{ number_format($teacher->salary ?? 0, 2) }}
+         </span>
         </td>
 
+        {{-- أزرار الإجراء --}}
         <td class="py-3 text-start">
          @if($teacher->stripe_account_id)
-          {{-- فورم التحويل عبر مسار payTeacherSalary --}}
-          <form action="{{ route('financial.paySalary') ?? '#' }}" method="POST" class="m-0 d-inline-block">
+          <form action="{{ route('financial.paySalary') }}" method="POST" class="m-0 d-inline-block">
            @csrf
            <input type="hidden" name="teacher_id" value="{{ $teacher->id }}">
            <input type="hidden" name="amount" value="{{ $teacher->salary ?? 0 }}">
@@ -125,7 +124,6 @@
            </button>
           </form>
          @else
-          {{-- زر معطل إذا لم يقم المدرس بربط حسابه البنكي --}}
           <button type="button" class="btn btn-sm btn-outline-secondary px-3 rounded" disabled
            title="يجب على المدرس إضافة رقم الـ IBAN أولاً">
            <i class="fa-solid fa-paper-plane me-1"></i> تحويل الآن
@@ -133,6 +131,7 @@
           <small class="d-block mt-1 text-danger" style="font-size: 0.75rem;">ينتظر إدخال البنك</small>
          @endif
         </td>
+
        </tr>
       @empty
        <tr>

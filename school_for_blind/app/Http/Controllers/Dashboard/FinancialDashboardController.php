@@ -25,10 +25,19 @@ class FinancialDashboardController extends Controller
 
     private function calculateTeacherLessonsSalary($teacherId)
     {
-        $teacher = Teacher::with('subjects')->find($teacherId);
+        $teacher = Teacher::with([
+            'subjects',
+            'punishments' => function ($query) {
+                $query->where('name', 'Salary Deduction')
+                    ->where(function ($q) {
+                        $q->whereNull('expires_at')
+                            ->orWhere('expires_at', '>', now());
+                    });
+            }
+        ])->find($teacherId);
 
         if (!$teacher) {
-            return ['salary' => 0, 'completed' => 0, 'unassigned' => 0];
+            return ['salary' => 0, 'completed' => 0, 'unassigned' => 0, 'deductions' => 0];
         }
 
         $rooms = Room::where('creator_type', Teacher::class)
@@ -47,17 +56,23 @@ class FinancialDashboardController extends Controller
                 continue;
             }
 
-            $subjectPivot = $teacher->subjects()->get()->where('id', $room->subject_id)->first();
-            $priceForLesson = $subjectPivot ? $subjectPivot->pivot->price_for_lesson : 0;
+            $subjectPivot = $teacher->subjects()->get()->firstWhere('id', $room->subject_id);
+            $priceForLesson = ($subjectPivot && $subjectPivot->pivot) ? (float) $subjectPivot->pivot->price_for_lesson : 0;
 
             $calculatedSalary += $priceForLesson;
             $completedLessons++;
         }
 
+        $penaltyAmount = 5;
+        $totalDeductions = $teacher->punishments->count() * $penaltyAmount;
+
+        $finalSalary = max(0, $calculatedSalary - $totalDeductions);
+
         return [
-            'salary' => $calculatedSalary,
+            'salary' => $finalSalary,
             'completed' => $completedLessons,
             'unassigned' => $unassignedRooms,
+            'deductions' => $totalDeductions,
         ];
     }
 
@@ -228,7 +243,14 @@ class FinancialDashboardController extends Controller
                 ->where('payment_status', 'unpaid')
                 ->whereNotNull('subject_id')
                 ->update(['payment_status' => 'paid']);
-                event(new SalaryTransferred($teacher, $amountInEur));
+
+            $deductionPunishmentIds = \App\Models\Punishment::where('name', 'Salary Deduction')->pluck('id');
+
+            if ($deductionPunishmentIds->isNotEmpty()) {
+                $teacher->punishments()->detach($deductionPunishmentIds);
+            }
+
+            event(new SalaryTransferred($teacher, $amountInEur));
 
             return redirect()->back()->with('success', 'تم تحويل الراتب بنجاح للأستاذ ' . $teacher->full_name);
         } catch (\Exception $e) {
