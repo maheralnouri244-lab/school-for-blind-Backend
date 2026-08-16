@@ -90,9 +90,14 @@ Route::middleware([CheckAdminRole::class . ':Super Admin,Moderator,Academic Mana
     Route::get('/types', [PunishmentController::class, 'indexTypes'])->name('types.index');
     Route::post('/types', [PunishmentController::class, 'storeType'])->name('types.store');
     Route::get('/active', [PunishmentController::class, 'activePunishments'])->name('active');
-    Route::post('/apply', [PunishmentController::class, 'apply'])->name('apply');
     Route::post('/{id}/revoke', [PunishmentController::class, 'revoke'])->name('revoke');
 });
+Route::middleware([CheckAdminRole::class . ':Super Admin'])
+    ->prefix('punishments')
+    ->name('punishments.')
+    ->group(function () {
+        Route::post('/apply', [PunishmentController::class, 'apply'])->name('apply');
+    });
 
 
 

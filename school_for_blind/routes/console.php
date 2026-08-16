@@ -10,3 +10,9 @@ Artisan::command('inspire', function () {
 
 Schedule::command('reports:generate-daily')->dailyAt('19:00');
 Schedule::command('reports:generate-monthly')->lastDayOfMonth('19:00');
+
+/*
+php artisan schedule:work
+php artisan reports:generate-monthly
+php artisan reports:generate-daily
+*/
