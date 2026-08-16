@@ -9,7 +9,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class SalaryTransferred implements ShouldBroadcast 
+class SalaryTransferred implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -37,8 +37,8 @@ class SalaryTransferred implements ShouldBroadcast
     public function broadcastWith(): array
     {
         return [
-            'title' => 'إشعار تحويل مالي',
-            'message' => "تم تحويل مبلغ {$this->amount} ل.س إلى حسابك بنجاح.",
+            'title' => '💰 إشعار تحويل الراتب',
+            'message' => "تم تحويل مستحقاتك المالية بمبلغ €{$this->amount} إلى حسابك بنجاح.",
             'date' => now()->toDateTimeString(),
         ];
     }

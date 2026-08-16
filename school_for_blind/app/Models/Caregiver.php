@@ -16,6 +16,7 @@ class Caregiver extends Authenticatable
         'phone',
         'password',
         'fcm_token',
+        'notifications_enabled'
     ];
 
     protected $hidden = [

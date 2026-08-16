@@ -70,7 +70,11 @@ class FcmService
                 Log::warning('FCM Warning: Empty FCM token provided.');
                 return false;
             }
-
+$isMuted = false;
+            if ($notifiable && isset($notifiable->notifications_enabled) && !$notifiable->notifications_enabled) {
+                $isMuted = true;
+                Log::info("User ID: {$notifiable->id} has muted sound - sending silent push.");
+            }
             $accessToken = $this->getAccessToken();
             if (!$accessToken) {
                 Log::error('FCM Error: Could not retrieve Access Token.');
@@ -87,7 +91,27 @@ class FcmService
                     "body"  => $body,
                 ],
             ];
-
+$message = [
+                "token" => $fcmToken,
+                "notification" => [
+                    "title" => $title,
+                    "body"  => $body,
+                ],
+                "android" => [
+                    "notification" => [
+                        "default_sound"         => !$isMuted,
+                        "default_vibrate_timings" => !$isMuted,
+                        "notification_priority" => $isMuted ? "PRIORITY_LOW" : "PRIORITY_HIGH",
+                    ]
+                ],
+                "apns" => [
+                    "payload" => [
+                        "aps" => [
+                            "sound" => $isMuted ? null : "default",
+                        ]
+                    ]
+                ]
+            ];
             if (!empty($data)) {
                 $formattedData = array_map(function ($value) {
                     return (string) $value;

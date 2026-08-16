@@ -50,12 +50,15 @@ class AnnouncementController extends Controller
             $query->where('target_audience', 'student')
                 ->whereIn('level', [$student->level, 'all']);
 
-        } elseif (auth()->guard('caregiver')->check()) {
-            $caregiver = auth()->guard('caregiver')->user();
-            $query->where('target_audience', 'caregiver')
-                ->whereIn('level', [$caregiver->level, 'all']);
+         } elseif (auth()->guard('caregiver')->check()) {
+    $caregiver = auth()->guard('caregiver')->user();
+    $childrenLevels = $caregiver->students()->pluck('level')->filter()->unique()->toArray();
+    $allowedLevels = array_merge($childrenLevels, ['all']);
+    $query->where('target_audience', 'caregiver')
+          ->whereIn('level', $allowedLevels);
 
-        } elseif (auth()->guard('teacher')->check()) {
+}
+         elseif (auth()->guard('teacher')->check()) {
             $teacher = auth()->guard('teacher')->user();
             $query->where('target_audience', 'teacher')
                 ->whereIn('level', [$teacher->level, 'all']);

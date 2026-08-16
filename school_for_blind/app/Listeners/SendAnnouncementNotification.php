@@ -70,7 +70,15 @@ class SendAnnouncementNotification implements ShouldQueue
         } elseif ($announcement->target_audience === 'caregiver') {
             $query = Caregiver::whereNotNull('fcm_token');
             if ($announcement->level && $announcement->level !== 'all') {
-                $query->where('level', $announcement->level);
+           $query->whereHas('students', function ($q) use ($announcement) {
+                    $q->where('level', $announcement->level);
+                });
+           
+            }
+            if ($announcement->class_id) {
+                $query->whereHas('students', function ($q) use ($announcement) {
+                    $q->where('class_id', $announcement->class_id);
+                });
             }
             $dispatchJobs($query);
         }
