@@ -119,13 +119,13 @@
               رواتب الأساتذة
             </a>
           </li>
-          <li class="nav-item">
+          {{-- <li class="nav-item">
             <a href="{{ route('financial.rewards') }}"
               class="nav-link py-2 px-3 rounded {{ request()->routeIs('financial.rewards') ? 'fw-bold text-success bg-soft-success' : 'text-muted nav-link-custom' }}"
               style="font-size: 0.85rem;">
               طلبات المكافآت
             </a>
-          </li>
+          </li> --}}
           <li class="nav-item">
             <a href="{{ route('financial.transactions') }}"
               class="nav-link py-2 px-3 rounded {{ request()->routeIs('financial.transactions') ? 'fw-bold text-success bg-soft-success' : 'text-muted nav-link-custom' }}"
