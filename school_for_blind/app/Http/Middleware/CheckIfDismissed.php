@@ -15,6 +15,19 @@ class CheckIfDismissed
         $user = $request->user();
 
         if ($user) {
+            if (isset($user->status) && $user->status === 'dismissed') {
+                if (method_exists($user, 'currentAccessToken') && $user->currentAccessToken()) {
+                    $user->currentAccessToken()->delete();
+                }
+
+                return response()->json([
+                    'success' => false,
+                    'message' => 'تم فصل حسابك بشكل نهائي من النظام. يرجى مراجعة الإدارة.',
+                    'is_dismissed' => true,
+                    'expires_at' => null
+                ], Response::HTTP_FORBIDDEN, [], JSON_UNESCAPED_UNICODE);
+            }
+
             $dismissalRecord = DB::table('punishables')
                 ->join('punishments', 'punishables.punishment_id', '=', 'punishments.id')
                 ->where('punishables.punishable_id', $user->id)
@@ -26,19 +39,22 @@ class CheckIfDismissed
                 })
                 ->select('punishables.expires_at')
                 ->first();
+
             if ($dismissalRecord) {
                 if (method_exists($user, 'currentAccessToken') && $user->currentAccessToken()) {
                     $user->currentAccessToken()->delete();
                 }
+
                 $expiresAt = $dismissalRecord->expires_at;
                 $message = 'تم تقييد حسابك وفصلك من النظام.';
+
                 if (is_null($expiresAt)) {
                     $message = 'تم فصل حسابك بشكل نهائي من النظام. يرجى مراجعة الإدارة.';
                 } else {
-                    $formattedDate = Carbon::parse($expiresAt)->locale('ar')->translatedFormat('l j F Y, h:i A');
                     $timeLeft = Carbon::parse($expiresAt)->locale('ar')->diffForHumans();
                     $message = "حسابك مفصول مؤقتاً. ستنتهي العقوبة في: " . $timeLeft;
                 }
+
                 return response()->json([
                     'success' => false,
                     'message' => $message,
@@ -47,6 +63,7 @@ class CheckIfDismissed
                 ], Response::HTTP_FORBIDDEN, [], JSON_UNESCAPED_UNICODE);
             }
         }
+
         return $next($request);
     }
 }

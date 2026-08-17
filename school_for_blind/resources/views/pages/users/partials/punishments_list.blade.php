@@ -12,6 +12,39 @@
             </tr>
         </thead>
         <tbody>
+
+            @if($user->status === 'dismissed')
+                <tr style="background-color: rgba(220, 53, 69, 0.05); border-bottom: 2px solid var(--danger-color);">
+                    <td class="py-3 px-3 fw-bold text-danger">-</td>
+
+                    <td class="py-3 px-3 fw-bold text-danger">
+                        <i class="fa-solid fa-user-slash me-2"></i> فصل نهائي من النظام
+                    </td>
+
+                    <td class="py-3 px-3 text-muted fw-medium" dir="ltr">
+                        {{ $user->updated_at ? $user->updated_at->format('Y-m-d H:i') : '-' }}
+                    </td>
+
+                    <td class="py-3 px-3 text-muted fw-medium" dir="ltr">
+                        دائمة
+                    </td>
+
+                    <td class="py-3 px-3">
+                        <span
+                            class="badge-status bg-soft-danger px-3 py-2 rounded-pill fw-bold shadow-sm d-inline-flex align-items-center gap-2"
+                            style="color: var(--danger-color);">
+                            <span
+                                style="width: 6px; height: 6px; border-radius: 50%; background-color: currentColor;"></span>
+                            إغلاق حساب (نشطة)
+                        </span>
+                    </td>
+
+                    <td class="py-3 px-3">
+                        <span class="text-muted fw-bold" title="لا يمكن التراجع عن هذا الإجراء من هنا">-</span>
+                    </td>
+                </tr>
+            @endif
+
             @forelse($punishments as $index => $record)
                 @php
                     $punishmentType = $record->punishment;

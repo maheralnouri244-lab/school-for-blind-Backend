@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class TeacherRegisterRequest extends FormRequest
 {
@@ -23,7 +24,11 @@ class TeacherRegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'phone' => 'required|regex:/^\+?\d{8,15}$/|unique:teachers,phone',
+            'phone' => [
+                'required',
+                'regex:/^\+?\d{8,15}$/',
+                Rule::unique('teachers', 'phone')->whereNull('deleted_at')
+            ],
             'full_name' => 'required|string|max:31',
             'password' => 'required|string|min:8|confirmed|max:40',
             // 'date_of_birth' => [

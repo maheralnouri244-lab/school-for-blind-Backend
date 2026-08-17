@@ -17,13 +17,14 @@ return new class extends Migration {
             $table->string('phone')->unique();
             $table->string('password');
             // $table->date('date_of_birth');
-           $table->string('subjects')->default('');
+            $table->string('subjects')->default('');
             $table->enum('level', ['ninth', 'twelfth']);
-            $table->enum('status', ['pending', 'approved', 'rejected','dismissed'])->default('pending');
+            $table->enum('status', ['pending', 'approved', 'rejected', 'dismissed'])->default('pending');
             $table->string('stripe_account_id')->nullable();
             $table->string('cv_path');
             $table->text('fcm_token')->nullable();
             $table->boolean('notifications_enabled')->default(true);
+            $table->boolean('was_dismissed_before')->default(false);
             $table->rememberToken();
         });
     }

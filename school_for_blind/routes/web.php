@@ -19,9 +19,7 @@ use App\Http\Controllers\Dashboard\ScheduleController;
 use App\Http\Controllers\Dashboard\ClassController;
 use App\Http\Controllers\Dashboard\StudentReportWebController;
 use App\Http\Controllers\Dashboard\MySpaceController;
-
-
-
+use App\Http\Controllers\Dashboard\TeacherTransferController;
 
 /*
 'Super Admin',
@@ -157,6 +155,8 @@ Route::get('/send-test-notification', [NotificationController::class, 'testSend'
 
 use App\Http\Controllers\Dashboard\FinancialDashboardController;
 use App\Http\Controllers\Dashboard\AnnouncementDashboardController;
+use App\Http\Controllers\Dashboard\RewardController;
+use App\Http\Controllers\Dashboard\grantPointsOrReward;
 
 Route::prefix('admin/financial')->name('financial.')->middleware([
     CheckAdminRole::class . ':Super Admin,Financial Manager'
@@ -214,4 +214,14 @@ Route::middleware([CheckAdminRole::class . ':Super Admin,Academic Manager,Modera
 Route::middleware([CheckAdminRole::class . ':Super Admin,Academic Manager,Moderator,Support Agent,Data Entry,Financial Manager'])->group(function () {
     Route::get('/my-space', [MySpaceController::class, 'index'])->name('my-space');
     Route::post('/my-space/notes', [MySpaceController::class, 'storeNote'])->name('notes.store');
+});
+
+
+Route::middleware([CheckAdminRole::class . ':Super Admin'])->prefix('dashboard/teacher')->group(function () {
+    Route::get('/search-by-phone', [TeacherTransferController::class, 'getTeacherByPhone'])->name('teacher.search_by_phone');
+    Route::post('/dismiss-and-transfer', [TeacherTransferController::class, 'dismissAndTransfer'])->name('teacher.dismiss_and_transfer');
+});
+Route::middleware([CheckAdminRole::class . ':Super Admin'])->prefix('dashboard/reward')->group(function () {
+    Route::post('/grant', [grantPointsOrReward::class, 'grantPointsOrReward'])->name('reward.grant');
+    Route::get('/search-user', [MySpaceController::class, 'searchUserForReward'])->name('reward.search_user');
 });

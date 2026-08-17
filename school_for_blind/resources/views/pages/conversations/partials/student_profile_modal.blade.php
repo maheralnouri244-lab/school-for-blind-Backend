@@ -15,7 +15,7 @@
             <div class="text-muted mb-1"><i class="fa-solid fa-user-tie me-2"></i>اسم الأب: {{ $user->fathersname }}</div>
             <div class="text-muted mb-1"><i class="fa-solid fa-phone me-2"></i>{{ $user->phone }}</div>
             <div class="text-muted mb-1"><i class="fa-solid fa-graduation-cap me-2"></i>المرحلة: {{ $user->level === 'ninth' ? 'التاسع' : 'البكالوريا' }}</div>
-            <div class="text-muted"><i class="fa-solid fa-star me-2 text-warning"></i>النقاط: {{ $user->points }}</div>
+            {{-- <div class="text-muted"><i class="fa-solid fa-star me-2 text-warning"></i>النقاط: {{ $user->points }}</div> --}}
         </div>
     </div>
 

@@ -82,7 +82,7 @@
      </div>
 
      {{-- النقاط --}}
-     <div class="col-md-6">
+     {{-- <div class="col-md-6">
       <div class="p-3 rounded shadow-sm-hover"
        style="background-color: var(--hover-bg); border: 1px solid var(--border-color); transition: 0.2s;">
        <div class="d-flex align-items-center gap-2 mb-2 text-muted">
@@ -99,7 +99,7 @@
        </div>
        <strong style="color: var(--text-main); font-size: 1.1rem;">{{ $student->total_earned_points }} نقطة</strong>
       </div>
-     </div>
+     </div> --}}
 
      {{-- زر عرض المستند الثبوتي --}}
      @if($student->DocumentaryEvidence)

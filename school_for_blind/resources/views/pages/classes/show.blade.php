@@ -48,7 +48,7 @@
                 <tr style="border-bottom: 2px solid var(--border-color);">
                   <th scope="col" class="pb-3 text-muted fw-bold">الطالب</th>
                   <th scope="col" class="pb-3 text-muted fw-bold text-center">رقم الهاتف</th>
-                  <th scope="col" class="pb-3 text-muted fw-bold text-center">النقاط</th>
+                  {{-- <th scope="col" class="pb-3 text-muted fw-bold text-center">النقاط</th> --}}
                   <th scope="col" class="pb-3 text-muted fw-bold text-start">الإجراءات</th>
                 </tr>
               </thead>
@@ -62,9 +62,9 @@
                       </span>
                     </td>
                     <td class="py-3 text-center text-muted" dir="ltr">{{ $student->phone }}</td>
-                    <td class="py-3 text-center">
+                    {{-- <td class="py-3 text-center">
                       <span class="badge bg-soft-success text-success px-2 py-1">{{ $student->points }} نقطة</span>
-                    </td>
+                    </td> --}}
                     <td class="py-3 text-start">
                       <div class="dropdown">
                         <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button"
@@ -78,11 +78,11 @@
                               <i class="fa-solid fa-right-left me-2"></i>نقل لشعبة أخرى
                             </a>
                           </li>
-                          <li>
+                          {{-- <li>
                             <a class="dropdown-menu-item dropdown-item cursor-pointer text-success"
                               onclick="openRewardSuggestModal({{ $student->id }}, '{{ $student->fullname }}')">
                               <i class="fa-solid fa-award me-2"></i>اقتراح نقاط مكافأة
-                            </a>
+                            </a> --}}
                           </li>
                           <li>
                             <a class="dropdown-menu-item dropdown-item cursor-pointer text-danger"

@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Note;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\PointSuggestion;
 
 class MySpaceController extends Controller
 {
@@ -27,6 +28,16 @@ class MySpaceController extends Controller
             ->get();
 
         $role = Auth::guard('admin')->user()->role;
+
+        if ($role === 'Super Admin') {
+            $pendingSuggestions = PointSuggestion::with('student')
+                ->where('status', 'pending')
+                ->latest()
+                ->take(30)
+                ->get();
+
+            return view('pages.my_space.super_admin', compact('publicNotes', 'privateNotes', 'pendingSuggestions'));
+        }
 
         return match ($role) {
             'Super Admin' => view('pages.my_space.super_admin', compact('publicNotes', 'privateNotes')),
@@ -57,5 +68,27 @@ class MySpaceController extends Controller
         ]);
 
         return back();
+    }
+
+    public function searchUserForReward(Request $request)
+    {
+        $request->validate([
+            'phone' => 'required|string',
+            'type' => 'required|in:manual_student,manual_teacher'
+        ]);
+
+        if ($request->type === 'manual_student') {
+            $user = \App\Models\Student::where('phone', $request->phone)
+                ->first(['id', 'fullname as name', 'phone']);
+        } else {
+            $user = \App\Models\Teacher::where('phone', $request->phone)
+                ->first(['id', 'full_name as name', 'phone']);
+        }
+
+        if (!$user) {
+            return response()->json(['status' => 'error', 'message' => 'لم يتم العثور على مستخدم بهذا الرقم.']);
+        }
+
+        return response()->json(['status' => 'success', 'data' => $user]);
     }
 }

@@ -21,7 +21,16 @@
                 style="width: 45px; height: 45px; background-color: rgba(132, 204, 22, 0.1);">
                 <i class="fa-solid fa-person-chalkboard fs-5" style="color: var(--accent-color);"></i>
               </div>
-              <span style="color: var(--text-main);">{{ $teacher->full_name }}</span>
+              <div class="d-flex flex-column">
+                <span style="color: var(--text-main);">{{ $teacher->full_name }}</span>
+                @if($teacher->was_dismissed_before)
+                  <span class="badge bg-soft-danger text-danger mt-1 px-2 py-1"
+                    style="font-size: 0.7rem; width: fit-content;">
+                    <i class="fa-solid fa-triangle-exclamation me-1"></i> مفصول سابقاً
+                  </span>
+                @endif
+
+              </div>
             </div>
           </td>
 
@@ -38,13 +47,14 @@
 
           <td class="py-3 px-4 text-start">
             @php
-              $statusColors = ['pending' => 'warning', 'approved' => 'success', 'rejected' => 'danger'];
+              $statusColors = ['pending' => 'warning', 'approved' => 'success', 'rejected' => 'danger', 'dismissed' => 'muted'];
               $color = $statusColors[$teacher->status] ?? 'secondary';
-              $statusNames = ['pending' => 'قيد الانتظار', 'approved' => 'مقبول', 'rejected' => 'مرفوض'];
+              $statusNames = ['pending' => 'قيد الانتظار', 'approved' => 'مقبول', 'rejected' => 'مرفوض', 'dismissed' => 'مفصول'];
               $statusText = $statusNames[$teacher->status] ?? $teacher->status;
             @endphp
             <span
-              class="badge-status bg-soft-{{ $color }} text-{{ $color }} px-3 py-2 rounded-pill d-inline-flex align-items-center gap-2 fw-bold shadow-sm">
+              class="badge-status {{ $color === 'muted' ? '' : 'bg-soft-' . $color . ' text-' . $color }} px-3 py-2 rounded-pill d-inline-flex align-items-center gap-2 fw-bold shadow-sm"
+              style="{{ $color === 'muted' ? 'background-color: var(--hover-bg); color: var(--text-muted) !important; border: 1px solid var(--border-color);' : '' }}">
               <span style="width: 8px; height: 8px; border-radius: 50%; background-color: currentColor;"></span>
               {{ $statusText }}
             </span>
@@ -61,7 +71,7 @@
               </button>
             @else
               <span class="btn btn-sm rounded-circle d-flex align-items-center justify-content-center"
-                title="لا يمكن معاقبة مستخدم قيد الانتظار أو مرفوض"
+                title="لا يمكن معاقبة مستخدم قيد الانتظار، مرفوض، أو مفصول"
                 style="width: 40px; height: 40px; background-color: var(--bg-main); border: 1px solid var(--border-color); opacity: 0.6; cursor: not-allowed;">
                 <i class="fa-solid fa-shield text-muted fs-6"></i>
               </span>

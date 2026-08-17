@@ -11,10 +11,10 @@
         <label class="text-muted small d-block">المستوى الدراسي</label>
         <span class="badge bg-primary">{{ $user->level == 'twelfth' ? 'بكالوريا' : 'تاسع' }}</span>
     </div>
-    <div class="col-md-6">
+    {{-- <div class="col-md-6">
         <label class="text-muted small d-block">النقاط</label>
         <h6 class="text-success fw-bold">{{ $user->points }} نقطة</h6>
-    </div>
+    </div> --}}
     <div class="col-12">
         <label class="text-muted small d-block mb-2">الوثائق الثبوتية</label>
         <a href="{{ asset('storage/' . $user->DocumentaryEvidence) }}" target="_blank"

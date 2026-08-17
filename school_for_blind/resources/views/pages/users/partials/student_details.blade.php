@@ -37,7 +37,7 @@
   </div>
  </div>
 
- <div class="col-12">
+ {{-- <div class="col-12">
   <h6 class="fw-bold mb-3" style="color: #3b82f6;"><i class="fa-solid fa-star me-2"></i>النقاط والمكافآت</h6>
   <div class="row g-3 p-4 shadow-sm"
    style="background-color: var(--bg-main); border: 1px solid var(--border-color); border-radius: 16px;">
@@ -50,7 +50,7 @@
     <h5 class="fw-bold m-0 text-info">{{ $user->total_earned_points }} <span class="fs-6 text-muted">نقطة</span></h5>
    </div>
   </div>
- </div>
+ </div> --}}
 
  <div class="col-12">
   <h6 class="fw-bold mb-3" style="color: #3b82f6;"><i class="fa-solid fa-file-lines me-2"></i>الوثائق الثبوتية</h6>

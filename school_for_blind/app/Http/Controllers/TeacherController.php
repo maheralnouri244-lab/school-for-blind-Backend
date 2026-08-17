@@ -39,40 +39,49 @@ class TeacherController extends Controller
 
     public function register(TeacherRegisterRequest $request)
     {
-
         // $deviceFingerprint = md5($request->ip() . $request->header('User-Agent'));
-
         // $cacheKey = 'otp_verified_' . $request->phone . '_' . $deviceFingerprint;
-
         // \Log::info('' . $request->phone . '  ' . $cacheKey);
         // $isVerified = Cache::pull($cacheKey);
-
         // if (!$isVerified) {
         //     return response()->json([
         //         'message' => 'طلب غير مصرح به، أو انتهت مهلة التحقق.'
         //     ], 403);
         // }
 
+        $path = $this->uploadfile($request->file('cv'), 'teahcers/CVS');
+        \Log::info('path : ' . $path);
+
         $teacherdata = [
             'full_name' => $request->full_name,
-            'phone' => $request->phone,
             'password' => Hash::make($request->password),
             'subjects' => $request->subjects,
             'level' => $request->level,
-            // 'fcm_token' => $request->fcm_token,
+            'cv_path' => $path,
+            'status' => 'pending',
         ];
-
-        $path = $this->uploadfile($request->file('cv'), 'teahcers/CVS');
-        \Log::info('path : ' . $path);
-        $teacherdata['cv_path'] = $path;
-        $teacher = Teacher::create($teacherdata);
-
+        $existingTeacher = clone Teacher::query();
+        if (method_exists($existingTeacher, 'withTrashed')) {
+            $existingTeacher = $existingTeacher->withTrashed();
+        }
+        $teacherRecord = $existingTeacher->where('phone', $request->phone)->first();
+        if ($teacherRecord) {
+            $wasDismissed = ($teacherRecord->status === 'dismissed');
+            if (method_exists($teacherRecord, 'trashed') && $teacherRecord->trashed()) {
+                $teacherRecord->restore();
+            }
+            $teacherdata['was_dismissed_before'] = $wasDismissed ? true : $teacherRecord->was_dismissed_before;
+            $teacherRecord->update($teacherdata);
+            $teacher = $teacherRecord;
+        } else {
+            $teacherdata['phone'] = $request->phone;
+            $teacher = Teacher::create($teacherdata);
+        }
         return response()->json([
             'message' => 'تم ارسال طلب لانشاء الحساب بنجاح',
             'data' => $teacher
         ], 201);
     }
-
     public function login(TeacherLoginRequest $request)
     {
         $teacher = Teacher::where('phone', $request->phone)->first();
@@ -91,6 +100,14 @@ class TeacherController extends Controller
 
         if ($teacher->status == 'pending') {
             return response()->json(['message' => 'انتظر حتى يوافق احد المشرفين على حسابك'], 403);
+        }
+
+        if ($teacher->status == 'dismissed') {
+            return response()->json(['message' => 'عذراً، تم فصل حسابك نهائياً من النظام ولا يمكنك تسجيل الدخول.'], 403);
+        }
+
+        if ($teacher->status == 'rejected') {
+            return response()->json(['message' => 'لقد تم رفض طلب انضمامك للنظام.'], 403);
         }
 
         try {

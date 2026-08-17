@@ -6,17 +6,17 @@
   {{-- ترويسة الصفحة --}}
   <div class="d-flex justify-content-between align-items-center mb-4">
    <h4 class="fw-bold" style="color: var(--text-main);">لوحة الإدارة المالية</h4>
-   <button class="btn btn-sm fw-bold px-3 py-2 shadow-sm-hover"
+   {{-- <button class="btn btn-sm fw-bold px-3 py-2 shadow-sm-hover"
     style="background-color: var(--accent-color); color: #fff; border-radius: 8px; transition: transform 0.2s;">
     <i class="fa-solid fa-file-excel me-2"></i> تصدير تقرير (Excel)
-   </button>
+   </button> --}}
   </div>
 
   {{-- 1. بطاقات الإحصائيات العلوية (KPIs) --}}
   <div class="row g-4 mb-4">
 
    {{-- بطاقة: رصيد محفظة المدرسة --}}
-   <div class="col-lg-3 col-md-6">
+   <div class="col-lg-4 col-md-6">
     <div class="custom-card h-100 d-flex flex-column justify-content-between p-4">
      <div class="d-flex justify-content-between align-items-start mb-2">
       <div>
@@ -35,7 +35,7 @@
    </div>
 
    {{-- بطاقة: إجمالي التبرعات --}}
-   <div class="col-lg-3 col-md-6">
+   <div class="col-lg-4 col-md-6">
     <div class="custom-card h-100 d-flex flex-column justify-content-between p-4">
      <div class="d-flex justify-content-between align-items-start mb-2">
       <div>
@@ -55,7 +55,7 @@
    </div>
 
    {{-- بطاقة: الرواتب المدفوعة --}}
-   <div class="col-lg-3 col-md-6">
+   <div class="col-lg-4 col-md-6">
     <div class="custom-card h-100 d-flex flex-column justify-content-between p-4">
      <div class="d-flex justify-content-between align-items-start mb-2">
       <div>
@@ -75,7 +75,7 @@
    </div>
 
    {{-- بطاقة: طلبات المكافآت (استبدال النقاط) --}}
-   <div class="col-lg-3 col-md-6">
+   {{-- <div class="col-lg-3 col-md-6">
     <div class="custom-card h-100 d-flex flex-column justify-content-between p-4">
      <div class="d-flex justify-content-between align-items-start mb-2">
       <div>
@@ -92,7 +92,7 @@
       مراجعة الطلبات <i class="fa-solid fa-arrow-left fa-sm ms-1"></i>
      </a>
     </div>
-   </div>
+   </div> --}}
 
   </div>
 
