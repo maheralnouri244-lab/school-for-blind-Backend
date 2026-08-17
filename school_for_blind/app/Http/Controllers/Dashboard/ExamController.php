@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Events\ExamPublished;
 use App\Http\Controllers\Controller;
 use App\Models\Choice;
 use App\Models\Exam;
@@ -132,7 +133,7 @@ class ExamController extends Controller
         }
 
         $exam->update(['is_published' => true]);
-
+event(new ExamPublished($exam));
         return redirect()->back()->with('success', 'تم نشر الامتحان للطلاب بنجاح.');
     }
 

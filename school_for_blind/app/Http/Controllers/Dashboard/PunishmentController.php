@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Events\PunishmentApplied;
+use App\Events\PunishmentRemoved;
 use App\Http\Controllers\Controller;
 use App\Models\Punishable;
 use App\Models\Punishment;
 use App\Models\Report;
+use App\Models\Student;
+use App\Models\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -70,6 +74,12 @@ class PunishmentController extends Controller
             'admin_id' => Auth::guard('admin')->id(),
             'expires_at' => $expiresAt,
         ]);
+if ($user instanceof Student || $user instanceof Teacher) {
+    $reason = $punishment->name ?? 'مخالفة التعليمات';
+    $formattedExpiresAt = $expiresAt ? $expiresAt->format('Y-m-d H:i') : null;
+    
+    event(new PunishmentApplied($user, $reason, $formattedExpiresAt));
+}
 
         if ($request->filled('report_id')) {
             Report::where('id', $request->report_id)->update(['status' => 'reviewed']);
@@ -99,7 +109,12 @@ class PunishmentController extends Controller
         $punishable->update([
             'expires_at' => Carbon::now()
         ]);
-
+$user = $punishable->punishable;
+if ($user instanceof Student || $user instanceof Teacher) {
+    $punishmentName = $punishable->punishment->name ?? 'العقوبة';
+    
+    event(new PunishmentRemoved($user, $punishmentName));
+}     
         return back()->with('success', 'تم إلغاء العقوبة ورفع التقييد عن المستخدم.');
     }
 }
