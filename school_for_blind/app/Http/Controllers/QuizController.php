@@ -100,33 +100,12 @@ class QuizController extends Controller
             }
 
          DB::commit();
+ 
+          $this->recalculateQuizTotals($quiz);
+$quiz->load('questions.choices');
 
-            $this->recalculateQuizTotals($quiz);
-            $quiz->load('questions.choices');
-
-           if ($lesson && $lesson->class_id) {
+if ($lesson && $lesson->class_id) {
     event(new QuizCreated($quiz, $lesson->class_id));
-
-    $students = Student::where('class_id', $lesson->class_id)
-        ->whereNotNull('fcm_token')
-        ->get();
-
-    if ($students->isNotEmpty()) {
-        $fcmService = app(FcmService::class);
-        $subjectName = $quiz->subject->name ?? 'المادة'; 
-
-        foreach ($students as $student) {
-            $fcmService->sendNotification(
-                $student, 
-                'اختبار جديد! 📝',
-                "تم إضافة اختبار جديد في مادة {$subjectName}",
-                [
-                    'quiz_id' => (string) $quiz->id, 
-                    'type'    => 'new_quiz'
-                ]
-            );
-        }
-    }
 }
 
         } catch (\Exception $e) {

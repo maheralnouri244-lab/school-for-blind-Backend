@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\QuizGraded;
 use App\Models\QuizSubmission;
 use App\Models\StudentAnswer;
 use App\Models\Teacher;
@@ -136,7 +137,8 @@ $teacherSectionIds = $teacher->classes()->pluck('class_id')->toArray();
         $submission->save();
 
         DB::commit();
-
+        $submission->load(['student.parent', 'quiz']);
+event(new QuizGraded($submission));
         return response()->json([
             'status'  => 'success',
             'message' => 'تم رصد علامات الأسئلة المقالية وتحديث النتيجة النهائية للاختبار بنجاح!',
