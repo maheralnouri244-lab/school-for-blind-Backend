@@ -256,7 +256,7 @@ Route::get('/past-exams/{id}/questions', [StudentpastexamController::class, 'get
 
 Route::get('/past-exams/{id}/solutions', [StudentpastexamController::class, 'getPastExamWithSolutions']);
 
-Route::get('/exams', [StudentExamController::class, 'getExamsBySubject']);
+Route::get('/exams', [StudentExamController::class, 'getExamsBySubject'])->middleware('auth:sanctum');
 Route::get('/exams/{id}/questions', [StudentExamController::class, 'getQuestionsByExam']);
 Route::get('/exams/{id}/solutions', [StudentExamController::class, 'getExamWithSolutions']);
 Route::post('/exams/submit-answer', [StudentExamController::class, 'submitAnswer'])->middleware(['auth:sanctum', 'CheckIfDismissed']);

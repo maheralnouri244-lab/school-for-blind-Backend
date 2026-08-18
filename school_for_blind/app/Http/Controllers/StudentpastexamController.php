@@ -10,16 +10,24 @@ use Illuminate\Http\JsonResponse;
 
 class StudentpastexamController extends Controller
 {
-   public function getPastExamsBySubject(Request $request)
+  public function getPastExamsBySubject(Request $request)
 {
     $subjectId = $request->query('subject_id');
     $userId = Auth::id();
 
     $exams = PastExam::where('subject_id', $subjectId)
-        ->withExists(['favorites as is_favorited' => function ($q) use ($userId) {
-            $q->where('user_id', $userId);
-        }])
-        ->get(); 
+        ->select('past_exams.*')
+        ->selectRaw('(EXISTS (
+            SELECT 1 FROM favorites 
+            WHERE favorites.favorable_id = past_exams.id 
+            AND favorites.favorable_type LIKE "%PastExam%" 
+            AND favorites.user_id = ?
+        )) as is_favorited', [$userId])
+        ->get()
+        ->map(function ($exam) {
+            $exam->is_favorited = (bool) $exam->is_favorited;
+            return $exam;
+        });
 
     return response()->json([
         'status' => 'success',
