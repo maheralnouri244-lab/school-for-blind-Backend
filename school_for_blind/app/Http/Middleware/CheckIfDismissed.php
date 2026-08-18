@@ -41,9 +41,9 @@ class CheckIfDismissed
                 ->first();
 
             if ($dismissalRecord) {
-                if (method_exists($user, 'currentAccessToken') && $user->currentAccessToken()) {
-                    $user->currentAccessToken()->delete();
-                }
+                // if (method_exists($user, 'currentAccessToken') && $user->currentAccessToken()) {
+                //     $user->currentAccessToken()->delete();
+                // }
 
                 $expiresAt = $dismissalRecord->expires_at;
                 $message = 'تم تقييد حسابك وفصلك من النظام.';
