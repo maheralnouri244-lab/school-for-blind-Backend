@@ -13,4 +13,17 @@ class PunishmentObjection extends Model
         'status',
         'reason',
     ];
+
+    public function student()
+    {
+        return $this->belongsTo(Student::class);
+    }
+    public function caregiver()
+    {
+        return $this->belongsTo(Caregiver::class);
+    }
+    public function punishableRecord()
+    {
+        return $this->belongsTo(Punishable::class, 'punishable_record_id');
+    }
 }

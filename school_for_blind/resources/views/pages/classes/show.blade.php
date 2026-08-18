@@ -91,6 +91,12 @@
                             </a>
                           </li>
                           <li>
+                            <a class="dropdown-menu-item dropdown-item cursor-pointer text-warning"
+                              onclick="openObjectionsModal({{ $student->id }}, '{{ $student->fullname }}')">
+                              <i class="fa-solid fa-shield-halved me-2"></i>اعتراضات العقوبات
+                            </a>
+                          </li>
+                          <li>
                             <a class="dropdown-menu-item dropdown-item cursor-pointer text-info"
                               onclick="openExcusesModal({{ $student->id }}, '{{ $student->fullname }}')">
                               <i class="fa-solid fa-envelope-open-text me-2"></i>تذاكر الغياب
@@ -123,8 +129,6 @@
         </div>
       </div>
 
-      {{-- 2. قائمة الأساتذة (الجهة اليسرى) --}}
-      {{-- 2. قائمة الأساتذة (الجهة اليسرى) --}}
       <div class="col-lg-5">
         <div class="custom-card h-100 p-4">
           <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom"
@@ -277,6 +281,35 @@
             </button>
           </div>
         </form>
+      </div>
+    </div>
+  </div>
+
+  {{-- Modal اعتراضات العقوبات --}}
+  <div class="modal fade glass-modal" id="objectionsModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable text-end" dir="rtl">
+      <div class="modal-content border-0 shadow-lg" style="border-radius: 16px;">
+        <div class="modal-header border-bottom pb-3" style="border-color: var(--border-color) !important;">
+          <div class="d-flex align-items-center gap-2">
+            <div class="p-2 rounded-circle bg-soft-warning d-flex align-items-center justify-content-center"
+              style="width: 40px; height: 40px;">
+              <i class="fa-solid fa-shield-halved text-warning fs-5"></i>
+            </div>
+            <div>
+              <h5 class="modal-title fw-bold mb-0" style="color: var(--text-main);">تذاكر الاعتراض على العقوبات</h5>
+              <small class="text-muted">الطالب: <span id="objectionsStudentNameDisplay" class="fw-bold"></span></small>
+            </div>
+          </div>
+          <button type="button" class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body py-4" id="objectionsModalBody" style="min-height: 200px;">
+          <div class="d-flex justify-content-center align-items-center h-100">
+            <div class="spinner-border text-warning" role="status">
+              <span class="visually-hidden">جاري التحميل...</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -476,9 +509,9 @@
         url = url.replace(':teacher_id', teacherId);
         form.action = url;
         form.innerHTML = `
-                                    @csrf
-                                    @method('DELETE')
-                                `;
+                                          @csrf
+                                          @method('DELETE')
+                                      `;
         document.body.appendChild(form);
         form.submit();
       }
@@ -541,9 +574,9 @@
     function openExcusesModal(studentId, studentName) {
       document.getElementById('excusesStudentNameDisplay').textContent = studentName;
       document.getElementById('excusesModalBody').innerHTML = `
-                   <div class="d-flex justify-content-center align-items-center" style="height: 150px;">
-                       <div class="spinner-border text-info" role="status"></div>
-                   </div>`;
+                         <div class="d-flex justify-content-center align-items-center" style="height: 150px;">
+                             <div class="spinner-border text-info" role="status"></div>
+                         </div>`;
 
       var excusesModal = new bootstrap.Modal(document.getElementById('excusesModal'));
       excusesModal.show();
@@ -576,6 +609,48 @@
             }
           })
           .catch(error => console.error('Error updating excuse:', error));
+      }
+    }
+
+    function openObjectionsModal(studentId, studentName) {
+      document.getElementById('objectionsStudentNameDisplay').textContent = studentName;
+      document.getElementById('objectionsModalBody').innerHTML = `
+                     <div class="d-flex justify-content-center align-items-center" style="height: 150px;">
+                         <div class="spinner-border text-warning" role="status"></div>
+                     </div>`;
+
+      var modal = new bootstrap.Modal(document.getElementById('objectionsModal'));
+      modal.show();
+
+      fetch(`/students/${studentId}/objections`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            document.getElementById('objectionsModalBody').innerHTML = data.html;
+          }
+        })
+        .catch(error => console.error('Error fetching objections:', error));
+    }
+
+    function updateObjectionStatus(objectionId, status, studentId) {
+      if (confirm('هل أنت متأكد من تغيير حالة الاعتراض؟')) {
+        fetch(`/objections/${objectionId}/status`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}' // تأكد أن الـ CSRF متاح هنا
+          },
+          body: JSON.stringify({ status: status })
+        })
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              // إعادة تحميل النافذة بنفس الطالب لرؤية التحديثات
+              let studentName = document.getElementById('objectionsStudentNameDisplay').textContent;
+              openObjectionsModal(studentId, studentName);
+            }
+          })
+          .catch(error => console.error('Error updating objection:', error));
       }
     }
   </script>

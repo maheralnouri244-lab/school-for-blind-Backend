@@ -327,6 +327,7 @@ Route::middleware(['auth:sanctum', 'CheckIfDismissed'])->group(function () {
 });
 Route::get('/notifications', [NotificationController::class, 'index'])->middleware(['auth:sanctum', 'CheckIfDismissed']);
 
+Route::middleware(['auth:sanctum', CheckIsStudent::class])->get('/student/check-dismissal', [StudentController::class, 'checkDismissalStatus']);
 
 // Route::get('magic-login/{id}', [StudentController::class, 'magicLogin'])
 //     ->name('student.magic.login');

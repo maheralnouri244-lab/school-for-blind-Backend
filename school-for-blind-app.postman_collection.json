@@ -19413,6 +19413,244 @@
               "body": "{\n    \"status\": \"success\",\n    \"message\": \"تم تسجيل الدخول بنجاح\",\n    \"token\": \"1|UJBPzJauRQ7VXlmDbbMwRxbBQKoPc4G4BIKXnEN030c85dcd\",\n    \"user\": {\n        \"id\": 1,\n        \"fullname\": \"Ayahammamieh\",\n        \"phone\": \"0948568727\",\n        \"parent_phone\": \"0948568727\",\n        \"points\": 0,\n        \"fcm_token\": null,\n        \"level\": \"twelfth\",\n        \"phone_verified_at\": \"2026-04-28 12:28:55\",\n        \"status\": \"approved\",\n        \"otp_expires_at\": null,\n        \"verification_token\": null,\n        \"token_expires_at\": null,\n        \"DocumentaryEvidence\": \"students/documents/1777379335_aya.jpg\",\n        \"created_at\": \"2026-04-28T12:28:55.000000Z\",\n        \"updated_at\": \"2026-04-28T12:28:55.000000Z\"\n    }\n}"
             }
           ]
+        },
+        {
+          "name": "check dismissal",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "23|oXhGc7z7h7xgUVtaVoPHCGH7GWbeEdnHLmyPaVMWbbc01878",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "student_id",
+                  "value": "1",
+                  "type": "text",
+                  "uuid": "6a5ed2d2-0dcc-4ed0-944d-13f0c6d7d611"
+                },
+                {
+                  "key": "punishable_record_id",
+                  "value": "2",
+                  "type": "text",
+                  "uuid": "9bddfc7c-f8e5-42ce-a379-02b3bcb0639e"
+                },
+                {
+                  "key": "reason",
+                  "value": "الطالب لم يقم بهذا التصرف وهناك سوء تفاهم.",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/student/check-dismissal",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "student",
+                "check-dismissal"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "not dismissal",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "student_id",
+                      "value": "1",
+                      "type": "text",
+                      "uuid": "6a5ed2d2-0dcc-4ed0-944d-13f0c6d7d611"
+                    },
+                    {
+                      "key": "punishable_record_id",
+                      "value": "2",
+                      "type": "text",
+                      "uuid": "9bddfc7c-f8e5-42ce-a379-02b3bcb0639e"
+                    },
+                    {
+                      "key": "reason",
+                      "value": "الطالب لم يقم بهذا التصرف وهناك سوء تفاهم.",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/student/check-dismissal",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "student",
+                    "check-dismissal"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.30"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 18 Aug 2026 10:46:41 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"is_dismissed\": false\n}"
+            },
+            {
+              "name": "dismissal",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "student_id",
+                      "value": "1",
+                      "type": "text",
+                      "uuid": "6a5ed2d2-0dcc-4ed0-944d-13f0c6d7d611"
+                    },
+                    {
+                      "key": "punishable_record_id",
+                      "value": "2",
+                      "type": "text",
+                      "uuid": "9bddfc7c-f8e5-42ce-a379-02b3bcb0639e"
+                    },
+                    {
+                      "key": "reason",
+                      "value": "الطالب لم يقم بهذا التصرف وهناك سوء تفاهم.",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/student/check-dismissal",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "student",
+                    "check-dismissal"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.30"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 18 Aug 2026 10:47:26 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"is_dismissed\": true\n}"
+            }
+          ]
         }
       ]
     },

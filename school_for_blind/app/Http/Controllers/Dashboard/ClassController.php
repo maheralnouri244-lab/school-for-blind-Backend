@@ -122,7 +122,7 @@ class ClassController extends Controller
         $excuse->update([
             'status' => $request->status
         ]);
-event(new AbsenceExcuseStatusUpdated($excuse));
+        event(new AbsenceExcuseStatusUpdated($excuse));
         return response()->json(['success' => true, 'message' => 'تم تحديث حالة التبرير بنجاح.']);
     }
 
@@ -166,7 +166,7 @@ event(new AbsenceExcuseStatusUpdated($excuse));
         $student = Student::with('class')->findOrFail($student_id);
 
         $query = Absence::with([
-            'room.subject', 
+            'room.subject',
             'excuse' => function ($q) use ($student_id) {
                 $q->where('student_id', $student_id);
             }
@@ -203,5 +203,50 @@ event(new AbsenceExcuseStatusUpdated($excuse));
         $absences = $query->latest('date')->paginate(15)->withQueryString();
 
         return view('pages.students.absences', compact('student', 'absences'));
+    }
+
+    public function getStudentObjections($student_id)
+    {
+        $objections = \App\Models\PunishmentObjection::with(['punishableRecord.punishment', 'caregiver'])
+            ->where('student_id', $student_id)
+            ->latest()
+            ->get();
+
+        $html = view('pages.classes.partials.objections_list', compact('objections'))->render();
+
+        return response()->json([
+            'success' => true,
+            'html' => $html
+        ]);
+    }
+
+    public function updateObjectionStatus(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|in:approved,rejected'
+        ]);
+
+        $objection = \App\Models\PunishmentObjection::with('punishableRecord')->findOrFail($id);
+        
+        $objection->update([
+            'status' => $request->status
+        ]);
+
+        if ($request->status === 'approved') {
+
+            if ($objection->punishableRecord) {
+                $objection->punishableRecord->delete();
+            }
+            $message = 'تم قبول الاعتراض وحذف العقوبة من سجل الطالب بنجاح.';
+        } else {
+            $message = 'تم رفض الاعتراض، وستبقى العقوبة سارية على الطالب.';
+        }
+
+        // event(new PunishmentObjectionStatusUpdated($objection));
+
+        return response()->json([
+            'success' => true,
+            'message' => $message
+        ]);
     }
 }

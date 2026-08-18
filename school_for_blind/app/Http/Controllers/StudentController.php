@@ -192,4 +192,23 @@ class StudentController extends Controller
         }
     }
 
+    public function checkDismissalStatus(Request $request): JsonResponse
+    {
+        $student = $request->user();
+
+        $isDismissed = DB::table('punishables')
+            ->join('punishments', 'punishables.punishment_id', '=', 'punishments.id')
+            ->where('punishables.punishable_id', $student->id)
+            ->where('punishables.punishable_type', get_class($student))
+            ->where('punishments.name', 'Dismissal')
+            ->where(function ($query) {
+                $query->whereNull('punishables.expires_at')
+                    ->orWhere('punishables.expires_at', '>', Carbon::now());
+            })
+            ->exists();
+
+        return response()->json([
+            'is_dismissed' => $isDismissed
+        ]);
+    }
 }

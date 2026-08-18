@@ -194,6 +194,8 @@ Route::middleware([CheckAdminRole::class . ':Super Admin,Academic Manager,Modera
     Route::get('/students/{student_id}/excuses', [ClassController::class, 'getStudentExcuses'])->name('students.excuses.get');
     Route::post('/excuses/{id}/status', [ClassController::class, 'updateExcuseStatus'])->name('excuses.status.update');
     Route::get('/excuses', [ClassController::class, 'allExcuses'])->name('excuses.index');
+    Route::get('/students/{student_id}/objections', [ClassController::class, 'getStudentObjections'])->name('students.objections.get');
+    Route::post('/objections/{id}/status', [ClassController::class, 'updateObjectionStatus'])->name('objections.status.update');
     Route::get('/students/{student_id}/absences', [ClassController::class, 'studentAbsences'])->name('students.absences');
     Route::get('/students/{student}/reports', [StudentReportWebController::class, 'index'])->name('students.reports');
 });
