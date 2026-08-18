@@ -16,9 +16,9 @@ class CheckIfDismissed
 
         if ($user) {
             if (isset($user->status) && $user->status === 'dismissed') {
-                if (method_exists($user, 'currentAccessToken') && $user->currentAccessToken()) {
-                    $user->currentAccessToken()->delete();
-                }
+                // if (method_exists($user, 'currentAccessToken') && $user->currentAccessToken()) {
+                //     $user->currentAccessToken()->delete();
+                // }
 
                 return response()->json([
                     'success' => false,
