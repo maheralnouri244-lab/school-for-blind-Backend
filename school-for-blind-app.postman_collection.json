@@ -3,7 +3,7 @@
     "_postman_id": "9aef9af2-148e-4d79-94c8-546cc662a7aa",
     "name": "school-for-blind-app",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "56921522",
+    "_exporter_id": "56938336",
     "_collection_link": "https://go.postman.co/collection/56921522-9aef9af2-148e-4d79-94c8-546cc662a7aa?source=collection_link"
   },
   "item": [
@@ -1482,7 +1482,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "44|0Dohw5SHUUf26EjjU8mH4ICatxth3sbPSHnLUm2i9190abc9",
+                  "value": "oc4JmLy7PmfUgyZX6wmsX38HehDirsk87IzuZ1Yvf10610df",
                   "type": "string"
                 }
               ]
@@ -1500,13 +1500,13 @@
               "formdata": [
                 {
                   "key": "room_name",
-                  "value": "test4",
+                  "value": "test3",
                   "type": "text",
                   "uuid": "26b7937c-5ff4-433d-8a99-e78c2a18b773"
                 },
                 {
                   "key": "class_id",
-                  "value": "4",
+                  "value": "1",
                   "type": "text",
                   "uuid": "f62e8c21-a8d5-408b-b948-6604dc8bbe01"
                 }
@@ -3179,18 +3179,18 @@
               "formdata": [
                 {
                   "key": "phone",
-                  "value": "0981226535",
+                  "value": "0930855168",
                   "type": "text",
                   "uuid": "9e1fcb36-2d13-497d-82b1-fe5beaafa5a5"
                 },
                 {
                   "key": "full_name",
-                  "value": "maher alnouri",
+                  "value": "آية حمامية",
                   "type": "text",
                   "uuid": "0592b53b-271e-4b03-a74c-e89e6c3800b0"
                 },
                 {
-                  "key": "password",
+                  "key": "password_confirmation",
                   "value": "12345678",
                   "type": "text",
                   "uuid": "6db0a4cf-1d78-4bb8-8d8e-f6f575304903"
@@ -3209,7 +3209,7 @@
                 },
                 {
                   "key": "fcm_token",
-                  "value": "123",
+                  "value": "12345678",
                   "type": "text",
                   "uuid": "db367923-24f8-4391-9b85-3d2bb92301d1"
                 },
@@ -3217,16 +3217,13 @@
                   "key": "cv",
                   "type": "file",
                   "uuid": "50cdf211-6039-469c-b454-aa4a23a6bb8d",
-                  "src": [
-                    "/C:/Users/maher/Downloads/Telegram Desktop/عملي الاوتومات واللغات الصورية.pdf",
-                    "/C:/Users/maher/Downloads/Telegram Desktop/عملي الاوتومات واللغات الصورية.pdf"
-                  ]
+                  "src": "/C:/Users/USER/Downloads/Telegram Desktop/اساسيات شبكات نموذج 1.pdf"
                 },
                 {
-                  "key": "password_confirmation",
+                  "key": "password",
                   "value": "12345678",
                   "type": "text",
-                  "uuid": "24b21d39-756c-479d-b4f5-bd751cb623ce"
+                  "uuid": "fc752a64-9af0-4b06-b1b2-6ccc52660ee8"
                 }
               ]
             },
@@ -3513,7 +3510,7 @@
                   "bearer": [
                     {
                       "key": "token",
-                      "value": "43|amoc7jOQ4LOj9aPXDrUXLPGXwOu0YPUx2BSVevZnf6b1e7b0",
+                      "value": "44|HLryqjM28Y6WDltPq3n4ct0g4sxzbkGMEqbq4VL284dfbe5e",
                       "type": "string"
                     }
                   ]
@@ -3597,6 +3594,65 @@
                   ],
                   "cookie": [],
                   "body": "{\n    \"status\": \"success\",\n    \"data\": [\n        {\n            \"greeting_message\": \"إلى ولي أمر الطالب: طالب تجريبي\",\n            \"student_id\": 301,\n            \"student_name\": \"طالب تجريبي\",\n            \"report_data\": {\n                \"date\": \"2026-07-17\",\n                \"attendance\": [\n                    {\n                        \"room_id\": 1,\n                        \"room_name\": \"بث الفلسفة المباشر\",\n                        \"can_excuse\": true,\n                        \"is_attended\": false,\n                        \"excuse_status\": null,\n                        \"total_room_minutes\": 60,\n                        \"student_presence_minutes\": 30\n                    }\n                ],\n                \"punishments\": [\n                    {\n                        \"name\": \"إنذار تأخر\",\n                        \"level\": 1,\n                        \"description\": \"إنذار بسبب التأخر عن البث\"\n                    }\n                ],\n                \"grades_today\": [\n                    {\n                        \"type\": \"quiz\",\n                        \"score\": 85,\n                        \"title\": \"المعرفة ومصادرها\",\n                        \"subject_name\": \"الفلسفة\"\n                    },\n                    {\n                        \"type\": \"exam\",\n                        \"score\": \"180.00\",\n                        \"title\": \"مذاكرة الفلسفة\",\n                        \"subject_name\": \"الفلسفة\"\n                    },\n                    {\n                        \"type\": \"exam\",\n                        \"score\": \"90.00\",\n                        \"title\": \"مذاكرة اللغة العربية\",\n                        \"subject_name\": \"اللغة العربية\"\n                    }\n                ]\n            },\n            \"message\": \"تم جلب التقرير بنجاح\"\n        }\n    ]\n}"
+                },
+                {
+                  "name": "success with new punishment",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "http://127.0.0.1:8000/api/parent/reports/daily",
+                      "protocol": "http",
+                      "host": [
+                        "127",
+                        "0",
+                        "0",
+                        "1"
+                      ],
+                      "port": "8000",
+                      "path": [
+                        "api",
+                        "parent",
+                        "reports",
+                        "daily"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "Host",
+                      "value": "127.0.0.1:8000"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "close"
+                    },
+                    {
+                      "key": "X-Powered-By",
+                      "value": "PHP/8.3.30"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, private"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Tue, 18 Aug 2026 10:04:18 GMT"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Access-Control-Allow-Origin",
+                      "value": "*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"status\": \"success\",\n    \"data\": [\n        {\n            \"greeting_message\": \"إلى ولي أمر الطالب: طالب First Division - ninth\",\n            \"student_id\": 1,\n            \"student_name\": \"طالب First Division - ninth\",\n            \"report_data\": {\n                \"date\": \"2026-08-18\",\n                \"attendance\": [],\n                \"punishments\": [\n                    {\n                        \"id\": 2,\n                        \"name\": \"Mute\",\n                        \"level\": 2,\n                        \"can_object\": true,\n                        \"description\": \"منع من المحادثات - درجة ثانية (لمدة 3 أيام)\",\n                        \"objection_status\": null\n                    },\n                    {\n                        \"id\": 3,\n                        \"name\": \"Dismissal\",\n                        \"level\": 3,\n                        \"can_object\": true,\n                        \"description\": \"فصل نهائي من النظام وتجميد الحساب\",\n                        \"objection_status\": null\n                    },\n                    {\n                        \"id\": 4,\n                        \"name\": \"Warning\",\n                        \"level\": 1,\n                        \"can_object\": false,\n                        \"description\": \"إنذار أكاديمي (تأخر عن درس يقام حاليا)\",\n                        \"objection_status\": null\n                    },\n                    {\n                        \"id\": 5,\n                        \"name\": \"Mute\",\n                        \"level\": 1,\n                        \"can_object\": true,\n                        \"description\": \"منع من المحادثات - درجة أولى (لمدة يوم واحد)\",\n                        \"objection_status\": null\n                    },\n                    {\n                        \"id\": 6,\n                        \"name\": \"Mute\",\n                        \"level\": 1,\n                        \"can_object\": true,\n                        \"description\": \"منع من المحادثات - درجة أولى (لمدة يوم واحد)\",\n                        \"objection_status\": null\n                    }\n                ],\n                \"grades_today\": []\n            },\n            \"message\": \"تم جلب التقرير بنجاح\"\n        }\n    ]\n}"
                 }
               ]
             },
@@ -3810,7 +3866,7 @@
                   "bearer": [
                     {
                       "key": "token",
-                      "value": "43|amoc7jOQ4LOj9aPXDrUXLPGXwOu0YPUx2BSVevZnf6b1e7b0",
+                      "value": "RSp7iWpaLNZQ2bH6VKE2pIBI7LIPTuhbWykFUfEFbafbe889",
                       "type": "string"
                     }
                   ]
@@ -4135,6 +4191,155 @@
                   "body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"student_name\": \"طالب تجريبي\",\n        \"quizzes\": [\n            {\n                \"title\": \"المعرفة ومصادرها\",\n                \"student_score\": 85,\n                \"teacher_assigned_mark\": 85,\n                \"graded_at\": \"2026-07-17 14:49:34\"\n            }\n        ],\n        \"exams\": [\n            {\n                \"title\": \"مذاكرة الفلسفة\",\n                \"max_score\": 200,\n                \"student_score\": \"180.00\",\n                \"graded_at\": \"2026-07-17 14:49:34\"\n            }\n        ]\n    }\n}"
                 }
               ]
+            },
+            {
+              "name": "Objection to Punishment",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "44|HLryqjM28Y6WDltPq3n4ct0g4sxzbkGMEqbq4VL284dfbe5e",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "student_id",
+                      "value": "1",
+                      "type": "text",
+                      "uuid": "6a5ed2d2-0dcc-4ed0-944d-13f0c6d7d611"
+                    },
+                    {
+                      "key": "punishable_record_id",
+                      "value": "2",
+                      "type": "text",
+                      "uuid": "9bddfc7c-f8e5-42ce-a379-02b3bcb0639e"
+                    },
+                    {
+                      "key": "reason",
+                      "value": "الطالب لم يقم بهذا التصرف وهناك سوء تفاهم.",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/parent/punishment-objection",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "parent",
+                    "punishment-objection"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "success",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "key": "student_id",
+                          "value": "1",
+                          "type": "text",
+                          "uuid": "6a5ed2d2-0dcc-4ed0-944d-13f0c6d7d611"
+                        },
+                        {
+                          "key": "punishable_record_id",
+                          "value": "2",
+                          "type": "text",
+                          "uuid": "9bddfc7c-f8e5-42ce-a379-02b3bcb0639e"
+                        },
+                        {
+                          "key": "reason",
+                          "value": "الطالب لم يقم بهذا التصرف وهناك سوء تفاهم.",
+                          "type": "text"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "http://127.0.0.1:8000/api/parent/punishment-objection",
+                      "protocol": "http",
+                      "host": [
+                        "127",
+                        "0",
+                        "0",
+                        "1"
+                      ],
+                      "port": "8000",
+                      "path": [
+                        "api",
+                        "parent",
+                        "punishment-objection"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "Host",
+                      "value": "127.0.0.1:8000"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "close"
+                    },
+                    {
+                      "key": "X-Powered-By",
+                      "value": "PHP/8.3.30"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, private"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Tue, 18 Aug 2026 10:07:26 GMT"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Access-Control-Allow-Origin",
+                      "value": "*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"status\": \"success\",\n    \"message\": \"تم إرسال الاعتراض إلى الإدارة بنجاح وسيتم مراجعته.\",\n    \"data\": {\n        \"student_id\": 1,\n        \"caregiver_id\": 1,\n        \"punishable_record_id\": \"2\",\n        \"reason\": \"الطالب لم يقم بهذا التصرف وهناك سوء تفاهم.\",\n        \"status\": \"pending\",\n        \"updated_at\": \"2026-08-18T10:07:26.000000Z\",\n        \"created_at\": \"2026-08-18T10:07:26.000000Z\",\n        \"id\": 1\n    }\n}"
+                }
+              ]
             }
           ]
         },
@@ -4156,7 +4361,7 @@
                   }
                 ],
                 "url": {
-                  "raw": "http://127.0.0.1:8000/api/caregiver/login?phone=0948568727&password=zm3acdltxx",
+                  "raw": "http://127.0.0.1:8000/api/caregiver/login?phone=0911111111&password=12345678",
                   "protocol": "http",
                   "host": [
                     "127",
@@ -4173,11 +4378,11 @@
                   "query": [
                     {
                       "key": "phone",
-                      "value": "0948568727"
+                      "value": "0911111111"
                     },
                     {
                       "key": "password",
-                      "value": "zm3acdltxx"
+                      "value": "12345678"
                     }
                   ]
                 }
@@ -4269,55 +4474,20 @@
                   "body": "{\n    \"success\": true,\n    \"message\": \"تم تسجيل الدخول بنجاح.\",\n    \"data\": {\n        \"user\": {\n            \"id\": 1,\n            \"phone\": \"0993297136\",\n            \"fcm_token\": null\n        },\n        \"token\": \"47|ZL9JuzdXIa8W01lh5QOZyKzL9vqEAiiRSi2PAm5i667afdd8\"\n    }\n}"
                 }
               ]
-            }
-          ]
-        },
-        {
-          "name": "logout",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "LBJYRbQeSJcVZFJH43n5DGrS4Znzs1yfixmtCWIzc7c97cde",
-                  "type": "string"
-                }
-              ]
             },
-            "method": "POST",
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "formdata",
-              "formdata": []
-            },
-            "url": {
-              "raw": "http://127.0.0.1:8000/api/caregiver/logout",
-              "protocol": "http",
-              "host": [
-                "127",
-                "0",
-                "0",
-                "1"
-              ],
-              "port": "8000",
-              "path": [
-                "api",
-                "caregiver",
-                "logout"
-              ]
-            }
-          },
-          "response": [
             {
-              "name": "success",
-              "originalRequest": {
+              "name": "logout",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "LBJYRbQeSJcVZFJH43n5DGrS4Znzs1yfixmtCWIzc7c97cde",
+                      "type": "string"
+                    }
+                  ]
+                },
                 "method": "POST",
                 "header": [
                   {
@@ -4347,41 +4517,76 @@
                   ]
                 }
               },
-              "status": "OK",
-              "code": 200,
-              "_postman_previewlanguage": "Text",
-              "header": [
+              "response": [
                 {
-                  "key": "Host",
-                  "value": "127.0.0.1:8000"
-                },
-                {
-                  "key": "Connection",
-                  "value": "close"
-                },
-                {
-                  "key": "X-Powered-By",
-                  "value": "PHP/8.2.12"
-                },
-                {
-                  "key": "Cache-Control",
-                  "value": "no-cache, private"
-                },
-                {
-                  "key": "Date",
-                  "value": "Tue, 16 Jun 2026 08:38:24 GMT"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                },
-                {
-                  "key": "Access-Control-Allow-Origin",
-                  "value": "*"
+                  "name": "success",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": []
+                    },
+                    "url": {
+                      "raw": "http://127.0.0.1:8000/api/caregiver/logout",
+                      "protocol": "http",
+                      "host": [
+                        "127",
+                        "0",
+                        "0",
+                        "1"
+                      ],
+                      "port": "8000",
+                      "path": [
+                        "api",
+                        "caregiver",
+                        "logout"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "Text",
+                  "header": [
+                    {
+                      "key": "Host",
+                      "value": "127.0.0.1:8000"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "close"
+                    },
+                    {
+                      "key": "X-Powered-By",
+                      "value": "PHP/8.2.12"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, private"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Tue, 16 Jun 2026 08:38:24 GMT"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Access-Control-Allow-Origin",
+                      "value": "*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"success\": true,\n    \"message\": \"تم تسجيل الخروج بنجاح وإبطال صلاحية الجهاز.\"\n}"
                 }
-              ],
-              "cookie": [],
-              "body": "{\n    \"success\": true,\n    \"message\": \"تم تسجيل الخروج بنجاح وإبطال صلاحية الجهاز.\"\n}"
+              ]
             }
           ]
         }
@@ -4653,7 +4858,7 @@
               "formdata": [
                 {
                   "key": "token",
-                  "value": "5LcQEMG9LoKIErMGCilxFEIUJIc8WTD6Q11sDsMdyWEkPH1cBWdF96nLOMdBZpyM",
+                  "value": "oCM4gTwhitEe9fxLpyBX45WsH4sXlzZJIQuxmgY3gD71kSmu4Ntdv2J3EffrlTK2",
                   "type": "text",
                   "uuid": "2681992e-bbcf-4140-bf21-448a8c392245"
                 }
@@ -4771,7 +4976,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "Y5vblyZnkbULZDIzdzm4hzdpT50SbNctLrWouHrd397dd2cb",
+                  "value": "maEI7DyT02m7IO9sZd7yBgovMhwApWRyyLC3l9j32283194c",
                   "type": "string"
                 }
               ]
@@ -4786,7 +4991,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"title\":\"حتى لا تضيع الهوية\",\r\n  \"lesson_id\":1290,\r\n  \"numofquestions\": 2,\r\n  \"timelimit\": 30,\r\n  \"totalmark\": 20,\r\n  \"lesson_name\":\"حتى لا تضيع الهوية\",\r\n  \"questions\": [\r\n    {\r\n      \"type\": \"mcq\",\r\n      \"description\": \"ما هي عاصمة سوريا؟\",\r\n      \"points\": 10,\r\n      \"choices\": [\r\n        { \"text\": \"حلب\", \"is_correct\": false },\r\n        { \"text\": \"دمشق\", \"is_correct\": true }\r\n      ]\r\n    },\r\n    {\r\n      \"type\": \"TF\",\r\n      \"description\": \"الماء يتكون من هيدروجين وأوكسجين.\",\r\n      \"points\": 10,\r\n      \"correct_answer\": \"True\"\r\n    }\r\n  ]\r\n}",
+              "raw": "{\r\n  \"title\":\"حتى لا تضيع الهوية\",\r\n  \"lesson_id\":1294,\r\n  \"numofquestions\": 2,\r\n  \"timelimit\": 30,\r\n  \"totalmark\": 20,\r\n  \"lesson_name\":\"حتى لا تضيع الهوية\",\r\n  \"questions\": [\r\n    {\r\n      \"type\": \"mcq\",\r\n      \"description\": \"ما هي عاصمة سوريا؟\",\r\n      \"points\": 10,\r\n      \"choices\": [\r\n        { \"text\": \"حلب\", \"is_correct\": false },\r\n        { \"text\": \"دمشق\", \"is_correct\": true }\r\n      ]\r\n    },\r\n    {\r\n      \"type\": \"TF\",\r\n      \"description\": \"الماء يتكون من هيدروجين وأوكسجين.\",\r\n      \"points\": 10,\r\n      \"correct_answer\": \"True\"\r\n    }\r\n  ]\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -6413,7 +6618,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "VHFQchVwSFF2kA0LQKYcIpOCiofbrllqTv2fnQaH2eb29502",
+                  "value": "f8AklIyTsFeQOL0pKfm89cdlSxB94mBjWJg0BMJS569b66b3",
                   "type": "string"
                 }
               ]
@@ -6436,25 +6641,25 @@
               "formdata": [
                 {
                   "key": "quiz_id",
-                  "value": "561",
+                  "value": "1",
                   "type": "text",
                   "uuid": "234763b7-dbeb-4ed8-b228-6069a397a628"
                 },
                 {
                   "key": "answers[0][question_id]",
-                  "value": "4138",
+                  "value": "1",
                   "type": "text",
                   "uuid": "99962cab-b73e-40b0-b948-c39c0507b7d1"
                 },
                 {
                   "key": "answers[0][choice_id]",
-                  "value": "5513",
+                  "value": "1",
                   "type": "text",
                   "uuid": "347506e6-54ce-4349-b1b3-0557dc6892f9"
                 },
                 {
                   "key": "answers[1][question_id]",
-                  "value": "4139",
+                  "value": "5",
                   "type": "text",
                   "uuid": "7ef746ad-bcd4-4e7c-b131-0fa9d9276da5"
                 },
@@ -6468,22 +6673,27 @@
                   "key": "answers[2][audio_answer]",
                   "type": "file",
                   "uuid": "94c7cb96-4555-4fde-857f-c2877e79d5a5",
-                  "src": "postman-cloud:///1f1745d9-d44d-4330-988f-4dca0a9c0567",
-                  "disabled": true
+                  "src": "postman-cloud:///1f19a2aa-4d9d-4800-8c09-9b4a62f34367"
                 },
                 {
-                  "key": "answers[2][question_id]",
-                  "value": "195",
+                  "key": "answers[1][choice_id]",
+                  "value": "",
                   "type": "text",
                   "uuid": "b0bf8893-7bb8-4ba8-ac59-c383d56e9c78",
                   "disabled": true
                 },
                 {
-                  "key": "answers[2][text_answer]",
-                  "value": "سورةالعلق",
+                  "key": "answers[1][text_answer]",
+                  "value": "True",
                   "type": "text",
                   "uuid": "a29df64c-8929-4f82-92be-7f7dd948d31b",
                   "disabled": true
+                },
+                {
+                  "key": "answers[2][question_id]",
+                  "value": "9",
+                  "type": "text",
+                  "uuid": "821b4507-54bc-41ef-980f-8466808d4925"
                 }
               ]
             },
@@ -9869,7 +10079,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"type\": \"exam_schedule\",\r\n    \"target_audience\":\"student\",\r\n     \"level\":\"ninth\",\r\n    \"title\": \"برنامج امتحانات الفصل الثاني لعام 2026\", \r\n    \"content\": {\r\n        \"columns\": [\r\n            \"اليوم والتاريخ\",\r\n            \"المادة\",\r\n            \"التوقيت\"\r\n        ],\r\n        \"rows\": [\r\n            {\r\n                \"date\": \"الأحد 2026-06-21\",\r\n                \"subject\": \"الرياضيات\",\r\n                \"time\": \"09:00 AM - 11:00 AM\"\r\n            }\r\n        ]\r\n    }\r\n}",
+              "raw": "{\r\n    \"type\": \"exam_schedule\",\r\n    \"target_audience\":\"caregiver\",\r\n     \"level\":\"ninth\",\r\n    \"title\": \"برنامج امتحانات الفصل الثاني لعام 2026\", \r\n    \"content\": {\r\n        \"columns\": [\r\n            \"اليوم والتاريخ\",\r\n            \"المادة\",\r\n            \"التوقيت\"\r\n        ],\r\n        \"rows\": [\r\n            {\r\n                \"date\": \"الأحد 2026-06-21\",\r\n                \"subject\": \"الرياضيات\",\r\n                \"time\": \"09:00 AM - 11:00 AM\"\r\n            }\r\n        ]\r\n    }\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -9978,7 +10188,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "VEq42VKJITkTUPR8JfGH0G8LRqJAFCmpmTmaiTX4fd084dbd",
+                  "value": "ZdtmO2JhrJrpondeHZBPxB0iAEuzWvmJYxav3wYGd5981172",
                   "type": "string"
                 }
               ]
@@ -15194,7 +15404,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "VHFQchVwSFF2kA0LQKYcIpOCiofbrllqTv2fnQaH2eb29502",
+                  "value": "HidP9Ctvd5otnWrp2l9nijertT0v39MpaIYa68hqaa381a90",
                   "type": "string"
                 }
               ]
@@ -15354,7 +15564,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "VHFQchVwSFF2kA0LQKYcIpOCiofbrllqTv2fnQaH2eb29502",
+                  "value": "HidP9Ctvd5otnWrp2l9nijertT0v39MpaIYa68hqaa381a90",
                   "type": "string"
                 }
               ]
@@ -15369,7 +15579,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"submission_id\":1,\r\n    \"answers\": [\r\n        {\r\n            \"answer_id\": 10,\r\n            \"points_earned\": 10\r\n        }\r\n       \r\n    ]\r\n}",
+              "raw": "{\r\n    \"submission_id\": 11,\r\n    \"answers\": [\r\n        {\r\n            \"answer_id\": 12,\r\n            \"points_earned\": 1\r\n        }\r\n    ]\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -16174,7 +16384,7 @@
                   "bearer": [
                     {
                       "key": "token",
-                      "value": "GJkS9wrBECaSon35jbZaAIkMwN8YFFaxM5eW3fu5bb715860",
+                      "value": "FFsi88QAP4F6lf1zgg3EIPeOF3LyVql3L6WHSkTFa0772919",
                       "type": "string"
                     }
                   ]
@@ -16200,7 +16410,7 @@
                       "key": "attachment",
                       "type": "file",
                       "uuid": "d5e1cb2b-e2de-4ad7-b83b-b1175c6f798a",
-                      "src": "/D:/project/laravel/school-for-blind-Backend/school_for_blind/database/seeders/files/default_audio.ogg"
+                      "src": "postman-cloud:///1f199603-ab4b-4eb0-85c8-c1622acdfbce"
                     }
                   ]
                 },
@@ -18918,7 +19128,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "1|NWf79ZDVPUD1L929isqyfQYHDxLd1yI6k8aGN67d8e714c48",
+                  "value": "Snq1PwPWQNw3jAGW05ejYlo3QaxjHnY7G9wBmxQ8e5c1c5f6",
                   "type": "string"
                 }
               ]
@@ -19217,7 +19427,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "0KEC6gT5C8d8hLexgJAKOx2gHWrLGT1h1YnmLIQY512b47d7",
+                  "value": "Q1j6pyJp5yFervX3AvnTEymSjVZXEaJ418vu9Cwcd1b972ef",
                   "type": "string"
                 }
               ]
@@ -19230,15 +19440,6 @@
                 "type": "text"
               }
             ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"fcm_token\": \"eGTgRM8_D_eOECIrDtDYOa:APA91bG8TJTQ...\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
             "url": {
               "raw": "http://127.0.0.1:8000/api/fcm-token",
               "protocol": "http",
@@ -19327,6 +19528,78 @@
               ],
               "cookie": [],
               "body": "{\n    \"success\": true,\n    \"message\": \"تم تحديث التوكن بنجاح.\",\n    \"data\": {\n        \"user_id\": 1,\n        \"user_type\": \"Student\",\n        \"fcm_token\": \"eGTgRM8_D_eOECIrDtDYOa:APA91bG8TJTQ...\"\n    }\n}"
+            },
+            {
+              "name": "Add",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"fcm_token\": \"eGTgRM8_D_eOECIrDtDYOa:APA91bG8TJTQSmIb53LMvrk10XGUVKQgpcWxyQBJpDd0gW97odTyf0XiocpYRR7P4SrDHtFMmaADi1ydIvX9p0hhrDOsyJTYLlbo-cAUUFov-GCdFrOe6-4\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/fcm-token",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "fcm-token"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 13 Aug 2026 07:16:14 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"logged_out\": true,\n    \"message\": \"عذراً، انتهت صلاحية الجلسة أو تم تسجيل الخروج مسبقاً. يرجى العودة لصفحة تسجيل الدخول\"\n}"
             }
           ]
         },
@@ -19338,7 +19611,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "0KEC6gT5C8d8hLexgJAKOx2gHWrLGT1h1YnmLIQY512b47d7",
+                  "value": "Snq1PwPWQNw3jAGW05ejYlo3QaxjHnY7G9wBmxQ8e5c1c5f6",
                   "type": "string"
                 }
               ]
@@ -19353,7 +19626,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"fcm_token\": \"eGTgRM8_D_eOECIrDtDYOa:APA91bG8TJTQ...\"\r\n}",
+              "raw": "{\r\n  \"fcm_token\": \"eGTgRM8_D_eOECIrDtDYOa:APA91bG8TJTQSmIb53LMvrk10XGUVKQgpcWxyQBJpDd0gW97odTyf0XiocpYRR7P4SrDHtFMmaADi1ydIvX9p0hhrDOsyJTYLlbo-cAUUFov-GCdFrOe6-4\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -19459,7 +19732,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "FCpZoACzAIPnwejscJWPKc3o7tqV1t1NzoDJreIv2a50716c",
+                  "value": "Q1j6pyJp5yFervX3AvnTEymSjVZXEaJ418vu9Cwcd1b972ef",
                   "type": "string"
                 }
               ]
@@ -19551,6 +19824,275 @@
               ],
               "cookie": [],
               "body": "{\n    \"success\": true,\n    \"message\": \"تم جلب الإشعارات بنجاح.\",\n    \"data\": {\n        \"unread_count\": 2,\n        \"total_count\": 2,\n        \"notifications\": [\n            {\n                \"id\": 2,\n                \"title\": \"📢 إعلان جديد: كك\",\n                \"body\": \"كك\",\n                \"data\": {\n                    \"type\": \"announcement\",\n                    \"announcement_id\": \"2\",\n                    \"target_audience\": \"student\",\n                    \"screen\": \"AnnouncementDetailsScreen\"\n                },\n                \"is_read\": false,\n                \"read_at\": null,\n                \"created_at\": \"منذ 13 دقيقة\",\n                \"timestamp\": \"2026-08-10T13:14:26+00:00\"\n            },\n            {\n                \"id\": 1,\n                \"title\": \"📢 إعلان جديد: عطلة\",\n                \"body\": \"نتمنى لكم عطلة سعيدة\",\n                \"data\": {\n                    \"type\": \"announcement\",\n                    \"announcement_id\": \"1\",\n                    \"target_audience\": \"student\",\n                    \"screen\": \"AnnouncementDetailsScreen\"\n                },\n                \"is_read\": false,\n                \"read_at\": null,\n                \"created_at\": \"منذ 13 دقيقة\",\n                \"timestamp\": \"2026-08-10T13:14:24+00:00\"\n            }\n        ]\n    }\n}"
+            },
+            {
+              "name": "notification",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/notifications",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "notifications"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 13 Aug 2026 06:57:26 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"تم جلب الإشعارات بنجاح.\",\n    \"data\": {\n        \"unread_count\": 1,\n        \"total_count\": 1,\n        \"notifications\": [\n            {\n                \"id\": 1,\n                \"title\": \"📢 إعلان جديد: عطلة\",\n                \"body\": \"عطلة سعيدة\",\n                \"data\": {\n                    \"type\": \"announcement\",\n                    \"screen\": \"AnnouncementDetailsScreen\",\n                    \"announcement_id\": \"6\",\n                    \"target_audience\": \"student\"\n                },\n                \"is_read\": false,\n                \"read_at\": null,\n                \"created_at\": \"منذ 46 ثانية\",\n                \"timestamp\": \"2026-08-13T06:56:40+00:00\"\n            }\n        ]\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "mute_status",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "Q1j6pyJp5yFervX3AvnTEymSjVZXEaJ418vu9Cwcd1b972ef",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/mute-status",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "mute-status"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "mute_status",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/mute-status",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "mute-status"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 14 Aug 2026 19:59:36 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"data\": {\n        \"notifications_enabled\": false,\n        \"status\": \"muted\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "mute",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "Q1j6pyJp5yFervX3AvnTEymSjVZXEaJ418vu9Cwcd1b972ef",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/toggle-mute",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "toggle-mute"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "mute",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/toggle-mute",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "toggle-mute"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 14 Aug 2026 19:53:10 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"تم كتم الإشعارات بنجاح.\",\n    \"data\": {\n        \"notifications_enabled\": false\n    }\n}"
             }
           ]
         }

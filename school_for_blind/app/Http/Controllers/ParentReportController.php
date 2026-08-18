@@ -170,6 +170,50 @@ class ParentReportController extends Controller
         ]);
     }
 
+    public function submitObjectiontoPunishment(Request $request)
+    {
+        $request->validate([
+            'student_id' => 'required|exists:students,id',
+            'punishable_record_id' => 'required|exists:punishables,id',
+            'reason' => 'required|string|max:1000',
+        ]);
+        $caregiver = $request->user();
+
+        $student = $caregiver->students()->where('id', $request->student_id)->first();
+        if (!$student) {
+            return response()->json(['status' => 'error', 'message' => 'طالب غير صالح.'], 403);
+        }
+        $existingObjection = \App\Models\PunishmentObjection::where('punishable_record_id', $request->punishable_record_id)
+            ->first();
+        if ($existingObjection) {
+            $statusAr = match ($existingObjection->status) {
+                'pending' => 'قيد المراجعة',
+                'approved' => 'مقبول',
+                'rejected' => 'مرفوض',
+                default => 'غير معروف'
+            };
+
+            return response()->json([
+                'status' => 'error',
+                'message' => "لقد قمت بتقديم اعتراض على هذه العقوبة مسبقاً. (الحالة: $statusAr)",
+            ], 422);
+        }
+
+        $objection = \App\Models\PunishmentObjection::create([
+            'student_id' => $student->id,
+            'caregiver_id' => $caregiver->id,
+            'punishable_record_id' => $request->punishable_record_id,
+            'reason' => $request->reason,
+            'status' => 'pending',
+        ]);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'تم إرسال الاعتراض إلى الإدارة بنجاح وسيتم مراجعته.',
+            'data' => $objection
+        ]);
+    }
+
     public function getSubjectGrades(Request $request, $studentId, $subjectId)
     {
         $caregiver = $request->user();

@@ -30,18 +30,23 @@ class ParentReportService
 
   private function getDailyPunishments(int $studentId, string $date): array
   {
-    return Punishable::where('punishable_id', $studentId)
+    $punishables = Punishable::where('punishable_id', $studentId)
       ->where('punishable_type', Student::class)
       ->whereDate('created_at', $date)
       ->with('punishment')
-      ->get()
-      ->map(function ($punishable) {
-        return [
-          'name' => $punishable->punishment->name,
-          'level' => $punishable->punishment->level,
-          'description' => $punishable->punishment->description,
-        ];
-      })->toArray();
+      ->get();
+    return $punishables->map(function ($punishable) use ($studentId) {
+      $objection = \App\Models\PunishmentObjection::where('punishable_record_id', $punishable->id)
+        ->first();
+      return [
+        'id' => $punishable->id,
+        'name' => $punishable->punishment->name,
+        'level' => $punishable->punishment->level,
+        'description' => $punishable->punishment->description,
+        'objection_status' => $objection ? $objection->status : null,
+        'can_object' => !$objection && $punishable->punishment->name != 'Warning',
+      ];
+    })->toArray();
   }
 
   private function getDailyGrades(int $studentId, string $date): array
