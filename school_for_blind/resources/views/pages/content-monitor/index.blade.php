@@ -74,6 +74,25 @@
      </div>
     </a>
    </div>
+
+   {{-- بطاقة إدارة الكويزات --}}
+   <div class="col-lg-4 col-md-6">
+    <a href="{{ route('dashboard.quizzes.index') }}" class="text-decoration-none d-block">
+     <div class="custom-card d-flex align-items-center justify-content-between shadow-sm-hover transition-transform"
+      style="transform: translateY(0); transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-5px)'"
+      onmouseout="this.style.transform='translateY(0)'">
+      <div>
+       <h5 class="fw-bold mb-2" style="color: var(--text-main);">إدارة الكويزات</h5>
+       <p class="text-muted mb-0">استعراض وتعديل وإعادة تصحيح الكويزات</p>
+      </div>
+      <div class="p-3 rounded-circle" style="background-color: rgba(163, 230, 53, 0.15);">
+       <i class="fa-solid fa-clipboard-question fs-3" style="color: var(--accent-color);"></i>
+      </div>
+     </div>
+    </a>
+   </div>
   </div>
  </div>
+
+
 @endsection

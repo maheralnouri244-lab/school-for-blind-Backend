@@ -227,3 +227,18 @@ Route::middleware([CheckAdminRole::class . ':Super Admin'])->prefix('dashboard/r
     Route::post('/grant', [grantPointsOrReward::class, 'grantPointsOrReward'])->name('reward.grant');
     Route::get('/search-user', [MySpaceController::class, 'searchUserForReward'])->name('reward.search_user');
 });
+
+Route::prefix('dashboard/quizzes')->name('dashboard.quizzes.')->group(function () {
+    Route::get('/', [App\Http\Controllers\Dashboard\QuizWebController::class, 'index'])->name('index');
+    Route::post('/{id}/regrade', [App\Http\Controllers\Dashboard\QuizWebController::class, 'regrade'])->name('regrade');
+    Route::get('/{id}/submissions', [App\Http\Controllers\Dashboard\QuizWebController::class, 'submissions'])->name('submissions');
+
+    Route::get('/{id}/edit', [App\Http\Controllers\Dashboard\QuizWebController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [App\Http\Controllers\Dashboard\QuizWebController::class, 'update'])->name('update');
+    Route::get('/{id}', [App\Http\Controllers\Dashboard\QuizWebController::class, 'show'])->name('show');
+    Route::delete('/{id}', [App\Http\Controllers\Dashboard\QuizWebController::class, 'destroy'])->name('destroy');
+
+    Route::post('/{id}/questions', [App\Http\Controllers\Dashboard\QuizWebController::class, 'storeQuestion'])->name('questions.store');
+    Route::delete('/{id}/questions/{question_id}', [App\Http\Controllers\Dashboard\QuizWebController::class, 'detachQuestion'])->name('questions.detach');
+    Route::put('/{id}/questions/{question_id}', [App\Http\Controllers\Dashboard\QuizWebController::class, 'updateQuestionAnswer'])->name('questions.update');
+});
