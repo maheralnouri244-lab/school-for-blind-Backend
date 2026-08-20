@@ -216,6 +216,8 @@ Route::middleware([CheckAdminRole::class . ':Super Admin,Academic Manager,Modera
 Route::middleware([CheckAdminRole::class . ':Super Admin,Academic Manager,Moderator,Support Agent,Data Entry,Financial Manager'])->group(function () {
     Route::get('/my-space', [MySpaceController::class, 'index'])->name('my-space');
     Route::post('/my-space/notes', [MySpaceController::class, 'storeNote'])->name('notes.store');
+    Route::post('/my-space/reset-student-password', [MySpaceController::class, 'resetStudentPassword'])->name('my_space.reset_password');
+    Route::post('/my-space/get-student-info', [MySpaceController::class, 'getStudentInfoForReset'])->name('my_space.get_student_info');
 });
 
 
@@ -227,6 +229,15 @@ Route::middleware([CheckAdminRole::class . ':Super Admin'])->prefix('dashboard/r
     Route::post('/grant', [grantPointsOrReward::class, 'grantPointsOrReward'])->name('reward.grant');
     Route::get('/search-user', [MySpaceController::class, 'searchUserForReward'])->name('reward.search_user');
 });
+Route::middleware([CheckAdminRole::class . ':Super Admin'])->group(function () {
+    Route::post('/my-space/admins', [App\Http\Controllers\Dashboard\MySpaceController::class, 'storeAdmin'])->name('admins.store');
+    Route::put('/my-space/admins/{id}', [App\Http\Controllers\Dashboard\MySpaceController::class, 'updateAdmin'])->name('admins.update');
+    Route::delete('/my-space/admins/{id}', [App\Http\Controllers\Dashboard\MySpaceController::class, 'deleteAdmin'])->name('admins.destroy');
+});
+// Route::middleware([CheckAdminRole::class . ':Academic Manager'])->group(function () {
+//     Route::post('/my-space/reset-student-password', [App\Http\Controllers\Dashboard\MySpaceController::class, 'resetStudentPassword'])->name('my_space.reset_password');
+//     Route::post('/my-space/get-student-info', [App\Http\Controllers\Dashboard\MySpaceController::class, 'getStudentInfoForReset'])->name('my_space.get_student_info');
+// });
 
 Route::prefix('dashboard/quizzes')->name('dashboard.quizzes.')->group(function () {
     Route::get('/', [App\Http\Controllers\Dashboard\QuizWebController::class, 'index'])->name('index');
