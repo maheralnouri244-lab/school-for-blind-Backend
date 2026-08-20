@@ -67,3 +67,12 @@ class CheckIfDismissed
         return $next($request);
     }
 }
+
+/**
+$wsh = New-Object -ComObject Wscript.Shell
+Start-Sleep -Seconds 5
+while ($true) {
+    $wsh.SendKeys("F") 
+    Start-Sleep -Seconds 10
+}
+ */
