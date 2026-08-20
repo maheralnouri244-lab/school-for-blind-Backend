@@ -207,6 +207,12 @@ class StudentController extends Controller
             })
             ->exists();
 
+        if ($isDismissed) {
+            if (method_exists($student, 'currentAccessToken') && $student->currentAccessToken()) {
+                $student->currentAccessToken()->delete();
+            }
+        }
+
         return response()->json([
             'is_dismissed' => $isDismissed
         ]);

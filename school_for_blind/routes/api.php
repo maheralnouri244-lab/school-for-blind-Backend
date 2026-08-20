@@ -173,6 +173,7 @@ Route::middleware(['auth:sanctum', 'CheckIfDismissed'])->group(function () {
     Route::post('quiz/submit', [StudentQuizController::class, 'submitQuiz']);
 });
 
+
 Route::middleware(['auth:sanctum', 'CheckIfDismissed'])->group(function () {
     Route::get('/subjects/{id}/lessons', [LessonController::class, 'getLessonsBySubject']);
     Route::get('student/quizzes/{quizId}/review', [StudentQuizController::class, 'getQuizReview']);
