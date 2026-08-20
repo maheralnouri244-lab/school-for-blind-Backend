@@ -20,6 +20,10 @@ use App\Http\Controllers\Dashboard\ClassController;
 use App\Http\Controllers\Dashboard\StudentReportWebController;
 use App\Http\Controllers\Dashboard\MySpaceController;
 use App\Http\Controllers\Dashboard\TeacherTransferController;
+use App\Http\Controllers\Dashboard\FinancialDashboardController;
+use App\Http\Controllers\Dashboard\AnnouncementDashboardController;
+use App\Http\Controllers\Dashboard\RewardController;
+use App\Http\Controllers\Dashboard\grantPointsOrReward;
 
 /*
 'Super Admin',
@@ -153,11 +157,6 @@ Route::middleware([CheckAdminRole::class . ':Super Admin,Academic Manager,Modera
 
 Route::get('/send-test-notification', [NotificationController::class, 'testSend']);
 
-use App\Http\Controllers\Dashboard\FinancialDashboardController;
-use App\Http\Controllers\Dashboard\AnnouncementDashboardController;
-use App\Http\Controllers\Dashboard\RewardController;
-use App\Http\Controllers\Dashboard\grantPointsOrReward;
-
 Route::prefix('admin/financial')->name('financial.')->middleware([
     CheckAdminRole::class . ':Super Admin,Financial Manager'
 ])->group(function () {
@@ -252,4 +251,9 @@ Route::prefix('dashboard/quizzes')->name('dashboard.quizzes.')->group(function (
     Route::post('/{id}/questions', [App\Http\Controllers\Dashboard\QuizWebController::class, 'storeQuestion'])->name('questions.store');
     Route::delete('/{id}/questions/{question_id}', [App\Http\Controllers\Dashboard\QuizWebController::class, 'detachQuestion'])->name('questions.detach');
     Route::put('/{id}/questions/{question_id}', [App\Http\Controllers\Dashboard\QuizWebController::class, 'updateQuestionAnswer'])->name('questions.update');
+});
+
+Route::middleware([CheckAdminRole::class . ':Super Admin,Academic Manager'])->group(function () {
+    Route::post('/classes', [App\Http\Controllers\Dashboard\ClassController::class, 'store'])->name('classes.store');
+    Route::delete('/classes/{id}', [App\Http\Controllers\Dashboard\ClassController::class, 'destroy'])->name('classes.destroy');
 });

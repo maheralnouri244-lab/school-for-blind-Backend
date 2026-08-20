@@ -10,14 +10,14 @@
     <p class="text-muted mb-0 small">متابعة وإدارة جميع عمليات التبرع المقدمة لدعم مدرسة المكفوفين</p>
    </div>
    <div class="d-flex gap-2">
-    <button class="btn btn-sm fw-bold px-3 py-2 shadow-sm-hover"
+    {{-- <button class="btn btn-sm fw-bold px-3 py-2 shadow-sm-hover"
      style="background-color: var(--hover-bg); color: var(--text-main); border: 1px solid var(--border-color); border-radius: 8px;">
      <i class="fa-solid fa-arrows-rotate me-1"></i> تحديث البيانات
     </button>
     <button class="btn btn-sm fw-bold px-3 py-2 shadow-sm-hover"
      style="background-color: var(--accent-color); color: #fff; border-radius: 8px;">
      <i class="fa-solid fa-file-excel me-1"></i> تصدير التبرعات
-    </button>
+    </button> --}}
    </div>
   </div>
 

@@ -47,6 +47,7 @@ return new class extends Migration {
             $table->string('stripe_account_id')->nullable();
             $table->boolean('notifications_enabled')->default(true);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
