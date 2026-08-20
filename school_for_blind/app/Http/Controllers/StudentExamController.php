@@ -30,19 +30,22 @@ public function getExamsBySubject(Request $request)
     $userId = Auth::id();
 
     $exams = Exam::where('subject_id', $subjectId)
-        ->where('is_published', true) 
-        ->withExists(['favorites as is_favorited' => function ($query) use ($userId) {
-            $query->where('user_id', $userId);
-        }])
-        ->get();
+        ->where('is_published', true)
+        ->select('exams.*')
+        ->selectRaw('(EXISTS (
+            SELECT 1 FROM favorites 
+            WHERE favorites.favorable_id = exams.id 
+            AND favorites.favorable_type = ? 
+            AND favorites.user_id = ?
+        )) as is_favorited', [Exam::class, $userId])
+        ->get()
+        ->map(function ($exam) {
+            $data = $exam->toArray();
+            $data['is_favorited'] = (bool) $exam->is_favorited;
+            return $data;
+        });
 
-    $formattedExams = $exams->map(function ($exam) {
-        $data = $exam->toArray();
-        $data['is_favorited'] = (bool) $exam->is_favorited;
-        return $data;
-    });
-
-    return response()->json(['status' => 'success', 'data' => $formattedExams]);  
+    return response()->json(['status' => 'success', 'data' => $exams]);  
 }
 
 public function getExamDetails($id): JsonResponse
