@@ -194,22 +194,26 @@ class StudentController extends Controller
 
     public function checkDismissalStatus(Request $request): JsonResponse
     {
-        $student = $request->user();
-
-        $isDismissed = DB::table('punishables')
-            ->join('punishments', 'punishables.punishment_id', '=', 'punishments.id')
-            ->where('punishables.punishable_id', $student->id)
-            ->where('punishables.punishable_type', get_class($student))
-            ->where('punishments.name', 'Dismissal')
-            ->where(function ($query) {
-                $query->whereNull('punishables.expires_at')
-                    ->orWhere('punishables.expires_at', '>', Carbon::now());
-            })
-            ->exists();
+        $user = $request->user();
+        $isDismissed = false;
+        if (class_basename($user) === 'Teacher') {
+            $isDismissed = ($user->status === 'dismissed');
+        } else {
+            $isDismissed = DB::table('punishables')
+                ->join('punishments', 'punishables.punishment_id', '=', 'punishments.id')
+                ->where('punishables.punishable_id', $user->id)
+                ->where('punishables.punishable_type', get_class($user))
+                ->where('punishments.name', 'Dismissal')
+                ->where(function ($query) {
+                    $query->whereNull('punishables.expires_at')
+                        ->orWhere('punishables.expires_at', '>', Carbon::now());
+                })
+                ->exists();
+        }
 
         // if ($isDismissed) {
-        //     if (method_exists($student, 'currentAccessToken') && $student->currentAccessToken()) {
-        //         $student->currentAccessToken()->delete();
+        //     if (method_exists($user, 'currentAccessToken') && $user->currentAccessToken()) {
+        //         $user->currentAccessToken()->delete();
         //     }
         // }
 

@@ -9,7 +9,7 @@
     <h4 class="fw-bold mb-1" style="color: var(--text-main);">سجل العمليات والتدقيق المالي</h4>
     <p class="text-muted mb-0 small">مراقبة وتتبع جميع الحركات المالية (الواردة والصادرة) بالتفصيل</p>
    </div>
-   <div class="d-flex gap-2">
+   {{-- <div class="d-flex gap-2">
     <button class="btn btn-sm fw-bold px-3 py-2 shadow-sm-hover"
      style="background-color: var(--hover-bg); color: var(--text-main); border: 1px solid var(--border-color); border-radius: 8px;">
      <i class="fa-solid fa-print me-1"></i> طباعة السجل
@@ -18,7 +18,7 @@
      style="background-color: var(--accent-color); color: #fff; border-radius: 8px;">
      <i class="fa-solid fa-file-csv me-1"></i> تصدير (CSV)
     </button>
-   </div>
+   </div> --}}
   </div>
 
   {{-- 1. بطاقات الإحصائيات (ملخص مالي سريع) --}}

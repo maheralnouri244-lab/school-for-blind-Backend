@@ -249,4 +249,32 @@ class ClassController extends Controller
             'message' => $message
         ]);
     }
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'level' => 'required|in:ninth,twelfth',
+            'number' => 'required|integer|min:1',
+        ]);
+
+        Classes::create([
+            'name' => $request->name,
+            'level' => $request->level,
+            'number' => $request->number,
+        ]);
+
+        return redirect()->back()->with('success', 'تم إضافة الشعبة بنجاح.');
+    }
+
+    public function destroy($id)
+    {
+        $class = Classes::withCount('students')->findOrFail($id);
+        if ($class->students_count > 0) {
+            return redirect()->back()->with('error', 'لا يمكن حذف شعبة تحتوي على طلاب. يرجى نقل الطلاب لشعبة أخرى أولاً.');
+        }
+        $class->teachers()->detach();
+        $class->delete();
+
+        return redirect()->back()->with('success', 'تم حذف الشعبة وفك ارتباط الأساتذة بنجاح.');
+    }
 }

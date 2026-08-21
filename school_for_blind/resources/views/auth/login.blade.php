@@ -387,12 +387,13 @@
             <input type="password" id="password" name="password" class="form-input password-input-padded"
               placeholder="ادخل كلمة المرور" required>
             <button type="button" id="togglePasswordBtn" class="password-toggle-btn" aria-label="إظهار كلمة المرور">
-              <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg id="eyeIcon" style="display: none;" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
                 <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                 <circle cx="12" cy="12" r="3"></circle>
               </svg>
-              <svg id="eyeSlashIcon" style="display: none;" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+              <svg id="eyeSlashIcon" style="display: block;" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                 stroke-linejoin="round">
                 <path
@@ -446,11 +447,11 @@
       passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
 
       if (isPassword) {
-        eyeIcon.style.display = 'none';
-        eyeSlashIcon.style.display = 'block';
-      } else {
         eyeIcon.style.display = 'block';
         eyeSlashIcon.style.display = 'none';
+      } else {
+        eyeIcon.style.display = 'none';
+        eyeSlashIcon.style.display = 'block';
       }
     });
 

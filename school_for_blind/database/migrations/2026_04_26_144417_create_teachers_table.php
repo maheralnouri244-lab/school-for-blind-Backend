@@ -26,6 +26,7 @@ return new class extends Migration {
             $table->boolean('notifications_enabled')->default(true);
             $table->boolean('was_dismissed_before')->default(false);
             $table->rememberToken();
+            $table->softDeletes();
         });
     }
 

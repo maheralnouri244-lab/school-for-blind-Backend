@@ -40,7 +40,7 @@
 
     {{-- عرض البيانات --}}
     <div class="card shadow-sm border-0">
-        <div class="card-header bg-light">
+        <div class="card-header var(--bg-card)">
             <h6 class="mb-0 fw-bold">{{ $message }}</h6>
         </div>
         <div class="card-body p-4">
