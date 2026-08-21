@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Sanctum\HasApiTokens;
@@ -9,10 +10,10 @@ use App\Traits\UploadFileTrait;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 class Student extends Authenticatable
 {
-    use HasApiTokens, HasFactory, UploadFileTrait;
+    use HasApiTokens, HasFactory, UploadFileTrait, SoftDeletes;
 
     protected $fillable = [
         'fullname',
@@ -111,7 +112,6 @@ class Student extends Authenticatable
             $student->notifications()->delete();
             if ($student->parent_id) {
                 $parent = $student->parent;
-
                 if ($parent && $parent->students()->count() <= 1) {
                     $parent->delete();
                 }

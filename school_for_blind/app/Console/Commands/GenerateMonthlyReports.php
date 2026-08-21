@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Events\ParentReportGenerated;
 use Illuminate\Console\Command;
 use App\Models\Student;
 use App\Models\StudentSummary;
@@ -66,7 +67,7 @@ class GenerateMonthlyReports extends Command
                 ]
             );
         }
-
+event(new ParentReportGenerated($student, 'monthly', $referenceDate));
         $this->info('تمت عملية توليد وتخزين التقارير الشهرية بنجاح.');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Events\ParentReportGenerated;
 use Illuminate\Console\Command;
 use App\Services\ParentReportService;
 use App\Models\Student;
@@ -35,6 +36,7 @@ class GenerateDailyReports extends Command
                 ]
             );
         }
+        event(new ParentReportGenerated($student, 'daily', $date));
         $this->info('تم توليد التقارير اليومية بنجاح!');
     }
 }

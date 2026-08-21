@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\TeacherTransferController;
 use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\Api\Admin\ArchiveController;
 use App\Http\Controllers\ConversationController;
 use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\CaregiverController;
@@ -336,3 +337,11 @@ Route::middleware(['auth:sanctum', CheckIsStudent::class])->get('/student/check-
 
 // Route::middleware(['auth:sanctum', 'CheckIsStudent'])->group(function () {
 // });
+Route::prefix('admin/archive')->group(function () {
+    Route::get('/students', [ArchiveController::class, 'getArchivedStudents']);
+    Route::delete('/students/{id}', [ArchiveController::class, 'archiveStudent']);
+    Route::post('/students/{id}/restore', [ArchiveController::class, 'restoreStudent']);
+    Route::delete('/students/{id}/force', [ArchiveController::class, 'forceDeleteStudent']);
+    Route::get('/caregivers', [ArchiveController::class, 'getArchivedCaregivers']);
+    Route::post('/caregivers/{id}/restore', [ArchiveController::class, 'restoreCaregiver']);
+});
