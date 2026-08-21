@@ -52,7 +52,7 @@ Route::prefix('otp')->controller(OtpController::class)->group(function () {
 });
 
 
-Route::middleware(['auth:sanctum', 'CheckIsStudent', 'CheckIfDismissed'])->group(function () {
+Route::middleware(['auth:sanctum', 'CheckIsStudent'])->group(function () {
     Route::post('/logout', [StudentController::class, 'logout']);
 });
 
@@ -63,7 +63,7 @@ Route::get('/user', function (Request $request) {
 Route::prefix('teacher')->controller(TeacherController::class)->group(function () {
     Route::post('register', 'register')->name('users.register');
     Route::post('login', 'login')->name('users.login');
-    Route::middleware(['auth:sanctum', 'CheckIfDismissed'])->group(function () {
+    Route::middleware('auth:sanctum')->group(function () {
         Route::post('logout', 'logout')->name('teachers.logout');
         Route::get('info', 'info')->name('teachers.info');
         Route::get('all-subjects/statistics', 'getAllSubjectsStats')->name('teachers.stats');
@@ -328,7 +328,7 @@ Route::middleware(['auth:sanctum', 'CheckIfDismissed'])->group(function () {
 });
 Route::get('/notifications', [NotificationController::class, 'index'])->middleware(['auth:sanctum', 'CheckIfDismissed']);
 
-Route::middleware(['auth:sanctum', CheckIsStudent::class])->get('/student/check-dismissal', [StudentController::class, 'checkDismissalStatus']);
+Route::middleware('auth:sanctum')->get('/student/check-dismissal', [StudentController::class, 'checkDismissalStatus']);
 
 // Route::get('magic-login/{id}', [StudentController::class, 'magicLogin'])
 //     ->name('student.magic.login');
