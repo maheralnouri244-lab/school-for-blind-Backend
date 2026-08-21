@@ -206,4 +206,93 @@ class MySpaceController extends Controller
         $admin->delete();
         return back()->with('success', 'تم حذف المدير بنجاح.');
     }
+
+    public function archiveEntireSystem(Request $request)
+    {
+        // حماية مضاعفة للتأكد من الصلاحية
+        if (Auth::guard('admin')->user()->role !== 'Super Admin') {
+            abort(403);
+        }
+
+        // حماية الكلمة المفتاحية (لا يتم تنفيذ الكود إلا إذا طابقت الكلمة تماماً)
+        if ($request->input('archive_confirmation') !== 'أرشفة النظام بالكامل') {
+            return back()->with('error', 'نص التأكيد غير متطابق. تم إلغاء العملية.');
+        }
+
+        try {
+            DB::transaction(function () {
+                \Illuminate\Support\Facades\Schema::disableForeignKeyConstraints();
+
+                // 1. الأرشفة (Soft Delete) للكيانات الأساسية وتاريخ الطلاب
+                \App\Models\Student::query()->delete();
+                \App\Models\Caregiver::query()->delete();
+                \App\Models\Teacher::query()->delete();
+                \App\Models\Subject::query()->delete();
+                \App\Models\Lesson::query()->delete();
+                \App\Models\Quiz::query()->delete();
+                \App\Models\Exam::query()->delete();
+                \App\Models\PastExam::query()->delete();
+                \App\Models\Question::query()->delete();
+                \App\Models\Choice::query()->delete(); // <-- تم نقل خيارات الأسئلة للأرشيف هنا
+                \App\Models\SupportTicket::query()->delete();
+                \App\Models\Punishment::query()->delete();
+                \App\Models\Punishable::query()->delete(); // <-- تم نقل سجل العقوبات المُطبقة للأرشيف هنا
+                \App\Models\Record::query()->delete();
+                \App\Models\QuizSubmission::query()->delete();
+                \App\Models\ExamSubmission::query()->delete();
+                \App\Models\StudentAnswer::query()->delete();
+                \App\Models\ExamStudentAnswer::query()->delete();
+                \App\Models\Conversation::query()->delete();
+                \App\Models\Message::query()->delete();
+
+                // 2. الحذف النهائي (Hard Delete) للبيانات التشغيلية واليومية فقط
+                $tablesToWipe = [
+                    'classes',
+                    'schedules',
+                    'rooms',
+                    'attendances',
+                    'announcements',
+                    'notifications',
+                    'activity_log',
+                    'wallets',
+                    'transactions',
+                    'school_wallets',
+                    'school_transactions',
+                    'donations',
+                    'rewards',
+                    'point_suggestions',
+                    'point_redemption_requests',
+                    'absences',
+                    'absence_excuses',
+                    'reports',
+                    'notes',
+                    'punishment_objections', // (تركنا الاعتراضات هنا لتنظيفها، أو يمكنك نقلها للأرشيف إذا أردت)
+                    'favorites',
+                    'bookmarks',
+                    'student_summaries',
+                    'teacher_availabilities',
+                    'otps',
+
+                    // جداول الربط (Pivots)
+                    'class_teacher',
+                    'teacher_subjects',
+                    'question_quiz',
+                    'exam_question',
+                    'past_exam_question'
+                ];
+
+                foreach ($tablesToWipe as $table) {
+                    DB::table($table)->delete();
+                }
+
+                \Illuminate\Support\Facades\Schema::enableForeignKeyConstraints();
+            });
+
+            return back()->with('success', 'تمت عملية أرشفة النظام بالكامل مع الاحتفاظ بالتاريخ السلوكي والأكاديمي بنجاح!');
+
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Schema::enableForeignKeyConstraints();
+            return back()->with('error', 'حدث خطأ غير متوقع أثناء الأرشفة: ' . $e->getMessage());
+        }
+    }
 }

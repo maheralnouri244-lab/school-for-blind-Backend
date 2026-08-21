@@ -18,6 +18,15 @@ class PastExamController extends Controller
     {
         $query = PastExam::with('subject');
 
+        // تطبيق فلتر الأرشيف
+        $archiveStatus = $request->archive_status ?? 'active';
+
+        if ($archiveStatus === 'archived') {
+            $query->onlyTrashed();
+        } elseif ($archiveStatus === 'all') {
+            $query->withTrashed();
+        }
+
         if ($request->has('search') && $request->search != '') {
             $query->where('title', 'like', '%' . $request->search . '%');
         }
@@ -31,9 +40,20 @@ class PastExamController extends Controller
         }
 
         $pastExams = $query->latest()->paginate(10);
+        $pastExams->appends($request->all());
+
         $subjects = Subject::all();
 
         return view('pages.past_exams.index', compact('pastExams', 'subjects'));
+    }
+
+    public function restore($id)
+    {
+        $pastExam = PastExam::withTrashed()->findOrFail($id);
+        
+        $pastExam->restore();
+        
+        return redirect()->back()->with('success', 'تم استرجاع الدورة بنجاح، وقد عادت للظهور مع كافة أسئلتها السابقة.');
     }
 
     public function create()

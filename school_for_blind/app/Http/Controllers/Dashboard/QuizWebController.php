@@ -19,6 +19,14 @@ class QuizWebController extends Controller
     {
         $query = Quiz::with(['subject', 'lesson', 'teacher']);
 
+        // فلتر الأرشيف
+        $archiveStatus = $request->archive_status ?? 'active';
+        if ($archiveStatus === 'archived') {
+            $query->onlyTrashed();
+        } elseif ($archiveStatus === 'all') {
+            $query->withTrashed();
+        }
+
         if ($request->filled('search')) {
             $query->whereHas('lesson', function ($q) use ($request) {
                 $q->where('title', 'like', '%' . $request->search . '%');
@@ -30,31 +38,32 @@ class QuizWebController extends Controller
         }
 
         $quizzes = $query->latest()->paginate(15);
+        $quizzes->appends($request->all()); // للحفاظ على الفلاتر عند التنقل بين الصفحات
         $subjects = Subject::all();
 
         return view('pages.quizzes.index', compact('quizzes', 'subjects'));
     }
 
-    public function regrade($id)
+    public function show($id)
     {
-        $quiz = Quiz::findOrFail($id);
-        RegradeQuizJob::dispatch($quiz->id);
-        return back()->with('success', 'تم بدء عملية إعادة التصحيح لجميع الطلاب في الخلفية بنجاح! سيتم تحديث العلامات خلال لحظات.');
+        // أضفنا withTrashed لكي يسمح بفتح الكويز المؤرشف
+        $quiz = Quiz::withTrashed()->with(['questions.choices', 'subject', 'lesson'])->findOrFail($id);
+
+        return view('pages.quizzes.show', compact('quiz'));
     }
 
     public function submissions($id, Request $request)
     {
-        $quiz = Quiz::with('questions')->findOrFail($id);
+        // أضفنا withTrashed لكي يسمح بفتح تسليمات الكويز المؤرشف
+        $quiz = Quiz::withTrashed()->with('questions')->findOrFail($id);
 
-        $query = QuizSubmission::with('student')
-            ->where('quiz_id', $id);
+        $query = QuizSubmission::with('student')->where('quiz_id', $id);
 
         if ($request->filled('status')) {
             $query->where('status', $request->status);
         }
 
         $submissions = $query->latest()->paginate(15);
-
         $questionIds = $quiz->questions->pluck('id');
 
         foreach ($submissions as $submission) {
@@ -66,6 +75,38 @@ class QuizWebController extends Controller
 
         return view('pages.quizzes.submissions', compact('quiz', 'submissions'));
     }
+
+    public function regrade($id)
+    {
+        $quiz = Quiz::findOrFail($id);
+        RegradeQuizJob::dispatch($quiz->id);
+        return back()->with('success', 'تم بدء عملية إعادة التصحيح لجميع الطلاب في الخلفية بنجاح! سيتم تحديث العلامات خلال لحظات.');
+    }
+
+    // public function submissions($id, Request $request)
+    // {
+    //     $quiz = Quiz::with('questions')->findOrFail($id);
+
+    //     $query = QuizSubmission::with('student')
+    //         ->where('quiz_id', $id);
+
+    //     if ($request->filled('status')) {
+    //         $query->where('status', $request->status);
+    //     }
+
+    //     $submissions = $query->latest()->paginate(15);
+
+    //     $questionIds = $quiz->questions->pluck('id');
+
+    //     foreach ($submissions as $submission) {
+    //         $submission->answers = StudentAnswer::with(['question.choices', 'choice'])
+    //             ->where('student_id', $submission->student_id)
+    //             ->whereIn('question_id', $questionIds)
+    //             ->get();
+    //     }
+
+    //     return view('pages.quizzes.submissions', compact('quiz', 'submissions'));
+    // }
 
 
 
@@ -96,12 +137,12 @@ class QuizWebController extends Controller
             ->with('success', 'تم تحديث بيانات الكويز بنجاح!');
     }
 
-    public function show($id)
-    {
-        $quiz = Quiz::with(['questions.choices', 'subject', 'lesson'])->findOrFail($id);
+    // public function show($id)
+    // {
+    //     $quiz = Quiz::with(['questions.choices', 'subject', 'lesson'])->findOrFail($id);
 
-        return view('pages.quizzes.show', compact('quiz'));
-    }
+    //     return view('pages.quizzes.show', compact('quiz'));
+    // }
 
     public function destroy($id)
     {
@@ -172,18 +213,18 @@ class QuizWebController extends Controller
                 'correct_choice' => 'required|exists:choices,id',
                 'points' => 'required|numeric|min:0.5'
             ]);
-            
+
             $question->choices()->update(['is_correct' => false]);
             $question->choices()->where('id', $request->correct_choice)->update(['is_correct' => true]);
-            
+
             $question->update(['points' => $request->points]);
-            
+
         } else {
             $request->validate([
                 'correct_answer' => 'required|string',
                 'points' => 'required|numeric|min:0.5'
             ]);
-            
+
             $question->update([
                 'correct_answer' => $request->correct_answer,
                 'points' => $request->points

@@ -14,16 +14,17 @@
     </div>
 
     {{-- كرت التصفية --}}
+    {{-- كرت التصفية --}}
     <div class="custom-card mb-4 p-3 border" style="border-color: var(--border-color) !important;">
       <form action="{{ route('dashboard.exams.index') }}" method="GET" class="row g-3 align-items-center">
 
-        <div class="col-md-4">
+        <div class="col-md-3">
           <input type="text" name="search" class="form-control search-input rounded-pill bg-transparent"
             style="color: var(--text-main); border: 1px solid var(--border-color);" placeholder="ابحث باسم الامتحان..."
             value="{{ request('search') }}">
         </div>
 
-        <div class="col-md-3">
+        <div class="col-md-2">
           <select name="subject_id" class="form-select search-input rounded-pill bg-transparent"
             style="color: var(--text-main); border: 1px solid var(--border-color);">
             <option value="">كل المواد</option>
@@ -35,7 +36,7 @@
           </select>
         </div>
 
-        <div class="col-md-3">
+        <div class="col-md-2">
           <select name="status" class="form-select search-input rounded-pill bg-transparent"
             style="color: var(--text-main); border: 1px solid var(--border-color);">
             <option value="">كل الحالات</option>
@@ -44,8 +45,19 @@
           </select>
         </div>
 
+        {{-- الفلتر الجديد للأرشيف --}}
+        <div class="col-md-3">
+          <select name="archive_status" class="form-select search-input rounded-pill bg-transparent text-danger fw-bold"
+            style="border: 1px solid var(--border-color);">
+            <option value="active" {{ request('archive_status') == 'active' ? 'selected' : '' }}>الامتحانات النشطة</option>
+            <option value="archived" {{ request('archive_status') == 'archived' ? 'selected' : '' }}>الأرشيف (المحذوفة)
+            </option>
+            <option value="all" {{ request('archive_status') == 'all' ? 'selected' : '' }}>عرض الكل (نشط + مؤرشف)</option>
+          </select>
+        </div>
+
         <div class="col-md-2">
-          {{-- زر التصفية الأساسي: لون أزرق شفاف بدون تدرج --}}
+          {{-- زر التصفية الأساسي --}}
           <button type="submit" class="btn w-100 rounded-pill fw-bold shadow-sm-hover"
             style="background-color: rgba(59, 130, 246, 0.12); color: #3b82f6; border: 1px solid rgba(59, 130, 246, 0.5); transition: transform 0.2s;">
             <i class="fa-solid fa-magnifying-glass me-1"></i> تصفية

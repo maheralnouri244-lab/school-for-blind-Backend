@@ -62,12 +62,18 @@
       </div>
      </div>
 
-     <div class="d-grid gap-2">
-      <a href="{{ route('dashboard.quizzes.edit', $quiz->id) }}" class="btn rounded-pill py-2 fw-bold shadow-sm-hover"
-       style="background-color: rgba(59, 130, 246, 0.12); color: #3b82f6; border: 1px solid rgba(59, 130, 246, 0.5); transition: transform 0.2s;">
-       <i class="fa-solid fa-pen-to-square me-2"></i> تعديل البيانات الأساسية
-      </a>
-     </div>
+     @if(!$quiz->trashed())
+      <div class="d-grid gap-2">
+       <a href="{{ route('dashboard.quizzes.edit', $quiz->id) }}" class="btn rounded-pill py-2 fw-bold shadow-sm-hover"
+        style="background-color: rgba(59, 130, 246, 0.12); color: #3b82f6; border: 1px solid rgba(59, 130, 246, 0.5); transition: transform 0.2s;">
+        <i class="fa-solid fa-pen-to-square me-2"></i> تعديل البيانات الأساسية
+       </a>
+      </div>
+     @else
+      <div class="alert alert-danger mb-0 text-center fw-bold rounded-3">
+       <i class="fa-solid fa-box-archive me-1"></i> كويز مؤرشف (للعرض فقط)
+      </div>
+     @endif
     </div>
 
     {{-- كرت إجراءات الأسئلة والتسليمات --}}
@@ -118,28 +124,30 @@
          </div>
 
          {{-- هنا أضفنا زر التعديل بجانب زر الحذف --}}
-         <div class="d-flex gap-2">
-          <button type="button"
-           class="btn btn-sm text-white shadow-sm-hover d-flex align-items-center justify-content-center"
-           data-bs-toggle="modal" data-bs-target="#editAnswerModal{{ $question->id }}"
-           style="width: 36px; height: 36px; border-radius: 8px; background: linear-gradient(135deg, #9ca3af, #3b82f6); box-shadow: 0 0 10px rgba(59, 130, 246, 0.3); border: none; transition: all 0.2s;"
-           title="تعديل الإجابة الصحيحة">
-           <i class="fa-solid fa-pen"></i>
-          </button>
-
-          <form action="{{ route('dashboard.quizzes.questions.detach', [$quiz->id, $question->id]) }}" method="POST"
-           onsubmit="return confirm('هل أنت متأكد من إزالة هذا السؤال من الكويز؟');">
-           @csrf
-           @method('DELETE')
-           <button type="submit"
+         {{-- إخفاء أزرار التعديل والحذف إذا كان الكويز مؤرشف --}}
+         @if(!$quiz->trashed())
+          <div class="d-flex gap-2">
+           <button type="button"
             class="btn btn-sm text-white shadow-sm-hover d-flex align-items-center justify-content-center"
-            style="width: 36px; height: 36px; border-radius: 8px; background: linear-gradient(135deg, #9ca3af, #ef4444); box-shadow: 0 0 10px rgba(239, 68, 68, 0.3); border: none; transition: all 0.2s;"
-            title="إزالة من الكويز">
-            <i class="fa-solid fa-minus"></i>
+            data-bs-toggle="modal" data-bs-target="#editAnswerModal{{ $question->id }}"
+            style="width: 36px; height: 36px; border-radius: 8px; background: linear-gradient(135deg, #9ca3af, #3b82f6); box-shadow: 0 0 10px rgba(59, 130, 246, 0.3); border: none; transition: all 0.2s;"
+            title="تعديل الإجابة الصحيحة">
+            <i class="fa-solid fa-pen"></i>
            </button>
-          </form>
-         </div>
-        </div>
+
+           <form action="{{ route('dashboard.quizzes.questions.detach', [$quiz->id, $question->id]) }}" method="POST"
+            onsubmit="return confirm('هل أنت متأكد من إزالة هذا السؤال من الكويز؟');">
+            @csrf
+            @method('DELETE')
+            <button type="submit"
+             class="btn btn-sm text-white shadow-sm-hover d-flex align-items-center justify-content-center"
+             style="width: 36px; height: 36px; border-radius: 8px; background: linear-gradient(135deg, #9ca3af, #ef4444); box-shadow: 0 0 10px rgba(239, 68, 68, 0.3); border: none; transition: all 0.2s;"
+             title="إزالة من الكويز">
+             <i class="fa-solid fa-minus"></i>
+            </button>
+           </form>
+          </div>
+         @endif
 
         <p class="fw-bold fs-5 mb-4" style="color: var(--text-main);">{{ $question->description }}</p>
 

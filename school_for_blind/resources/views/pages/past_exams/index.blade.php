@@ -15,16 +15,17 @@
         </div>
 
         {{-- قسم البحث والفلترة --}}
+        {{-- قسم البحث والفلترة --}}
         <div class="custom-card mb-4 p-3 border" style="border-color: var(--border-color) !important;">
             <form action="{{ route('dashboard.past-exams.index') }}" method="GET" class="row g-3 align-items-center">
 
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <input type="text" name="search" class="form-control search-input rounded-pill bg-transparent"
                         style="color: var(--text-main); border: 1px solid var(--border-color);"
                         placeholder="ابحث باسم الدورة..." value="{{ request('search') }}">
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <select name="subject_id" class="form-select search-input rounded-pill bg-transparent"
                         style="color: var(--text-main); border: 1px solid var(--border-color);">
                         <option value="">كل المواد</option>
@@ -36,7 +37,7 @@
                     </select>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <select name="year" class="form-select search-input rounded-pill bg-transparent"
                         style="color: var(--text-main); border: 1px solid var(--border-color);">
                         <option value="">كل السنوات</option>
@@ -46,8 +47,22 @@
                     </select>
                 </div>
 
+                {{-- الفلتر الجديد للأرشيف --}}
+                <div class="col-md-3">
+                    <select name="archive_status"
+                        class="form-select search-input rounded-pill bg-transparent text-danger fw-bold"
+                        style="border: 1px solid var(--border-color);">
+                        <option value="active" {{ request('archive_status') == 'active' ? 'selected' : '' }}>الدورات النشطة
+                        </option>
+                        <option value="archived" {{ request('archive_status') == 'archived' ? 'selected' : '' }}>الأرشيف
+                            (المحذوفة)</option>
+                        <option value="all" {{ request('archive_status') == 'all' ? 'selected' : '' }}>عرض الكل (نشط + مؤرشف)
+                        </option>
+                    </select>
+                </div>
+
                 <div class="col-md-2">
-                    {{-- زر التصفية الأساسي: لون أزرق شفاف بدون تدرج --}}
+                    {{-- زر التصفية الأساسي --}}
                     <button type="submit" class="btn w-100 rounded-pill fw-bold shadow-sm-hover"
                         style="background-color: rgba(59, 130, 246, 0.12); color: #3b82f6; border: 1px solid rgba(59, 130, 246, 0.5); transition: transform 0.2s;">
                         <i class="fa-solid fa-magnifying-glass me-1"></i> تصفية
@@ -124,39 +139,51 @@
                                 </td>
 
                                 {{-- أزرار الإجراءات --}}
+                                {{-- أزرار الإجراءات --}}
                                 <td class="align-middle px-4">
                                     <div class="d-flex justify-content-center gap-2">
+                                        @if($exam->trashed())
+                                            {{-- زر الاسترجاع (يظهر فقط إذا كانت الدورة في الأرشيف) --}}
+                                            <form action="{{ route('dashboard.past-exams.restore', $exam->id) }}" method="POST"
+                                                class="d-inline">
+                                                @csrf
+                                                <button type="submit"
+                                                    class="btn btn-sm text-white shadow-sm-hover d-flex align-items-center justify-content-center"
+                                                    style="width: auto; padding: 0 12px; height: 36px; border-radius: 8px; background: linear-gradient(135deg, #10b981, #059669); box-shadow: 0 0 10px rgba(16, 185, 129, 0.3); border: none;"
+                                                    title="استرجاع الدورة">
+                                                    <i class="fa-solid fa-rotate-left me-2"></i> استرجاع الدورة
+                                                </button>
+                                            </form>
+                                        @else
+                                            {{-- زر التفاصيل --}}
+                                            <a href="{{ route('dashboard.past-exams.show', $exam->id) }}"
+                                                class="btn btn-sm shadow-sm-hover d-flex align-items-center justify-content-center"
+                                                style="width: 36px; height: 36px; border-radius: 8px; background: linear-gradient(135deg, #9ca3af, var(--accent-color)); box-shadow: 0 0 10px rgba(163, 230, 53, 0.3); color: #111827; border: none; transition: all 0.2s;"
+                                                title="عرض وإدارة الأسئلة">
+                                                <i class="fa-solid fa-eye"></i>
+                                            </a>
 
-                                        {{-- زر التفاصيل --}}
-                                        <a href="{{ route('dashboard.past-exams.show', $exam->id) }}"
-                                            class="btn btn-sm shadow-sm-hover d-flex align-items-center justify-content-center"
-                                            style="width: 36px; height: 36px; border-radius: 8px; background: linear-gradient(135deg, #9ca3af, var(--accent-color)); box-shadow: 0 0 10px rgba(163, 230, 53, 0.3); color: #111827; border: none; transition: all 0.2s;"
-                                            title="عرض وإدارة الأسئلة">
-                                            <i class="fa-solid fa-eye"></i>
-                                        </a>
-
-                                        {{-- زر التعديل --}}
-                                        <a href="{{ route('dashboard.past-exams.edit', $exam->id) }}"
-                                            class="btn btn-sm text-white shadow-sm-hover d-flex align-items-center justify-content-center"
-                                            style="width: 36px; height: 36px; border-radius: 8px; background: linear-gradient(135deg, #9ca3af, #3b82f6); box-shadow: 0 0 10px rgba(59, 130, 246, 0.3); border: none; transition: all 0.2s;"
-                                            title="تعديل">
-                                            <i class="fa-solid fa-pen-to-square"></i>
-                                        </a>
-
-                                        {{-- زر الحذف --}}
-                                        <form action="{{ route('dashboard.past-exams.destroy', $exam->id) }}" method="POST"
-                                            class="d-inline"
-                                            onsubmit="return confirm('هل أنت متأكد من حذف هذه الدورة بشكل نهائي؟');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit"
+                                            {{-- زر التعديل --}}
+                                            <a href="{{ route('dashboard.past-exams.edit', $exam->id) }}"
                                                 class="btn btn-sm text-white shadow-sm-hover d-flex align-items-center justify-content-center"
-                                                style="width: 36px; height: 36px; border-radius: 8px; background: linear-gradient(135deg, #9ca3af, #ef4444); box-shadow: 0 0 10px rgba(239, 68, 68, 0.3); border: none; transition: all 0.2s;"
-                                                title="حذف">
-                                                <i class="fa-solid fa-trash"></i>
-                                            </button>
-                                        </form>
+                                                style="width: 36px; height: 36px; border-radius: 8px; background: linear-gradient(135deg, #9ca3af, #3b82f6); box-shadow: 0 0 10px rgba(59, 130, 246, 0.3); border: none; transition: all 0.2s;"
+                                                title="تعديل">
+                                                <i class="fa-solid fa-pen-to-square"></i>
+                                            </a>
 
+                                            {{-- زر الحذف إلى الأرشيف --}}
+                                            <form action="{{ route('dashboard.past-exams.destroy', $exam->id) }}" method="POST"
+                                                class="d-inline" onsubmit="return confirm('هل أنت متأكد من أرشفة هذه الدورة؟');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit"
+                                                    class="btn btn-sm text-white shadow-sm-hover d-flex align-items-center justify-content-center"
+                                                    style="width: 36px; height: 36px; border-radius: 8px; background: linear-gradient(135deg, #9ca3af, #ef4444); box-shadow: 0 0 10px rgba(239, 68, 68, 0.3); border: none; transition: all 0.2s;"
+                                                    title="أرشفة">
+                                                    <i class="fa-solid fa-trash"></i>
+                                                </button>
+                                            </form>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>

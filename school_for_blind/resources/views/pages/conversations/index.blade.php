@@ -16,18 +16,18 @@
     <div class="custom-card">
       <form action="{{ route('dashboard.conversations.index') }}" method="GET" class="mb-4">
         <div class="row g-3">
-          <div class="col-12 col-md-3">
-            <label class="form-label small fw-bold" style="color: var(--text-muted);">بحث باسم المحادثة</label>
+          <div class="col-12 col-md-2">
+            <label class="form-label small fw-bold" style="color: var(--text-muted);">بحث</label>
             <div class="input-group">
               <span class="input-group-text border-0" style="background-color: var(--bg-main); color: var(--text-muted);">
                 <i class="fa-solid fa-magnifying-glass"></i>
               </span>
               <input type="text" name="search" value="{{ request('search') }}"
-                class="form-control border-0 shadow-none search-input" placeholder="اكتب للبحث...">
+                class="form-control border-0 shadow-none search-input" placeholder="اسم المحادثة...">
             </div>
           </div>
 
-          <div class="col-12 col-md-3">
+          <div class="col-12 col-md-2">
             <label class="form-label small fw-bold" style="color: var(--text-muted);">الأستاذ</label>
             <select name="teacher_id" class="form-select border-0 shadow-none"
               style="background-color: var(--bg-main); color: var(--text-main);">
@@ -44,11 +44,10 @@
             <label class="form-label small fw-bold" style="color: var(--text-muted);">المادة والصف</label>
             <select name="subject_id" class="form-select border-0 shadow-none"
               style="background-color: var(--bg-main); color: var(--text-main);">
-              <option value="">جميع المواد والصفوف</option>
+              <option value="">جميع المواد</option>
               @foreach($subjects as $subject)
                 <option value="{{ $subject->id }}" {{ request('subject_id') == $subject->id ? 'selected' : '' }}>
-                  {{ $subject->name }} -
-                  ({{ $subject->grade_level === 'ninth' ? 'تاسع' : ($subject->grade_level === 'twelfth' ? 'بكالوريا' : 'غير محدد') }})
+                  {{ $subject->name }}
                 </option>
               @endforeach
             </select>
@@ -61,8 +60,17 @@
               <option value="">جميع الأنواع</option>
               <option value="channel" {{ request('type') == 'channel' ? 'selected' : '' }}>قناة</option>
               <option value="discussion" {{ request('type') == 'discussion' ? 'selected' : '' }}>مناقشة</option>
-              <option value="teacher_admin" {{ request('type') == 'teacher_admin' ? 'selected' : '' }}>محادثة إدارية
-              </option>
+            </select>
+          </div>
+
+          {{-- الفلتر الجديد للأرشيف --}}
+          <div class="col-12 col-md-2">
+            <label class="form-label small fw-bold text-danger">الأرشيف</label>
+            <select name="archive_status" class="form-select border-0 shadow-none fw-bold text-danger"
+              style="background-color: var(--bg-main);">
+              <option value="active" {{ request('archive_status') == 'active' ? 'selected' : '' }}>محادثات نشطة</option>
+              <option value="archived" {{ request('archive_status') == 'archived' ? 'selected' : '' }}>الأرشيف</option>
+              <option value="all" {{ request('archive_status') == 'all' ? 'selected' : '' }}>عرض الكل</option>
             </select>
           </div>
 
@@ -70,12 +78,6 @@
             <button type="submit" class="btn w-100 fw-bold" style="background-color: var(--accent-color); color: #fff;">
               تصفية
             </button>
-            @if(request()->hasAny(['search', 'teacher_id', 'subject_id', 'type']))
-              <a href="{{ route('dashboard.conversations.index') }}" class="btn btn-outline-secondary"
-                title="إلغاء الفلاتر">
-                <i class="fa-solid fa-rotate-left"></i>
-              </a>
-            @endif
           </div>
         </div>
       </form>

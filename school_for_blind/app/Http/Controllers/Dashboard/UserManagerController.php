@@ -33,8 +33,17 @@ class UserManagerController extends Controller
         $classId = $request->class_id;
         $search = $request->search;
 
+        $archiveStatus = $request->archive_status;
+
         if ($type === 'student') {
             $query = Student::with('class');
+
+            if ($archiveStatus === 'archived') {
+                $query->onlyTrashed();
+            } elseif ($archiveStatus === 'all') {
+                $query->withTrashed();
+            }
+
             if ($status)
                 $query->where('status', $status);
             if ($level)
@@ -46,11 +55,21 @@ class UserManagerController extends Controller
 
             $users = $query->latest()->paginate(15);
             $html = view('pages.users.partials.student_table', compact('users'))->render();
+
         } elseif ($type === 'caregiver') {
             $query = Caregiver::with('students.class');
 
+            if ($archiveStatus === 'archived') {
+                $query->onlyTrashed();
+            } elseif ($archiveStatus === 'all') {
+                $query->withTrashed();
+            }
+
             if ($status || $level || $classId) {
-                $query->whereHas('students', function ($q) use ($status, $level, $classId) {
+                $query->whereHas('students', function ($q) use ($status, $level, $classId, $archiveStatus) {
+                    if ($archiveStatus === 'archived' || $archiveStatus === 'all') {
+                        $q->withTrashed();
+                    }
                     if ($status)
                         $q->where('status', $status);
                     if ($level)
@@ -62,15 +81,26 @@ class UserManagerController extends Controller
 
             if ($search) {
                 $query->where('phone', 'like', "%{$search}%")
-                    ->orWhereHas('students', function ($q) use ($search) {
+                    ->orWhereHas('students', function ($q) use ($search, $archiveStatus) {
+                        if ($archiveStatus === 'archived' || $archiveStatus === 'all') {
+                            $q->withTrashed();
+                        }
                         $q->search($search);
                     });
             }
 
             $users = $query->latest()->paginate(15);
             $html = view('pages.users.partials.caregiver_table', compact('users'))->render();
+
         } else {
             $query = Teacher::with('classes');
+
+            if ($archiveStatus === 'archived') {
+                $query->onlyTrashed();
+            } elseif ($archiveStatus === 'all') {
+                $query->withTrashed();
+            }
+
             if ($status)
                 $query->where('status', $status);
             if ($level)

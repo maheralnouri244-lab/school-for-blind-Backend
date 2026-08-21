@@ -37,24 +37,28 @@
             <div id="messages-wrapper"></div>
           </div>
 
-          @if((isset($canReply) && $canReply) || 1)
+          @if(!$conversation->trashed())
             <form id="send-message-form" class="mt-auto" enctype="multipart/form-data">
               @csrf
               <div class="input-group p-1 rounded-3"
                 style="background-color: var(--bg-card); border: 1px solid var(--border-color);">
 
                 <div class="dropdown">
-                  <button class="btn btn-link text-muted m-0 d-flex align-items-center" type="button" id="attachmentDropdown" data-bs-toggle="dropdown" aria-expanded="false" title="إرفاق ملف أو تسجيل">
+                  <button class="btn btn-link text-muted m-0 d-flex align-items-center" type="button"
+                    id="attachmentDropdown" data-bs-toggle="dropdown" aria-expanded="false" title="إرفاق ملف أو تسجيل">
                     <i class="fa-solid fa-paperclip fs-5 transition-transform" id="attachment-icon"></i>
                   </button>
-                  <ul class="dropdown-menu shadow border-0" aria-labelledby="attachmentDropdown" style="background-color: var(--bg-card);">
+                  <ul class="dropdown-menu shadow border-0" aria-labelledby="attachmentDropdown"
+                    style="background-color: var(--bg-card);">
                     <li>
-                      <button type="button" class="dropdown-item d-flex align-items-center gap-2" id="btn-select-file" style="color: var(--text-main);">
+                      <button type="button" class="dropdown-item d-flex align-items-center gap-2" id="btn-select-file"
+                        style="color: var(--text-main);">
                         <i class="fa-solid fa-file-arrow-up text-primary"></i> اختيار ملف من الجهاز
                       </button>
                     </li>
                     <li>
-                      <button type="button" class="dropdown-item d-flex align-items-center gap-2" id="btn-record-voice" style="color: var(--text-main);">
+                      <button type="button" class="dropdown-item d-flex align-items-center gap-2" id="btn-record-voice"
+                        style="color: var(--text-main);">
                         <i class="fa-solid fa-microphone text-danger"></i> تسجيل مقطع صوتي
                       </button>
                     </li>
@@ -82,58 +86,60 @@
               </div>
             </form>
           @else
-              <div class="p-2 rounded bg-soft-warning text-warning text-center" style="font-size: 0.9rem;">
-                <i class="fa-solid fa-circle-info me-1"></i> هذه الواجهة مخصصة لمراقبة وضبط المحتوى وحذف المخالفات.
-              </div>
-            @endif
-
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content glass-modal">
-          <div class="modal-header border-0">
-            <h5 class="modal-title fw-bold text-danger">تأكيد حذف الرسالة</h5>
-            <button type="button" class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body text-end">
-            <p style="color: var(--text-main);">هل أنت متأكد من رغبتك في حذف هذه الرسالة نهائياً؟ لا يمكن التراجع عن هذا الإجراء.</p>
-          </div>
-          <div class="modal-footer border-0">
-            <button type="button" class="btn btn-sm" data-bs-dismiss="modal"
-              style="background-color: var(--bg-main); color: var(--text-main); border: 1px solid var(--border-color);">إلغاء</button>
-            <button type="button" class="btn btn-sm btn-reject px-3" id="btn-confirm-delete">حذف الآن</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="modal fade" id="userProfileModal" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content glass-modal text-end" id="user-profile-modal-content">
-          <div class="text-center py-5">
-            <div class="spinner-border text-primary" role="status"></div>
-            <p class="mt-2 text-muted">جاري تحميل بيانات الملف الشخصي...</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="modal fade" id="attachmentPreviewModal" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content glass-modal">
-          <div class="modal-header border-0">
-            <h5 class="modal-title fw-bold" style="color: var(--text-main);">عرض المرفق</h5>
-            <button type="button" class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body text-center p-4" id="attachment-modal-body">
+            <div class="p-3 rounded bg-soft-danger text-danger text-center fw-bold mt-2"
+              style="font-size: 1rem; border: 1px dashed var(--danger-color);">
+              <i class="fa-solid fa-box-archive me-1"></i> هذه المحادثة مؤرشفة - للعرض والقراءة فقط.
             </div>
+          @endif
+
         </div>
       </div>
     </div>
+  </div>
+
+  <div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content glass-modal">
+        <div class="modal-header border-0">
+          <h5 class="modal-title fw-bold text-danger">تأكيد حذف الرسالة</h5>
+          <button type="button" class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-end">
+          <p style="color: var(--text-main);">هل أنت متأكد من رغبتك في حذف هذه الرسالة نهائياً؟ لا يمكن التراجع عن هذا
+            الإجراء.</p>
+        </div>
+        <div class="modal-footer border-0">
+          <button type="button" class="btn btn-sm" data-bs-dismiss="modal"
+            style="background-color: var(--bg-main); color: var(--text-main); border: 1px solid var(--border-color);">إلغاء</button>
+          <button type="button" class="btn btn-sm btn-reject px-3" id="btn-confirm-delete">حذف الآن</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="userProfileModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content glass-modal text-end" id="user-profile-modal-content">
+        <div class="text-center py-5">
+          <div class="spinner-border text-primary" role="status"></div>
+          <p class="mt-2 text-muted">جاري تحميل بيانات الملف الشخصي...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="attachmentPreviewModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content glass-modal">
+        <div class="modal-header border-0">
+          <h5 class="modal-title fw-bold" style="color: var(--text-main);">عرض المرفق</h5>
+          <button type="button" class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-center p-4" id="attachment-modal-body">
+        </div>
+      </div>
+    </div>
+  </div>
 @endsection
 
 @push('scripts')
@@ -158,16 +164,16 @@
     });
 
     // دالة فتح المرفق داخل المودال
-    window.openAttachmentModal = function(type, url) {
+    window.openAttachmentModal = function (type, url) {
       const modalBody = document.getElementById('attachment-modal-body');
       if (type === 'image') {
         modalBody.innerHTML = `<img src="${url}" class="img-fluid rounded shadow" style="max-height: 70vh;" alt="عرض الصورة">`;
       } else if (type === 'video') {
         modalBody.innerHTML = `
-          <video controls autoplay class="w-100 rounded shadow" style="max-height: 70vh; background: #000;">
-            <source src="${url}">
-            متصفحك لا يدعم تشغيل الفيديو.
-          </video>`;
+              <video controls autoplay class="w-100 rounded shadow" style="max-height: 70vh; background: #000;">
+                <source src="${url}">
+                متصفحك لا يدعم تشغيل الفيديو.
+              </video>`;
       } else {
         modalBody.innerHTML = `<iframe src="${url}" class="w-100 rounded" style="height: 60vh; border: none;"></iframe>`;
       }
@@ -216,10 +222,10 @@
 
           if (messagesWrapper.children.length === 0) {
             messagesWrapper.innerHTML = `
-              <div id="no-messages-alert" class="text-center py-5 text-muted">
-                <i class="fa-regular fa-comments fs-1 mb-3"></i>
-                <p>لا توجد رسائل في هذه المحادثة بعد.</p>
-              </div>`;
+                  <div id="no-messages-alert" class="text-center py-5 text-muted">
+                    <i class="fa-regular fa-comments fs-1 mb-3"></i>
+                    <p>لا توجد رسائل في هذه المحادثة بعد.</p>
+                  </div>`;
           }
         })
         .catch(err => console.error('Error fetching messages:', err))
@@ -296,33 +302,33 @@
 
         if (msg.attachment_type === 'image') {
           attachmentHTML = `
-            <div class="mt-2 position-relative d-inline-block">
-              <img src="${fileUrl}" class="img-fluid rounded border" style="max-height: 200px; cursor: pointer;" alt="مرفق صورة" onclick="openAttachmentModal('image', '${fileUrl}')">
-              <a href="${fileUrl}" download class="btn btn-sm btn-dark position-absolute bottom-0 start-0 m-1 opacity-75 hover-opacity-100" title="تحميل"><i class="fa-solid fa-download"></i></a>
-            </div>`;
+                <div class="mt-2 position-relative d-inline-block">
+                  <img src="${fileUrl}" class="img-fluid rounded border" style="max-height: 200px; cursor: pointer;" alt="مرفق صورة" onclick="openAttachmentModal('image', '${fileUrl}')">
+                  <a href="${fileUrl}" download class="btn btn-sm btn-dark position-absolute bottom-0 start-0 m-1 opacity-75 hover-opacity-100" title="تحميل"><i class="fa-solid fa-download"></i></a>
+                </div>`;
         } else if (msg.attachment_type === 'video') {
           attachmentHTML = `
-            <div class="mt-2 position-relative d-inline-block" style="max-width: 250px; cursor: pointer;" onclick="openAttachmentModal('video', '${fileUrl}')">
-              <video src="${fileUrl}" class="img-fluid rounded border" style="max-height: 200px; background: #000;" preload="metadata"></video>
-              <div class="position-absolute top-50 start-50 translate-middle pointer-events-none">
-                <i class="fa-solid fa-circle-play text-white opacity-75" style="font-size: 3rem; text-shadow: 0 0 10px rgba(0,0,0,0.5);"></i>
-              </div>
-              <a href="${fileUrl}" download class="btn btn-sm btn-dark position-absolute bottom-0 start-0 m-1 opacity-75 hover-opacity-100" title="تحميل" style="z-index: 2;" onclick="event.stopPropagation();"><i class="fa-solid fa-download"></i></a>
-            </div>`;
+                <div class="mt-2 position-relative d-inline-block" style="max-width: 250px; cursor: pointer;" onclick="openAttachmentModal('video', '${fileUrl}')">
+                  <video src="${fileUrl}" class="img-fluid rounded border" style="max-height: 200px; background: #000;" preload="metadata"></video>
+                  <div class="position-absolute top-50 start-50 translate-middle pointer-events-none">
+                    <i class="fa-solid fa-circle-play text-white opacity-75" style="font-size: 3rem; text-shadow: 0 0 10px rgba(0,0,0,0.5);"></i>
+                  </div>
+                  <a href="${fileUrl}" download class="btn btn-sm btn-dark position-absolute bottom-0 start-0 m-1 opacity-75 hover-opacity-100" title="تحميل" style="z-index: 2;" onclick="event.stopPropagation();"><i class="fa-solid fa-download"></i></a>
+                </div>`;
         } else if (msg.attachment_type === 'voice') {
           attachmentHTML = `
-            <div class="mt-3 mb-2 d-flex align-items-center gap-2" style="width: 100%; min-width: 280px;">
-              <audio controls preload="auto" class="flex-grow-1 shadow-sm rounded" style="height: 54px; outline: none;" src="${fileUrl}" onerror="retryAudio(this)">
-                متصفحك لا يدعم مشغل الصوت.
-              </audio>
-              <a href="${fileUrl}" download="voice_record.webm" class="btn btn-outline-secondary btn-sm" title="تحميل"><i class="fa-solid fa-download"></i></a>
-            </div>`;
+                <div class="mt-3 mb-2 d-flex align-items-center gap-2" style="width: 100%; min-width: 280px;">
+                  <audio controls preload="auto" class="flex-grow-1 shadow-sm rounded" style="height: 54px; outline: none;" src="${fileUrl}" onerror="retryAudio(this)">
+                    متصفحك لا يدعم مشغل الصوت.
+                  </audio>
+                  <a href="${fileUrl}" download="voice_record.webm" class="btn btn-outline-secondary btn-sm" title="تحميل"><i class="fa-solid fa-download"></i></a>
+                </div>`;
         } else {
           attachmentHTML = `
-            <div class="mt-2 d-flex gap-2 align-items-center">
-              <button type="button" onclick="openAttachmentModal('file', '${fileUrl}')" class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-eye me-1"></i> عرض</button>
-              <a href="${fileUrl}" download class="btn btn-sm btn-outline-secondary"><i class="fa-solid fa-download me-1"></i> تحميل</a>
-            </div>`;
+                <div class="mt-2 d-flex gap-2 align-items-center">
+                  <button type="button" onclick="openAttachmentModal('file', '${fileUrl}')" class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-eye me-1"></i> عرض</button>
+                  <a href="${fileUrl}" download class="btn btn-sm btn-outline-secondary"><i class="fa-solid fa-download me-1"></i> تحميل</a>
+                </div>`;
         }
       }
 
@@ -331,36 +337,36 @@
         : '';
 
       return `
-        <div class="d-flex align-items-start mb-3 justify-content-between p-2 rounded msg-item" id="message-${msg.id}" 
-             style="background-color: var(--bg-card); border: 1px solid var(--border-color);">
-          <div class="d-flex align-items-start gap-2 w-100">
-            <div class="p-2 rounded ${iconBg} d-flex align-items-center justify-content-center cursor-pointer flex-shrink-0" 
-                 style="width: 38px; height: 38px;" ${profileClick} title="عرض الملف الشخصي">
-              <i class="fa-solid ${iconClass}"></i>
-            </div>
-            <div class="flex-grow-1" style="max-width: 85%;">
-              <strong class="d-block cursor-pointer text-hover-primary" style="color: var(--text-main); font-size: 0.9rem;" ${profileClick}>
-                ${senderName}
-                <span class="text-muted fw-normal" style="font-size: 0.75rem;">(${roleName})</span>
-              </strong>
-              ${msg.body ? `<p class="mb-1 mt-1" style="color: var(--text-main); font-size: 0.95rem;">${msg.body}</p>` : ''}
-              ${attachmentHTML}
-              <small class="text-muted d-block mt-1" style="font-size: 0.7rem;">${new Date(msg.created_at).toLocaleString('ar-EG')}</small>
-            </div>
-          </div>
-          <button class="btn btn-sm btn-link text-danger border-0 p-1 flex-shrink-0" onclick="confirmDeleteMessage(${msg.id})" title="حذف هذه الرسالة">
-            <i class="fa-regular fa-trash-can fs-5"></i>
-          </button>
-        </div>`;
+            <div class="d-flex align-items-start mb-3 justify-content-between p-2 rounded msg-item" id="message-${msg.id}" 
+                 style="background-color: var(--bg-card); border: 1px solid var(--border-color);">
+              <div class="d-flex align-items-start gap-2 w-100">
+                <div class="p-2 rounded ${iconBg} d-flex align-items-center justify-content-center cursor-pointer flex-shrink-0" 
+                     style="width: 38px; height: 38px;" ${profileClick} title="عرض الملف الشخصي">
+                  <i class="fa-solid ${iconClass}"></i>
+                </div>
+                <div class="flex-grow-1" style="max-width: 85%;">
+                  <strong class="d-block cursor-pointer text-hover-primary" style="color: var(--text-main); font-size: 0.9rem;" ${profileClick}>
+                    ${senderName}
+                    <span class="text-muted fw-normal" style="font-size: 0.75rem;">(${roleName})</span>
+                  </strong>
+                  ${msg.body ? `<p class="mb-1 mt-1" style="color: var(--text-main); font-size: 0.95rem;">${msg.body}</p>` : ''}
+                  ${attachmentHTML}
+                  <small class="text-muted d-block mt-1" style="font-size: 0.7rem;">${new Date(msg.created_at).toLocaleString('ar-EG')}</small>
+                </div>
+              </div>
+              <button class="btn btn-sm btn-link text-danger border-0 p-1 flex-shrink-0" onclick="confirmDeleteMessage(${msg.id})" title="حذف هذه الرسالة">
+                <i class="fa-regular fa-trash-can fs-5"></i>
+              </button>
+            </div>`;
     }
 
     window.openUserProfile = function (type, id) {
       const modalContent = document.getElementById('user-profile-modal-content');
       modalContent.innerHTML = `
-        <div class="text-center py-5">
-          <div class="spinner-border text-primary" role="status"></div>
-          <p class="mt-2 text-muted">جاري تحميل بيانات الملف الشخصي...</p>
-        </div>`;
+            <div class="text-center py-5">
+              <div class="spinner-border text-primary" role="status"></div>
+              <p class="mt-2 text-muted">جاري تحميل بيانات الملف الشخصي...</p>
+            </div>`;
       profileModal.show();
 
       fetch(`/content-monitor/conversations/user-profile?type=${type}&id=${id}`, {
@@ -399,7 +405,7 @@
           fileInput.click();
         });
 
-        fileInput.addEventListener('change', function() {
+        fileInput.addEventListener('change', function () {
           if (this.files && this.files[0]) {
             audioBlob = null;
             isVoiceInput.value = '0';

@@ -138,6 +138,30 @@
         </div>
       </div>
 
+      <!-- منطقة الخطر: أرشفة النظام -->
+      <div class="col-lg-12 mt-3">
+        <div class="card h-100 shadow-sm rounded-4"
+          style="border: 2px solid #ef4444; background: rgba(239, 68, 68, 0.04);">
+          <div class="card-body p-4 d-flex flex-column flex-md-row align-items-center justify-content-between gap-4">
+            <div class="d-flex align-items-center gap-3">
+              <div class="p-4 bg-danger text-white rounded-circle shadow-sm">
+                <i class="fa-solid fa-skull-crossbones fs-2"></i>
+              </div>
+              <div>
+                <h4 class="fw-bold text-danger mb-2">منطقة الخطر (ترحيل نهاية العام)</h4>
+                <p class="text-muted mb-0" style="font-size: 1rem; max-width: 600px;">
+                  هذا الإجراء سيقوم <strong>بأرشفة</strong> جميع الحسابات والمواد والاختبارات، وسيقوم <strong>بحذف
+                    نهائي</strong> لكافة الشُعب، الجداول، المحادثات، والبيانات المالية. لا يمكن التراجع عن هذا الإجراء!
+                </p>
+              </div>
+            </div>
+            <button type="button" class="btn btn-danger px-5 py-3 fw-bold shadow-lg d-flex align-items-center gap-2"
+              data-bs-toggle="modal" data-bs-target="#systemArchiveModal" style="font-size: 1.1rem;">
+              <i class="fa-solid fa-radiation"></i> أرشفة النظام بالكامل
+            </button>
+          </div>
+        </div>
+      </div>
       <!-- مودال منح النقاط -->
       <div class="modal fade glass-modal" id="grantPointsModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -574,6 +598,52 @@
         </div>
       </div>
     </div>
+
+    <!-- مودال أرشفة النظام (الخطر) -->
+    <div class="modal fade glass-modal" id="systemArchiveModal" data-bs-backdrop="static" tabindex="-1"
+      aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+          <div class="bg-danger py-4 text-center">
+            <div class="bg-white rounded-circle d-inline-flex align-items-center justify-content-center mb-2 shadow"
+              style="width: 80px; height: 80px;">
+              <i class="fa-solid fa-bomb text-danger" style="font-size: 2.5rem;"></i>
+            </div>
+            <h3 class="fw-bold text-white mb-0 mt-2">تحذير أمني شديد الخطورة</h3>
+          </div>
+
+          <form action="{{ route('system.archive') }}" method="POST" id="system-archive-form">
+            @csrf
+            <div class="modal-body p-5">
+              <div class="alert alert-danger border-danger mb-4 fw-bold" style="background: #fef2f2;">
+                <i class="fa-solid fa-triangle-exclamation me-2"></i>
+                أنت على وشك مسح جميع السجلات التشغيلية وأرشفة كافة المستخدمين والمحتوى!
+              </div>
+
+              <p class="mb-4" style="color: var(--text-main); font-size: 1.1rem;">
+                لتأكيد هذه العملية، يرجى كتابة الجملة التالية بدقة في الحقل أدناه:<br>
+                <span class="badge bg-danger fs-5 mt-3 user-select-none">أرشفة النظام بالكامل</span>
+              </p>
+
+              <div class="p-3 border rounded-3 border-danger" style="background-color: var(--bg-main);">
+                <input type="text" name="archive_confirmation" id="archive-confirmation-input"
+                  class="form-control form-control-lg text-center fw-bold" style="color: var(--danger-color) !important;"
+                  placeholder="اكتب الجملة هنا..." required autocomplete="off">
+              </div>
+            </div>
+
+            <div class="modal-footer px-4 py-3 border-top-0 d-flex justify-content-between bg-light">
+              <button type="button" class="btn btn-outline-secondary px-5 fw-bold" data-bs-dismiss="modal">تراجع
+                فوراً</button>
+              <button type="submit" class="btn btn-danger px-5 fw-bold shadow-sm d-flex align-items-center gap-2"
+                id="archive-submit-btn" disabled>
+                <i class="fa-solid fa-fire"></i> تنفيذ أرشفة النظام
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
 @endsection
 
   <script>
@@ -752,6 +822,23 @@
           toggleButtonLoading('final-submit-btn', true);
         }
       });
+      const archiveInput = document.getElementById('archive-confirmation-input');
+      const archiveSubmitBtn = document.getElementById('archive-submit-btn');
+
+      if (archiveInput && archiveSubmitBtn) {
+        archiveInput.addEventListener('input', function (e) {
+          if (e.target.value.trim() === 'أرشفة النظام بالكامل') {
+            archiveSubmitBtn.removeAttribute('disabled');
+          } else {
+            archiveSubmitBtn.setAttribute('disabled', 'true');
+          }
+        });
+
+        archiveInput.addEventListener('paste', function (e) {
+          e.preventDefault();
+          alert('يرجى كتابة الجملة يدوياً لتأكيد الإجراء.');
+        });
+      }
     });
     function openEditAdminModal(id, email, role) {
       bootstrap.Modal.getInstance(document.getElementById('adminManagementModal')).hide();
@@ -759,5 +846,25 @@
       document.getElementById('edit-role').value = role;
       document.getElementById('edit-admin-form').action = `/my-space/admins/${id}`;
       new bootstrap.Modal(document.getElementById('editAdminModal')).show();
+    }
+
+    const archiveInput = document.getElementById('archive-confirmation-input');
+    const archiveSubmitBtn = document.getElementById('archive-submit-btn');
+
+    if (archiveInput && archiveSubmitBtn) {
+      archiveInput.addEventListener('input', function (e) {
+        if (e.target.value === 'أرشفة النظام بالكامل') {
+          archiveSubmitBtn.removeAttribute('disabled');
+          archiveSubmitBtn.classList.add('pulse-danger');
+        } else {
+          archiveSubmitBtn.setAttribute('disabled', 'true');
+          archiveSubmitBtn.classList.remove('pulse-danger');
+        }
+      });
+
+      archiveInput.addEventListener('paste', function (e) {
+        e.preventDefault();
+        alert('يرجى كتابة الجملة يدوياً لتأكيد الإجراء.');
+      });
     }
   </script>

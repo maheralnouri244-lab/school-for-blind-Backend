@@ -32,7 +32,7 @@
             <option value="twelfth">البكالوريا</option>
           </select>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
           <select id="filter-class" class="form-select search-input py-2">
             <option value="">كل الشعب</option>
             @foreach($classes as $class)
@@ -42,14 +42,23 @@
             @endforeach
           </select>
         </div>
-        <div class="col-md-3">
+        <!-- الفلتر الجديد للأرشيف بنفس التنسيق -->
+        <div class="col-md-2">
+          <select id="filter-archive" class="form-select search-input py-2 text-danger fw-bold">
+            <option value="active" selected>الحسابات النشطة</option>
+            <option value="archived">الأرشيف (المحذوفين)</option>
+            <option value="all">عرض الكل (نشط + مؤرشف)</option>
+          </select>
+        </div>
+        <!-- تصغير عمود البحث ليتناسب مع البقية -->
+        <div class="col-md-2">
           <div class="input-group">
             <span class="input-group-text border-0"
               style="background-color: var(--bg-main); color: var(--text-muted); border-radius: 0 8px 8px 0;">
               <i class="fa-solid fa-magnifying-glass"></i>
             </span>
             <input type="text" id="filter-search" class="form-control search-input py-2 border-start-0"
-              placeholder="بحث بالاسم أو الرقم..." style="border-radius: 8px 0 0 8px;">
+              placeholder="بحث بالاسم..." style="border-radius: 8px 0 0 8px;">
           </div>
         </div>
       </div>
@@ -208,6 +217,7 @@
       const statusSelect = document.getElementById('filter-status');
       const levelSelect = document.getElementById('filter-level');
       const classSelect = document.getElementById('filter-class');
+      const archiveSelect = document.getElementById('filter-archive'); // <-- إضافة هذا السطر
       const searchInput = document.getElementById('filter-search');
       const tableContainer = document.getElementById('table-container');
       const paginationContainer = document.getElementById('pagination-container');
@@ -217,6 +227,7 @@
       if (urlParams.has('status')) statusSelect.value = urlParams.get('status');
       if (urlParams.has('level')) levelSelect.value = urlParams.get('level');
       if (urlParams.has('class_id')) classSelect.value = urlParams.get('class_id');
+      if (urlParams.has('archive_status')) archiveSelect.value = urlParams.get('archive_status'); // <-- إضافة هذا السطر
       if (urlParams.has('search')) searchInput.value = urlParams.get('search');
 
       function fetchUsers(page = 1) {
@@ -227,6 +238,7 @@
           status: statusSelect.value,
           level: levelSelect.value,
           class_id: classSelect.value,
+          archive_status: archiveSelect.value, // <-- تمرير الفلتر للكنترولر
           search: searchInput.value,
           page: page
         });
@@ -254,6 +266,7 @@
       statusSelect.addEventListener('change', () => fetchUsers());
       levelSelect.addEventListener('change', () => fetchUsers());
       classSelect.addEventListener('change', () => fetchUsers());
+      archiveSelect.addEventListener('change', () => fetchUsers()); // <-- إضافة هذا الحدث
 
       let debounceTimer;
       searchInput.addEventListener('input', () => {

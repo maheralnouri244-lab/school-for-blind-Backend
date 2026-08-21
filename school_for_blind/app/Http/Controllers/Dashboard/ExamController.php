@@ -20,6 +20,14 @@ class ExamController extends Controller
     {
         $query = Exam::with('subject');
 
+        $archiveStatus = $request->archive_status ?? 'active';
+        
+        if ($archiveStatus === 'archived') {
+            $query->onlyTrashed();
+        } elseif ($archiveStatus === 'all') {
+            $query->withTrashed();
+        }
+
         if ($request->has('search') && $request->search != '') {
             $query->where('title', 'like', '%' . $request->search . '%');
         }
@@ -34,6 +42,9 @@ class ExamController extends Controller
         }
 
         $exams = $query->latest('exam_date')->paginate(10);
+        
+        $exams->appends($request->all()); 
+        
         $subjects = Subject::all();
 
         return view('pages.exams.index', compact('exams', 'subjects'));

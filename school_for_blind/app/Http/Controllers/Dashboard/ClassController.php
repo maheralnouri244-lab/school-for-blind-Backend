@@ -273,6 +273,7 @@ class ClassController extends Controller
             return redirect()->back()->with('error', 'لا يمكن حذف شعبة تحتوي على طلاب. يرجى نقل الطلاب لشعبة أخرى أولاً.');
         }
         $class->teachers()->detach();
+        $class->schedules()->delete();
         $class->delete();
 
         return redirect()->back()->with('success', 'تم حذف الشعبة وفك ارتباط الأساتذة بنجاح.');

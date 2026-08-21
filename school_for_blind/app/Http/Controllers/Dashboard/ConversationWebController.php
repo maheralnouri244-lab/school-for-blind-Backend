@@ -22,6 +22,13 @@ class ConversationWebController extends Controller
         $admin = Auth::guard('admin')->user();
         $query = Conversation::with(['teacher', 'subject'])->latest();
 
+        $archiveStatus = $request->archive_status ?? 'active';
+        if ($archiveStatus === 'archived') {
+            $query->onlyTrashed();
+        } elseif ($archiveStatus === 'all') {
+            $query->withTrashed();
+        }
+
         if ($admin->role === 'Academic Manager' || $admin->role === 'Moderator') {
             $query->where(function ($q) use ($admin) {
                 $q->whereIn('type', ['channel', 'discussion'])
@@ -48,7 +55,8 @@ class ConversationWebController extends Controller
             $query->where('type', $request->type);
         }
 
-        $conversations = $query->paginate(15)->withQueryString();
+        $conversations = $query->paginate(15);
+        $conversations->appends($request->all());
         $teachers = Teacher::all();
         $subjects = Subject::all();
 
@@ -58,7 +66,7 @@ class ConversationWebController extends Controller
     public function show($id)
     {
         $admin = Auth::guard('admin')->user();
-        $conversation = Conversation::with('teacher')->findOrFail($id);
+        $conversation = Conversation::with('teacher')->withTrashed()->findOrFail($id);
         $canReply = false;
 
         if ($conversation->type === 'teacher_admin' && $conversation->admin_id === $admin->id) {
@@ -72,7 +80,7 @@ class ConversationWebController extends Controller
 
     public function fetchMessages(Request $request, $id)
     {
-        $messages = Message::with('sender')
+        $messages = Message::with('sender')->withTrashed()
             ->where('conversation_id', $id)
             ->latest()
             ->cursorPaginate(30);
