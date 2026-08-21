@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->decimal('points')->default(1.00);
             $table->enum('status', ['publish', 'Bank']);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

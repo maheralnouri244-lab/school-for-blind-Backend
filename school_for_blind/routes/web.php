@@ -125,6 +125,7 @@ Route::middleware([CheckAdminRole::class . ':Super Admin,Academic Manager,Data E
     Route::post('past-exams/{id}/questions', [PastExamController::class, 'storeQuestion'])->name('past-exams.questions.store');
     Route::post('past-exams/{id}/questions/attach', [PastExamController::class, 'attachQuestion'])->name('past-exams.questions.attach');
     Route::delete('past-exams/{id}/questions/{question_id}', [PastExamController::class, 'detachQuestion'])->name('past-exams.questions.detach');
+    Route::post('past-exams/{id}/restore', [PastExamController::class, 'restore'])->name('past-exams.restore');
     Route::resource('past-exams', PastExamController::class)->parameters(['past-exams' => 'id']);
 
     Route::post('exams/{id}/publish', [ExamController::class, 'publish'])->name('exams.publish');
@@ -232,6 +233,7 @@ Route::middleware([CheckAdminRole::class . ':Super Admin'])->group(function () {
     Route::post('/my-space/admins', [App\Http\Controllers\Dashboard\MySpaceController::class, 'storeAdmin'])->name('admins.store');
     Route::put('/my-space/admins/{id}', [App\Http\Controllers\Dashboard\MySpaceController::class, 'updateAdmin'])->name('admins.update');
     Route::delete('/my-space/admins/{id}', [App\Http\Controllers\Dashboard\MySpaceController::class, 'deleteAdmin'])->name('admins.destroy');
+    Route::post('/my-space/system-archive', [App\Http\Controllers\Dashboard\MySpaceController::class, 'archiveEntireSystem'])->name('system.archive');
 });
 // Route::middleware([CheckAdminRole::class . ':Academic Manager'])->group(function () {
 //     Route::post('/my-space/reset-student-password', [App\Http\Controllers\Dashboard\MySpaceController::class, 'resetStudentPassword'])->name('my_space.reset_password');

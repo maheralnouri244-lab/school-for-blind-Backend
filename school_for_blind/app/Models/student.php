@@ -116,10 +116,20 @@ class Student extends Authenticatable
                     $parent->delete();
                 }
             }
+
+            if (!$student->isForceDeleting()) {
+                $student->punishables()->delete();
+            }
+        });
+
+        static::restoring(function (Student $student) {
+            $student->punishables()->restore();
+            $student->class_id = null;
+            $student->parent_id = null;
         });
 
     }
-  public function notifications(): MorphMany
+    public function notifications(): MorphMany
     {
         return $this->morphMany(Notification::class, 'notifiable')->latest();
     }
@@ -187,5 +197,5 @@ class Student extends Authenticatable
         }
         return $query;
     }
-    
+
 }

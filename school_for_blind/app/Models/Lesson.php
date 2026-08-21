@@ -5,28 +5,42 @@ namespace App\Models;
 use App\Models\Record;
 use App\Models\Subject;
 use App\Models\Teacher;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\LogOptions;
-use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\Models\Activity;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Lesson extends Model
 {
-    use SoftDeletes;
+    use HasFactory, SoftDeletes;
     use LogsActivity;
+
+    protected static function booted(): void
+    {
+        static::deleting(function (Lesson $lesson) {
+            if (!$lesson->isForceDeleting()) {
+                $lesson->quizzes()->delete();
+            }
+        });
+
+        static::restoring(function (Lesson $lesson) {
+            $lesson->quizzes()->restore();
+        });
+    }
 
 
     protected $guarded = [];
     protected $appends = ['has_quiz'];
     public function subject()
     {
-        return $this->belongsTo(Subject::class);
+        return $this->belongsTo(Subject::class)->withTrashed();
     }
 
     public function teacher()
     {
-        return $this->belongsTo(Teacher::class);
+        return $this->belongsTo(Teacher::class)->withTrashed();
     }
 
     public function quiz()
@@ -41,7 +55,7 @@ class Lesson extends Model
 
     public function class()
     {
-        return $this->belongsTo(Classes::class);
+        return $this->belongsTo(Classes::class)->withTrashed();
     }
 
     public function getActivitylogOptions(): LogOptions
@@ -84,8 +98,8 @@ class Lesson extends Model
         }
         return $this->quiz()->exists();
     }
-public function bookmarks()
-{
-    return $this->hasMany(Bookmark::class);
-}
+    public function bookmarks()
+    {
+        return $this->hasMany(Bookmark::class);
+    }
 }

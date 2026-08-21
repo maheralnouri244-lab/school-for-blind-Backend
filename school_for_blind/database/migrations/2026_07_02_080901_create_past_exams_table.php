@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->string('voice_solution_path')->nullable();
             $table->boolean('is_published')->default(true);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

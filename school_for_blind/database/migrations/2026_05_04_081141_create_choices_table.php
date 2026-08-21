@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->string('choice_text');
             $table->boolean('is_correct')->default(false);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

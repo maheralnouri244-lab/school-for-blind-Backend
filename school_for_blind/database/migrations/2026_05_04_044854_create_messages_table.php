@@ -20,6 +20,7 @@ return new class extends Migration {
             $table->string('attachment_path')->nullable();
             $table->enum('attachment_type', ['file', 'image', 'voice', 'video'])->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->text('description')->nullable();
             $table->integer('duration_minutes')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

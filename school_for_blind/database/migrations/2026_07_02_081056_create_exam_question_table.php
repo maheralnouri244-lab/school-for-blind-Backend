@@ -12,7 +12,6 @@ return new class extends Migration {
             $table->foreignId('exam_id')->constrained('exams')->cascadeOnDelete();
             $table->foreignId('question_id')->constrained('questions')->cascadeOnDelete();
             $table->timestamps();
-            
             $table->unique(['exam_id', 'question_id']);
         });
     }

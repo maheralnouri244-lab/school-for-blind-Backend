@@ -2,13 +2,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Conversation extends Model
 {
     // protected $fillable = ['type', 'name', 'teacher_id', 'subject_id', 'parent_id'];
+    use SoftDeletes;
 
     protected $guarded = [];
-    
+
     public function discussion()
     {
         return $this->hasOne(Conversation::class, 'parent_id')->where('type', 'discussion');
@@ -36,4 +38,17 @@ class Conversation extends Model
     {
         return $this->belongsTo(Admin::class, 'admin_id');
     }
+
+    protected static function booted(): void
+{
+    static::deleting(function (Conversation $conversation) {
+        if (! $conversation->isForceDeleting()) {
+            $conversation->messages()->delete();
+        }
+    });
+
+    static::restoring(function (Conversation $conversation) {
+        $conversation->messages()->restore();
+    });
+}
 }

@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->float('points_earned')->default(0);
             $table->boolean('is_graded')->default(false);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

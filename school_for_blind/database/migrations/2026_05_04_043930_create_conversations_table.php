@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->foreignId('parent_id')->nullable()->constrained('conversations')->onDelete('cascade');
             $table->foreignId('admin_id')->nullable()->constrained('admins')->onDelete('cascade');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

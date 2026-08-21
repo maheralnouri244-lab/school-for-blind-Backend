@@ -12,8 +12,8 @@ return new class extends Migration {
             $table->foreignId('exam_id')->constrained('exams')->cascadeOnDelete();
             $table->decimal('score')->default(0);
             $table->enum('status', ['pending_grading', 'pending_approval', 'approved', 'rejected'])->default('pending_grading');
-
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

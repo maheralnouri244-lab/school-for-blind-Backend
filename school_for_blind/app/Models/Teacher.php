@@ -4,16 +4,16 @@ namespace App\Models;
 
 use App\Models\Subject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class Teacher extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\TeacherFactory> */
-    use HasFactory, Notifiable, HasApiTokens;
-
+    use HasFactory, Notifiable, HasApiTokens, SoftDeletes;
     public function subjects()
     {
         return $this->belongsToMany(Subject::class, 'teacher_subjects')
@@ -48,9 +48,20 @@ class Teacher extends Authenticatable
         static::deleting(function ($teacher) {
             $teacher->deviceTokens()->delete();
             $teacher->notifications()->delete();
+
+            if (!$teacher->isForceDeleting()) {
+                $teacher->punishables()->delete();
+                $teacher->questions()->delete();
+            }
+        });
+
+        static::restoring(function (Teacher $teacher) {
+            $teacher->punishables()->restore();
+            $teacher->questions()->restore();
+            $teacher->classes()->detach();
         });
     }
- public function notifications(): MorphMany
+    public function notifications(): MorphMany
     {
         return $this->morphMany(Notification::class, 'notifiable')->latest();
     }

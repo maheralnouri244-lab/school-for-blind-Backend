@@ -20,6 +20,7 @@ return new class extends Migration {
             $table->foreignId('lesson_id')->constrained('lessons');
             $table->foreignId('teacher_id')->constrained('teachers');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

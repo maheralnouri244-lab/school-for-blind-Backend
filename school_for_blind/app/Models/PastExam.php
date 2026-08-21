@@ -3,14 +3,18 @@
 namespace App\Models;
 
 use App\Models\Favorite;
+use App\Models\Question;
 use App\Models\Subject;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class PastExam extends Model
 {
+    use HasFactory, SoftDeletes;
     protected $table = 'past_exams';
 
     protected $guarded = [];
@@ -20,10 +24,11 @@ class PastExam extends Model
         return $this->belongsTo(Subject::class, 'subject_id');
     }
 
-    public function questions(): BelongsToMany
+    public function questions()
     {
-        return $this->belongsToMany(Question::class, 'past_exam_question', 'past_exam_id', 'question_id')
-            ->withTimestamps();
+        return $this->belongsToMany(Question::class, 'past_exam_question')
+            ->withTimestamps()
+            ->withTrashed();
     }
     public function favorites()
     {

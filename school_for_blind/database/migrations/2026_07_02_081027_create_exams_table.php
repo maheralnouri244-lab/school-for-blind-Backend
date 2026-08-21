@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->integer('totalmark')->default(0);
             $table->boolean('is_published')->default(false);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

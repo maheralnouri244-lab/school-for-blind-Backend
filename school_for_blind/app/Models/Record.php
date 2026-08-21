@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Record extends Model
 {
-    use SoftDeletes;
-
+    use HasFactory, SoftDeletes;
     protected $guarded = [];
 
     protected $appends = ['name', 'url'];
@@ -44,9 +44,14 @@ class Record extends Model
         );
     }
 
-public function bookmarks()
-{
-    return $this->hasMany(Bookmark::class);
-}
-
+    public function bookmarks()
+    {
+        return $this->hasMany(Bookmark::class);
     }
+    protected static function booted(): void
+    {
+        static::deleting(function (Record $record) {
+            $record->bookmarks()->delete();
+        });
+    }
+}

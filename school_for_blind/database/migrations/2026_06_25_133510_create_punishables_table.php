@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->foreignId('admin_id')->constrained('admins')->cascadeOnDelete();
             $table->timestamp('expires_at')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

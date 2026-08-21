@@ -8,7 +8,9 @@ use App\Models\Question;
 use App\Models\QuizSubmission;
 use App\Models\Subject;
 use App\Models\Teacher;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Log;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Models\Activity;
@@ -17,29 +19,30 @@ use Spatie\Activitylog\Traits\LogsActivity;
 class Quiz extends Model
 {
     use LogsActivity;
+    use HasFactory, SoftDeletes;
 
     protected $guarded = [];
 
     public function lesson()
     {
-        return $this->belongsTo(Lesson::class, 'lesson_id');
+        return $this->belongsTo(Lesson::class, 'lesson_id')->withTrashed();
     }
 
     public function teacher()
     {
-        return $this->belongsTo(Teacher::class, 'teacher_id');
+        return $this->belongsTo(Teacher::class, 'teacher_id')->withTrashed();
     }
 
     public function subject()
     {
-        return $this->belongsTo(Subject::class, 'subject_id');
+        return $this->belongsTo(Subject::class, 'subject_id')->withTrashed();
     }
 
     public function questions()
     {
-        return $this->belongsToMany(Question::class);
+        return $this->belongsToMany(Question::class)->withTrashed();
     }
-    
+
     public function submissions()
     {
         return $this->hasMany(QuizSubmission::class);
@@ -83,11 +86,11 @@ class Quiz extends Model
 
         $activity->properties = $activity->properties->put('custom_info', $customInfo);
     }
-public function favorites()
-{
-    return $this->morphMany(Favorite::class, 'favorable');
-}
-
-
-
+    public function favorites()
+    {
+        return $this->morphMany(Favorite::class, 'favorable');
     }
+
+
+
+}
