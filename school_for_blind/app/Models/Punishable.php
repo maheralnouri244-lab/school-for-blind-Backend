@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\MorphPivot;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Punishable extends MorphPivot
 {
+    use SoftDeletes;
     protected $table = 'punishables';
 
     public $incrementing = true;
