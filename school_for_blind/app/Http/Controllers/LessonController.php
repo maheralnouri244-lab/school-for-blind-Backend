@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\LessonPublished;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\IndexLessonRequest;
 use App\Http\Requests\StoreLessonRequest;
@@ -42,7 +43,7 @@ class LessonController extends Controller
                 'duration' => $request->duration,
             ]);
         }
-
+event(new LessonPublished($lesson));
         return response()->json([
             'message' => 'تم رفع الدرس والتسجيل بنجاح.',
             'lesson' => $lesson->load('records')
