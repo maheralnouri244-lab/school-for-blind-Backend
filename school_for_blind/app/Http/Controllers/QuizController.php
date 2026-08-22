@@ -138,7 +138,7 @@ if ($lesson && $lesson->class_id) {
             $query->where('lesson_id', $request->lesson_id);
         }
 
-        $quizzes = $query->paginate(20);
+        $quizzes = $query->get();
 
         return response()->json($quizzes);
     }

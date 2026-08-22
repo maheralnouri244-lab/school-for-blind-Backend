@@ -78,7 +78,7 @@ Route::post('/donation/checkout', [DonationController::class, 'checkout']);
 Route::post('/donation/confirm', [DonationController::class, 'confirmPayment']);
 Route::get('/donation/success', [DonationController::class, 'success'])->name('donation.success');
 Route::get('/donation/cancel', [DonationController::class, 'cancel'])->name('donation.cancel');
-Route::middleware(['auth:sanctum', 'CheckIfDismissed'])->group(function () {});
+Route::middleware(['auth:sanctum', 'CheckIfDismissed'])->group(function () { });
 Route::post('/point-redemption/request', [PointRedemptionController::class, 'store'])->middleware('auth:sanctum');
 Route::prefix('admin/point-redemption')->middleware(['auth:sanctum', 'CheckIfDismissed'])->group(function () {
     Route::post('/{redemptionRequest}/approve', [PointRedemptionController::class, 'approve']);
@@ -159,7 +159,7 @@ Route::middleware(['auth:sanctum', IsTeacher::class, 'CheckIfDismissed'])->prefi
     Route::delete('/{id}', [QuestionBankController::class, 'destroy']);
 });
 
-Route::middleware(['auth:sanctum', CheckUserType::class.':admin'])->prefix('admin/teachers')->group(function () {
+Route::middleware(['auth:sanctum', CheckUserType::class . ':admin'])->prefix('admin/teachers')->group(function () {
     Route::post('/transfer-assets', [TeacherTransferController::class, 'transferAssets']);
 });
 Route::middleware(['auth:sanctum', 'CheckIfDismissed'])->group(function () {
@@ -194,16 +194,16 @@ Route::middleware(['auth:sanctum', 'CheckIfDismissed'])->group(function () {
 Route::post('/favorites/remove', [FavoriteController::class, 'remove'])
     ->middleware(['auth:sanctum', 'CheckIfDismissed']);
 
-Route::middleware(['auth:sanctum', CheckUserType::class.':admin'])->prefix('admin/punishments')->group(function () {
+Route::middleware(['auth:sanctum', CheckUserType::class . ':admin'])->prefix('admin/punishments')->group(function () {
     Route::post('/apply', [PunishmentController::class, 'applyPunishment']);
     Route::patch('/{id}/revoke', [PunishmentController::class, 'revokePunishment']);
 });
 
-Route::middleware(['auth:sanctum', CheckPunishment::class.':Report Ban', 'CheckIfDismissed'])->group(function () {
+Route::middleware(['auth:sanctum', CheckPunishment::class . ':Report Ban', 'CheckIfDismissed'])->group(function () {
     Route::post('/reports', [ReportController::class, 'store']);
 });
 
-Route::middleware(['auth:sanctum', CheckUserType::class.':admin'])->prefix('admin/reports')->group(function () {
+Route::middleware(['auth:sanctum', CheckUserType::class . ':admin'])->prefix('admin/reports')->group(function () {
     Route::get('/', [ReportController::class, 'index']);
     Route::patch('/{id}/status', [ReportController::class, 'updateStatus']);
 });
@@ -217,7 +217,7 @@ Route::middleware(['auth:sanctum', IsTeacher::class, 'CheckIfDismissed'])->prefi
     Route::get('/admin-chats', [ConversationController::class, 'getTeacherAdminConversations']);
     Route::get('/{conversationId}/messages', [ConversationController::class, 'getMessages']);
     Route::post('/{conversationId}/messages', [ConversationController::class, 'sendMessage'])
-        ->middleware(CheckPunishment::class.':Mute');
+        ->middleware(CheckPunishment::class . ':Mute');
     Route::post('/{conversationId}/read', [ConversationController::class, 'markAsRead']);
 });
 
@@ -225,7 +225,7 @@ Route::middleware(['auth:sanctum', CheckIsStudent::class, 'CheckIfDismissed'])->
     Route::get('/', [ConversationController::class, 'getStudentChannels']);
     Route::get('/{conversationId}/messages', [ConversationController::class, 'getMessages']);
     Route::post('/{conversationId}/messages', [ConversationController::class, 'sendMessage'])
-        ->middleware(CheckPunishment::class.':Mute');
+        ->middleware(CheckPunishment::class . ':Mute');
     Route::post('/{conversationId}/read', [ConversationController::class, 'markAsRead']);
 });
 

@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => 'https://stays-ability-accustom.ngrok-free.dev',
+    'url' => 'https://barman-wannabe-cape.ngrok-free.dev/',
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
