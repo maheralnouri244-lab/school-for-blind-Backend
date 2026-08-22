@@ -193,10 +193,12 @@ class FinancialDashboardController extends Controller
 
     public function paySalary(Request $request)
     {
+
         $request->validate([
             'teacher_id' => 'required|exists:teachers,id',
             'amount' => 'required|numeric|min:1',
         ]);
+
 
         $teacherId = $request->teacher_id;
         $amountInEur = $request->amount;
@@ -208,10 +210,12 @@ class FinancialDashboardController extends Controller
             return redirect()->back()->with('error', 'الأستاذ ليس لديه حساب بنكي مربوط في Stripe');
         }
 
+
         $walletsTable = $this->getWalletsTable();
         $txTable = $this->getTransactionsTable();
 
         $wallet = DB::table($walletsTable)->where('id', 1)->first();
+        \Log::info($wallet->balance);
         if (!$wallet || $wallet->balance < $amountInEur) {
             return redirect()->back()->with('error', 'رصيد المدرسة غير كافٍ لتحويل الراتب');
         }
@@ -220,29 +224,29 @@ class FinancialDashboardController extends Controller
             $stripeSecret = config('cashier.secret') ?? env('STRIPE_SECRET');
             $stripe = new StripeClient($stripeSecret);
 
-            $transfer = $stripe->transfers->create([
-                'amount' => $amountInCents,
-                'currency' => 'eur',
-                'destination' => $teacher->stripe_account_id,
-                'description' => 'راتب مستحق للأستاذ: ' . $teacher->full_name,
-            ]);
+            // $transfer = $stripe->transfers->create([
+            //     'amount' => $amountInCents,
+            //     'currency' => 'eur',
+            //     'destination' => $teacher->stripe_account_id,
+            //     'description' => 'راتب مستحق للأستاذ: ' . $teacher->full_name,
+            // ]);
 
-            DB::table($walletsTable)->where('id', 1)->decrement('balance', $amountInEur);
+            // DB::table($walletsTable)->where('id', 1)->decrement('balance', $amountInEur);
 
-            DB::table($txTable)->insert([
-                'type' => 'withdrawal',
-                'amount' => $amountInEur,
-                'description' => 'تم تحويل راتب للأستاذ ' . $teacher->full_name . ' برقم عملية: ' . $transfer->id,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+            // DB::table($txTable)->insert([
+            //     'type' => 'withdrawal',
+            //     'amount' => $amountInEur,
+            //     'description' => 'تم تحويل راتب للأستاذ ' . $teacher->full_name . ' برقم عملية: ' . $transfer->id,
+            //     'created_at' => now(),
+            //     'updated_at' => now(),
+            // ]);
 
-            Room::where('creator_type', Teacher::class)
-                ->where('creator_id', $teacherId)
-                ->where('status', 'ended')
-                ->where('payment_status', 'unpaid')
-                ->whereNotNull('subject_id')
-                ->update(['payment_status' => 'paid']);
+            // Room::where('creator_type', Teacher::class)
+            //     ->where('creator_id', $teacherId)
+            //     ->where('status', 'ended')
+            //     ->where('payment_status', 'unpaid')
+            //     ->whereNotNull('subject_id')
+            //     ->update(['payment_status' => 'paid']);
 
             $deductionPunishmentIds = \App\Models\Punishment::where('name', 'Salary Deduction')->pluck('id');
 
@@ -250,10 +254,11 @@ class FinancialDashboardController extends Controller
                 $teacher->punishments()->detach($deductionPunishmentIds);
             }
 
-            event(new SalaryTransferred($teacher, $amountInEur));
+            // event(new SalaryTransferred($teacher, $amountInEur));
 
             return redirect()->back()->with('success', 'تم تحويل الراتب بنجاح للأستاذ ' . $teacher->full_name);
         } catch (\Exception $e) {
+            \Log::info('any thing');
             return redirect()->back()->with('error', 'فشل تحويل الراتب: ' . $e->getMessage());
         }
     }
