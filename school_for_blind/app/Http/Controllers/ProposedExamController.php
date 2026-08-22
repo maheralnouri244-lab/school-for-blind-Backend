@@ -1,6 +1,5 @@
 <?php
-namespace App\Http\Controllers\Api\Teacher;
-
+namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Exam;
 use App\Models\Question;
