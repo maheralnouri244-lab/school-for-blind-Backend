@@ -16,15 +16,14 @@ use Illuminate\Support\Carbon;
 
 class ConversationController extends Controller
 {
-    private function determineAttachmentType($mimeType, $extension = null)
+
+    private function determineAttachmentType($mimeType)
     {
         if (Str::startsWith($mimeType, 'image/')) {
             return 'image';
         }
 
-        $audioExtensions = ['m4a', 'mp3', 'aac', 'wav', 'ogg', 'amr'];
-        if (Str::startsWith($mimeType, 'audio/') ||
-            in_array(strtolower($extension ?? ''), $audioExtensions)) {
+        if (Str::startsWith($mimeType, 'audio/')) {
             return 'voice';
         }
 
@@ -87,7 +86,7 @@ class ConversationController extends Controller
             $teacherId = $conversation->teacher_id ?? optional($conversation->parent)->teacher_id;
 
             $hasAccess = $user->class->teachers()->where('teachers.id', $teacherId)->exists();
-            if (! $hasAccess) {
+            if (!$hasAccess) {
                 return response()->json(['success' => false, 'message' => 'غير مصرح لك باستعراض رسائل هذه المحادثة.'], 403);
             }
         }
@@ -122,8 +121,9 @@ class ConversationController extends Controller
             ->exists();
 
         return response()->json(['success' => true, 'data' => $messages, 'isBanned' => $hasActivePunishment]);
-
     }
+
+
 
     public function sendMessage(Request $request, $conversationId)
     {
@@ -132,7 +132,7 @@ class ConversationController extends Controller
             'attachment' => 'nullable|file|max:51200',
         ]);
 
-        if (! $request->filled('body') && ! $request->hasFile('attachment')) {
+        if (!$request->filled('body') && !$request->hasFile('attachment')) {
             return response()->json(['success' => false, 'message' => 'لا يمكن إرسال رسالة فارغة'], 400);
         }
 
@@ -149,13 +149,13 @@ class ConversationController extends Controller
             if ($conversation->type === 'discussion') {
                 $teacherId = $conversation->teacher_id ?? optional($conversation->parent)->teacher_id;
 
-                if (! $teacherId) {
+                if (!$teacherId) {
                     return response()->json(['success' => false, 'message' => 'بيانات المحادثة غير مكتملة.'], 400);
                 }
 
                 $isEnrolled = $user->class->teachers()->where('teachers.id', $teacherId)->exists();
 
-                if (! $isEnrolled) {
+                if (!$isEnrolled) {
                     return response()->json(['success' => false, 'message' => 'عذراً، لا يمكنك الإرسال في مجموعة نقاش لا تنتمي لأساتذة شعبتك.'], 403);
                 }
             }
@@ -167,19 +167,17 @@ class ConversationController extends Controller
         if ($request->hasFile('attachment')) {
             $file = $request->file('attachment');
 
-            $attachmentType = $this->determineAttachmentType(
-                $file->getMimeType(),
-                $file->getClientOriginalExtension()
-            );
-            $filename = Str::uuid().'.'.$file->getClientOriginalExtension();
-            $attachmentPath = $file->storeAs('chat_attachments/'.$attachmentType.'s', $filename, 'public');
+            $attachmentType = $this->determineAttachmentType($file->getMimeType());
+
+            $filename = Str::uuid() . '.' . $file->getClientOriginalExtension();
+            $attachmentPath = $file->storeAs('chat_attachments/' . $attachmentType . 's', $filename, 'public');
         }
 
         $message = $conversation->messages()->create([
             'sender_type' => get_class($user),
             'sender_id' => $user->id,
             'body' => $request->body,
-            'attachment_path' => $attachmentPath ? 'storage/'.$attachmentPath : null,
+            'attachment_path' => $attachmentPath ? 'storage/' . $attachmentPath : null,
             'attachment_type' => $attachmentType,
         ]);
 
@@ -205,7 +203,7 @@ class ConversationController extends Controller
             $isMyMessage = ($message->sender_id === $user->id && $message->sender_type === get_class($user));
             $isMyChannel = ($message->conversation->teacher_id === $user->id);
 
-            if (! $isMyMessage && ! $isMyChannel) {
+            if (!$isMyMessage && !$isMyChannel) {
                 return response()->json(['success' => false, 'message' => 'لا تملك الصلاحية لحذف هذه الرسالة.'], 403);
             }
         }
@@ -227,6 +225,7 @@ class ConversationController extends Controller
         return response()->json(['success' => true, 'data' => $conversations]);
     }
 
+
     public function reportMessage(Request $request, $messageId)
     {
         $request->validate([
@@ -240,7 +239,7 @@ class ConversationController extends Controller
         if ($message->sender_id === $reporter->id && $message->sender_type === get_class($reporter)) {
             return response()->json([
                 'success' => false,
-                'message' => 'لا يمكنك الإبلاغ عن رسالتك الخاصة.',
+                'message' => 'لا يمكنك الإبلاغ عن رسالتك الخاصة.'
             ], 400);
         }
 
@@ -260,7 +259,7 @@ class ConversationController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'تم إرسال البلاغ بنجاح، ستقوم الإدارة بمراجعته.',
+            'message' => 'تم إرسال البلاغ بنجاح، ستقوم الإدارة بمراجعته.'
         ]);
     }
 }

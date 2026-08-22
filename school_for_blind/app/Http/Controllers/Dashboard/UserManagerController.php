@@ -311,7 +311,7 @@ class UserManagerController extends Controller
                 ]);
             }
 
-            // $whatsApp->sendTeacherinfo($teacher->phone, $teacher->full_name);
+            $whatsApp->sendTeacherinfo($teacher->phone, $teacher->full_name);
         });
 
         return redirect()->route('dashboard.users.index')->with('success', 'تم اعتماد وتفعيل بيانات المعلم بنجاح.');

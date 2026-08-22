@@ -20,17 +20,17 @@ class AnnouncementCreated implements ShouldBroadcast
         $this->announcement = $announcement;
     }
 
+    
     public function broadcastOn(): array
     {
-        $target = $this->announcement->target_audience;
-        $level = $this->announcement->level;
-        $sectionId = $this->announcement->section_id;
+        $target = $this->announcement->target_audience; 
+        $sectionId = $this->announcement->section_id;   
 
         if ($target === 'section' && $sectionId) {
             return [new Channel("announcements.section.{$sectionId}")];
         }
 
-        return [new Channel("announcements.{$target}.{$level}")];
+        return [new Channel("announcements.{$target}")];
     }
 
     public function broadcastAs(): string
@@ -38,6 +38,7 @@ class AnnouncementCreated implements ShouldBroadcast
         return 'new-announcement';
     }
 
+    
     public function broadcastWith(): array
     {
         $content = $this->announcement->content;
@@ -47,13 +48,13 @@ class AnnouncementCreated implements ShouldBroadcast
         }
 
         return [
-            'id' => $this->announcement->id,
-            'type' => (string) $this->announcement->type,
-            'title' => (string) $this->announcement->title,
-            'content' => $content,
+            'id'              => (string) $this->announcement->id,
+            'type'            => (string) $this->announcement->type,
+            'title'           => (string) $this->announcement->title,
+            'content'         => $content,
             'target_audience' => (string) $this->announcement->target_audience,
-            'section_id' => $this->announcement->section_id ? (string) $this->announcement->section_id : null,
-            'created_at' => $this->announcement->created_at->toDateTimeString(),
+            'section_id'      => $this->announcement->section_id ? (string) $this->announcement->section_id : null,
+            'created_at'      => $this->announcement->created_at->toDateTimeString(),
         ];
     }
 }

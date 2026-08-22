@@ -33,14 +33,9 @@ class CheckIfDismissed
                 ->where('punishables.punishable_id', $user->id)
                 ->where('punishables.punishable_type', get_class($user))
                 ->where('punishments.name', 'Dismissal')
-                ->whereNull('punishables.deleted_at')
-                ->whereNull('punishments.deleted_at')
                 ->where(function ($query) {
                     $query->whereNull('punishables.expires_at')
-                        ->orWhere(function ($q) {
-                            $q->where('punishables.expires_at', '>', Carbon::now())
-                                ->whereNotNull('punishables.deleted_at');
-                        });
+                        ->orWhere('punishables.expires_at', '>', Carbon::now());
                 })
                 ->select('punishables.expires_at')
                 ->first();

@@ -33,8 +33,6 @@ class CheckPunishment
             ->where('punishables.punishable_id', $user->id)
             ->where('punishables.punishable_type', get_class($user))
             ->where('punishments.name', 'LIKE', '%' . $punishmentName . '%')
-            ->whereNull('punishables.deleted_at')
-            ->whereNull('punishments.deleted_at')
             ->where(function ($query) {
                 $query->whereNull('punishables.expires_at')
                     ->orWhere('punishables.expires_at', '>', Carbon::now());

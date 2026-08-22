@@ -47,25 +47,26 @@ class AnnouncementController extends Controller
 
         if (auth()->guard('student')->check()) {
             $student = auth()->guard('student')->user();
-            $query->whereIn('target_audience', ['student', 'all'])
+            $query->where('target_audience', 'student')
                 ->whereIn('level', [$student->level, 'all']);
 
-        } elseif (auth()->guard('caregiver')->check()) {
-            $caregiver = auth()->guard('caregiver')->user();
-            $childrenLevels = $caregiver->students()->pluck('level')->filter()->unique()->toArray();
-            $allowedLevels = array_merge($childrenLevels, ['all']);
-            $query->whereIn('target_audience', ['caregiver', 'all'])
-                ->whereIn('level', $allowedLevels);
+         } elseif (auth()->guard('caregiver')->check()) {
+    $caregiver = auth()->guard('caregiver')->user();
+    $childrenLevels = $caregiver->students()->pluck('level')->filter()->unique()->toArray();
+    $allowedLevels = array_merge($childrenLevels, ['all']);
+    $query->where('target_audience', 'caregiver')
+          ->whereIn('level', $allowedLevels);
 
-        } elseif (auth()->guard('teacher')->check()) {
+}
+         elseif (auth()->guard('teacher')->check()) {
             $teacher = auth()->guard('teacher')->user();
-            $query->whereIn('target_audience', ['teacher', 'all'])
+            $query->where('target_audience', 'teacher')
                 ->whereIn('level', [$teacher->level, 'all']);
 
         } elseif (auth()->guard('admin')->check()) {
             $admin = auth()->guard('admin')->user();
             if ($admin->role === 'teacher') {
-                $query->whereIn('target_audience', ['teacher', 'all'])
+                $query->where('target_audience', 'teacher')
                     ->whereIn('level', [$admin->level, 'all']);
             }
         } else {

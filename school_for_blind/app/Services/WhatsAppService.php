@@ -32,16 +32,6 @@ class WhatsAppService
 
         return $this->execute($phone, $message);
     }
-
-    public function newpassword(string $phone, string $fullname, string $parent_phone, string $password)
-    {
-        $message = "مرحباً {$fullname} 👋\nتم تغيير كلمة المرور الخاصة بحساب الاهل و سيتم ارفاق البيانات الجديدة\n
-رقم الهاتف: {$parent_phone}\n
-كلمة المرور: {$password}"
-        ;
-
-        return $this->execute($phone, $message);
-    }
     public function sendTeacherinfo(string $phone, string $fullname)
     {
         $message = "مرحباً {$fullname} 👋\n

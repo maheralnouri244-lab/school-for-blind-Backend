@@ -1,29 +1,29 @@
 <?php
 
-use App\Http\Controllers\Dashboard\AnnouncementDashboardController;
 use App\Http\Controllers\Dashboard\AuthController;
-use App\Http\Controllers\Dashboard\ClassController;
 use App\Http\Controllers\Dashboard\ContentMonitorController;
 use App\Http\Controllers\Dashboard\ConversationWebController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\ExamController;
-use App\Http\Controllers\Dashboard\FinancialDashboardController;
-use App\Http\Controllers\Dashboard\grantPointsOrReward;
-use App\Http\Controllers\Dashboard\MySpaceController;
 use App\Http\Controllers\Dashboard\PastExamController;
 use App\Http\Controllers\Dashboard\PunishmentController;
-use App\Http\Controllers\Dashboard\QuizWebController;
 use App\Http\Controllers\Dashboard\ReportController;
 use App\Http\Controllers\Dashboard\RoomWebController;
-use App\Http\Controllers\Dashboard\ScheduleController;
-use App\Http\Controllers\Dashboard\StudentReportWebController;
 use App\Http\Controllers\Dashboard\SupportTicketController;
-use App\Http\Controllers\Dashboard\TeacherTransferController;
-use App\Http\Controllers\Dashboard\UserManagerController;
 use App\Http\Controllers\MagicLoginController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Middleware\CheckAdminRole;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Dashboard\UserManagerController;
+use App\Http\Controllers\Dashboard\ScheduleController;
+use App\Http\Controllers\Dashboard\ClassController;
+use App\Http\Controllers\Dashboard\StudentReportWebController;
+use App\Http\Controllers\Dashboard\MySpaceController;
+use App\Http\Controllers\Dashboard\TeacherTransferController;
+use App\Http\Controllers\Dashboard\FinancialDashboardController;
+use App\Http\Controllers\Dashboard\AnnouncementDashboardController;
+use App\Http\Controllers\Dashboard\RewardController;
+use App\Http\Controllers\Dashboard\grantPointsOrReward;
 
 /*
 'Super Admin',
@@ -48,7 +48,7 @@ Route::post('/magic-login/generate/{id}', [MagicLoginController::class, 'generat
     ->name('student.magic.generate')
     ->middleware('signed');
 
-Route::middleware([CheckAdminRole::class.':Super Admin,Academic Manager,Moderator,Support Agent,Data Entry,Financial Manager'])->group(function () {
+Route::middleware([CheckAdminRole::class . ':Super Admin,Academic Manager,Moderator,Support Agent,Data Entry,Financial Manager'])->group(function () {
     Route::get('/home', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/charts', function () {
         return view('dashboard');
@@ -58,7 +58,7 @@ Route::middleware([CheckAdminRole::class.':Super Admin,Academic Manager,Moderato
     })->name('classes');
 });
 
-Route::middleware([CheckAdminRole::class.':Super Admin,Academic Manager'])->group(function () {
+Route::middleware([CheckAdminRole::class . ':Super Admin,Academic Manager'])->group(function () {
     Route::get('/active-calls', [RoomWebController::class, 'activeCalls'])->name('admin.active-calls');
     Route::get('/rooms', [RoomWebController::class, 'index'])->name('rooms.index');
     Route::get('/rooms/history', [RoomWebController::class, 'history'])->name('rooms.history');
@@ -77,7 +77,7 @@ Route::middleware([CheckAdminRole::class.':Super Admin,Academic Manager'])->grou
 });
 
 Route::middleware([
-    CheckAdminRole::class.':Super Admin,Academic Manager,Moderator,Support Agent,Data Entry,Financial Manager',
+    CheckAdminRole::class . ':Super Admin,Academic Manager,Moderator,Support Agent,Data Entry,Financial Manager'
 ])->group(function () {
     Route::get('/content-monitor', [ContentMonitorController::class, 'index'])->name('content.monitor');
 
@@ -89,21 +89,23 @@ Route::middleware([
     Route::get('/logs', [DashboardController::class, 'logs'])->name('logs.index');
 });
 
-Route::middleware([CheckAdminRole::class.':Super Admin,Moderator,Academic Manager'])->prefix('punishments')->name('punishments.')->group(function () {
+Route::middleware([CheckAdminRole::class . ':Super Admin,Moderator,Academic Manager'])->prefix('punishments')->name('punishments.')->group(function () {
     Route::get('/api-types', [PunishmentController::class, 'getTypesJson'])->name('api.types');
     Route::get('/types', [PunishmentController::class, 'indexTypes'])->name('types.index');
     Route::post('/types', [PunishmentController::class, 'storeType'])->name('types.store');
     Route::get('/active', [PunishmentController::class, 'activePunishments'])->name('active');
     Route::post('/{id}/revoke', [PunishmentController::class, 'revoke'])->name('revoke');
 });
-Route::middleware([CheckAdminRole::class.':Super Admin'])
+Route::middleware([CheckAdminRole::class . ':Super Admin'])
     ->prefix('punishments')
     ->name('punishments.')
     ->group(function () {
         Route::post('/apply', [PunishmentController::class, 'apply'])->name('apply');
     });
 
-Route::middleware([CheckAdminRole::class.':Super Admin,Academic Manager,Data Entry'])
+
+
+Route::middleware([CheckAdminRole::class . ':Super Admin,Academic Manager,Data Entry'])
     ->prefix('dashboard/users')
     ->name('dashboard.users.')
     ->group(function () {
@@ -118,7 +120,7 @@ Route::middleware([CheckAdminRole::class.':Super Admin,Academic Manager,Data Ent
         Route::post('/teacher/{id}/setup', [UserManagerController::class, 'completeTeacherSetup'])->name('teacher.setup.submit');
     });
 
-Route::middleware([CheckAdminRole::class.':Super Admin,Academic Manager,Data Entry'])->prefix('dashboard')->name('dashboard.')->group(function () {
+Route::middleware([CheckAdminRole::class . ':Super Admin,Academic Manager,Data Entry'])->prefix('dashboard')->name('dashboard.')->group(function () {
     Route::post('past-exams/{id}/publish', [PastExamController::class, 'publish'])->name('past-exams.publish');
     Route::post('past-exams/{id}/questions', [PastExamController::class, 'storeQuestion'])->name('past-exams.questions.store');
     Route::post('past-exams/{id}/questions/attach', [PastExamController::class, 'attachQuestion'])->name('past-exams.questions.attach');
@@ -143,7 +145,7 @@ Route::prefix('support')->name('dashboard.support.')->group(function () {
     Route::post('/{id}/status', [SupportTicketController::class, 'updateStatus'])->name('update-status');
 });
 
-Route::middleware([CheckAdminRole::class.':Super Admin,Academic Manager,Moderator'])->group(function () {
+Route::middleware([CheckAdminRole::class . ':Super Admin,Academic Manager,Moderator'])->group(function () {
     Route::prefix('content-monitor/conversations')->name('dashboard.conversations.')->group(function () {
         Route::get('/', [ConversationWebController::class, 'index'])->name('index');
         Route::get('/user-profile', [ConversationWebController::class, 'getUserProfile'])->name('user-profile');
@@ -157,7 +159,7 @@ Route::middleware([CheckAdminRole::class.':Super Admin,Academic Manager,Moderato
 Route::get('/send-test-notification', [NotificationController::class, 'testSend']);
 
 Route::prefix('admin/financial')->name('financial.')->middleware([
-    CheckAdminRole::class.':Super Admin,Financial Manager',
+    CheckAdminRole::class . ':Super Admin,Financial Manager'
 ])->group(function () {
 
     Route::get('/', [FinancialDashboardController::class, 'index'])->name('index');
@@ -171,7 +173,8 @@ Route::prefix('admin/financial')->name('financial.')->middleware([
     Route::post('/rewards/{id}/reject', [FinancialDashboardController::class, 'rejectReward'])->name('rewards.reject');
 });
 
-Route::middleware([CheckAdminRole::class.':Super Admin,Academic Manager'])->prefix('dashboard/schedules')->name('dashboard.schedules.')->group(function () {
+
+Route::middleware([CheckAdminRole::class . ':Super Admin,Academic Manager'])->prefix('dashboard/schedules')->name('dashboard.schedules.')->group(function () {
     Route::get('/', [ScheduleController::class, 'index'])->name('index');
     Route::get('/create', [ScheduleController::class, 'create'])->name('create');
     Route::get('/workspace', [ScheduleController::class, 'workspace'])->name('workspace');
@@ -180,7 +183,8 @@ Route::middleware([CheckAdminRole::class.':Super Admin,Academic Manager'])->pref
     Route::delete('/{id}', [ScheduleController::class, 'destroy'])->name('destroy');
 });
 
-Route::middleware([CheckAdminRole::class.':Super Admin,Academic Manager,Moderator'])->group(function () {
+
+Route::middleware([CheckAdminRole::class . ':Super Admin,Academic Manager,Moderator'])->group(function () {
     Route::get('/classes', [ClassController::class, 'index'])->name('classes');
     Route::get('/classes/{id}', [ClassController::class, 'show'])->name('classes.show');
     Route::post('/classes/{id}/teachers/attach', [ClassController::class, 'attachTeacher'])->name('classes.teachers.attach');
@@ -200,7 +204,7 @@ Route::get('/fcm-test', function () {
     return view('fcm_test');
 });
 
-Route::middleware([CheckAdminRole::class.':Super Admin,Academic Manager,Moderator'])->group(function () {
+Route::middleware([CheckAdminRole::class . ':Super Admin,Academic Manager,Moderator'])->group(function () {
     Route::get('/announcements', function () {
         return view('pages.announcements.index');
     })->name('announcements.index');
@@ -208,26 +212,28 @@ Route::middleware([CheckAdminRole::class.':Super Admin,Academic Manager,Moderato
     Route::post('/api/dashboard/announcements', [AnnouncementDashboardController::class, 'store'])->name('dashboard.announcements.store');
 });
 
-Route::middleware([CheckAdminRole::class.':Super Admin,Academic Manager,Moderator,Support Agent,Data Entry,Financial Manager'])->group(function () {
+
+Route::middleware([CheckAdminRole::class . ':Super Admin,Academic Manager,Moderator,Support Agent,Data Entry,Financial Manager'])->group(function () {
     Route::get('/my-space', [MySpaceController::class, 'index'])->name('my-space');
     Route::post('/my-space/notes', [MySpaceController::class, 'storeNote'])->name('notes.store');
     Route::post('/my-space/reset-student-password', [MySpaceController::class, 'resetStudentPassword'])->name('my_space.reset_password');
     Route::post('/my-space/get-student-info', [MySpaceController::class, 'getStudentInfoForReset'])->name('my_space.get_student_info');
 });
 
-Route::middleware([CheckAdminRole::class.':Super Admin'])->prefix('dashboard/teacher')->group(function () {
+
+Route::middleware([CheckAdminRole::class . ':Super Admin'])->prefix('dashboard/teacher')->group(function () {
     Route::get('/search-by-phone', [TeacherTransferController::class, 'getTeacherByPhone'])->name('teacher.search_by_phone');
     Route::post('/dismiss-and-transfer', [TeacherTransferController::class, 'dismissAndTransfer'])->name('teacher.dismiss_and_transfer');
 });
-Route::middleware([CheckAdminRole::class.':Super Admin'])->prefix('dashboard/reward')->group(function () {
+Route::middleware([CheckAdminRole::class . ':Super Admin'])->prefix('dashboard/reward')->group(function () {
     Route::post('/grant', [grantPointsOrReward::class, 'grantPointsOrReward'])->name('reward.grant');
     Route::get('/search-user', [MySpaceController::class, 'searchUserForReward'])->name('reward.search_user');
 });
-Route::middleware([CheckAdminRole::class.':Super Admin'])->group(function () {
-    Route::post('/my-space/admins', [MySpaceController::class, 'storeAdmin'])->name('admins.store');
-    Route::put('/my-space/admins/{id}', [MySpaceController::class, 'updateAdmin'])->name('admins.update');
-    Route::delete('/my-space/admins/{id}', [MySpaceController::class, 'deleteAdmin'])->name('admins.destroy');
-    Route::post('/my-space/system-archive', [MySpaceController::class, 'archiveEntireSystem'])->name('system.archive');
+Route::middleware([CheckAdminRole::class . ':Super Admin'])->group(function () {
+    Route::post('/my-space/admins', [App\Http\Controllers\Dashboard\MySpaceController::class, 'storeAdmin'])->name('admins.store');
+    Route::put('/my-space/admins/{id}', [App\Http\Controllers\Dashboard\MySpaceController::class, 'updateAdmin'])->name('admins.update');
+    Route::delete('/my-space/admins/{id}', [App\Http\Controllers\Dashboard\MySpaceController::class, 'deleteAdmin'])->name('admins.destroy');
+    Route::post('/my-space/system-archive', [App\Http\Controllers\Dashboard\MySpaceController::class, 'archiveEntireSystem'])->name('system.archive');
 });
 // Route::middleware([CheckAdminRole::class . ':Academic Manager'])->group(function () {
 //     Route::post('/my-space/reset-student-password', [App\Http\Controllers\Dashboard\MySpaceController::class, 'resetStudentPassword'])->name('my_space.reset_password');
@@ -235,21 +241,21 @@ Route::middleware([CheckAdminRole::class.':Super Admin'])->group(function () {
 // });
 
 Route::prefix('dashboard/quizzes')->name('dashboard.quizzes.')->group(function () {
-    Route::get('/', [QuizWebController::class, 'index'])->name('index');
-    Route::post('/{id}/regrade', [QuizWebController::class, 'regrade'])->name('regrade');
-    Route::get('/{id}/submissions', [QuizWebController::class, 'submissions'])->name('submissions');
+    Route::get('/', [App\Http\Controllers\Dashboard\QuizWebController::class, 'index'])->name('index');
+    Route::post('/{id}/regrade', [App\Http\Controllers\Dashboard\QuizWebController::class, 'regrade'])->name('regrade');
+    Route::get('/{id}/submissions', [App\Http\Controllers\Dashboard\QuizWebController::class, 'submissions'])->name('submissions');
 
-    Route::get('/{id}/edit', [QuizWebController::class, 'edit'])->name('edit');
-    Route::put('/{id}', [QuizWebController::class, 'update'])->name('update');
-    Route::get('/{id}', [QuizWebController::class, 'show'])->name('show');
-    Route::delete('/{id}', [QuizWebController::class, 'destroy'])->name('destroy');
+    Route::get('/{id}/edit', [App\Http\Controllers\Dashboard\QuizWebController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [App\Http\Controllers\Dashboard\QuizWebController::class, 'update'])->name('update');
+    Route::get('/{id}', [App\Http\Controllers\Dashboard\QuizWebController::class, 'show'])->name('show');
+    Route::delete('/{id}', [App\Http\Controllers\Dashboard\QuizWebController::class, 'destroy'])->name('destroy');
 
-    Route::post('/{id}/questions', [QuizWebController::class, 'storeQuestion'])->name('questions.store');
-    Route::delete('/{id}/questions/{question_id}', [QuizWebController::class, 'detachQuestion'])->name('questions.detach');
-    Route::put('/{id}/questions/{question_id}', [QuizWebController::class, 'updateQuestionAnswer'])->name('questions.update');
+    Route::post('/{id}/questions', [App\Http\Controllers\Dashboard\QuizWebController::class, 'storeQuestion'])->name('questions.store');
+    Route::delete('/{id}/questions/{question_id}', [App\Http\Controllers\Dashboard\QuizWebController::class, 'detachQuestion'])->name('questions.detach');
+    Route::put('/{id}/questions/{question_id}', [App\Http\Controllers\Dashboard\QuizWebController::class, 'updateQuestionAnswer'])->name('questions.update');
 });
 
-Route::middleware([CheckAdminRole::class.':Super Admin,Academic Manager'])->group(function () {
-    Route::post('/classes', [ClassController::class, 'store'])->name('classes.store');
-    Route::delete('/classes/{id}', [ClassController::class, 'destroy'])->name('classes.destroy');
+Route::middleware([CheckAdminRole::class . ':Super Admin,Academic Manager'])->group(function () {
+    Route::post('/classes', [App\Http\Controllers\Dashboard\ClassController::class, 'store'])->name('classes.store');
+    Route::delete('/classes/{id}', [App\Http\Controllers\Dashboard\ClassController::class, 'destroy'])->name('classes.destroy');
 });

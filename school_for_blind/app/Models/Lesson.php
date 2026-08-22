@@ -55,7 +55,7 @@ class Lesson extends Model
 
     public function class()
     {
-        return $this->belongsTo(Classes::class);
+        return $this->belongsTo(Classes::class)->withTrashed();
     }
 
     public function getActivitylogOptions(): LogOptions

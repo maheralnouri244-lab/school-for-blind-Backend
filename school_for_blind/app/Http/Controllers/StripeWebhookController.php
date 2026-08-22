@@ -14,8 +14,9 @@ class StripeWebhookController extends Controller
     {
         $payload = $request->getContent();
         $sigHeader = $request->header('Stripe-Signature');
+        
+        $endpointSecret = env('STRIPE_WEBHOOK_SECRET'); 
 
-        $endpointSecret = 'whsec_388f7edf69ba8826b3120a184e4829da67bc0c8f505eb30cdee2343791d0a99f';
         $event = null;
 
         try {
@@ -24,7 +25,6 @@ class StripeWebhookController extends Controller
             return response()->json(['error' => 'حزمة البيانات غير صالحة'], 400);
         } catch (SignatureVerificationException $e) {
             Log::critical('تنبيه أمني: فشل التحقق من توقيع Stripe Webhook!');
-
             return response()->json(['error' => 'التوقيع الرقمي غير صحيح'], 400);
         }
 
@@ -36,7 +36,7 @@ class StripeWebhookController extends Controller
 
             case 'payment_intent.payment_failed':
                 $paymentIntent = $event->data->object;
-                Log::warning('فشلت عملية الدفع للـ Intent ID: '.$paymentIntent->id);
+                Log::warning("فشلت عملية الدفع للـ Intent ID: " . $paymentIntent->id);
                 break;
         }
 
@@ -47,13 +47,13 @@ class StripeWebhookController extends Controller
     {
         try {
             DB::transaction(function () use ($paymentIntent) {
-
+                
                 $donation = DB::table('donations')
                     ->where('stripe_session_id', $paymentIntent->id)
                     ->lockForUpdate()
                     ->first();
 
-                if (! $donation || $donation->status === 'completed') {
+                if (!$donation || $donation->status === 'completed') {
                     return;
                 }
 
@@ -61,25 +61,27 @@ class StripeWebhookController extends Controller
                     ->where('id', $donation->id)
                     ->update([
                         'status' => 'completed',
-                        'updated_at' => now(),
+                        'updated_at' => now()
                     ]);
 
                 DB::table('school_wallets')
                     ->where('id', 1)
                     ->increment('balance', $donation->amount);
 
-                SchoolTransaction::create([
-                    'type' => 'deposit',
-                    'amount' => $donation->amount,
-                    'description' => "تبرع ناجح وآمن ومؤكد عبر الـ Webhook من: {$donation->donor_name} بقيمة: {$donation->amount}",
-                    'reference_id' => $donation->id,
-                    'reference_type' => Donation::class,
+                DB::table('school_transactions')->insert([
+                    'type'           => 'deposit',
+                    'amount'         => $donation->amount,
+                    'description'    => "تبرع ناجح وآمن ومؤكد عبر الـ Webhook من: " . ($donation->donor_name ?? 'فاعل خير') . " بقيمة: {$donation->amount}",
+                    'reference_id'   => $donation->id,
+                    'reference_type' => 'App\Models\Donation',
+                    'created_at'     => now(),
+                    'updated_at'     => now(),
                 ]);
 
-                Log::info('تمت معالجة التبرع بنجاح عبر الـ Webhook للـ Intent: '.$paymentIntent->id);
+                Log::info("تمت معالجة التبرع بنجاح عبر الـ Webhook للـ Intent: " . $paymentIntent->id);
             });
         } catch (\Exception $e) {
-            Log::error('خطأ أثناء معالجة الـ Webhook المالي: '.$e->getMessage());
+            Log::error("خطأ أثناء معالجة الـ Webhook المالي: " . $e->getMessage());
         }
     }
 }

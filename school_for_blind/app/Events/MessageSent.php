@@ -22,7 +22,7 @@ class MessageSent implements ShouldBroadcastNow
 
     public function broadcastOn()
     {
-        return new PrivateChannel('conversation.'.$this->message->conversation_id);
+        return new PrivateChannel('conversation.' . $this->message->conversation_id);
     }
 
     public function broadcastWith()
@@ -33,7 +33,8 @@ class MessageSent implements ShouldBroadcastNow
             'id' => $this->message->id,
             'conversation_id' => $this->message->conversation_id,
             'body' => $this->message->body,
-            'attachment_path' => $this->message->attachment_path,            'attachment_type' => $this->message->attachment_type,
+            'attachment_path' => $this->message->attachment_path ? asset($this->message->attachment_path) : null,
+            'attachment_type' => $this->message->attachment_type,
             'sender_type' => $this->message->sender_type,
             'sender_id' => $this->message->sender_id,
             'created_at' => $this->message->created_at,

@@ -52,7 +52,8 @@ return [
     |
     */
 
-    'url' => 'https://barman-wannabe-cape.ngrok-free.dev/',
+    'url' => env('APP_URL', 'http://localhost'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone

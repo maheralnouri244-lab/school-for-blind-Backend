@@ -3,9 +3,9 @@
 use App\Http\Controllers\Admin\TeacherTransferController;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\Api\Admin\ArchiveController;
+use App\Http\Controllers\ConversationController;
 use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\CaregiverController;
-use App\Http\Controllers\ConversationController;
 use App\Http\Controllers\DonationController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\FcmTokenController;
@@ -42,6 +42,7 @@ use App\Http\Middleware\PreventStudentCallActions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+
 Route::post('verify-otp', [OtpController::class, 'verify']);
 Route::post('register', [StudentController::class, 'register']);
 Route::post('login', [StudentController::class, 'login']);
@@ -50,6 +51,7 @@ Route::prefix('otp')->controller(OtpController::class)->group(function () {
     Route::post('send', 'sendOtp')->name('otp.send')->middleware('throttle:3,1');
     Route::post('verify', 'verifyOtp')->name('otp.verify');
 });
+
 
 Route::middleware(['auth:sanctum', 'CheckIsStudent'])->group(function () {
     Route::post('/logout', [StudentController::class, 'logout']);
@@ -140,6 +142,8 @@ Route::post('/announcements', [AnnouncementController::class, 'store']);
 Route::get('/announcements', [AnnouncementController::class, 'index']);
 Route::get('/announcements/exam/{id}', [AnnouncementController::class, 'showExam']);
 Route::get('/announcements/school-timetable/first', [AnnouncementController::class, 'firstSchoolTimetable'])->middleware(['auth:sanctum', 'CheckIfDismissed']);
+;
+
 
 Route::prefix('student/quizzes')->group(function () {
 
@@ -151,6 +155,8 @@ Route::middleware(['auth:sanctum', 'CheckIfDismissed'])->group(function () {
     Route::post('student/quizzes/search-info', [StudentQuizController::class, 'getQuizInfoByNames']);
 });
 
+
+
 Route::post('/get-quiz-info', [QuizController::class, 'getQuizInfoByNames']);
 Route::middleware(['auth:sanctum', IsTeacher::class, 'CheckIfDismissed'])->prefix('question-bank')->group(function () {
     Route::get('/', [QuestionBankController::class, 'index']);
@@ -158,6 +164,7 @@ Route::middleware(['auth:sanctum', IsTeacher::class, 'CheckIfDismissed'])->prefi
     Route::get('/{id}', [QuestionBankController::class, 'show']);
     Route::delete('/{id}', [QuestionBankController::class, 'destroy']);
 });
+
 
 Route::middleware(['auth:sanctum', CheckUserType::class . ':admin'])->prefix('admin/teachers')->group(function () {
     Route::post('/transfer-assets', [TeacherTransferController::class, 'transferAssets']);
@@ -167,6 +174,7 @@ Route::middleware(['auth:sanctum', 'CheckIfDismissed'])->group(function () {
     Route::post('quiz/submit', [StudentQuizController::class, 'submitQuiz']);
 });
 
+
 Route::middleware(['auth:sanctum', 'CheckIfDismissed'])->group(function () {
     Route::get('/subjects/{id}/lessons', [LessonController::class, 'getLessonsBySubject']);
     Route::get('student/quizzes/{quizId}/review', [StudentQuizController::class, 'getQuizReview']);
@@ -175,18 +183,21 @@ Route::get('/lessons/{id}/record', [LessonController::class, 'getLessonRecord'])
 Route::get('/subjects/{id}/lessons/count', [LessonController::class, 'getLessonsCountBySubject']);
 Route::get('/subjects/{id}/lessons/progress', [LessonController::class, 'getLessonsProgress']);
 
+
 Route::middleware(['auth:sanctum', 'CheckIfDismissed'])->group(function () {
 
     Route::post('/favorites/toggle', [FavoriteController::class, 'toggle']);
     Route::post('favorites/add', [FavoriteController::class, 'addToFavorite']);
 
     Route::get('/favorites/lessons', [FavoriteController::class, 'favoriteLessons']);
+    ;
 
     Route::get('/favorites/quizzes', [FavoriteController::class, 'favoriteQuizzes']);
-
+    ;
     Route::get('favorites/exams', [FavoriteController::class, 'favoriteExams']);
-
-    Route::get('favorites/past-exams', [FavoriteController::class, 'favoritePastExams']);
+    ;
+    Route::get('favorites/past-exams', [FavoriteController::class, 'favoritePastExams'])
+    ;
 
     Route::get('/favorites/all', [FavoriteController::class, 'allFavorites']);
 });
@@ -194,10 +205,12 @@ Route::middleware(['auth:sanctum', 'CheckIfDismissed'])->group(function () {
 Route::post('/favorites/remove', [FavoriteController::class, 'remove'])
     ->middleware(['auth:sanctum', 'CheckIfDismissed']);
 
+
 Route::middleware(['auth:sanctum', CheckUserType::class . ':admin'])->prefix('admin/punishments')->group(function () {
     Route::post('/apply', [PunishmentController::class, 'applyPunishment']);
     Route::patch('/{id}/revoke', [PunishmentController::class, 'revokePunishment']);
 });
+
 
 Route::middleware(['auth:sanctum', CheckPunishment::class . ':Report Ban', 'CheckIfDismissed'])->group(function () {
     Route::post('/reports', [ReportController::class, 'store']);
@@ -234,6 +247,7 @@ Route::middleware(['auth:sanctum', 'CheckIfDismissed'])->group(function () {
     Route::post('/messages/{messageId}/report', [ConversationController::class, 'reportMessage']);
 });
 
+
 Route::middleware(['auth:sanctum', 'CheckIfDismissed'])->group(function () {
     Route::get('/student/submissions', [StudentQuizController::class, 'getStudentSubmissions']);
 });
@@ -264,6 +278,8 @@ Route::middleware(['auth:sanctum', 'CheckIfDismissed'])->group(function () {
 
 });
 
+
+
 Route::get('/teacher/pending-essay-answers', [TeacherQuizController::class, 'getPendingEssayAnswers'])->middleware(['auth:sanctum', IsTeacher::class, 'CheckIfDismissed']);
 Route::post('/teacher/grade-full-quiz-submission', [TeacherQuizController::class, 'gradeFullQuizSubmission'])->middleware(['auth:sanctum', IsTeacher::class, 'CheckIfDismissed']);
 
@@ -273,8 +289,10 @@ Route::middleware(['auth:teacher', 'CheckIfDismissed'])->group(function () {
     Route::post('/teacher/grade-exam', [TeacherExamcorrectController::class, 'gradeFullExamSubmission']);
 });
 
-Route::post('/transfer/salary/teacher', [Teacherpaymentcontroller::class, 'setupTeacherBank']); /* ->middleware(['auth:sanctum', CheckUserType::class . ':admin']); */
+
+Route::post('/transfer/salary/teacher', [Teacherpaymentcontroller::class, 'setupTeacherBank']);/*->middleware(['auth:sanctum', CheckUserType::class . ':admin']);*/
 Route::post('/teacher/pay-salary', [Teacherpaymentcontroller::class, 'payTeacherSalary']);
+
 
 Route::middleware(['auth:sanctum', 'isparent'])->prefix('parent')->group(function () {
     Route::get('/reports/daily', [ParentReportController::class, 'getDailyReport']);
