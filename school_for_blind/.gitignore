@@ -10,6 +10,7 @@
 /storage/framework/sessions/*
 /storage/framework/views/*
 /storage/logs/*
+/storage/framework/lsp-*.php
 
 .env
 .env.backup
