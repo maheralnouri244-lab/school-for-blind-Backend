@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\QuizAutoGraded;
+use App\Events\QuizNeedsGrading;
 use App\Http\Requests\QuizInfoRequest;
 use App\Http\Requests\SubmitQuizRequest;
 use App\Http\Resources\StudentQuestionResource;
@@ -145,7 +146,9 @@ public function submitQuiz(SubmitQuizRequest $request): JsonResponse
         DB::commit();
         if ($submission->status === 'graded') {
     event(new QuizAutoGraded($submission));
-}
+}if ($submission->status === 'pending') {
+            event(new QuizNeedsGrading($submission));
+        }
         return response()->json([
             'status' => 'success',
             'message' => 'تم تسليم الكويز بنجاح وتصحيح الأسئلة المؤتمتة تلقائياً!',
