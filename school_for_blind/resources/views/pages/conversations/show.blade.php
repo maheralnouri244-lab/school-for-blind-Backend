@@ -170,10 +170,10 @@
         modalBody.innerHTML = `<img src="${url}" class="img-fluid rounded shadow" style="max-height: 70vh;" alt="عرض الصورة">`;
       } else if (type === 'video') {
         modalBody.innerHTML = `
-              <video controls autoplay class="w-100 rounded shadow" style="max-height: 70vh; background: #000;">
-                <source src="${url}">
-                متصفحك لا يدعم تشغيل الفيديو.
-              </video>`;
+                        <video controls autoplay class="w-100 rounded shadow" style="max-height: 70vh; background: #000;">
+                          <source src="${url}">
+                          متصفحك لا يدعم تشغيل الفيديو.
+                        </video>`;
       } else {
         modalBody.innerHTML = `<iframe src="${url}" class="w-100 rounded" style="height: 60vh; border: none;"></iframe>`;
       }
@@ -222,10 +222,10 @@
 
           if (messagesWrapper.children.length === 0) {
             messagesWrapper.innerHTML = `
-                  <div id="no-messages-alert" class="text-center py-5 text-muted">
-                    <i class="fa-regular fa-comments fs-1 mb-3"></i>
-                    <p>لا توجد رسائل في هذه المحادثة بعد.</p>
-                  </div>`;
+                            <div id="no-messages-alert" class="text-center py-5 text-muted">
+                              <i class="fa-regular fa-comments fs-1 mb-3"></i>
+                              <p>لا توجد رسائل في هذه المحادثة بعد.</p>
+                            </div>`;
           }
         })
         .catch(err => console.error('Error fetching messages:', err))
@@ -278,7 +278,9 @@
     function renderMessageHTML(msg) {
       const senderTypeClass = msg.sender_type ? msg.sender_type.split('\\').pop() : '';
       const senderName = msg.sender ? (msg.sender.fullname || msg.sender.full_name || msg.sender.role || 'مستخدم') : 'مستخدم';
-
+      const isDeleted = msg.deleted_at !== null;
+      const deletedBadge = isDeleted ? '<span class="badge bg-soft-danger text-danger ms-2" style="font-size: 0.65rem;">رسالة محذوفة</span>' : '';
+      const deletedStyle = isDeleted ? 'opacity: 0.7; background-color: var(--hover-bg) !important; border: 1px dashed var(--danger-color) !important;' : '';
       let iconClass = 'fa-user-graduate';
       let roleName = 'طالب';
       let iconBg = 'bg-soft-info';
@@ -302,33 +304,33 @@
 
         if (msg.attachment_type === 'image') {
           attachmentHTML = `
-                <div class="mt-2 position-relative d-inline-block">
-                  <img src="${fileUrl}" class="img-fluid rounded border" style="max-height: 200px; cursor: pointer;" alt="مرفق صورة" onclick="openAttachmentModal('image', '${fileUrl}')">
-                  <a href="${fileUrl}" download class="btn btn-sm btn-dark position-absolute bottom-0 start-0 m-1 opacity-75 hover-opacity-100" title="تحميل"><i class="fa-solid fa-download"></i></a>
-                </div>`;
+                          <div class="mt-2 position-relative d-inline-block">
+                            <img src="${fileUrl}" class="img-fluid rounded border" style="max-height: 200px; cursor: pointer;" alt="مرفق صورة" onclick="openAttachmentModal('image', '${fileUrl}')">
+                            <a href="${fileUrl}" download class="btn btn-sm btn-dark position-absolute bottom-0 start-0 m-1 opacity-75 hover-opacity-100" title="تحميل"><i class="fa-solid fa-download"></i></a>
+                          </div>`;
         } else if (msg.attachment_type === 'video') {
           attachmentHTML = `
-                <div class="mt-2 position-relative d-inline-block" style="max-width: 250px; cursor: pointer;" onclick="openAttachmentModal('video', '${fileUrl}')">
-                  <video src="${fileUrl}" class="img-fluid rounded border" style="max-height: 200px; background: #000;" preload="metadata"></video>
-                  <div class="position-absolute top-50 start-50 translate-middle pointer-events-none">
-                    <i class="fa-solid fa-circle-play text-white opacity-75" style="font-size: 3rem; text-shadow: 0 0 10px rgba(0,0,0,0.5);"></i>
-                  </div>
-                  <a href="${fileUrl}" download class="btn btn-sm btn-dark position-absolute bottom-0 start-0 m-1 opacity-75 hover-opacity-100" title="تحميل" style="z-index: 2;" onclick="event.stopPropagation();"><i class="fa-solid fa-download"></i></a>
-                </div>`;
+                          <div class="mt-2 position-relative d-inline-block" style="max-width: 250px; cursor: pointer;" onclick="openAttachmentModal('video', '${fileUrl}')">
+                            <video src="${fileUrl}" class="img-fluid rounded border" style="max-height: 200px; background: #000;" preload="metadata"></video>
+                            <div class="position-absolute top-50 start-50 translate-middle pointer-events-none">
+                              <i class="fa-solid fa-circle-play text-white opacity-75" style="font-size: 3rem; text-shadow: 0 0 10px rgba(0,0,0,0.5);"></i>
+                            </div>
+                            <a href="${fileUrl}" download class="btn btn-sm btn-dark position-absolute bottom-0 start-0 m-1 opacity-75 hover-opacity-100" title="تحميل" style="z-index: 2;" onclick="event.stopPropagation();"><i class="fa-solid fa-download"></i></a>
+                          </div>`;
         } else if (msg.attachment_type === 'voice') {
           attachmentHTML = `
-                <div class="mt-3 mb-2 d-flex align-items-center gap-2" style="width: 100%; min-width: 280px;">
-                  <audio controls preload="auto" class="flex-grow-1 shadow-sm rounded" style="height: 54px; outline: none;" src="${fileUrl}" onerror="retryAudio(this)">
-                    متصفحك لا يدعم مشغل الصوت.
-                  </audio>
-                  <a href="${fileUrl}" download="voice_record.webm" class="btn btn-outline-secondary btn-sm" title="تحميل"><i class="fa-solid fa-download"></i></a>
-                </div>`;
+                          <div class="mt-3 mb-2 d-flex align-items-center gap-2" style="width: 100%; min-width: 280px;">
+                            <audio controls preload="auto" class="flex-grow-1 shadow-sm rounded" style="height: 54px; outline: none;" src="${fileUrl}" onerror="retryAudio(this)">
+                              متصفحك لا يدعم مشغل الصوت.
+                            </audio>
+                            <a href="${fileUrl}" download="voice_record.webm" class="btn btn-outline-secondary btn-sm" title="تحميل"><i class="fa-solid fa-download"></i></a>
+                          </div>`;
         } else {
           attachmentHTML = `
-                <div class="mt-2 d-flex gap-2 align-items-center">
-                  <button type="button" onclick="openAttachmentModal('file', '${fileUrl}')" class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-eye me-1"></i> عرض</button>
-                  <a href="${fileUrl}" download class="btn btn-sm btn-outline-secondary"><i class="fa-solid fa-download me-1"></i> تحميل</a>
-                </div>`;
+                          <div class="mt-2 d-flex gap-2 align-items-center">
+                            <button type="button" onclick="openAttachmentModal('file', '${fileUrl}')" class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-eye me-1"></i> عرض</button>
+                            <a href="${fileUrl}" download class="btn btn-sm btn-outline-secondary"><i class="fa-solid fa-download me-1"></i> تحميل</a>
+                          </div>`;
         }
       }
 
@@ -337,36 +339,39 @@
         : '';
 
       return `
-            <div class="d-flex align-items-start mb-3 justify-content-between p-2 rounded msg-item" id="message-${msg.id}" 
-                 style="background-color: var(--bg-card); border: 1px solid var(--border-color);">
-              <div class="d-flex align-items-start gap-2 w-100">
-                <div class="p-2 rounded ${iconBg} d-flex align-items-center justify-content-center cursor-pointer flex-shrink-0" 
-                     style="width: 38px; height: 38px;" ${profileClick} title="عرض الملف الشخصي">
-                  <i class="fa-solid ${iconClass}"></i>
-                </div>
-                <div class="flex-grow-1" style="max-width: 85%;">
-                  <strong class="d-block cursor-pointer text-hover-primary" style="color: var(--text-main); font-size: 0.9rem;" ${profileClick}>
-                    ${senderName}
-                    <span class="text-muted fw-normal" style="font-size: 0.75rem;">(${roleName})</span>
-                  </strong>
-                  ${msg.body ? `<p class="mb-1 mt-1" style="color: var(--text-main); font-size: 0.95rem;">${msg.body}</p>` : ''}
-                  ${attachmentHTML}
-                  <small class="text-muted d-block mt-1" style="font-size: 0.7rem;">${new Date(msg.created_at).toLocaleString('ar-EG')}</small>
-                </div>
-              </div>
-              <button class="btn btn-sm btn-link text-danger border-0 p-1 flex-shrink-0" onclick="confirmDeleteMessage(${msg.id})" title="حذف هذه الرسالة">
-                <i class="fa-regular fa-trash-can fs-5"></i>
-              </button>
-            </div>`;
+                <div class="d-flex align-items-start mb-3 justify-content-between p-2 rounded msg-item" id="message-${msg.id}" 
+                     style="background-color: var(--bg-card); border: 1px solid var(--border-color); ${deletedStyle}">
+                  <div class="d-flex align-items-start gap-2 w-100">
+                    <div class="p-2 rounded ${iconBg} d-flex align-items-center justify-content-center cursor-pointer flex-shrink-0" 
+                         style="width: 38px; height: 38px;" ${profileClick} title="عرض الملف الشخصي">
+                      <i class="fa-solid ${iconClass}"></i>
+                    </div>
+                    <div class="flex-grow-1" style="max-width: 85%;">
+                      <strong class="d-block cursor-pointer text-hover-primary" style="color: var(--text-main); font-size: 0.9rem;" ${profileClick}>
+                        ${senderName}
+                        <span class="text-muted fw-normal" style="font-size: 0.75rem;">(${roleName})</span>
+                        ${deletedBadge}
+                      </strong>
+                      ${msg.body ? `<p class="mb-1 mt-1" style="color: var(--text-main); font-size: 0.95rem;">${isDeleted ? '<del>' + msg.body + '</del>' : msg.body}</p>` : ''}
+                      ${attachmentHTML}
+                      <small class="text-muted d-block mt-1" style="font-size: 0.7rem;">${new Date(msg.created_at).toLocaleString('ar-EG')}</small>
+                    </div>
+                  </div>
+                  ${!isDeleted ? `
+                  <button class="btn btn-sm btn-link text-danger border-0 p-1 flex-shrink-0" onclick="confirmDeleteMessage(${msg.id})" title="حذف هذه الرسالة">
+                    <i class="fa-regular fa-trash-can fs-5"></i>
+                  </button>
+                  ` : ''}
+                </div>`;
     }
 
     window.openUserProfile = function (type, id) {
       const modalContent = document.getElementById('user-profile-modal-content');
       modalContent.innerHTML = `
-            <div class="text-center py-5">
-              <div class="spinner-border text-primary" role="status"></div>
-              <p class="mt-2 text-muted">جاري تحميل بيانات الملف الشخصي...</p>
-            </div>`;
+                      <div class="text-center py-5">
+                        <div class="spinner-border text-primary" role="status"></div>
+                        <p class="mt-2 text-muted">جاري تحميل بيانات الملف الشخصي...</p>
+                      </div>`;
       profileModal.show();
 
       fetch(`/content-monitor/conversations/user-profile?type=${type}&id=${id}`, {
@@ -530,9 +535,27 @@
           if (data.success) {
             const msgEl = document.getElementById('message-' + messageIdToDelete);
             if (msgEl) {
+              // تحديث مظهر الرسالة بدلاً من إزالتها
               msgEl.style.transition = 'all 0.4s ease';
-              msgEl.style.opacity = '0';
-              setTimeout(() => msgEl.remove(), 400);
+              msgEl.style.opacity = '0.7';
+              msgEl.style.backgroundColor = 'var(--hover-bg)';
+              msgEl.style.border = '1px dashed var(--danger-color)';
+
+              // إضافة شارة "رسالة محذوفة" بجانب الاسم
+              const nameContainer = msgEl.querySelector('strong');
+              if (nameContainer && !nameContainer.innerHTML.includes('رسالة محذوفة')) {
+                nameContainer.insertAdjacentHTML('beforeend', ' <span class="badge bg-soft-danger text-danger ms-2" style="font-size: 0.65rem;">رسالة محذوفة</span>');
+              }
+
+              // إخفاء زر الحذف
+              const deleteBtn = msgEl.querySelector('button[title="حذف هذه الرسالة"]');
+              if (deleteBtn) deleteBtn.remove();
+
+              // شطب النص
+              const textBody = msgEl.querySelector('p');
+              if (textBody && !textBody.innerHTML.includes('<del>')) {
+                textBody.innerHTML = '<del>' + textBody.innerHTML + '</del>';
+              }
             }
             deleteModal.hide();
           } else {
@@ -556,29 +579,25 @@
           window.Echo.private('conversation.' + conversationId)
             .listen('MessageDeleted', (e) => {
               console.log("🗑️ Message deleted event received", e);
-
               const deletedId = e.deleted_message_id || e.id;
+              const msgEl = document.getElementById('message-' + deletedId);
 
-              const deletedMsgEl = document.getElementById('message-' + deletedId);
-              if (deletedMsgEl) {
-                deletedMsgEl.style.transition = 'all 0.4s ease';
-                deletedMsgEl.style.opacity = '0';
-                setTimeout(() => deletedMsgEl.remove(), 400);
-              }
-            })
-            .listen('MessageSent', (e) => {
-              console.log("💬 New message received!", e);
-              const messageData = e.message || e;
+              if (msgEl) {
+                // بدلاً من إزالة العنصر، نقوم بتحديث مظهره
+                msgEl.style.transition = 'all 0.4s ease';
+                msgEl.style.opacity = '0.7';
+                msgEl.style.backgroundColor = 'var(--hover-bg)';
+                msgEl.style.border = '1px dashed var(--danger-color)';
 
-              if (messageData && messageData.id) {
-                if (document.getElementById('message-' + messageData.id)) {
-                  return;
+                // إخفاء زر الحذف
+                const deleteBtn = msgEl.querySelector('button[title="حذف هذه الرسالة"]');
+                if (deleteBtn) deleteBtn.remove();
+
+                // شطب النص إن أردت (اختياري)
+                const textBody = msgEl.querySelector('p');
+                if (textBody && !textBody.innerHTML.includes('<del>')) {
+                  textBody.innerHTML = '<del>' + textBody.innerHTML + '</del>';
                 }
-                const noMsgAlert = document.getElementById('no-messages-alert');
-                if (noMsgAlert) noMsgAlert.remove();
-
-                messagesWrapper.insertAdjacentHTML('beforeend', renderMessageHTML(messageData));
-                scrollToBottom();
               }
             });
         } else {

@@ -4,11 +4,15 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\Caregiver;
+use App\Models\Classes;
 use App\Models\Note;
 use App\Models\PointSuggestion;
 use App\Models\Student;
+use App\Models\Subject;
+use App\Models\Teacher;
 use App\Services\WhatsAppService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -121,7 +125,7 @@ class MySpaceController extends Controller
                 $caregiver = Caregiver::findOrFail($student->parent_id);
                 $caregiver->password = Hash::make($newPassword);
                 $caregiver->save();
-                $whatsApp->sendStudentinfo($student->phone, $student->fullname, $student->parent_phone, $newPassword);
+                $whatsApp->newpassword($student->phone, $student->fullname, $student->parent_phone, $newPassword);
             });
             return response()->json(['success' => true, 'message' => 'تم إعادة تعيين كلمة المرور وإرسالها لولي الأمر بنجاح.']);
         } catch (\Exception $e) {
@@ -287,7 +291,23 @@ class MySpaceController extends Controller
 
                 \Illuminate\Support\Facades\Schema::enableForeignKeyConstraints();
             });
+            Artisan::call('db:seed', ['--class' => 'Database\\Seeders\\AdminSeeder']);
+            Artisan::call('db:seed', ['--class' => 'Database\\Seeders\\PunishmentSeeder']);
 
+            $allSubjectIds = Subject::pluck('id')->toArray();
+            $commonPassword = Hash::make('00000000');
+            $adminTeacher = Teacher::firstOrCreate(
+                ['phone' => '0000000000'],
+                [
+                    'full_name' => 'الإدارة العامة',
+                    'password' => $commonPassword,
+                    'subjects' => 'كل المواد',
+                    'level' => 'twelfth',
+                    'status' => 'approved',
+                    'cv_path' => 'system/admin_cv.pdf',
+                ]
+            );
+            $adminTeacher->subjects()->sync($allSubjectIds);
             return back()->with('success', 'تمت عملية أرشفة النظام بالكامل مع الاحتفاظ بالتاريخ السلوكي والأكاديمي بنجاح!');
 
         } catch (\Exception $e) {
